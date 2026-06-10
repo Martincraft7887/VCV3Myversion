@@ -1,0 +1,4 @@
+<!DOCTYPE codename-engine-character>
+<character x="250" y="600" sprite="aura" scale="4" icon="Galactic Storm God" imagePath="aura.png">
+	<anim name="idle" anim="aura" x="0" y="0" fps="24" loop="true"/>
+</character>

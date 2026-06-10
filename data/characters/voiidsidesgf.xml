@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="gfrtx">
+	<anim name="idle" anim="dance"/>
+	<anim name="singDOWN" anim="dance"/>
+	<anim name="singRIGHT" anim="dance"/>
+	<anim name="singLEFT" anim="dance"/>
+	<anim name="singUP" anim="dance"/>
+	<anim name="dance" anim="dance"/>
+</character>

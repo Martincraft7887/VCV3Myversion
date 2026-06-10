@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="fatt" flipX="true" camx="-150" camy="-50" isPlayer="true" icon="mattsword-icons" color="#E99E1F" isGF="false">
+	<anim name="idle" anim="idle0" x="-4" y="-6" fps="24" loop="false"/>
+	<anim name="idle-alt" anim="idle-alt0" x="-4" y="-6" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="right0" x="-26" y="-3" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="down0" x="-11" y="73" fps="24" loop="false"/>
+	<anim name="singUP" anim="up0" x="-26" y="43" fps="24" loop="false"/>
+	<anim name="singUP-alt" anim="up-alt0" x="-34" y="151" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="left0" x="-6" y="-3" fps="24" loop="false"/>
+</character>

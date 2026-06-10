@@ -1,0 +1,9 @@
+{
+    "params": [
+        {
+            "name": "Enable Grayscale",
+            "type": "Bool",
+            "defaultValue": true
+        }
+    ]
+}

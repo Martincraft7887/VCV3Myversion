@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="-235" sprite="shaggy_jordan" scale="1.02" camx="300" icon="Awoken" color="#87FDDC" imagePath="shaggy_jordan.png">
+	<anim name="idle" anim="shaggy_idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="shaggy_down0" x="0" y="-160" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="shaggy_left0" x="175" y="-105" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="shaggy_right0" x="-10" y="-37" fps="24" loop="false"/>
+	<anim name="singUP" anim="shaggy_up0" x="-20" y="28" fps="24" loop="false"/>
+</character>

@@ -1,0 +1,19 @@
+{
+    "params": [
+        {
+            "name": "Enable",
+            "type": "Bool",
+            "defaultValue": true
+        },
+        {
+            "name": "Hue",
+            "type": "Float(0, 10, 0.01, 2)",
+            "defaultValue": 0
+        },
+        {
+            "name": "Target",
+            "type": "DropDown([\"all\",\"opponent1\",\"opponent2\",\"player\"])",
+            "defaultValue": "all"
+        }
+    ]
+}

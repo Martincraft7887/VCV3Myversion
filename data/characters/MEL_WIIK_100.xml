@@ -1,0 +1,5 @@
+<!DOCTYPE codename-engine-character>
+<character x="80" y="-100" sprite="MEL_WIIK_100" icon="Melody-icon" imagePath="MEL WIIK 100.png">
+	<anim name="idle" anim="GF Dancing Beat" x="0" y="0" fps="24" loop="true"/>
+	<anim name="cheer" anim="GF Cheer" x="0" y="10" fps="24" loop="false"/>
+</character>

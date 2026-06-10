@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="BOYFRIEND" flipX="true" isPlayer="true" icon="bf" color="#00EBE4" imagePath="BOYFRIEND.png">
+	<anim name="idle" anim="BF idle dance" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="BF NOTE DOWN" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="BF NOTE UP" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="BF NOTE LEFT" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="BF NOTE RIGHT" x="0" y="0" fps="24" loop="false"/>
+	<anim name="HEY" anim="BF HEY!!" x="0" y="0" fps="14" loop="false"/>
+	<anim name="preattack" anim="bf pre attack" x="0" y="0" fps="24" loop="false"/>
+	<anim name="attack" anim="boyfriend attack" x="0" y="0" fps="24" loop="false"/>
+	<anim name="dodge" anim="boyfriend dodge" x="0" y="0" fps="24" loop="false"/>
+</character>

@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Rejected Vip Matt" icon="Rejected VIP" color="#0E0E0E" imagePath="Matt Rejected VIP.png">
+	<anim name="idle" anim="Idle" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="Down Note" x="-75" y="-125" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="Left Note" x="50" y="-60" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="Right Note" x="-40" y="-60" fps="24" loop="false"/>
+	<anim name="singUP" anim="Up Note" x="150" y="5" fps="24" loop="false"/>
+</character>

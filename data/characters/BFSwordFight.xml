@@ -1,0 +1,13 @@
+<!DOCTYPE codename-engine-character>
+<character x="-150" y="50" sprite="BFSwordFight" flipX="true" camx="-120" camy="-100" isPlayer="true" icon="Wiik1BFRTX-icons" color="#FF9A9A" width="3815" imagePath="BFSwordFight.png" height="4154">
+	<anim name="idle" anim="BF Sword Idle" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="BF Sword Attack Down" x="320" y="5" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="BF Sword Attack Right" x="415" y="20" fps="24" loop="false"/>
+	<anim name="singUP" anim="BF Sword Attack Up" x="350" y="175" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="Bf Sword Attack Left" x="340" y="0" fps="24" loop="false"/>
+	<anim name="singUP-block" anim="BF Sword Block Up" x="25" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT-block" anim="BF Sword Block Right" x="15" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT-block" anim="BF Sword Block Left" x="10" y="90" fps="24" loop="false"/>
+	<anim name="singDOWN-block" anim="BF Sword Block Down" x="20" y="0" fps="24" loop="false"/>
+	<anim name="taunt" anim="BF Sword Countered" x="50" y="30" fps="24" loop="false"/>
+</character>

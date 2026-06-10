@@ -1,0 +1,11 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/BoxingRingOld/" name="BoxingRingOld" zoom="0.7">
+	<sprite scrolly="0.9" x="-500" sprite="boxingnight2" y="500" scrollx="0.02" name="BoxingBG"/>
+	<sprite scrolly="0.9" x="-400" sprite="buildings" y="500" scrollx="0.2" name="buildings"/>
+	<sprite scrolly="0.9" sprite="boxingnight3" y="500" name="BoxingRound"/>
+	<girlfriend x="1612.3685833895" y="1654.4042125419"/>
+	<dad x="674.422014059999" y="1763.0693947258"/>
+	<boyfriend x="1887.25834607726" y="1790.14789352391"/>
+	<sprite scrolly="1.8" x="500" sprite="lights" y="800" scrollx="2" name="lights"/>
+	<sprite x="-500" scroll="0" sprite="ruido" y="-400" name="ruido"/>
+</stage>

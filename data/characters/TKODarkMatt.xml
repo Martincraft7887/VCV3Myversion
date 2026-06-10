@@ -1,0 +1,15 @@
+<!DOCTYPE codename-engine-character>
+<character y="100" sprite="TKODarkMatt" scale="2.42" camx="-100" camy="20" icon="Wiik3VoiidMatt-icons" color="#393939" imagePath="Matt_Wiik_3_RTX.png">
+	<anim name="idle" anim="idle" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="attackdown" x="2" y="-17" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="attackleft" x="0" y="-8" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="attackright" x="0" y="-10" fps="24" loop="false"/>
+	<anim name="singUP" anim="attackup" x="0" y="0" fps="24" loop="false"/>
+	<anim name="fist" anim="Matt Attack FistThrow" x="150" y="30" fps="24" loop="false"/>
+	<anim name="singDOWN-block" anim="blockdown" x="0" y="-12" fps="24" loop="false"/>
+	<anim name="singLEFT-block" anim="blockleft" x="0" y="-11" fps="24" loop="false"/>
+	<anim name="singRIGHT-block" anim="blockright" x="0" y="-3" fps="24" loop="false"/>
+	<anim name="singUP-block" anim="blockup" x="0" y="-3" fps="24" loop="false"/>
+	<anim name="singDOWN-parry" anim="parrydown" x="83" y="-10" fps="24" loop="false"/>
+	<anim name="singUP-parry" anim="parryup" x="85" y="-5" fps="24" loop="false"/>
+</character>

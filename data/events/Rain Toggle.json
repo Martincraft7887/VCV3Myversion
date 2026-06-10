@@ -1,0 +1,9 @@
+{
+    "params": [
+        {
+            "name": "Enable Rain",
+            "type": "Bool",
+            "defaultValue": false
+        }
+    ]
+}

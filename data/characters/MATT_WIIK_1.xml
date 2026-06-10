@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="matt_assets" icon="mattsword-icons" color="#FF8200" imagePath="Matt2_NO_RTX.png">
+	<anim name="idle" anim="matt idle" x="0" y="-1" fps="24" loop="true"/>
+	<anim name="singUP" anim="matt up note" x="-45" y="10" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="matt down note" x="-55" y="-20" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note" x="50" y="-40" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note" x="-15" y="-20" fps="24" loop="false"/>
+</character>

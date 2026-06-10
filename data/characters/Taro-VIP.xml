@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Taro-VIP" scale="0.8" x="50" antialiasing="false" flipX="true" isPlayer="true" icon="Tarovip-icons" color="#FFB7A8">
+	<anim name="idle" anim="BF idle dance" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="BF SING DOWN" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="BF SING RIGHT" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="BF SING LEFT" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="BF SING UP" x="0" y="0" fps="24" loop="false"/>
+	<anim name="BF UP MISS" anim="BF UP MISS" x="0" y="0" fps="24" loop="false"/>
+	<anim name="BF LEFT MISS" anim="BF LEFT MISS" x="0" y="0" fps="24" loop="false"/>
+	<anim name="BF DOWN MISS" anim="BF DOWN MISS" x="0" y="0" fps="24" loop="false"/>
+	<anim name="BF RIGHT MISS" anim="BF RIGHT MISS" x="0" y="0" fps="24" loop="false"/>
+</character>

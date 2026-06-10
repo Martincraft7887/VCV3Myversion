@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="350" sprite="VoiidWiik2MattGod" camx="200" icon="Voiid God Matt" color="#262627" imagePath="VoiidWiik2MattGod.png">
+	<anim name="idle" anim="SuperIdle" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="SuperDown" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="SuperRight" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="superLeft" x="100" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="superUp" x="0" y="100" fps="24" loop="false"/>
+</character>

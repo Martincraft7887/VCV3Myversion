@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="MattOLD" icon="MattOLD" color="#575757" imagePath="MattOLD.png">
+	<anim name="idle" anim="matt idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="matt down note0" x="0" y="-60" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note0" x="76" y="-50" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note0" x="100" y="-55" fps="24" loop="false"/>
+	<anim name="singUP" anim="matt up note0" x="35" y="0" fps="24" loop="false"/>
+</character>

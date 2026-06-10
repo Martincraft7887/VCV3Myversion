@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="VC_Shaggy" x="-300" camx="250" camy="500" icon="CosmicShagXMatt-icons" color="#5E4F58" isGF="false">
+	<anim name="idle" anim="idle0" x="4" y="3" fps="60"/>
+	<anim name="singLEFT" anim="left0" x="53" y="23" fps="60"/>
+	<anim name="singDOWN" anim="down0" x="219" y="-107" fps="60"/>
+	<anim name="singUP" anim="up0" x="84" y="-575" fps="60"/>
+	<anim name="singRIGHT" anim="right0" x="32" y="-440" fps="60"/>
+</character>

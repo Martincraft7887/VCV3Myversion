@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-character>
+<character x="20" y="100" sprite="Last Combat Matt" camx="-100" camy="-100" icon="Wiik4VoiidMatt-icons" color="#49454E" isGF="false">
+	<anim name="idle" anim="matt idle0" x="-2" y="53" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note0" x="75" y="125" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="matt down note0" x="25" y="20" fps="24" loop="false"/>
+	<anim name="singUP" anim="matt up note0" x="250" y="140" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note0" x="-15" y="125" fps="24" loop="false"/>
+	<anim name="trans" anim="vuela alto matt0" x="395" y="290" fps="24" loop="false"/>
+</character>

@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="singular_matt" icon="Galactic Storm God" imagePath="Matt Singular.png">
+	<anim name="idle" anim="matt idle0" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="matt down note0" x="-75" y="-60" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note0" x="30" y="-45" fps="24" loop="false"/>
+	<anim name="singUP" anim="matt up note0" x="-15" y="-2" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note0" x="-10" y="-60" fps="24" loop="false"/>
+</character>

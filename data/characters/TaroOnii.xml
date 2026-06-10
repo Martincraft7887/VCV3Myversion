@@ -1,0 +1,20 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="ONI_WIIK_3" scale="2" flipX="true" camx="-85" camy="-200" isPlayer="true" icon="OniiBF-icons" color="#4005D8" isGF="false">
+	<anim name="idle" anim="BF idle dance0" x="-5" y="-25"/>
+	<anim name="singUP" anim="BF Attack Up0" x="110" y="-20"/>
+	<anim name="singDOWN" anim="BF Attack Down0" x="109" y="-48"/>
+	<anim name="singLEFT" anim="BF Attack Right0" x="110" y="-15"/>
+	<anim name="singRIGHT" anim="BF Attack Left0" x="110" y="-25"/>
+	<anim name="singLEFTmiss" anim="BF RIGHT MISS0" x="-20" y="-25"/>
+	<anim name="singDOWNmiss" anim="BF RIGHT MISS0" x="-20" y="-25"/>
+	<anim name="singUPmiss" anim="BF RIGHT MISS0" x="-20" y="-25"/>
+	<anim name="singRIGHTmiss" anim="BF RIGHT MISS0" x="-20" y="-25"/>
+	<anim name="singLEFT-block" anim="BF Block Left0" x="-15" y="-23"/>
+	<anim name="singDOWN-block" anim="BF Block Down0" x="-5" y="-19"/>
+	<anim name="singUP-block" anim="BF Block Up0" x="-20" y="-20"/>
+	<anim name="singRIGHT-block" anim="BF Block Right0" x="-18" y="-20"/>
+	<anim name="singDOWN-dodge" anim="dodge DOWN0" x="40" y="-45"/>
+	<anim name="singLEFT-dodge" anim="dodge DOWN0" x="40" y="-45"/>
+	<anim name="singUP-dodge" anim="dodge UP0" x="22" y="-29"/>
+	<anim name="singRIGHT-dodge" anim="dodge UP0" x="22" y="-29"/>
+</character>

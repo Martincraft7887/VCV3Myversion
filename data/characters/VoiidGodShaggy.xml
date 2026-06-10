@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character y="-50" sprite="VoiidGodShaggy" camx="185" icon="VoiidSXM-godl" color="#242424" imagePath="VoiidGodShaggy.png">
+	<anim name="idle" anim="Idle" x="0" y="0" fps="26" loop="true"/>
+	<anim name="singDOWN" anim="Down" x="100" y="-80" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="Left" x="35" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="Right" x="-50" y="-25" fps="24" loop="false"/>
+	<anim name="singUP" anim="Up" x="0" y="100" fps="24" loop="false"/>
+</character>

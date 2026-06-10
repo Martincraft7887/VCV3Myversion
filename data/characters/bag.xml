@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character x="950" sprite="bag" camy="200" icon="Galactic Storm God" color="#494450" imagePath="bag.png">
+	<anim name="idle" anim="bag idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT-block" anim="bag left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT-block" anim="bag right" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP-block" anim="bag left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN-block" anim="bag left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT-dodge" anim="bag left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP-dodge" anim="bag left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN-dodge" anim="bag left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT-dodge" anim="bag right" x="0" y="0" fps="24" loop="false"/>
+</character>

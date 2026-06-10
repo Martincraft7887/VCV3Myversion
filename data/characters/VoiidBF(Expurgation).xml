@@ -1,0 +1,16 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="VoiidBF(Expurgation)" flipX="true" camx="-80" isPlayer="true" icon="Wiik1BFRTX-icons" color="#DA8182" imagePath="VoiidBF(Expurgation).png">
+	<anim name="idle" anim="BF idle dance" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singLEFT" anim="BF NOTE LEFT0" x="5" y="-5" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="BF NOTE DOWN0" x="-10" y="-55" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="BF NOTE RIGHT0" x="-45" y="-5" fps="24" loop="false"/>
+	<anim name="singUP" anim="BF NOTE UP0" x="-40" y="50" fps="24" loop="false"/>
+	<anim name="singDOWN-dodge" anim="dodge DOWN" x="75" y="-40" fps="24" loop="false"/>
+	<anim name="singRIGHT-dodge" anim="dodge RIGHT" x="-25" y="-30" fps="24" loop="false"/>
+	<anim name="singUP-dodge" anim="dodge UP" x="10" y="5" fps="24" loop="false"/>
+	<anim name="singLEFT-dodge" anim="dodge LEFT" x="20" y="-30" fps="24" loop="false"/>
+	<anim name="singDOWNmiss" anim="BF NOTE DOWN MISS" x="0" y="-20" fps="40" loop="false"/>
+	<anim name="singUPmiss" anim="BF NOTE UP MISS" x="-40" y="42" fps="40" loop="false"/>
+	<anim name="singLEFTmiss" anim="BF NOTE LEFT MISS" x="0" y="10" fps="40" loop="false"/>
+	<anim name="singRIGHTmiss" anim="BF NOTE RIGHT MISS" x="-30" y="30" fps="40" loop="false"/>
+</character>

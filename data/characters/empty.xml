@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="40" y="70" sprite="empty" flipX="true" camx="99999" camy="99999" isPlayer="true" icon="Galactic Storm God" isGF="false">
+	<anim name="idle" anim="idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="idle0" x="0" y="0" fps="24" loop="false"/>
+</character>

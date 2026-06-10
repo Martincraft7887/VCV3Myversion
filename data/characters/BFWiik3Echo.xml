@@ -1,0 +1,15 @@
+<!DOCTYPE codename-engine-character>
+<character x="250" y="85" sprite="BFWiik3Echo" scale="1.5" camy="-100" isPlayer="true" icon="Galactic Storm God" isGF="false">
+	<anim name="singLEFT" anim="BF Attack Right0" x="-60" y="-15" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="BF Attack Down0" x="-65" y="-60" fps="24" loop="false"/>
+	<anim name="singUP" anim="BF Attack Up0" x="-70" y="-25" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="BF Attack Left0" x="-70" y="-25" fps="24" loop="false"/>
+	<anim name="singLEFT-block" anim="BF Block Left0" x="-34" y="-28" fps="24" loop="false"/>
+	<anim name="singDOWN-block" anim="BF Block Down0" x="-50" y="-30" fps="24" loop="false"/>
+	<anim name="singUP-block" anim="BF Block Up0" x="-25" y="-27" fps="24" loop="false"/>
+	<anim name="singRIGHT-block" anim="BF Block Right0" x="-31" y="-26" fps="24" loop="false"/>
+	<anim name="singLEFT-dodge" anim="dodge DOWN0" x="-65" y="-60" fps="24" loop="false"/>
+	<anim name="singDOWN-dodge" anim="dodge DOWN0" x="-65" y="-60" fps="24" loop="false"/>
+	<anim name="singUP-dodge" anim="dodge UP0" x="-65" y="-25" fps="24" loop="false"/>
+	<anim name="singRIGHT-dodge" anim="dodge UP0" x="-60" y="-25" fps="24" loop="false"/>
+</character>

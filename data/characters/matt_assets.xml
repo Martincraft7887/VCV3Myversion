@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="75" y="120" sprite="matt_assets" scale="1.7" camx="160" camy="5" icon="EdgyMatt-Icons" color="#FD9122" imagePath="matt_assets.png">
+	<anim name="idle" anim="matt idle" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="matt down note" x="-40" y="-20" fps="24" loop="false"/>
+	<anim name="singUP" anim="matt up note" x="-20" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note" x="-20" y="-30" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note" x="30" y="-30" fps="24" loop="false"/>
+</character>

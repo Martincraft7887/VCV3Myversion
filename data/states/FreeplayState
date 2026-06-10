@@ -1,0 +1,198 @@
+import flixel.text.FlxText;
+import flixel.util.FlxAxes;
+var returningToCategories:Bool = false;
+// =====================
+// VARIABLES
+// =====================
+
+var inCategoryMenu:Bool = true;
+var categoryIndex:Int = 0;
+
+var categoryNames:Array<String> = [
+    "--- Story mode ---",
+    "--- Collabs ---",
+    "--- Extras ---",
+    "--- VIP remixes ---"
+];
+
+var categoryTexts:Array<FlxText> = [];
+
+// =====================
+// CREACIÓN DEL MENÚ
+// =====================
+
+function postCreate()
+{
+    trace("CATEGORY MENU READY");
+
+    // ocultar freeplay original
+    grpSongs.visible = false;
+    for (i in 0...iconArray.length)
+        iconArray[i].visible = false;
+
+    // crear textos
+    for (i in 0...categoryNames.length)
+    {
+var t = new FlxText(0, 220 + i * 60, 0, categoryNames[i]);
+t.setFormat(
+    Paths.font("Electrolize.ttf"), // font
+    52,                       // tamaño
+    FlxColor.WHITE,           // color
+        t.screenCenter(FlxAxes.X)
+);
+        t.screenCenter(FlxAxes.X);
+        t.scrollFactor.set();
+        FlxG.state.add(t);
+        categoryTexts.push(t);
+    }
+
+    updateCategoryVisuals();
+}
+
+// =====================
+// VISUAL SELECCIÓN
+// =====================
+
+function updateCategoryVisuals()
+{
+    for (i in 0...categoryTexts.length)
+    {
+        categoryTexts[i].alpha = (i == categoryIndex) ? 1 : 0.35;
+        categoryTexts[i].scale.set(
+            (i == categoryIndex) ? 1.15 : 1,
+            (i == categoryIndex) ? 1.15 : 1
+        );
+    }
+}
+
+// =====================
+// UPDATE (CLAVE)
+// =====================
+
+function update(elapsed)
+{
+    if (inCategoryMenu)
+    {
+        var realAccept = controls.ACCEPT;
+        controls.ACCEPT = false;
+
+        if (controls.UP_P)
+        {
+            categoryIndex = (categoryIndex - 1 + categoryNames.length) % categoryNames.length;
+            updateCategoryVisuals();
+        }
+
+        if (controls.DOWN_P)
+        {
+            categoryIndex = (categoryIndex + 1) % categoryNames.length;
+            updateCategoryVisuals();
+        }
+
+        if (realAccept)
+            openCategory(categoryNames[categoryIndex]);
+
+        return;
+    }
+// =====================
+// DENTRO DE CATEGORÍA
+// =====================
+if (!inCategoryMenu)
+{
+    // ⛔ cancelar BACK real del engine
+    controls.BACK = false;
+
+    // manejar ESC manualmente
+    if (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.B)
+    {
+        trace("ESC manual → volver a categorías");
+        returnToCategories();
+        return;
+    }
+}
+}
+function returnToCategories()
+{
+    trace("Volviendo al HUB de categorías");
+
+    // ocultar freeplay
+    grpSongs.visible = false;
+    for (i in 0...iconArray.length)
+        iconArray[i].visible = false;
+
+    // reconstruir menú
+    for (i in 0...categoryNames.length)
+    {
+var t = new FlxText(0, 220 + i * 60, 0, categoryNames[i]);
+t.setFormat(
+    Paths.font("Electrolize.ttf"), // font
+    52,                       // tamaño
+    FlxColor.WHITE,           // color
+        t.screenCenter(FlxAxes.X)
+);
+        t.screenCenter(FlxAxes.X);
+        t.scrollFactor.set();
+        FlxG.state.add(t);
+        categoryTexts.push(t);
+    }
+
+    categoryIndex = 0;
+    updateCategoryVisuals();
+
+    inCategoryMenu = true;
+    returningToCategories = false;
+}
+// =====================
+// ENTRAR A CATEGORÍA
+// =====================
+
+function openCategory(catName:String)
+{
+    trace("Entrando a categoría: " + catName);
+
+    inCategoryMenu = false;
+
+    // borrar menú
+    for (t in categoryTexts)
+    {
+        FlxG.state.remove(t);
+        t.kill();
+    }
+    categoryTexts = [];
+
+    // mostrar freeplay
+    grpSongs.visible = true;
+    for (i in 0...iconArray.length)
+        iconArray[i].visible = true;
+
+    // saltar a la categoría correcta
+    for (i in 0...grpSongs.length)
+    {
+        if (grpSongs.members[i].text == catName)
+        {
+            curSelected = i;
+            FlxG.state.changeSelection(0);
+            return;
+        }
+    }
+
+    trace("⚠ Categoría no encontrada en grpSongs");
+}
+function preUpdate(elapsed:Float)
+{
+    // ⛔ impedir que el engine vea BACK
+    if (!inCategoryMenu)
+    if (controls.BACK)
+    {
+        controls.BACK = false;
+    }
+
+    // Si estamos dentro de canciones → ESC vuelve al hub
+    if (!inCategoryMenu)
+    {
+        if (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.B)
+        {
+            trace("BACK interceptado en preUpdate → HUB");
+            returnToCategories();
+        }
+    }
+}

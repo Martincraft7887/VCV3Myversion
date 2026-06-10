@@ -1,0 +1,18 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="ONI_TKO" scale="2" flipX="true" isPlayer="true" icon="OniiBF-icons" color="#8623A4" imagePath="ONI_WIIK_3.png">
+	<anim name="idle" anim="BF idle dance" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="BF Attack Down" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="BF Attack Left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="BF Attack Right" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="BF Attack Up" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN-block" anim="BF Block Down" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT-block" anim="BF Block Left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT-block" anim="BF Block Right" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP-block" anim="BF Block Up" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHTmiss" anim="BF RIGHT MISS" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFTmiss" anim="BF RIGHT MISS" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUPmiss" anim="BF RIGHT MISS" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWNmiss" anim="BF RIGHT MISS" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN-dodge" anim="dodge DOWN" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP-dodge" anim="dodge UP" x="0" y="0" fps="24" loop="false"/>
+</character>

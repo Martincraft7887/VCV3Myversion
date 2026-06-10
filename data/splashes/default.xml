@@ -1,0 +1,30 @@
+<!DOCTYPE codename-engine-splashes>
+<splashes sprite="game/splashes/default" alpha="1">
+	<strum id="0"> <!-- LEFT -->
+		<anim name="splashleft1" anim="note splash left0" fps="24" x="-15" y="0" />
+	</strum>
+	<strum id="1"> <!-- DOWN -->
+		<anim name="splashdown1" anim="note splash down0" fps="24" x="-15" y="0" />
+	</strum>
+	<strum id="2"> <!-- UP -->
+		<anim name="splashup1" anim="note splash up0" fps="24" x="-15" y="0" />
+	</strum>
+	<strum id="3"> <!-- RIGHT -->
+		<anim name="splashright1" anim="note splash right0" fps="24" x="-15" y="0" />
+	</strum>
+	<strum id="4"> <!-- SPACE -->
+		<anim name="splashspace1" anim="note splash square0" fps="24" x="-15" y="0" />
+	</strum>
+	<strum id="5"> <!-- LEFT2 -->
+		<anim name="splashl21" anim="note splash left20" fps="24" x="-15" y="0" />
+	</strum>
+	<strum id="6"> <!-- DOWN2 -->
+		<anim name="splashd21" anim="note splash down20" fps="24" x="-15" y="0" />
+	</strum>
+	<strum id="7"> <!-- UP2 -->
+		<anim name="splashu21" anim="note splash up20" fps="24" x="-15" y="0" />
+	</strum>
+	<strum id="8"> <!-- RIGHT2 -->
+		<anim name="splashr21" anim="note splash right20" fps="24" x="-15" y="0" />
+	</strum>
+</splashes>

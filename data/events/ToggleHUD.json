@@ -1,0 +1,14 @@
+{
+    "params": [
+        {
+            "name": "Visible",
+            "type": "Bool",
+            "defaultValue": true
+        },
+        {
+            "name": "Tween Steps",
+            "type": "Float(0, 64, 1, 1)",
+            "defaultValue": 4
+        }
+    ]
+}

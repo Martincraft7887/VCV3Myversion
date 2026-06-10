@@ -1,0 +1,4 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Matt_RejectedVip" icon="Matt_RejectedVip-icon" color="#0B0B0B" imagePath="Matt_RejectedVip.png">
+	<anim name="idle" anim="idle" x="0" y="0" fps="24" loop="true"/>
+</character>

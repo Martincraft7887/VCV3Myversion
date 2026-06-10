@@ -1,0 +1,26 @@
+{
+    "params": [
+        { "name": "Push", "type": "Bool", "defaultValue": true },
+        { "name": "Push Trails", "type": "Bool", "defaultValue": true },
+        { "name": "BF Block", "type": "Bool", "defaultValue": true },
+        { "name": "Matt Block", "type": "Bool", "defaultValue": true },
+        { "name": "BF Echo", "type": "Bool", "defaultValue": false },
+        { "name": "Matt Echo", "type": "Bool", "defaultValue": false },
+        { "name": "Matt Parry", "type": "Bool", "defaultValue": false },
+        { "name": "Push Power", "type": "Int(0,100,1)", "defaultValue": 5 },
+        { "name": "Max Push", "type": "Int(0,1000,1)", "defaultValue": 400 },
+        { "name": "Min Push", "type": "Int(-1000,0,1)", "defaultValue": -400 },
+        { "name": "Reset Position", "type": "Bool", "defaultValue": false },
+        {
+            "name": "Mode",
+            "type": "DropDown([\"custom\",\"default\",\"pushing\",\"duet parry\",\"no ranged\",\"duet\",\"duet-tko\",\"tko-closeup\",\"tko-bfmoveright\",\"tko-mattmoveleft\",\"shield\",\"bfshield\",\"doubleshield\",\"echoInFront\",\"echoInFront-tko\",\"resetpush\",\"disable\",\"enable\",\"tko-powerup\",\"tko-powerupEnd\"])",
+            "defaultValue": "custom"
+        },
+        { "name": "Enabled", "type": "Bool", "defaultValue": true },
+        { "name": "Ranged Punches", "type": "Bool", "defaultValue": true },
+        { "name": "BF Splashes", "type": "Bool", "defaultValue": false },
+        { "name": "Matt Splashes", "type": "Bool", "defaultValue": false },
+        { "name": "Health Drain", "type": "Bool", "defaultValue": true },
+        { "name": "Drain Amount", "type": "Float(0, 1, 0.001, 3)", "defaultValue": 0.008 }
+    ]
+}

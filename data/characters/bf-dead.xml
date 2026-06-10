@@ -1,0 +1,6 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="TARO_DEATH" flipX="true" isPlayer="true" icon="bf1-icons" isGF="false">
+	<anim name="firstDeath" anim="BF dies0" x="37" y="10" fps="24" loop="false"/>
+	<anim name="deathLoop" anim="BF Dead Loop0" x="37" y="-199" fps="24" loop="true"/>
+	<anim name="deathConfirm" anim="BF Dead confirm0" x="98" y="-198" fps="24" loop="false"/>
+</character>

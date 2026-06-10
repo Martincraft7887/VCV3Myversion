@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character x="75" y="35" sprite="MattSwordFightVOIID" camx="-120" camy="-100" icon="Wiik3VoiidMatt-icons" color="#343434" width="3815" imagePath="MattSwordFightVOIID.png" height="4154">
+	<anim name="idle" anim="idle" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="attackdown" x="-55" y="-50" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="attackright" x="300" y="-60" fps="24" loop="false"/>
+	<anim name="singUP" anim="attackup" x="-50" y="66" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="attackleft" x="120" y="-60" fps="24" loop="false"/>
+	<anim name="singUP-block" anim="blockup" x="-3" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT-block" anim="blockright" x="-40" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT-block" anim="blockleft" x="-40" y="2" fps="24" loop="false"/>
+	<anim name="singDOWN-block" anim="blockdown" x="-3" y="0" fps="24" loop="false"/>
+</character>

@@ -1,0 +1,15 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="MattPurgation" icon="VoiidExMatt-icons" color="#A42828" imagePath="MattPurgation.png">
+	<anim name="idle" anim="matt idle" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singUP" anim="matt up note" x="40" y="20" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note" x="-45" y="-70" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note" x="0" y="-15" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="matt down note" x="-20" y="-60" fps="24" loop="false"/>
+	<anim name="trans" anim="transformation" x="125" y="250" fps="24" loop="false"/>
+	<anim name="destrans" anim="destransformation" x="47" y="67" fps="24" loop="false"/>
+	<anim name="idle-alt" anim="IdleGod" x="50" y="90" fps="24" loop="true"/>
+	<anim name="singRIGHT-alt" anim="RightGod" x="0" y="40" fps="24" loop="false"/>
+	<anim name="singLEFT-alt" anim="LeftGod" x="0" y="60" fps="24" loop="false"/>
+	<anim name="singDOWN-alt" anim="DownGod" x="15" y="60" fps="24" loop="false"/>
+	<anim name="singUP-alt" anim="UpGod" x="50" y="90" fps="24" loop="false"/>
+</character>

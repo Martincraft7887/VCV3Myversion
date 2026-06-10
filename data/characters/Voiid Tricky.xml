@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character y="230" sprite="Voiid Tricky" camx="10" camy="5" icon="Voiid Tricky-icon" color="#056C31" imagePath="Voiid Tricky.png" i="A">
+	<anim name="idle" anim="clowni" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singLEFT" anim="clownl" x="305" y="165" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="clownr" x="-200" y="125" fps="24" loop="false"/>
+	<anim name="singUP" anim="clownu" x="260" y="175" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="clownd" x="280" y="30" fps="24" loop="false"/>
+</character>

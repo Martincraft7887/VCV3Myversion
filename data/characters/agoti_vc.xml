@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="5" y="110" sprite="agoti_vc" flipX="true" camx="265" camy="50" icon="agoti_voiid-icons" color="#DC7AD0" imagePath="BOYFRIEND.png">
+	<anim name="idle" anim="AgotiBF idle0" x="0" y="0" fps="10" loop="true"/>
+	<anim name="singDOWN" anim="AgotiBF down0" x="25" y="70" fps="14" loop="false"/>
+	<anim name="singLEFT" anim="AgotiBF left0" x="-10" y="50" fps="14" loop="false"/>
+	<anim name="singRIGHT" anim="AgotiBF right0" x="120" y="60" fps="14" loop="false"/>
+	<anim name="singUP" anim="AgotiBF up0" x="-10" y="170" fps="16" loop="false"/>
+</character>
