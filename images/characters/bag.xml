@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="bag.png">
+<SubTexture name="bag left0000" x="1689" y="0" width="222" height="854" frameX="-163" frameY="-17" frameWidth="541" frameHeight="918" />
+<SubTexture name="bag left0001" x="0" y="0" width="289" height="862" frameX="-88" frameY="-7" frameWidth="541" frameHeight="918" />
+<SubTexture name="bag left0002" x="524" y="0" width="223" height="856" frameX="-162" frameY="-16" frameWidth="541" frameHeight="918" />
+<SubTexture name="bag left0003" x="0" y="862" width="223" height="853" frameX="-166" frameY="-19" frameWidth="541" frameHeight="918" />
+<SubTexture name="bag left0004" x="1245" y="0" width="221" height="855" frameX="-165" frameY="-17" frameWidth="541" frameHeight="918" />
+<SubTexture name="bag right0000" x="1689" y="0" width="222" height="854" frameX="-163" frameY="-17" frameWidth="541" frameHeight="918" />
+<SubTexture name="bag right0001" x="747" y="0" width="271" height="856" frameX="-176" frameY="-15" frameWidth="541" frameHeight="918" />
+<SubTexture name="bag right0002" x="1466" y="0" width="223" height="855" frameX="-163" frameY="-17" frameWidth="541" frameHeight="918" />
+<SubTexture name="bag right0003" x="289" y="0" width="235" height="858" frameX="-148" frameY="-14" frameWidth="541" frameHeight="918" />
+<SubTexture name="bag right0004" x="1018" y="0" width="227" height="856" frameX="-158" frameY="-16" frameWidth="541" frameHeight="918" />
+<SubTexture name="bag idle0000" x="1689" y="0" width="222" height="854" frameX="-163" frameY="-17" frameWidth="541" frameHeight="918" />
+
+</TextureAtlas>

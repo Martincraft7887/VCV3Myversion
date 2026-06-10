@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="BOYFRIEND.png"><SubTexture name="AgotiBF down0000" x="0" y="2583" width="650" height="711" frameX="-50" frameY="-189" frameWidth="700" frameHeight="900" />
+<SubTexture name="AgotiBF down0001" x="650" y="2583" width="632" height="700" frameX="-67" frameY="-200" frameWidth="700" frameHeight="900" />
+<SubTexture name="AgotiBF down0002" x="1282" y="2583" width="622" height="602" frameX="-75" frameY="-298" frameWidth="700" frameHeight="900" />
+<SubTexture name="AgotiBF down0003" x="1904" y="2583" width="619" height="599" frameX="-78" frameY="-301" frameWidth="700" frameHeight="900" />
+<SubTexture name="AgotiBF idle0000" x="1924" y="0" width="450" height="836" frameX="0" frameY="0" frameWidth="500" frameHeight="900" />
+<SubTexture name="AgotiBF idle0001" x="2374" y="0" width="443" height="827" frameX="-1" frameY="-4" frameWidth="500" frameHeight="900" />
+<SubTexture name="AgotiBF idle0002" x="1476" y="1756" width="433" height="824" frameX="0" frameY="-8" frameWidth="500" frameHeight="900" />
+<SubTexture name="AgotiBF idle0003" x="2374" y="827" width="433" height="826" frameX="0" frameY="-6" frameWidth="500" frameHeight="900" />
+<SubTexture name="AgotiBF idle0004" x="1924" y="836" width="443" height="829" frameX="0" frameY="-3" frameWidth="500" frameHeight="900" />
+<SubTexture name="AgotiBF left0000" x="1909" y="1756" width="842" height="792" frameX="-56" frameY="-108" frameWidth="900" frameHeight="900" />
+<SubTexture name="AgotiBF left0001" x="2817" y="0" width="857" height="783" frameX="-43" frameY="-115" frameWidth="900" frameHeight="900" />
+<SubTexture name="AgotiBF left0002" x="2817" y="1551" width="813" height="764" frameX="-87" frameY="-133" frameWidth="900" frameHeight="900" />
+<SubTexture name="AgotiBF left0003" x="2817" y="783" width="817" height="768" frameX="-83" frameY="-132" frameWidth="900" frameHeight="900" />
+<SubTexture name="AgotiBF right0000" x="752" y="917" width="785" height="838" frameX="-115" frameY="-62" frameWidth="900" frameHeight="900" />
+<SubTexture name="AgotiBF right0001" x="0" y="917" width="752" height="839" frameX="-139" frameY="-61" frameWidth="900" frameHeight="900" />
+<SubTexture name="AgotiBF right0002" x="0" y="1756" width="737" height="827" frameX="-145" frameY="-70" frameWidth="900" frameHeight="900" />
+<SubTexture name="AgotiBF right0003" x="737" y="1756" width="739" height="827" frameX="-144" frameY="-73" frameWidth="900" frameHeight="900" />
+<SubTexture name="AgotiBF up0000" x="1443" y="0" width="481" height="908" frameX="-19" frameY="-90" frameWidth="500" frameHeight="1000" />
+<SubTexture name="AgotiBF up0001" x="963" y="0" width="480" height="914" frameX="-20" frameY="-84" frameWidth="500" frameHeight="1000" />
+<SubTexture name="AgotiBF up0002" x="478" y="0" width="485" height="916" frameX="-15" frameY="-84" frameWidth="500" frameHeight="1000" />
+<SubTexture name="AgotiBF up0003" x="0" y="0" width="478" height="917" frameX="-22" frameY="-83" frameWidth="500" frameHeight="1000" />
+</TextureAtlas>

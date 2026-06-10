@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Funkin Packer v0.1.3 https://neeeoo.github.io/funkin-packer/
+-->
+<TextureAtlas imagePath="BFSwordFight.png" width="3815" height="4154">
+	<SubTexture name="BF Sword Attack Down0000" x="1" y="1234" width="723" height="442" frameX="-0" frameY="-1" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0001" x="1" y="869" width="728" height="364" frameX="-5" frameY="-78" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0002" x="1" y="869" width="728" height="364" frameX="-5" frameY="-78" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0003" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0004" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0005" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0006" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0007" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0008" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0009" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0010" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0011" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0012" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0013" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0014" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0015" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0016" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0017" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0018" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0019" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0020" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0021" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0022" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Down0023" x="1677" y="1" width="367" height="714" rotated="true" frameX="-22" frameY="-76" frameWidth="741" frameHeight="448"/>
+	<SubTexture name="BF Sword Attack Right0000" x="1" y="1" width="856" height="432" frameX="-0" frameY="-36" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0001" x="1" y="434" width="823" height="434" frameX="-196" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0002" x="1" y="434" width="823" height="434" frameX="-196" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0003" x="2878" y="700" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0004" x="2878" y="700" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0005" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0006" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0007" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0008" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0009" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0010" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0011" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0012" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0013" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0014" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0015" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0016" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0017" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0018" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0019" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0020" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0021" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0022" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Right0023" x="2889" y="1330" width="434" height="629" rotated="true" frameX="-440" frameY="-34" frameWidth="1069" frameHeight="482"/>
+	<SubTexture name="BF Sword Attack Up0000" x="858" y="1" width="402" height="737" rotated="true" frameX="-0" frameY="-205" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0001" x="2889" y="1" width="522" height="667" rotated="true" frameX="-80" frameY="-85" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0002" x="2889" y="1" width="522" height="667" rotated="true" frameX="-80" frameY="-85" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0003" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0004" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0005" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0006" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0007" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0008" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0009" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0010" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0011" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0012" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0013" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0014" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0015" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0016" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0017" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0018" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0019" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0020" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0021" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0022" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Attack Up0023" x="2813" y="2094" width="524" height="607" frameX="-227" frameY="-0" frameWidth="873" frameHeight="643"/>
+	<SubTexture name="BF Sword Block Down0000" x="2970" y="3319" width="440" height="396" frameX="-16" frameY="-30" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0001" x="3338" y="2154" width="447" height="397" frameX="-6" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0002" x="3338" y="2552" width="447" height="397" frameX="-6" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0003" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0004" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0005" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0006" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0007" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0008" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0009" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0010" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0011" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0012" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0013" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0014" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0015" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0016" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0017" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0018" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0019" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0020" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0021" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0022" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Down0023" x="3338" y="1756" width="452" height="397" frameX="-0" frameY="-29" frameWidth="576" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Left0000" x="2078" y="2909" width="517" height="417" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0001" x="2596" y="2909" width="517" height="409" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0002" x="696" y="2907" width="517" height="409" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0003" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0004" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0005" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0006" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0007" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0008" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0009" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0010" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0011" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0012" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0013" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0014" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0015" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0016" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0017" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0018" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0019" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0020" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0021" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0022" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Left0023" x="1" y="3341" width="517" height="407" rotated="true" frameX="-62" frameY="-0" frameWidth="580" frameHeight="553"/>
+	<SubTexture name="BF Sword Block Right0000" x="1" y="3749" width="414" height="404" frameX="-61" frameY="-30" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0001" x="519" y="3741" width="397" height="409" rotated="true" frameX="-61" frameY="-29" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0002" x="917" y="3741" width="397" height="409" rotated="true" frameX="-61" frameY="-29" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0003" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0004" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0005" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0006" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0007" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0008" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0009" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0010" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0011" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0012" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0013" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0014" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0015" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0016" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0017" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0018" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0019" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0020" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0021" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0022" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Right0023" x="3411" y="2950" width="401" height="407" rotated="true" frameX="-61" frameY="-25" frameWidth="573" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0000" x="519" y="3341" width="501" height="399" frameX="-0" frameY="-27" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0001" x="3412" y="1" width="402" height="483" rotated="true" frameX="-7" frameY="-24" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0002" x="3412" y="485" width="402" height="483" rotated="true" frameX="-7" frameY="-24" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0003" x="3338" y="969" width="475" height="395" frameX="-9" frameY="-31" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0004" x="3338" y="969" width="475" height="395" frameX="-9" frameY="-31" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0005" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0006" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0007" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0008" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0009" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0010" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0011" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0012" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0013" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0014" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0015" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0016" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0017" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0018" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0019" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0020" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0021" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0022" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Block Up0023" x="3338" y="1365" width="475" height="390" frameX="-9" frameY="-36" frameWidth="601" frameHeight="462"/>
+	<SubTexture name="BF Sword Countered0000" x="1389" y="2512" width="688" height="421" frameX="-70" frameY="-56" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0001" x="2124" y="2094" width="688" height="421" frameX="-70" frameY="-56" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0002" x="2461" y="1399" width="427" height="694" rotated="true" frameX="-71" frameY="-50" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0003" x="1" y="2520" width="694" height="427" frameX="-71" frameY="-50" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0004" x="1425" y="1850" width="698" height="427" frameX="-68" frameY="-50" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0005" x="2461" y="1" width="427" height="698" rotated="true" frameX="-68" frameY="-50" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0006" x="1668" y="1425" width="703" height="424" frameX="-70" frameY="-53" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0007" x="1" y="2095" width="703" height="424" frameX="-70" frameY="-53" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0008" x="1" y="1677" width="711" height="417" frameX="-70" frameY="-59" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0009" x="713" y="1677" width="711" height="417" frameX="-70" frameY="-59" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0010" x="825" y="739" width="415" height="720" rotated="true" frameX="-70" frameY="-62" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0011" x="1261" y="1" width="415" height="720" rotated="true" frameX="-70" frameY="-62" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0012" x="2045" y="1" width="415" height="711" rotated="true" frameX="-70" frameY="-62" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0013" x="2045" y="713" width="415" height="711" rotated="true" frameX="-70" frameY="-62" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0014" x="705" y="2095" width="698" height="416" frameX="-70" frameY="-61" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Countered0015" x="2461" y="700" width="416" height="698" rotated="true" frameX="-70" frameY="-61" frameWidth="790" frameHeight="554"/>
+	<SubTexture name="BF Sword Idle0000" x="1021" y="3327" width="489" height="383" frameX="-6" frameY="-44" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0001" x="1021" y="3327" width="489" height="383" frameX="-6" frameY="-44" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0002" x="1214" y="2934" width="486" height="385" frameX="-6" frameY="-42" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0003" x="1214" y="2934" width="486" height="385" frameX="-6" frameY="-42" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0004" x="2485" y="3327" width="484" height="390" frameX="-6" frameY="-37" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0005" x="2485" y="3327" width="484" height="390" frameX="-6" frameY="-37" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0006" x="1511" y="3327" width="486" height="403" frameX="-6" frameY="-24" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0007" x="1511" y="3327" width="486" height="403" frameX="-6" frameY="-24" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0008" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0009" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0010" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0011" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0012" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0013" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0014" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0015" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0016" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0017" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0018" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0019" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0020" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0021" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0022" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="BF Sword Idle0023" x="1998" y="3327" width="486" height="404" frameX="-6" frameY="-23" frameWidth="514" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0000" x="1261" y="722" width="406" height="718" rotated="true" frameX="-1" frameY="-45" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0001" x="696" y="2520" width="692" height="386" frameX="-42" frameY="-40" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0002" x="696" y="2520" width="692" height="386" frameX="-42" frameY="-40" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0003" x="2078" y="2516" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0004" x="2078" y="2516" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0005" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0006" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0007" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0008" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0009" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0010" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0011" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0012" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0013" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0014" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0015" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0016" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0017" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0018" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0019" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0020" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0021" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0022" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+	<SubTexture name="Bf Sword Attack Left0023" x="1" y="2948" width="563" height="392" frameX="-345" frameY="-34" frameWidth="908" frameHeight="462"/>
+</TextureAtlas>

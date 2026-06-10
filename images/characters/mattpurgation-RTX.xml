@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="mattpurgation-RTX.png">
+	<!-- Created with Adobe Animate version 22.0.7.214 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="EX DOWN0000" x="0" y="0" width="562" height="696" frameX="-11" frameY="-73" frameWidth="573" frameHeight="769"/>
+	<SubTexture name="EX DOWN0001" x="567" y="0" width="536" height="602" frameX="-27" frameY="-40" frameWidth="573" frameHeight="769"/>
+	<SubTexture name="EX DOWN0002" x="1108" y="0" width="481" height="611" frameX="-40" frameY="-13" frameWidth="573" frameHeight="769"/>
+	<SubTexture name="EX DOWN0003" x="1594" y="0" width="510" height="552" frameX="-27" frameY="-36" frameWidth="573" frameHeight="769"/>
+	<SubTexture name="EX DOWN0004" x="2109" y="0" width="460" height="625" frameX="-64" frameY="0" frameWidth="573" frameHeight="769"/>
+	<SubTexture name="EX DOWN0005" x="2574" y="0" width="494" height="548" frameX="-37" frameY="-73" frameWidth="573" frameHeight="769"/>
+	<SubTexture name="EX DOWN0006" x="3073" y="0" width="519" height="535" frameX="0" frameY="-51" frameWidth="573" frameHeight="769"/>
+	<SubTexture name="EX DOWN0007" x="3597" y="0" width="464" height="556" frameX="-67" frameY="-25" frameWidth="573" frameHeight="769"/>
+	<SubTexture name="EX Idle0000" x="4066" y="0" width="395" height="553" frameX="-6" frameY="-12" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0001" x="4466" y="0" width="402" height="558" frameX="-6" frameY="-10" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0002" x="4873" y="0" width="393" height="554" frameX="-3" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0003" x="5271" y="0" width="392" height="553" frameX="-7" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0004" x="5668" y="0" width="397" height="555" frameX="0" frameY="-13" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0005" x="6070" y="0" width="395" height="565" frameX="-6" frameY="0" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0006" x="4066" y="0" width="395" height="553" frameX="-6" frameY="-12" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0007" x="4466" y="0" width="402" height="558" frameX="-6" frameY="-10" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0008" x="4873" y="0" width="393" height="554" frameX="-3" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0009" x="5271" y="0" width="392" height="553" frameX="-7" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0010" x="5668" y="0" width="397" height="555" frameX="0" frameY="-13" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0011" x="6070" y="0" width="395" height="565" frameX="-6" frameY="0" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0012" x="4066" y="0" width="395" height="553" frameX="-6" frameY="-12" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0013" x="4466" y="0" width="402" height="558" frameX="-6" frameY="-10" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0014" x="4873" y="0" width="393" height="554" frameX="-3" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0015" x="5271" y="0" width="392" height="553" frameX="-7" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0016" x="5668" y="0" width="397" height="555" frameX="0" frameY="-13" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0017" x="6070" y="0" width="395" height="565" frameX="-6" frameY="0" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0018" x="4066" y="0" width="395" height="553" frameX="-6" frameY="-12" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0019" x="4466" y="0" width="402" height="558" frameX="-6" frameY="-10" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0020" x="4873" y="0" width="393" height="554" frameX="-3" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0021" x="5271" y="0" width="392" height="553" frameX="-7" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0022" x="5668" y="0" width="397" height="555" frameX="0" frameY="-13" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0023" x="6070" y="0" width="395" height="565" frameX="-6" frameY="0" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0024" x="4066" y="0" width="395" height="553" frameX="-6" frameY="-12" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0025" x="4466" y="0" width="402" height="558" frameX="-6" frameY="-10" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0026" x="4873" y="0" width="393" height="554" frameX="-3" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0027" x="5271" y="0" width="392" height="553" frameX="-7" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0028" x="5668" y="0" width="397" height="555" frameX="0" frameY="-13" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0029" x="6070" y="0" width="395" height="565" frameX="-6" frameY="0" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0030" x="4066" y="0" width="395" height="553" frameX="-6" frameY="-12" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0031" x="4466" y="0" width="402" height="558" frameX="-6" frameY="-10" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0032" x="4873" y="0" width="393" height="554" frameX="-3" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0033" x="5271" y="0" width="392" height="553" frameX="-7" frameY="-18" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX Idle0034" x="5668" y="0" width="397" height="555" frameX="0" frameY="-13" frameWidth="408" frameHeight="572"/>
+	<SubTexture name="EX LEFT0000" x="6470" y="0" width="758" height="638" frameX="0" frameY="-21" frameWidth="759" frameHeight="700"/>
+	<SubTexture name="EX LEFT0001" x="7233" y="0" width="561" height="601" frameX="-162" frameY="-76" frameWidth="759" frameHeight="700"/>
+	<SubTexture name="EX LEFT0002" x="0" y="701" width="523" height="528" frameX="-176" frameY="-143" frameWidth="759" frameHeight="700"/>
+	<SubTexture name="EX LEFT0003" x="528" y="701" width="493" height="579" frameX="-243" frameY="-71" frameWidth="759" frameHeight="700"/>
+	<SubTexture name="EX LEFT0004" x="1026" y="701" width="441" height="573" frameX="-271" frameY="-127" frameWidth="759" frameHeight="700"/>
+	<SubTexture name="EX LEFT0005" x="1472" y="701" width="410" height="636" frameX="-295" frameY="0" frameWidth="759" frameHeight="700"/>
+	<SubTexture name="EX LEFT0006" x="1887" y="701" width="477" height="582" frameX="-177" frameY="-86" frameWidth="759" frameHeight="700"/>
+	<SubTexture name="EX LEFT0007" x="2369" y="701" width="404" height="597" frameX="-355" frameY="-77" frameWidth="759" frameHeight="700"/>
+	<SubTexture name="EX RIGHT 0000" x="2778" y="701" width="705" height="519" frameX="-70" frameY="-21" frameWidth="775" frameHeight="596"/>
+	<SubTexture name="EX RIGHT 0001" x="3488" y="701" width="627" height="516" frameX="-74" frameY="-44" frameWidth="775" frameHeight="596"/>
+	<SubTexture name="EX RIGHT 0002" x="4120" y="701" width="540" height="528" frameX="-10" frameY="-2" frameWidth="775" frameHeight="596"/>
+	<SubTexture name="EX RIGHT 0003" x="4665" y="701" width="601" height="517" frameX="-38" frameY="-72" frameWidth="775" frameHeight="596"/>
+	<SubTexture name="EX RIGHT 0004" x="5271" y="701" width="555" height="505" frameX="-43" frameY="-38" frameWidth="775" frameHeight="596"/>
+	<SubTexture name="EX RIGHT 0005" x="5831" y="701" width="530" height="469" frameX="-12" frameY="-127" frameWidth="775" frameHeight="596"/>
+	<SubTexture name="EX RIGHT 0006" x="6366" y="701" width="537" height="493" frameX="-21" frameY="-18" frameWidth="775" frameHeight="596"/>
+	<SubTexture name="EX RIGHT 0007" x="6908" y="701" width="510" height="502" frameX="0" frameY="0" frameWidth="775" frameHeight="596"/>
+	<SubTexture name="EX Up0000" x="7423" y="701" width="605" height="677" frameX="0" frameY="0" frameWidth="615" frameHeight="803"/>
+	<SubTexture name="EX Up0001" x="0" y="1383" width="554" height="612" frameX="-41" frameY="-84" frameWidth="615" frameHeight="803"/>
+	<SubTexture name="EX Up0002" x="559" y="1383" width="509" height="583" frameX="-61" frameY="-167" frameWidth="615" frameHeight="803"/>
+	<SubTexture name="EX Up0003" x="1073" y="1383" width="501" height="582" frameX="-99" frameY="-172" frameWidth="615" frameHeight="803"/>
+	<SubTexture name="EX Up0004" x="1579" y="1383" width="514" height="587" frameX="-72" frameY="-169" frameWidth="615" frameHeight="803"/>
+	<SubTexture name="EX Up0005" x="2098" y="1383" width="550" height="597" frameX="-65" frameY="-206" frameWidth="615" frameHeight="803"/>
+	<SubTexture name="EX Up0006" x="2653" y="1383" width="511" height="591" frameX="-58" frameY="-158" frameWidth="615" frameHeight="803"/>
+	<SubTexture name="EX Up0007" x="3169" y="1383" width="518" height="589" frameX="-92" frameY="-152" frameWidth="615" frameHeight="803"/>
+	<SubTexture name="SPAWN Sprite0000" x="3692" y="1383" width="444" height="553" frameX="-97" frameY="-1137" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0001" x="4141" y="1383" width="474" height="449" frameX="-117" frameY="-1209" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0002" x="4620" y="1383" width="380" height="550" frameX="-126" frameY="-1057" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0003" x="5005" y="1383" width="365" height="437" frameX="-136" frameY="-1102" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0004" x="5375" y="1383" width="367" height="517" frameX="-135" frameY="-983" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0005" x="5747" y="1383" width="371" height="557" frameX="-130" frameY="-914" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0006" x="6123" y="1383" width="377" height="598" frameX="-123" frameY="-810" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0007" x="6505" y="1383" width="529" height="733" frameX="-6" frameY="-441" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0008" x="7039" y="1383" width="440" height="776" frameX="-39" frameY="-41" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0009" x="7484" y="1383" width="434" height="672" frameX="-25" frameY="-48" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0010" x="0" y="2164" width="430" height="610" frameX="-17" frameY="-53" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0011" x="435" y="2164" width="424" height="596" frameX="-16" frameY="-58" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0012" x="864" y="2164" width="425" height="590" frameX="-10" frameY="-60" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0013" x="1294" y="2164" width="429" height="595" frameX="-5" frameY="-62" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0014" x="1728" y="2164" width="431" height="598" frameX="0" frameY="-69" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0015" x="2164" y="2164" width="418" height="596" frameX="-14" frameY="-67" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0016" x="2587" y="2164" width="412" height="599" frameX="-30" frameY="-60" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0017" x="3004" y="2164" width="393" height="640" frameX="-116" frameY="0" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0018" x="3402" y="2164" width="495" height="608" frameX="-113" frameY="-74" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0019" x="3902" y="2164" width="573" height="500" frameX="-168" frameY="-214" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0020" x="4480" y="2164" width="529" height="527" frameX="-231" frameY="-212" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0021" x="5014" y="2164" width="546" height="511" frameX="-239" frameY="-238" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0022" x="5565" y="2164" width="546" height="517" frameX="-222" frameY="-237" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0023" x="6116" y="2164" width="467" height="527" frameX="-259" frameY="-210" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0024" x="6588" y="2164" width="475" height="580" frameX="-239" frameY="-146" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0025" x="7068" y="2164" width="490" height="560" frameX="-206" frameY="-165" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0026" x="7563" y="2164" width="476" height="547" frameX="-206" frameY="-190" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0027" x="0" y="2809" width="451" height="503" frameX="-201" frameY="-254" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0028" x="456" y="2809" width="511" height="478" frameX="-180" frameY="-289" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0029" x="972" y="2809" width="420" height="547" frameX="-242" frameY="-249" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0030" x="1397" y="2809" width="584" height="515" frameX="-80" frameY="-174" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0031" x="1986" y="2809" width="603" height="557" frameX="-97" frameY="-130" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0032" x="2594" y="2809" width="536" height="561" frameX="-62" frameY="-239" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0033" x="3135" y="2809" width="554" height="616" frameX="-103" frameY="-129" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0034" x="3694" y="2809" width="460" height="610" frameX="-318" frameY="-205" frameWidth="785" frameHeight="1690"/>
+	<SubTexture name="SPAWN Sprite0035" x="4159" y="2809" width="467" height="517" frameX="-169" frameY="-316" frameWidth="785" frameHeight="1690"/>
+</TextureAtlas>
