@@ -1,0 +1,65 @@
+{
+	"categories": [
+		{
+			"name": "VIP Remixes",
+			"songs": [
+				{
+					"name": "Boxing Match VIP",
+					"port": "Wiik_2Vip",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Immortal VIP",
+					"port": "Wiik_3"
+				},
+				{
+					"name": "King Hit VIP",
+					"port": "Wiik_3"
+				},
+				{
+					"name": "TKO VIP",
+					"port": "TKO"
+				},
+				{
+					"name": "Veteran VIP",
+					"port": "Wiik_100",
+					"loadingScreen": "Wiik100"
+				},
+				{
+					"name": "Edgy VIP",
+					"port": "Wiik_100",
+					"loadingScreen": "Wiik100"
+				},
+				{
+					"name": "Burnout VIP",
+					"port": "Wiik_2Vip",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Alter Ego VIP",
+					"port": "Wiik_2Vip",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Target Practice VIP",
+					"port": "Wiik_1"
+				},
+				{
+					"name": "DETERMINANT VIP",
+					"port": "Greed",
+					"loadingScreen": "Wiik4"
+				},
+				{
+					"name": "Rejected VIP",
+					"port": "Rejected",
+					"loadingScreen": "RejectVIP"
+				},
+				{
+					"name": "Final Destination VIP",
+					"port": "BG_2",
+					"loadingScreen": "SXMGodLoadScreen"
+				}
+			]
+		}
+	]
+}

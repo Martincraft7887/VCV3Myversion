@@ -1,0 +1,27 @@
+{
+	"composer": "TheOnlyVolume,Wolfinu,ImSilv4",
+	"charter": "Spikemaster",
+	"originalComposer": "Srperez",
+	"startTime": 0,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#6d0091",
+	"midBorderBot": "#1c1c1c",
+	"innerBorderTop": "#300d14",
+	"innerBorderBot": "#212121",
+
+	"sobelStrength": 0.5,
+	"sobelIntensity": 1.0,
+
+	"outerBorderTopVIP": "#000000",
+	"outerBorderBotVIP": "#000000",
+	"midBorderTopVIP": "#30101b",
+	"midBorderBotVIP": "#6d0091",
+	"innerBorderTopVIP": "#000000",
+	"innerBorderBotVIP": "#15001c",
+
+	"outerBorderSize": 13
+}

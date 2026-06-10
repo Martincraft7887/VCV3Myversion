@@ -1,0 +1,481 @@
+<Modchart>
+	<Init>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="MosaicEffect" name="MosaicEffect" color="#545454">
+			<Property value="20" name="strength"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="BloomEffect" name="Bloom" color="#545454">
+			<Property value="1" name="contrast"/>
+			<Property value="0" name="strength"/>
+			<Property value="1" name="effect"/>
+			<Property value="0" name="brightness"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="MirrorRepeatEffect" name="MirrorGAME" color="#545454">
+			<Property value="0" name="x"/>
+			<Property value="0" name="y"/>
+			<Property value="0" name="angle"/>
+			<Property value="1" name="zoom"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="false" shader="MirrorRepeatEffect" name="MirrorHUD" color="#545454">
+			<Property value="0" name="x"/>
+			<Property value="0" name="y"/>
+			<Property value="0" name="angle"/>
+			<Property value="1" name="zoom"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="VignetteEffect" name="Vignette" color="#545454">
+			<Property value="0" name="red"/>
+			<Property value="1" name="size"/>
+			<Property value="0" name="strength"/>
+			<Property value="0" name="blue"/>
+			<Property value="0" name="green"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="ColorSwapEffect" name="ColorSwap" color="#545454">
+			<Property value="0" name="brt"/>
+			<Property value="0" name="sat"/>
+			<Property value="0" name="hue"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="ChessMania" name="Chess" color="#545454">
+			<Property value="0" name="transparency"/>
+			<Property value="1" name="chessSize"/>
+			<Property value="0" name="fisheyeStrength"/>
+			<Property value="1" name="directionY"/>
+			<Property value="1" name="chessGlow"/>
+			<Property value="0" name="iTime"/>
+			<Property value="0" name="borderWidthX"/>
+			<Property value="1" name="direction"/>
+			<Property value="0" name="borderWidthY"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="BarsEffect" name="Bars" color="#545454">
+			<Property value="0.5" name="effect"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="barscolor" name="barsang" color="#545454">
+			<Property value="0" name="angle1"/>
+			<Property value="0" name="angle2"/>
+			<Property value="0" name="effect2"/>
+			<Property value="0" name="effect"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="BarrelBlurEffect" name="barrelGAME" color="#545454">
+			<Property value="0" name="x"/>
+			<Property value="0" name="doChroma"/>
+			<Property value="0" name="y"/>
+			<Property value="0" name="barrel"/>
+			<Property value="1" name="zoom"/>
+			<Property value="0" name="angle"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="false" shader="BarrelBlurEffect" name="BarrelHUD" color="#545454">
+			<Property value="0" name="x"/>
+			<Property value="0" name="doChroma"/>
+			<Property value="0" name="y"/>
+			<Property value="0" name="barrel"/>
+			<Property value="1" name="zoom"/>
+			<Property value="0" name="angle"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="GreyscaleEffect" name="grey" color="#545454">
+			<Property value="0" name="strength"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="godray" name="godrays" color="#545454">
+			<Property value="1.2" name="weight"/>
+			<Property value="1.5" name="density"/>
+			<Property value="0" name="iTime"/>
+			<Property value="1" name="decay"/>
+			<Property value="1.2" name="exposure"/>
+		</Shader>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="X" modifier="x" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="XP" modifier="x" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="XO" modifier="x" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="250" name="Y" modifier="y" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="YP" modifier="y" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="YO" modifier="y" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="Z" modifier="Z" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="ZP" modifier="Z" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="ZO" modifier="Z" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="AngleZ" modifier="angleZ" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="AngleZP" modifier="angleZ" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="AngleZO" modifier="angleZ" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="AngleY" modifier="angleY" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="AngleYP" modifier="angleY" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="AngleYO" modifier="angleY" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="AngleX" modifier="angleX" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="AngleXP" modifier="angleX" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="AngleXO" modifier="angleX" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="tipsy" modifier="tipsy" color="#545454">
+			<SubMod value="1" name="speed"/>
+		</Modifier>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="IncomingAngleXP" modifier="incomingAngleX" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="IncomingAngleXO" modifier="incomingAngleX" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="incomingAngleYP" modifier="incomingAngleY" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="incomingAngleYO" modifier="incomingAngleY" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="incomingAngleZP" modifier="incomingAngleZ" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="incomingAngleZO" modifier="incomingAngleZ" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="1" value="0" name="XPLeft" modifier="x" color="#E200FF"/>
+		<Modifier strumID="1" strumLineID="1" value="0" name="XPDown" modifier="x" color="#00F8FF"/>
+		<Modifier strumID="2" strumLineID="1" value="0" name="XPUp" modifier="x" color="#2CFF00"/>
+		<Modifier strumID="3" strumLineID="1" value="0" name="XPRight" modifier="x" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="1" value="0" name="YPLeft" modifier="y" color="#E200FF"/>
+		<Modifier strumID="1" strumLineID="1" value="0" name="YPDown" modifier="y" color="#00F8FF"/>
+		<Modifier strumID="2" strumLineID="1" value="0" name="YPUp" modifier="y" color="#2CFF00"/>
+		<Modifier strumID="3" strumLineID="1" value="0" name="YPRight" modifier="y" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="0" value="0" name="XOLeft" modifier="x" color="#E200FF"/>
+		<Modifier strumID="1" strumLineID="0" value="0" name="XODown" modifier="x" color="#00F8FF"/>
+		<Modifier strumID="2" strumLineID="0" value="0" name="XOUp" modifier="x" color="#2CFF00"/>
+		<Modifier strumID="3" strumLineID="0" value="0" name="XORight" modifier="x" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="0" value="0" name="YOLeft" modifier="y" color="#E200FF"/>
+		<Modifier strumID="1" strumLineID="0" value="0" name="YODown" modifier="y" color="#00F8FF"/>
+		<Modifier strumID="2" strumLineID="0" value="0" name="YOUp" modifier="y" color="#2CFF00"/>
+		<Modifier strumID="3" strumLineID="0" value="0" name="YORight" modifier="y" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="Rotate" modifier="strumLineRotate" color="#545454">
+			<SubMod value="0" name="z"/>
+			<SubMod value="0" name="x"/>
+			<SubMod value="0" name="y"/>
+		</Modifier>
+	</Init>
+	<Events>
+		<Event step="0" time="128" value="0" property="effect" ease="linear" type="tweenShaderProperty" startValue="0.5" name="Bars"/>
+		<Event step="0" time="4" value="0.95" property="decay" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="godrays"/>
+		<Event step="0" time="4" value="1" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bloom"/>
+		<Event step="0" time="4" value="-0.2" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bloom"/>
+		<Event step="0" time="4" value="1" property="exposure" ease="cubeInOut" type="tweenShaderProperty" startValue="1.2" name="godrays"/>
+		<Event step="0" time="4" value="1.3" property="density" ease="cubeInOut" type="tweenShaderProperty" startValue="1.5" name="godrays"/>
+		<Event step="0" time="36" value="0" property="strength" ease="linear" type="tweenShaderProperty" startValue="10" name="MosaicEffect"/>
+		<Event step="120" time="8" value="10" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="MosaicEffect"/>
+		<Event step="120" time="8" value="0.4" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.2" name="Bloom"/>
+		<Event step="128" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="250" name="Y"/>
+		<Event step="128" time="16" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="MosaicEffect"/>
+		<Event step="128" time="4" value="0.2" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="tipsy"/>
+		<Event step="128" time="16" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="Bloom"/>
+		<Event step="160" time="2" value="1.4" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bloom"/>
+		<Event step="162" time="2" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1.4" name="Bloom"/>
+		<Event step="176" time="2" value="1.4" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bloom"/>
+		<Event step="178" time="2" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1.4" name="Bloom"/>
+		<Event step="192" time="2" value="1.4" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bloom"/>
+		<Event step="194" time="2" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1.4" name="Bloom"/>
+		<Event step="208" time="2" value="1.4" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bloom"/>
+		<Event step="210" time="2" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1.4" name="Bloom"/>
+		<Event step="224" time="2" value="1.4" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bloom"/>
+		<Event step="226" time="2" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1.4" name="Bloom"/>
+		<Event step="236" time="4" value="0.1" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bars"/>
+		<Event step="240" time="12" value="0.4" property="transparency" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="Chess"/>
+		<Event step="240" time="2" value="1.4" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bloom"/>
+		<Event step="240" time="12" value="2" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="242" time="2" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1.4" name="Bloom"/>
+		<Event step="248" time="12" value="-12" property="angle" ease="quartOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="248" time="8" value="-1" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bloom"/>
+		<Event step="248" time="16" value="4" property="x" ease="quintOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="252" time="4" value="0" property="transparency" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="Chess"/>
+		<Event step="256" time="1" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0.2" name="tipsy"/>
+		<Event step="256" time="4" value="300" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="X"/>
+		<Event step="256" time="4" value="400" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XP"/>
+		<Event step="256" time="4" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="2" name="MirrorGAME"/>
+		<Event step="256" time="4" value="0" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.1" name="Bars"/>
+		<Event step="256" time="4" value="-360" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleZ"/>
+		<Event step="256" time="4" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="-11.852" name="MirrorGAME"/>
+		<Event step="256" time="4" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="-1" name="Bloom"/>
+		<Event step="264" time="4" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="Bloom"/>
+		<Event step="264" time="2" value="50" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleX"/>
+		<Event step="264" time="0" value="0" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="5" name="MirrorGAME"/>
+		<Event step="264" time="2" value="50" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleY"/>
+		<Event step="266" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="50" name="AngleX"/>
+		<Event step="266" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="50" name="AngleY"/>
+		<Event step="280" time="2" value="-50" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleX"/>
+		<Event step="280" time="4" value="1" property="y" ease="quintOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="280" time="4" value="0.2" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bars"/>
+		<Event step="280" time="4" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.5" name="Bloom"/>
+		<Event step="280" time="8" value="8" property="strength" ease="quadInOut" type="tweenShaderProperty" startValue="0" name="MosaicEffect"/>
+		<Event step="280" time="2" value="-50" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleY"/>
+		<Event step="282" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-50" name="AngleX"/>
+		<Event step="282" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-50" name="AngleY"/>
+		<Event step="284" time="4" value="0.3" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="Bars"/>
+		<Event step="284" time="4" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="Bloom"/>
+		<Event step="284" time="4" value="2" property="zoom" ease="quartOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="284" time="4" value="2" property="y" ease="quartOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="286" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="300" name="X"/>
+		<Event step="286" time="4" value="-600" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XO"/>
+		<Event step="286" time="4" value="-320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="400" name="XP"/>
+		<Event step="288" time="4" value="0" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.3" name="Bars"/>
+		<Event step="288" time="4" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="2" name="MirrorGAME"/>
+		<Event step="288" time="0" value="0" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="2" name="MirrorGAME"/>
+		<Event step="288" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="8" name="MosaicEffect"/>
+		<Event step="288" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-360" name="AngleZ"/>
+		<Event step="288" time="3" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="Bloom"/>
+		<Event step="296" time="2" value="50" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleX"/>
+		<Event step="296" time="2" value="50" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleY"/>
+		<Event step="298" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="50" name="AngleX"/>
+		<Event step="298" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="50" name="AngleY"/>
+		<Event step="312" time="4" value="0.125" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bars"/>
+		<Event step="312" time="2" value="-50" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleX"/>
+		<Event step="312" time="4" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.5" name="Bloom"/>
+		<Event step="312" time="8" value="8" property="strength" ease="quadInOut" type="tweenShaderProperty" startValue="0" name="MosaicEffect"/>
+		<Event step="312" time="4" value="1.5" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="312" time="4" value="1" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="312" time="2" value="-50" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleY"/>
+		<Event step="314" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-50" name="AngleX"/>
+		<Event step="314" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-50" name="AngleY"/>
+		<Event step="316" time="4" value="2" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="316" time="4" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="Bloom"/>
+		<Event step="316" time="4" value="2" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1.5" name="MirrorGAME"/>
+		<Event step="316" time="4" value="0.25" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.125" name="Bars"/>
+		<Event step="320" time="2" value="-6.25" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-600" name="XO"/>
+		<Event step="320" time="3" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="Bloom"/>
+		<Event step="320" time="1" value="0" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.25" name="Bars"/>
+		<Event step="320" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="8" name="MosaicEffect"/>
+		<Event step="320" time="0" value="0" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="2" name="MirrorGAME"/>
+		<Event step="320" time="2" value="-181.25" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-320" name="XP"/>
+		<Event step="320" time="2" value="-90" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleZ"/>
+		<Event step="320" time="2" value="187.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="ZO"/>
+		<Event step="320" time="2" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="2" name="MirrorGAME"/>
+		<Event step="320" time="2" value="62.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="ZP"/>
+		<Event step="324" time="2" value="-87.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-181.25" name="XP"/>
+		<Event step="324" time="2" value="87.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-6.25" name="XO"/>
+		<Event step="324" time="2" value="-180" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-90" name="AngleZ"/>
+		<Event step="324" time="2" value="125" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="187.5" name="ZO"/>
+		<Event step="324" time="2" value="125" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="62.5" name="ZP"/>
+		<Event step="328" time="2" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="4" name="MosaicEffect"/>
+		<Event step="328" time="4" value="0.2" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bars"/>
+		<Event step="328" time="2" value="181.25" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="87.5" name="XO"/>
+		<Event step="328" time="2" value="62.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="125" name="ZO"/>
+		<Event step="328" time="2" value="5" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="328" time="2" value="1.2" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="328" time="2" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="Bloom"/>
+		<Event step="328" time="2" value="6.25" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-87.5" name="XP"/>
+		<Event step="328" time="2" value="-270" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-180" name="AngleZ"/>
+		<Event step="328" time="2" value="187.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="125" name="ZP"/>
+		<Event step="332" time="4" value="9" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="5" name="MirrorGAME"/>
+		<Event step="332" time="4" value="0.4" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="Bars"/>
+		<Event step="332" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="MosaicEffect"/>
+		<Event step="332" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="Bloom"/>
+		<Event step="332" time="4" value="0.4" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1.2" name="MirrorGAME"/>
+		<Event step="332" time="2" value="200" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="6.25" name="XP"/>
+		<Event step="332" time="2" value="-360" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-270" name="AngleZ"/>
+		<Event step="332" time="2" value="320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="181.25" name="XO"/>
+		<Event step="332" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="62.5" name="ZO"/>
+		<Event step="332" time="2" value="250" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="187.5" name="ZP"/>
+		<Event step="334" time="0" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleZ"/>
+		<Event step="337" time="4" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="MirrorGAME"/>
+		<Event step="338" time="4" value="0" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="Bars"/>
+		<Event step="340" time="2" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.5" name="Bloom"/>
+		<Event step="340" time="2" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="15" name="MosaicEffect"/>
+		<Event step="340" time="2" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="MirrorGAME"/>
+		<Event step="344" time="2" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.5" name="Bloom"/>
+		<Event step="344" time="2" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="15" name="MosaicEffect"/>
+		<Event step="344" time="2" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="MirrorGAME"/>
+		<Event step="348" time="8" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="50" name="MirrorGAME"/>
+		<Event step="348" time="2" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="Bloom"/>
+		<Event step="348" time="6" value="0.5" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bars"/>
+		<Event step="348" time="8" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="15" name="MosaicEffect"/>
+		<Event step="348" time="8" value="10" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="352" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="250" name="ZP"/>
+		<Event step="352" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-360" name="AngleZ"/>
+		<Event step="352" time="4" value="-200" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="320" name="XO"/>
+		<Event step="352" time="4" value="250" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="ZO"/>
+		<Event step="352" time="4" value="-320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="200" name="XP"/>
+		<Event step="354" time="2" value="0" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.5" name="Bars"/>
+		<Event step="356" time="0" value="0" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="MirrorGAME"/>
+		<Event step="384" time="4" value="-360" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleZ"/>
+		<Event step="384" time="4" value="200" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-320" name="XP"/>
+		<Event step="384" time="4" value="320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-200" name="XO"/>
+		<Event step="384" time="4" value="250" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="ZP"/>
+		<Event step="384" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="250" name="ZO"/>
+		<Event step="416" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-360" name="AngleZ"/>
+		<Event step="416" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="250" name="ZP"/>
+		<Event step="416" time="4" value="-320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="200" name="XP"/>
+		<Event step="416" time="4" value="250" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="ZO"/>
+		<Event step="416" time="4" value="-200" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="320" name="XO"/>
+		<Event step="448" time="2" value="-6.25" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-200" name="XO"/>
+		<Event step="448" time="2" value="187.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="250" name="ZO"/>
+		<Event step="448" time="2" value="-181.25" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-300" name="XP"/>
+		<Event step="448" time="2" value="62.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="ZP"/>
+		<Event step="448" time="2" value="-90" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleZ"/>
+		<Event step="452" time="2" value="-87.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-181.25" name="XP"/>
+		<Event step="452" time="2" value="-180" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-90" name="AngleZ"/>
+		<Event step="452" time="2" value="87.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-6.25" name="XO"/>
+		<Event step="452" time="2" value="125" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="62.5" name="ZP"/>
+		<Event step="452" time="2" value="125" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="187.5" name="ZO"/>
+		<Event step="456" time="2" value="181.25" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="87.5" name="XO"/>
+		<Event step="456" time="2" value="-270" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-180" name="AngleZ"/>
+		<Event step="456" time="2" value="62.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="125" name="ZO"/>
+		<Event step="456" time="2" value="6.25" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-87.5" name="XP"/>
+		<Event step="456" time="2" value="187.5" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="125" name="ZP"/>
+		<Event step="460" time="2" value="200" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="6.25" name="XP"/>
+		<Event step="460" time="2" value="320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="181.25" name="XO"/>
+		<Event step="460" time="2" value="-360" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-270" name="AngleZ"/>
+		<Event step="460" time="2" value="250" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="187.5" name="ZP"/>
+		<Event step="460" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="62.5" name="ZO"/>
+		<Event step="462" time="0" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleZ"/>
+		<Event step="480" time="4" value="250" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="ZO"/>
+		<Event step="480" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-360" name="AngleZ"/>
+		<Event step="480" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="250" name="ZP"/>
+		<Event step="480" time="4" value="-200" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="320" name="XO"/>
+		<Event step="480" time="4" value="-320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="200" name="XP"/>
+		<Event step="512" time="16" value="100" property="value" ease="quartOut" type="tweenModifierValue" startValue="0" name="ZP"/>
+		<Event step="512" time="12" value="1" property="barrel" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="BarrelHUD"/>
+		<Event step="512" time="16" value="-45" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="512" time="16" value="-45" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="MirrorHUD"/>
+		<Event step="512" time="12" value="0.8" property="zoom" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1" name="BarrelHUD"/>
+		<Event step="512" time="16" value="-1" property="x" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="512" time="4" value="2" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="512" time="32" value="3" property="hue" ease="linear" type="tweenShaderProperty" startValue="0" name="ColorSwap"/>
+		<Event step="512" time="4" value="-900" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-200" name="XO"/>
+		<Event step="524" time="4" value="1" property="zoom" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0.8" name="BarrelHUD"/>
+		<Event step="524" time="4" value="0" property="barrel" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1" name="BarrelHUD"/>
+		<Event step="528" time="16" value="45" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-45" name="MirrorHUD"/>
+		<Event step="528" time="12" value="1.5" property="barrel" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="BarrelHUD"/>
+		<Event step="528" time="12" value="0.7" property="zoom" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1" name="BarrelHUD"/>
+		<Event step="528" time="16" value="45" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-45" name="MirrorGAME"/>
+		<Event step="528" time="16" value="1" property="x" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-1" name="MirrorGAME"/>
+		<Event step="528" time="16" value="200" property="value" ease="quartOut" type="tweenModifierValue" startValue="100" name="ZP"/>
+		<Event step="540" time="4" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="0.7" name="BarrelHUD"/>
+		<Event step="540" time="4" value="0" property="barrel" ease="cubeInOut" type="tweenShaderProperty" startValue="1.5" name="BarrelHUD"/>
+		<Event step="544" time="4" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="45" name="MirrorHUD"/>
+		<Event step="544" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="200" name="ZP"/>
+		<Event step="544" time="8" value="1" property="zoom" ease="smootherStepInOut" type="tweenShaderProperty" startValue="2" name="MirrorGAME"/>
+		<Event step="544" time="0" value="0" property="hue" ease="cubeInOut" type="tweenShaderProperty" startValue="3" name="ColorSwap"/>
+		<Event step="544" time="4" value="0" property="x" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="544" time="4" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="45" name="MirrorGAME"/>
+		<Event step="558" time="4" value="180" property="angle" ease="quintIn" type="tweenShaderProperty" startValue="0" name="MirrorHUD"/>
+		<Event step="560" time="4" value="180" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="AngleZP"/>
+		<Event step="560" time="4" value="110" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XPDown"/>
+		<Event step="560" time="4" value="-110" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XPUp"/>
+		<Event step="560" time="4" value="-330" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XPRight"/>
+		<Event step="560" time="4" value="330" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XPLeft"/>
+		<Event step="576" time="4" value="-90" property="angle" ease="quintIn" type="tweenShaderProperty" startValue="-180" name="MirrorHUD"/>
+		<Event step="580" time="4" value="0" property="angle" ease="quintIn" type="tweenShaderProperty" startValue="-90" name="MirrorHUD"/>
+		<Event step="582" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-110" name="XPUp"/>
+		<Event step="582" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-330" name="XPRight"/>
+		<Event step="582" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="180" name="AngleZP"/>
+		<Event step="582" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="110" name="XPDown"/>
+		<Event step="582" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="330" name="XPLeft"/>
+		<Event step="603" time="4" value="0.8" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="603" time="4" value="0.7" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bloom"/>
+		<Event step="607" time="4" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1.3" name="MirrorGAME"/>
+		<Event step="607" time="3" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0.7" name="Bloom"/>
+		<Event step="607" time="5" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="16" name="MirrorGAME"/>
+		<Event step="622" time="4" value="0.1" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bars"/>
+		<Event step="622" time="4" value="2" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="624" time="4" value="0" property="angle" ease="sineInOut" type="tweenShaderProperty" startValue="25" name="BarrelHUD"/>
+		<Event step="624" time="4" value="0" property="x" ease="circInOut" type="tweenShaderProperty" startValue="32" name="MirrorGAME"/>
+		<Event step="624" time="4" value="0.1" property="hue" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="ColorSwap"/>
+		<Event step="624" time="4" value="0" property="barrel" ease="sineInOut" type="tweenShaderProperty" startValue="1" name="BarrelHUD"/>
+		<Event step="624" time="4" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="MirrorGAME"/>
+		<Event step="628" time="4" value="0" property="angle" ease="sineInOut" type="tweenShaderProperty" startValue="-25" name="BarrelHUD"/>
+		<Event step="628" time="4" value="0" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-32" name="MirrorGAME"/>
+		<Event step="628" time="4" value="0" property="barrel" ease="sineInOut" type="tweenShaderProperty" startValue="1" name="BarrelHUD"/>
+		<Event step="628" time="4" value="0" property="hue" ease="cubeInOut" type="tweenShaderProperty" startValue="0.1" name="ColorSwap"/>
+		<Event step="628" time="2" value="0.1" property="effect2" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="barsang"/>
+		<Event step="628" time="4" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="MirrorGAME"/>
+		<Event step="632" time="4" value="0" property="x" ease="circInOut" type="tweenShaderProperty" startValue="32" name="MirrorGAME"/>
+		<Event step="632" time="4" value="0" property="angle" ease="sineInOut" type="tweenShaderProperty" startValue="25" name="BarrelHUD"/>
+		<Event step="632" time="4" value="0" property="barrel" ease="sineInOut" type="tweenShaderProperty" startValue="1" name="BarrelHUD"/>
+		<Event step="632" time="2" value="0.2" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.1" name="Bars"/>
+		<Event step="632" time="4" value="0.1" property="hue" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="ColorSwap"/>
+		<Event step="632" time="4" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="MirrorGAME"/>
+		<Event step="636" time="2" value="0.3" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="Bars"/>
+		<Event step="636" time="4" value="0" property="hue" ease="cubeInOut" type="tweenShaderProperty" startValue="0.1" name="ColorSwap"/>
+		<Event step="636" time="4" value="0" property="barrel" ease="sineInOut" type="tweenShaderProperty" startValue="1" name="BarrelHUD"/>
+		<Event step="636" time="4" value="0" property="angle" ease="sineInOut" type="tweenShaderProperty" startValue="-25" name="BarrelHUD"/>
+		<Event step="636" time="2" value="0.2" property="effect2" ease="cubeInOut" type="tweenShaderProperty" startValue="0.1" name="barsang"/>
+		<Event step="636" time="4" value="0" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-32" name="MirrorGAME"/>
+		<Event step="636" time="4" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="MirrorGAME"/>
+		<Event step="638" time="4" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="2" name="MirrorGAME"/>
+		<Event step="640" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-35" name="Rotate"/>
+		<Event step="640" time="4" value="0" property="effect2" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="barsang"/>
+		<Event step="640" time="4" value="0" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.3" name="Bars"/>
+		<Event step="644" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="35" name="Rotate"/>
+		<Event step="652" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-35" name="Rotate"/>
+		<Event step="654" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="35" name="Rotate"/>
+		<Event step="656" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-35" name="Rotate"/>
+		<Event step="660" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="35" name="Rotate"/>
+		<Event step="668" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-35" name="Rotate"/>
+		<Event step="670" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="35" name="Rotate"/>
+		<Event step="672" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-35" name="Rotate"/>
+		<Event step="676" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="35" name="Rotate"/>
+		<Event step="684" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-35" name="Rotate"/>
+		<Event step="686" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="35" name="Rotate"/>
+		<Event step="688" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-35" name="Rotate"/>
+		<Event step="692" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="35" name="Rotate"/>
+		<Event step="700" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-35" name="Rotate"/>
+		<Event step="702" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="35" name="Rotate"/>
+		<Event step="704" time="12" value="1" property="barrel" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="BarrelHUD"/>
+		<Event step="704" time="12" value="-0.15" property="y" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="BarrelHUD"/>
+		<Event step="704" time="16" value="15" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="BarrelHUD"/>
+		<Event step="704" time="64" value="4" property="hue" ease="linear" type="tweenShaderProperty" startValue="0" name="ColorSwap"/>
+		<Event step="704" time="16" value="10" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="704" time="16" value="1.4" property="zoom" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="716" time="4" value="0.5" property="barrel" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="BarrelHUD"/>
+		<Event step="720" time="16" value="-20" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="10" name="MirrorGAME"/>
+		<Event step="720" time="16" value="-25" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="15" name="BarrelHUD"/>
+		<Event step="720" time="12" value="1.5" property="barrel" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0.5" name="BarrelHUD"/>
+		<Event step="720" time="16" value="1.8" property="zoom" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1.4" name="MirrorGAME"/>
+		<Event step="732" time="4" value="1" property="barrel" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1.5" name="BarrelHUD"/>
+		<Event step="736" time="16" value="30" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-20" name="MirrorGAME"/>
+		<Event step="736" time="16" value="35" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-25" name="BarrelHUD"/>
+		<Event step="736" time="12" value="2" property="barrel" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1" name="BarrelHUD"/>
+		<Event step="736" time="16" value="2.2" property="zoom" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1.8" name="MirrorGAME"/>
+		<Event step="748" time="20" value="0" property="barrel" ease="smootherStepInOut" type="tweenShaderProperty" startValue="2" name="BarrelHUD"/>
+		<Event step="752" time="16" value="0" property="y" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-0.15" name="BarrelHUD"/>
+		<Event step="752" time="16" value="0" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="35" name="BarrelHUD"/>
+		<Event step="752" time="16" value="0" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="30" name="MirrorGAME"/>
+		<Event step="752" time="16" value="1" property="zoom" ease="smootherStepInOut" type="tweenShaderProperty" startValue="2.2" name="MirrorGAME"/>
+		<Event step="768" time="4" value="0" property="y" ease="circOut" type="tweenModifierValue" startValue="45" name="Rotate"/>
+		<Event step="776" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="780" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="782" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="784" time="4" value="0" property="y" ease="circOut" type="tweenModifierValue" startValue="45" name="Rotate"/>
+		<Event step="792" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="796" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="798" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="800" time="4" value="0" property="y" ease="circOut" type="tweenModifierValue" startValue="45" name="Rotate"/>
+		<Event step="808" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="812" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="814" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="816" time="4" value="0" property="y" ease="circOut" type="tweenModifierValue" startValue="45" name="Rotate"/>
+		<Event step="824" time="8" value="1.5" property="zoom" ease="sineInOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="824" time="8" value="25" property="angle" ease="sineInOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="824" time="4" value="0" property="y" ease="circOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="828" time="4" value="0" property="y" ease="circOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="832" time="4" value="1" property="zoom" ease="sineOut" type="tweenShaderProperty" startValue="1.5" name="MirrorGAME"/>
+		<Event step="832" time="4" value="0" property="angle" ease="quintOut" type="tweenShaderProperty" startValue="-25" name="MirrorGAME"/>
+		<Event step="832" time="4" value="0" property="y" ease="circOut" type="tweenModifierValue" startValue="45" name="Rotate"/>
+		<Event step="838" time="3" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-45" name="Rotate"/>
+		<Event step="839" time="4" value="0" property="y" ease="backOut" type="tweenModifierValue" startValue="45" name="Rotate"/>
+		<Event step="848" time="4" value="0" property="y" ease="circOut" type="tweenModifierValue" startValue="45" name="Rotate"/>
+		<Event step="854" time="3" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-45" name="Rotate"/>
+		<Event step="855" time="4" value="0" property="y" ease="backOut" type="tweenModifierValue" startValue="45" name="Rotate"/>
+		<Event step="864" time="4" value="0" property="z" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="868" time="4" value="0" property="z" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="872" time="4" value="0" property="z" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="876" time="4" value="0" property="z" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="880" time="16" value="1" property="strength" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="grey"/>
+		<Event step="880" time="2" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="882" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="884" time="2" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="886" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="888" time="2" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="889" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="890" time="2" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="891" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="892" time="2" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="893" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="894" time="2" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="25" name="Rotate"/>
+		<Event step="895" time="4" value="0" property="y" ease="expoOut" type="tweenModifierValue" startValue="-25" name="Rotate"/>
+		<Event step="896" time="12" value="600" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="XPRight"/>
+		<Event step="896" time="12" value="-600" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="XPLeft"/>
+		<Event step="912" time="12" value="-800" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="YPDown"/>
+		<Event step="912" time="12" value="400" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="YPUp"/>
+		<Event step="928" time="12" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="250" name="ZO"/>
+		<Event step="944" time="0" value="400" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="YOUp"/>
+		<Event step="944" time="0" value="-800" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="YODown"/>
+		<Event step="944" time="0" value="90000" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XORight"/>
+		<Event step="944" time="0" value="-600" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XOLeft"/>
+		<Event step="944" time="12" value="320" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-900" name="XO"/>
+		<Event step="960" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="600" name="XORight"/>
+		<Event step="960" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-600" name="XPLeft"/>
+		<Event step="960" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="600" name="XPRight"/>
+		<Event step="960" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-600" name="XOLeft"/>
+		<Event step="976" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="400" name="YOUp"/>
+		<Event step="976" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-800" name="YPDown"/>
+		<Event step="976" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="400" name="YPUp"/>
+		<Event step="976" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-800" name="YODown"/>
+		<Event step="992" time="16" value="0" property="value" ease="elasticInOut" type="tweenModifierValue" startValue="320" name="XO"/>
+		<Event step="992" time="16" value="0" property="value" ease="elasticInOut" type="tweenModifierValue" startValue="-320" name="XP"/>
+		<Event step="1180" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="grey"/>
+	</Events>
+</Modchart>

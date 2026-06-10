@@ -1,0 +1,51 @@
+{
+	"events": [
+		{
+			"params": [
+				"BoxingRingOld"
+			],
+			"time": 77333.3333333333,
+			"name": "Change Stage"
+		},
+		{
+			"params": [
+				"dad",
+				"Wiik2VoiidMatt"
+			],
+			"time": 77333.3333333333,
+			"name": "Change Characters"
+		},
+		{
+			"params": [
+				"bf",
+				"Gerald"
+			],
+			"time": 77333.3333333333,
+			"name": "Change Characters"
+		},
+		{
+			"params": [
+				"dad",
+				"MattVoiidNEWER"
+			],
+			"time": 98666.6666666667,
+			"name": "Change Characters"
+		},
+		{
+			"params": [
+				"Mattpurgation"
+			],
+			"time": 98666.6666666667,
+			"name": "Change Stage"
+		},
+		{
+			"params": [
+				"bf",
+				"Taro"
+			],
+			"time": 98666.6666666667,
+			"name": "Change Characters"
+		},
+		{"params":[1],"name":"Camera Movement","time":0},{"params":[0],"time":1333.33333333333,"name":"Camera Movement"},{"params":[1],"time":14000,"name":"Camera Movement"},{"params":[0],"name":"Camera Movement","time":21333.3333333333},{"params":[1],"name":"Camera Movement","time":24000},{"params":[0],"name":"Camera Movement","time":28000},{"params":[1],"name":"Camera Movement","time":29333.3333333333},{"params":[0],"name":"Camera Movement","time":37333.3333333333},{"params":[1],"name":"Camera Movement","time":40000},{"params":[0],"name":"Camera Movement","time":42666.6666666667},{"params":[1],"name":"Camera Movement","time":45333.3333333333},{"params":[0],"name":"Camera Movement","time":48000},{"params":[1],"name":"Camera Movement","time":50666.6666666667},{"params":[0],"name":"Camera Movement","time":53333.3333333334},{"params":[1],"name":"Camera Movement","time":56000},{"params":[0],"name":"Camera Movement","time":58666.6666666667},{"params":[1],"name":"Camera Movement","time":60000},{"params":[0],"name":"Camera Movement","time":61333.3333333334},{"params":[1],"name":"Camera Movement","time":62666.6666666667},{"params":[0],"name":"Camera Movement","time":64000},{"params":[1],"name":"Camera Movement","time":66666.6666666667},{"params":[0],"name":"Camera Movement","time":69333.3333333334},{"params":[1],"name":"Camera Movement","time":70666.6666666667},{"params":[0,"trans",true],"name":"Play Animation","time":70666.6666666667},{"params":[false,-4783873,8,"camGame"],"name":"Camera Flash","time":71333.3333333333},{"params":[0],"name":"Camera Movement","time":72000},{"params":[true,true,0],"name":"Alt Animation Toggle","time":72000},{"params":[1],"name":"Camera Movement","time":73333.3333333334},{"params":[0],"name":"Camera Movement","time":74666.6666666667},{"params":[0,"destrans",false],"time":75333.3333333333,"name":"Play Animation"},{"params":[false,false,0],"name":"Alt Animation Toggle","time":75916.6666666667},{"params":["gf","Voiidsidesmel1"],"name":"Change Characters","time":76000},{"params":[1],"name":"Camera Movement","time":76000},{"params":[0],"name":"Camera Movement","time":77333.3333333333},{"params":[1],"name":"Camera Movement","time":80000},{"params":[0],"name":"Camera Movement","time":81333.3333333333},{"params":[1],"name":"Camera Movement","time":82666.6666666667},{"params":[0],"name":"Camera Movement","time":84000},{"params":[1],"name":"Camera Movement","time":88000},{"params":[0],"name":"Camera Movement","time":90666.6666666666},{"params":[1],"name":"Camera Movement","time":93333.3333333333},{"params":[0],"name":"Camera Movement","time":95999.9999999999},{"params":["gf","Melody"],"name":"Change Characters","time":98666.6666666667},{"params":[1],"name":"Camera Movement","time":101333.333333333},{"params":[0],"name":"Camera Movement","time":104000},{"params":[1],"name":"Camera Movement","time":108000},{"params":[0],"name":"Camera Movement","time":112000},{"params":[1],"name":"Camera Movement","time":113333.333333333},{"params":[0],"name":"Camera Movement","time":114666.666666667},{"params":[1],"name":"Camera Movement","time":117333.333333333},{"params":[0],"name":"Camera Movement","time":120000},{"params":[1],"name":"Camera Movement","time":122666.666666667},{"params":[0],"name":"Camera Movement","time":125333.333333333},{"params":[1],"name":"Camera Movement","time":128000},{"params":[0],"name":"Camera Movement","time":130666.666666666},{"params":[1],"name":"Camera Movement","time":133333.333333333},{"params":[0],"name":"Camera Movement","time":136000},{"params":[1],"name":"Camera Movement","time":137333.333333333},{"params":[0],"name":"Camera Movement","time":138666.666666667},{"params":[1],"name":"Camera Movement","time":140000},{"params":[0],"name":"Camera Movement","time":141333.333333333},{"params":[1],"name":"Camera Movement","time":144000},{"params":[0],"name":"Camera Movement","time":146666.666666667},{"params":[1],"name":"Camera Movement","time":149333.333333333},{"params":[0],"name":"Camera Movement","time":152000},{"params":[1],"name":"Camera Movement","time":154666.666666667},{"params":[0],"name":"Camera Movement","time":157333.333333333},{"params":[1],"name":"Camera Movement","time":160000},{"params":[0],"name":"Camera Movement","time":162666.666666667},{"params":[1],"name":"Camera Movement","time":165333.333333333},{"params":[0],"name":"Camera Movement","time":168000},{"params":[1],"name":"Camera Movement","time":170666.666666667},{"params":[0],"name":"Camera Movement","time":173333.333333333},{"params":[1],"name":"Camera Movement","time":176000},{"params":[0],"name":"Camera Movement","time":178666.666666667},{"params":[1],"name":"Camera Movement","time":180000},{"params":[0],"name":"Camera Movement","time":181333.333333334},{"params":[1],"name":"Camera Movement","time":182666.666666667},{"params":[0],"name":"Camera Movement","time":184000},{"params":[1],"name":"Camera Movement","time":186666.666666667},{"params":[0],"name":"Camera Movement","time":189333.333333334},{"params":[1],"time":190666.666666667,"name":"Camera Movement"},{"params":[0,"trans",true],"time":190666.666666667,"name":"Play Animation"},{"params":[false,-4783873,8,"camGame"],"time":191333.333333333,"name":"Camera Flash"},{"params":[0],"time":192000,"name":"Camera Movement"},{"params":[true,true,0],"time":192000,"name":"Alt Animation Toggle"},{"params":[1],"name":"Camera Movement","time":193333.333333334},{"params":[0],"name":"Camera Movement","time":194666.666666667},{"params":[1],"name":"Camera Movement","time":196000},{"params":[0],"name":"Camera Movement","time":197333.333333334},{"params":[1],"name":"Camera Movement","time":200000}
+	]
+}
