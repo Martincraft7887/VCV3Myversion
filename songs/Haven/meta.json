@@ -1,0 +1,16 @@
+{
+	"color": "#FFFFFF",
+	"opponentModeAllowed": true,
+	"difficulties": [
+		"mania",
+		"canon",
+		"My version"
+	],
+	"icon": "SXMICON",
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"displayName": "Haven",
+	"needsVoices": true,
+	"beatsPerMeasure": 4,
+	"bpm": 150
+}

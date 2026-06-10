@@ -1,0 +1,23 @@
+<Modchart>
+	<Init>
+<Shader camHUD="false" shader="Lluvia" camGame="true" camOther="false" color="#545454" name="Rain">
+
+    <Property value="0" name="iTime"/>
+
+    <!-- Cantidad de gotas -->
+    <Property value="0.55" name="rainAmount"/>
+
+    <!-- Velocidad -->
+    <Property value="0.6" name="fallSpeed"/>
+
+    <!-- Intensidad -->
+    <Property value="0.9" name="alpha"/>
+
+    <!-- Distorsión -->
+    <Property value="0.7" name="distortion"/>
+
+</Shader>	
+</Init>
+	<Events>
+	</Events>
+</Modchart>

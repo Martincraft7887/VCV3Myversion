@@ -1,0 +1,14 @@
+{
+	"opponentModeAllowed": true,
+	"icon": "Wiik4VoiidMatt-icons",
+	"difficulties": [
+		"Voiid"
+	],
+	"color": "#296A00",
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"displayName": "Last Combat",
+	"needsVoices": true,
+	"beatsPerMeasure": 4,
+	"bpm": 200
+}

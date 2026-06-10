@@ -1,0 +1,497 @@
+<Modchart>
+	<Init>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="colorswap" name="colorswap" color="#545454">
+			<Property value="0" name="hue"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="MirrorRepeatWarpEffect" name="mirror" color="#545454">
+			<Property value="0" name="warp"/>
+			<Property value="0" name="x"/>
+			<Property value="0" name="y"/>
+			<Property value="1" name="zoom"/>
+			<Property value="0" name="angle"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="false" shader="EchoEffect" name="echo" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="alphaO" modifier="alpha" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="alphaP" modifier="alpha" color="#0001FF"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="xP" modifier="x" color="#0001FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="xO" modifier="x" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="yP" modifier="y" color="#0001FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="yO" modifier="y" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="zP" modifier="z" color="#0001FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="zO" modifier="z" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="reverseP" modifier="reverse" color="#0001FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="reverseO" modifier="reverse" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="1" value="0" name="XPLe" modifier="x" color="#0001FF"/>
+		<Modifier strumID="1" strumLineID="1" value="0" name="XPdo" modifier="x" color="#0000F1"/>
+		<Modifier strumID="2" strumLineID="1" value="0" name="XPUp" modifier="x" color="#0000F1"/>
+		<Modifier strumID="3" strumLineID="1" value="0" name="XPRi" modifier="x" color="#0000F1"/>
+		<Modifier strumID="0" strumLineID="0" value="0" name="XOLe" modifier="x" color="#FF0000"/>
+		<Modifier strumID="1" strumLineID="0" value="0" name="XODo" modifier="x" color="#FF0000"/>
+		<Modifier strumID="2" strumLineID="0" value="0" name="XOUp" modifier="x" color="#FF0000"/>
+		<Modifier strumID="3" strumLineID="0" value="0" name="XORi" modifier="x" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="1" value="0" name="yPLe" modifier="y" color="#0000F1"/>
+		<Modifier strumID="1" strumLineID="1" value="0" name="yPDo" modifier="y" color="#0000F1"/>
+		<Modifier strumID="2" strumLineID="1" value="0" name="yPUp" modifier="y" color="#0000F1"/>
+		<Modifier strumID="3" strumLineID="1" value="0" name="yPRi" modifier="y" color="#0000F1"/>
+		<Modifier strumID="0" strumLineID="0" value="0" name="yOLe" modifier="y" color="#FF0000"/>
+		<Modifier strumID="1" strumLineID="0" value="0" name="yODo" modifier="y" color="#FF0000"/>
+		<Modifier strumID="2" strumLineID="0" value="0" name="yOUp" modifier="y" color="#FF0000"/>
+		<Modifier strumID="3" strumLineID="0" value="0" name="yORi" modifier="y" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="1" value="0" name="zPLe" modifier="z" color="#0000F1"/>
+		<Modifier strumID="1" strumLineID="1" value="0" name="zPDo" modifier="z" color="#0000F1"/>
+		<Modifier strumID="2" strumLineID="1" value="0" name="zPUp" modifier="z" color="#0000F1"/>
+		<Modifier strumID="3" strumLineID="1" value="0" name="zPRi" modifier="z" color="#0000F1"/>
+		<Modifier strumID="0" strumLineID="0" value="0" name="zOLe" modifier="z" color="#FF0000"/>
+		<Modifier strumID="1" strumLineID="0" value="0" name="zODo" modifier="z" color="#FF0000"/>
+		<Modifier strumID="2" strumLineID="0" value="0" name="zOUp" modifier="z" color="#FF0000"/>
+		<Modifier strumID="3" strumLineID="0" value="0" name="zORi" modifier="z" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="1" value="0" name="anglezPLe" modifier="angleZ" color="#0000F1"/>
+		<Modifier strumID="1" strumLineID="1" value="0" name="anglezPDo" modifier="angleZ" color="#0000F1"/>
+		<Modifier strumID="2" strumLineID="1" value="0" name="anglezPUp" modifier="angleZ" color="#0000F1"/>
+		<Modifier strumID="3" strumLineID="1" value="0" name="anglezPRi" modifier="angleZ" color="#0000F1"/>
+		<Modifier strumID="0" strumLineID="0" value="0" name="anglezOLe" modifier="angleZ" color="#FF0000"/>
+		<Modifier strumID="1" strumLineID="0" value="0" name="anglezODo" modifier="angleZ" color="#FF0000"/>
+		<Modifier strumID="2" strumLineID="0" value="0" name="anglezOUp" modifier="angleZ" color="#FF0000"/>
+		<Modifier strumID="3" strumLineID="0" value="0" name="anglezORi" modifier="angleZ" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="1" value="0" name="alphaPLe" modifier="alpha" color="#0000F1"/>
+		<Modifier strumID="1" strumLineID="1" value="0" name="alphaPDo" modifier="alpha" color="#0000F1"/>
+		<Modifier strumID="2" strumLineID="1" value="0" name="alphaPUp" modifier="alpha" color="#0000F1"/>
+		<Modifier strumID="3" strumLineID="1" value="0" name="alphaPRi" modifier="alpha" color="#0000F1"/>
+		<Modifier strumID="0" strumLineID="0" value="0" name="alphaOLe" modifier="alpha" color="#FF0000"/>
+		<Modifier strumID="1" strumLineID="0" value="0" name="alphaODo" modifier="alpha" color="#FF0000"/>
+		<Modifier strumID="2" strumLineID="0" value="0" name="alphaOUp" modifier="alpha" color="#FF0000"/>
+		<Modifier strumID="3" strumLineID="0" value="0" name="alphaORi" modifier="alpha" color="#FF0000"/>
+	</Init>
+	<Events>
+		<Event step="-1" type="addCameraZoom" value="0.06"/>
+		<Event step="-1" type="addHUDZoom" value="0.06"/>
+		<Event step="-2" time="0" value="-700" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="yPLe"/>
+		<Event step="-2" time="0" value="-700" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="yPUp"/>
+		<Event step="-2" time="0" value="-700" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="yOLe"/>
+		<Event step="-2" time="0" value="-700" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="yODo"/>
+		<Event step="-2" time="0" value="-550" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XOUp"/>
+		<Event step="-2" time="0" value="-700" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="yORi"/>
+		<Event step="-2" time="0" value="-700" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="yOUp"/>
+		<Event step="-2" time="0" value="-700" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="yPRi"/>
+		<Event step="-2" time="0" value="-700" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="yPDo"/>
+		<Event step="-2" time="0" value="550" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XPUp"/>
+		<Event step="-2" time="0" value="-550" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XODo"/>
+		<Event step="-2" time="0" value="550" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XPdo"/>
+		<Event step="-2" time="0" value="-550" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XORi"/>
+		<Event step="-2" time="0" value="550" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XPLe"/>
+		<Event step="-2" time="0" value="550" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XPRi"/>
+		<Event step="-2" time="0" value="-550" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XOLe"/>
+		<Event step="12" type="addCameraZoom" value="0.06"/>
+		<Event step="12" type="addHUDZoom" value="0.06"/>
+		<Event step="20" type="addCameraZoom" value="0.06"/>
+		<Event step="20" type="addHUDZoom" value="0.06"/>
+		<Event step="32" type="addCameraZoom" value="0.06"/>
+		<Event step="32" type="addHUDZoom" value="0.06"/>
+		<Event step="44" type="addCameraZoom" value="0.06"/>
+		<Event step="44" type="addHUDZoom" value="0.06"/>
+		<Event step="52" type="addCameraZoom" value="0.06"/>
+		<Event step="52" type="addHUDZoom" value="0.06"/>
+		<Event step="64" type="addCameraZoom" value="0.06"/>
+		<Event step="64" type="addHUDZoom" value="0.06"/>
+		<Event step="76" type="addCameraZoom" value="0.06"/>
+		<Event step="76" type="addHUDZoom" value="0.06"/>
+		<Event step="84" type="addCameraZoom" value="0.06"/>
+		<Event step="84" type="addHUDZoom" value="0.06"/>
+		<Event step="96" time="128" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-700" name="yPLe"/>
+		<Event step="96" type="addCameraZoom" value="0.06"/>
+		<Event step="96" time="128" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="550" name="XPLe"/>
+		<Event step="96" time="112" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-550" name="XORi"/>
+		<Event step="96" time="112" value="0" property="value" ease="linear" type="tweenModifierValue" startValue="360" name="anglezPLe"/>
+		<Event step="96" time="112" value="0" property="value" ease="linear" type="tweenModifierValue" startValue="360" name="anglezORi"/>
+		<Event step="96" time="112" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-700" name="yORi"/>
+		<Event step="96" type="addHUDZoom" value="0.06"/>
+		<Event step="108" type="addCameraZoom" value="0.06"/>
+		<Event step="108" type="addHUDZoom" value="0.06"/>
+		<Event step="112" time="112" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-700" name="yPDo"/>
+		<Event step="112" time="96" value="0" property="value" ease="linear" type="tweenModifierValue" startValue="360" name="anglezPDo"/>
+		<Event step="112" time="96" value="0" property="value" ease="linear" type="tweenModifierValue" startValue="360" name="anglezOUp"/>
+		<Event step="112" time="96" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-550" name="XOUp"/>
+		<Event step="112" time="96" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-700" name="yOUp"/>
+		<Event step="112" time="112" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="550" name="XPdo"/>
+		<Event step="116" type="addCameraZoom" value="0.06"/>
+		<Event step="116" type="addHUDZoom" value="0.06"/>
+		<Event step="128" time="80" value="0" property="value" ease="linear" type="tweenModifierValue" startValue="360" name="anglezPUp"/>
+		<Event step="128" time="80" value="0" property="value" ease="linear" type="tweenModifierValue" startValue="360" name="anglezODo"/>
+		<Event step="128" time="96" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-700" name="yPUp"/>
+		<Event step="128" time="96" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="550" name="XPUp"/>
+		<Event step="128" time="80" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-700" name="yODo"/>
+		<Event step="128" time="80" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-550" name="XODo"/>
+		<Event step="128" type="addCameraZoom" value="0.06"/>
+		<Event step="128" type="addHUDZoom" value="0.06"/>
+		<Event step="140" type="addCameraZoom" value="0.06"/>
+		<Event step="140" type="addHUDZoom" value="0.06"/>
+		<Event step="144" time="64" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-700" name="yOLe"/>
+		<Event step="144" time="64" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-550" name="XOLe"/>
+		<Event step="144" time="80" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-700" name="yPRi"/>
+		<Event step="144" time="64" value="0" property="value" ease="linear" type="tweenModifierValue" startValue="360" name="anglezOLe"/>
+		<Event step="144" time="64" value="0" property="value" ease="linear" type="tweenModifierValue" startValue="360" name="anglezPRi"/>
+		<Event step="144" time="80" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="550" name="XPRi"/>
+		<Event step="148" type="addCameraZoom" value="0.06"/>
+		<Event step="148" type="addHUDZoom" value="0.06"/>
+		<Event step="160" type="addCameraZoom" value="0.06"/>
+		<Event step="160" type="addHUDZoom" value="0.06"/>
+		<Event step="172" type="addCameraZoom" value="0.06"/>
+		<Event step="172" type="addHUDZoom" value="0.06"/>
+		<Event step="180" type="addCameraZoom" value="0.06"/>
+		<Event step="180" type="addHUDZoom" value="0.06"/>
+		<Event step="192" type="addCameraZoom" value="0.06"/>
+		<Event step="192" type="addHUDZoom" value="0.06"/>
+		<Event step="204" type="addCameraZoom" value="0.06"/>
+		<Event step="204" type="addHUDZoom" value="0.06"/>
+		<Event step="212" type="addCameraZoom" value="0.06"/>
+		<Event step="212" type="addHUDZoom" value="0.06"/>
+		<Event step="224" type="addCameraZoom" value="0.06"/>
+		<Event step="224" type="addHUDZoom" value="0.06"/>
+		<Event step="236" type="addCameraZoom" value="0.06"/>
+		<Event step="236" type="addHUDZoom" value="0.06"/>
+		<Event step="248" time="8" value="10" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="254" time="2" value="320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="254" time="2" value="-1" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="alphaP"/>
+		<Event step="254" time="2" value="-320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="256" type="addCameraZoom" value="0.06"/>
+		<Event step="256" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="10" name="mirror"/>
+		<Event step="256" type="addHUDZoom" value="0.06"/>
+		<Event step="264" type="addCameraZoom" value="0.1"/>
+		<Event step="264" type="addHUDZoom" value="0.1"/>
+		<Event step="268" type="addCameraZoom" value="0.06"/>
+		<Event step="268" type="addHUDZoom" value="0.06"/>
+		<Event step="276" type="addCameraZoom" value="0.06"/>
+		<Event step="276" type="addHUDZoom" value="0.06"/>
+		<Event step="280" type="addCameraZoom" value="0.1"/>
+		<Event step="280" type="addHUDZoom" value="0.1"/>
+		<Event step="288" type="addCameraZoom" value="0.06"/>
+		<Event step="288" type="addHUDZoom" value="0.06"/>
+		<Event step="296" type="addCameraZoom" value="0.1"/>
+		<Event step="296" type="addHUDZoom" value="0.1"/>
+		<Event step="300" type="addCameraZoom" value="0.06"/>
+		<Event step="300" type="addHUDZoom" value="0.06"/>
+		<Event step="308" type="addCameraZoom" value="0.06"/>
+		<Event step="308" type="addHUDZoom" value="0.06"/>
+		<Event step="312" type="addCameraZoom" value="0.1"/>
+		<Event step="312" type="addHUDZoom" value="0.1"/>
+		<Event step="320" type="addCameraZoom" value="0.06"/>
+		<Event step="320" type="addHUDZoom" value="0.06"/>
+		<Event step="328" type="addCameraZoom" value="0.1"/>
+		<Event step="328" type="addHUDZoom" value="0.1"/>
+		<Event step="332" type="addCameraZoom" value="0.06"/>
+		<Event step="332" type="addHUDZoom" value="0.06"/>
+		<Event step="340" type="addCameraZoom" value="0.06"/>
+		<Event step="340" type="addHUDZoom" value="0.06"/>
+		<Event step="344" type="addCameraZoom" value="0.1"/>
+		<Event step="344" type="addHUDZoom" value="0.1"/>
+		<Event step="352" type="addCameraZoom" value="0.06"/>
+		<Event step="352" type="addHUDZoom" value="0.06"/>
+		<Event step="360" type="addCameraZoom" value="0.1"/>
+		<Event step="360" type="addHUDZoom" value="0.1"/>
+		<Event step="364" type="addCameraZoom" value="0.06"/>
+		<Event step="364" type="addHUDZoom" value="0.06"/>
+		<Event step="374" time="0" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-1" name="alphaP"/>
+		<Event step="374" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-700" name="yP"/>
+		<Event step="376" time="4" value="-200" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="zO"/>
+		<Event step="378" time="4" value="-700" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="yO"/>
+		<Event step="384" type="addCameraZoom" value="0.06"/>
+		<Event step="384" type="addHUDZoom" value="0.06"/>
+		<Event step="392" type="addCameraZoom" value="0.1"/>
+		<Event step="392" type="addHUDZoom" value="0.1"/>
+		<Event step="396" type="addCameraZoom" value="0.06"/>
+		<Event step="396" type="addHUDZoom" value="0.06"/>
+		<Event step="404" type="addCameraZoom" value="0.06"/>
+		<Event step="404" type="addHUDZoom" value="0.06"/>
+		<Event step="408" type="addCameraZoom" value="0.1"/>
+		<Event step="408" type="addHUDZoom" value="0.1"/>
+		<Event step="416" type="addCameraZoom" value="0.06"/>
+		<Event step="416" type="addHUDZoom" value="0.06"/>
+		<Event step="424" type="addCameraZoom" value="0.1"/>
+		<Event step="424" type="addHUDZoom" value="0.1"/>
+		<Event step="428" type="addCameraZoom" value="0.06"/>
+		<Event step="428" type="addHUDZoom" value="0.06"/>
+		<Event step="436" type="addCameraZoom" value="0.06"/>
+		<Event step="436" type="addHUDZoom" value="0.06"/>
+		<Event step="440" type="addCameraZoom" value="0.1"/>
+		<Event step="440" type="addHUDZoom" value="0.1"/>
+		<Event step="446" time="4" value="-250" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XOLe"/>
+		<Event step="446" time="4" value="250" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XORi"/>
+		<Event step="446" time="4" value="-250" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XODo"/>
+		<Event step="446" time="4" value="250" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XOUp"/>
+		<Event step="448" type="addCameraZoom" value="0.06"/>
+		<Event step="448" type="addHUDZoom" value="0.06"/>
+		<Event step="456" type="addCameraZoom" value="0.06"/>
+		<Event step="456" type="addHUDZoom" value="0.06"/>
+		<Event step="468" time="0" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-700" name="yO"/>
+		<Event step="468" time="0" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-200" name="zO"/>
+		<Event step="468" time="0" value="-1" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="480" time="12" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-1" name="alphaO"/>
+		<Event step="481" time="12" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="200" name="zORi"/>
+		<Event step="481" time="12" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="100" name="zODo"/>
+		<Event step="481" time="12" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="100" name="zOUp"/>
+		<Event step="481" time="12" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="200" name="zOLe"/>
+		<Event step="496" type="addCameraZoom" value="0.06"/>
+		<Event step="496" type="addHUDZoom" value="0.06"/>
+		<Event step="500" type="addCameraZoom" value="0.06"/>
+		<Event step="500" type="addHUDZoom" value="0.06"/>
+		<Event step="504" time="8" value="0.2" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="504" type="addCameraZoom" value="0.06"/>
+		<Event step="504" type="addHUDZoom" value="0.06"/>
+		<Event step="508" type="addCameraZoom" value="0.06"/>
+		<Event step="508" type="addHUDZoom" value="0.06"/>
+		<Event step="509" time="3" value="0" property="value" ease="quartOut" type="tweenModifierValue" startValue="250" name="XOUp"/>
+		<Event step="509" time="3" value="0" property="value" ease="quartOut" type="tweenModifierValue" startValue="250" name="XORi"/>
+		<Event step="509" time="3" value="0" property="value" ease="quartOut" type="tweenModifierValue" startValue="-250" name="XOLe"/>
+		<Event step="509" time="3" value="0" property="value" ease="quartOut" type="tweenModifierValue" startValue="-250" name="XODo"/>
+		<Event step="510" time="4" value="-0.8" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="510" time="4" value="300" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="zP"/>
+		<Event step="512" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.2" name="mirror"/>
+		<Event step="512" type="addCameraZoom" value="0.06"/>
+		<Event step="512" type="addHUDZoom" value="0.06"/>
+		<Event step="520" type="addCameraZoom" value="0.1"/>
+		<Event step="520" type="addHUDZoom" value="0.1"/>
+		<Event step="524" type="addCameraZoom" value="0.06"/>
+		<Event step="524" type="addHUDZoom" value="0.06"/>
+		<Event step="532" type="addCameraZoom" value="0.06"/>
+		<Event step="532" type="addHUDZoom" value="0.06"/>
+		<Event step="536" type="addCameraZoom" value="0.1"/>
+		<Event step="536" type="addHUDZoom" value="0.1"/>
+		<Event step="544" type="addCameraZoom" value="0.06"/>
+		<Event step="544" type="addHUDZoom" value="0.06"/>
+		<Event step="552" type="addCameraZoom" value="0.1"/>
+		<Event step="552" type="addHUDZoom" value="0.1"/>
+		<Event step="556" type="addCameraZoom" value="0.06"/>
+		<Event step="556" time="12" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="300" name="zP"/>
+		<Event step="556" time="12" value="300" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="zO"/>
+		<Event step="556" type="addHUDZoom" value="0.06"/>
+		<Event step="564" type="addCameraZoom" value="0.06"/>
+		<Event step="564" type="addHUDZoom" value="0.06"/>
+		<Event step="568" type="addCameraZoom" value="0.1"/>
+		<Event step="568" type="addHUDZoom" value="0.1"/>
+		<Event step="576" type="addCameraZoom" value="0.06"/>
+		<Event step="576" type="addHUDZoom" value="0.06"/>
+		<Event step="584" type="addCameraZoom" value="0.1"/>
+		<Event step="584" type="addHUDZoom" value="0.1"/>
+		<Event step="588" type="addCameraZoom" value="0.06"/>
+		<Event step="588" type="addHUDZoom" value="0.06"/>
+		<Event step="596" type="addCameraZoom" value="0.06"/>
+		<Event step="596" type="addHUDZoom" value="0.06"/>
+		<Event step="600" type="addCameraZoom" value="0.1"/>
+		<Event step="600" type="addHUDZoom" value="0.1"/>
+		<Event step="608" type="addCameraZoom" value="0.06"/>
+		<Event step="608" type="addHUDZoom" value="0.06"/>
+		<Event step="616" type="addCameraZoom" value="0.1"/>
+		<Event step="616" type="addHUDZoom" value="0.1"/>
+		<Event step="617" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="300" name="zO"/>
+		<Event step="618" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-0.8" name="alphaO"/>
+		<Event step="620" type="addCameraZoom" value="0.06"/>
+		<Event step="620" time="12" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="320" name="xO"/>
+		<Event step="620" time="12" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-320" name="xP"/>
+		<Event step="620" type="addHUDZoom" value="0.06"/>
+		<Event step="628" type="addCameraZoom" value="0.06"/>
+		<Event step="628" type="addHUDZoom" value="0.06"/>
+		<Event step="632" type="addCameraZoom" value="0.1"/>
+		<Event step="632" type="addHUDZoom" value="0.1"/>
+		<Event step="640" time="8" value="-0.8" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="640" type="addCameraZoom" value="0.06"/>
+		<Event step="640" type="addHUDZoom" value="0.06"/>
+		<Event step="644" time="4" value="1" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="reverseO"/>
+		<Event step="648" time="16" value="320" property="value" ease="quartOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="648" type="addCameraZoom" value="0.1"/>
+		<Event step="648" time="16" value="-320" property="value" ease="quartOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="648" type="addHUDZoom" value="0.1"/>
+		<Event step="652" type="addCameraZoom" value="0.06"/>
+		<Event step="652" type="addHUDZoom" value="0.06"/>
+		<Event step="660" type="addCameraZoom" value="0.06"/>
+		<Event step="660" type="addHUDZoom" value="0.06"/>
+		<Event step="664" type="addCameraZoom" value="0.1"/>
+		<Event step="664" type="addHUDZoom" value="0.1"/>
+		<Event step="672" type="addCameraZoom" value="0.06"/>
+		<Event step="672" type="addHUDZoom" value="0.06"/>
+		<Event step="680" type="addCameraZoom" value="0.1"/>
+		<Event step="680" type="addHUDZoom" value="0.1"/>
+		<Event step="684" type="addCameraZoom" value="0.06"/>
+		<Event step="684" type="addHUDZoom" value="0.06"/>
+		<Event step="688" time="8" value="0" property="value" ease="quadOut" type="tweenModifierValue" startValue="1" name="reverseO"/>
+		<Event step="688" time="8" value="1" property="value" ease="quadOut" type="tweenModifierValue" startValue="0" name="reverseP"/>
+		<Event step="692" type="addCameraZoom" value="0.06"/>
+		<Event step="692" type="addHUDZoom" value="0.06"/>
+		<Event step="696" type="addCameraZoom" value="0.1"/>
+		<Event step="696" type="addHUDZoom" value="0.1"/>
+		<Event step="704" type="addCameraZoom" value="0.06"/>
+		<Event step="704" type="addHUDZoom" value="0.06"/>
+		<Event step="712" type="addCameraZoom" value="0.1"/>
+		<Event step="712" type="addHUDZoom" value="0.1"/>
+		<Event step="716" type="addCameraZoom" value="0.06"/>
+		<Event step="716" type="addHUDZoom" value="0.06"/>
+		<Event step="724" type="addCameraZoom" value="0.06"/>
+		<Event step="724" type="addHUDZoom" value="0.06"/>
+		<Event step="728" type="addCameraZoom" value="0.1"/>
+		<Event step="728" type="addHUDZoom" value="0.1"/>
+		<Event step="736" time="8" value="0" property="value" ease="quadOut" type="tweenModifierValue" startValue="1" name="reverseP"/>
+		<Event step="736" type="addCameraZoom" value="0.06"/>
+		<Event step="736" type="addHUDZoom" value="0.06"/>
+		<Event step="740" time="8" value="300" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="zP"/>
+		<Event step="744" type="addCameraZoom" value="0.1"/>
+		<Event step="744" type="addHUDZoom" value="0.1"/>
+		<Event step="748" type="addCameraZoom" value="0.06"/>
+		<Event step="748" type="addHUDZoom" value="0.06"/>
+		<Event step="752" time="8" value="-100" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-320" name="xP"/>
+		<Event step="756" type="addCameraZoom" value="0.06"/>
+		<Event step="756" type="addHUDZoom" value="0.06"/>
+		<Event step="760" type="addCameraZoom" value="0.1"/>
+		<Event step="760" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="300" name="zP"/>
+		<Event step="760" time="8" value="100" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="320" name="xO"/>
+		<Event step="760" type="addHUDZoom" value="0.1"/>
+		<Event step="764" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-0.8" name="alphaO"/>
+		<Event step="768" type="addCameraZoom" value="0.06"/>
+		<Event step="768" type="addHUDZoom" value="0.06"/>
+		<Event step="780" type="addCameraZoom" value="0.06"/>
+		<Event step="780" type="addHUDZoom" value="0.06"/>
+		<Event step="788" type="addCameraZoom" value="0.06"/>
+		<Event step="788" type="addHUDZoom" value="0.06"/>
+		<Event step="800" type="addCameraZoom" value="0.06"/>
+		<Event step="800" type="addHUDZoom" value="0.06"/>
+		<Event step="812" type="addCameraZoom" value="0.06"/>
+		<Event step="812" type="addHUDZoom" value="0.06"/>
+		<Event step="820" type="addCameraZoom" value="0.06"/>
+		<Event step="820" type="addHUDZoom" value="0.06"/>
+		<Event step="832" type="addCameraZoom" value="0.06"/>
+		<Event step="832" type="addHUDZoom" value="0.06"/>
+		<Event step="844" type="addCameraZoom" value="0.06"/>
+		<Event step="844" type="addHUDZoom" value="0.06"/>
+		<Event step="852" type="addCameraZoom" value="0.06"/>
+		<Event step="852" type="addHUDZoom" value="0.06"/>
+		<Event step="864" type="addCameraZoom" value="0.06"/>
+		<Event step="864" type="addHUDZoom" value="0.06"/>
+		<Event step="620" time="4" value="0.1" property="hue" ease="cubeIn" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="640" time="4" value="0" property="hue" ease="cubeOut" type="tweenShaderProperty" startValue="0.1" name="colorswap"/>
+		<Event step="768" time="4" value="0.05" property="hue" ease="cubeIn" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="848" time="48" value="290" property="value" ease="linear" type="tweenModifierValue" startValue="100" name="xO"/>
+		<Event step="848" time="52" value="250" property="value" ease="linear" type="tweenModifierValue" startValue="0" name="XPLe"/>
+		<Event step="856" time="44" value="150" property="value" ease="linear" type="tweenModifierValue" startValue="0" name="XPdo"/>
+		<Event step="880" time="16" value="50" property="value" ease="linear" type="tweenModifierValue" startValue="0" name="XPUp"/>
+		<Event step="896" time="8" value="100" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="290" name="xO"/>
+		<Event step="896" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="50" name="XPUp"/>
+		<Event step="896" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="136.364" name="XPdo"/>
+		<Event step="896" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="230.769" name="XPLe"/>
+		<Event step="968" time="48" value="-290" property="value" ease="linear" type="tweenModifierValue" startValue="-100" name="xP"/>
+		<Event step="968" time="52" value="-250" property="value" ease="linear" type="tweenModifierValue" startValue="0" name="XORi"/>
+		<Event step="976" time="44" value="-150" property="value" ease="linear" type="tweenModifierValue" startValue="0" name="XOUp"/>
+		<Event step="1000" time="16" value="-50" property="value" ease="linear" type="tweenModifierValue" startValue="0" name="XODo"/>
+		<Event step="1008" time="16" value="0.2" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1016" time="4" value="0" property="hue" ease="cubeIn" type="tweenShaderProperty" startValue="0.05" name="colorswap"/>
+		<Event step="1022" time="4" value="-110" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-290" name="xP"/>
+		<Event step="1022" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-50" name="XODo"/>
+		<Event step="1022" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-150" name="XOUp"/>
+		<Event step="1022" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-250" name="XORi"/>
+		<Event step="1024" time="4" value="-1" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="alphaP"/>
+		<Event step="1024" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="100" name="xO"/>
+		<Event step="1024" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.2" name="mirror"/>
+		<Event step="1052" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-110" name="xP"/>
+		<Event step="1056" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-1" name="alphaP"/>
+		<Event step="1064" time="4" value="640" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="1064" time="4" value="-640" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="1132" time="4" value="0.1" property="hue" ease="cubeIn" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="1136" time="4" value="540" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="640" name="xO"/>
+		<Event step="1136" time="4" value="-540" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-640" name="xP"/>
+		<Event step="1152" time="4" value="-320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-540" name="xP"/>
+		<Event step="1152" time="4" value="1" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="reverseO"/>
+		<Event step="1152" time="4" value="320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="540" name="xO"/>
+		<Event step="1152" time="4" value="-0.8" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="1152" time="4" value="0" property="hue" ease="cubeOut" type="tweenShaderProperty" startValue="0.1" name="colorswap"/>
+		<Event step="1200" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="1" name="reverseO"/>
+		<Event step="1200" time="4" value="1" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="reverseP"/>
+		<Event step="1248" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="1" name="reverseP"/>
+		<Event step="1264" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-320" name="xP"/>
+		<Event step="1272" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-0.8" name="alphaO"/>
+		<Event step="1272" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="320" name="xO"/>
+		<Event step="1272" time="6" value="10" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1278" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="10" name="mirror"/>
+		<Event step="1312" time="4" value="640" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="1312" time="4" value="-640" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="1328" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-640" name="xP"/>
+		<Event step="1336" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="640" name="xO"/>
+		<Event step="1392" time="4" value="-0.8" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="1392" time="4" value="320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="1392" time="4" value="-320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="1392" time="8" value="30" property="angle" ease="cubeOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="1400" time="8" value="-30" property="angle" ease="cubeOut" type="tweenShaderProperty" startValue="30" name="mirror"/>
+		<Event step="1408" time="4" value="0" property="angle" ease="cubeOut" type="tweenShaderProperty" startValue="-30" name="mirror"/>
+		<Event step="1520" time="16" value="10" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1520" time="16" value="360" property="angle" ease="cubeIn" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="1536" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-320" name="xP"/>
+		<Event step="1536" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="320" name="xO"/>
+		<Event step="1536" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-0.8" name="alphaO"/>
+		<Event step="1536" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="10" name="mirror"/>
+		<Event step="1536" time="2" value="0" property="angle" ease="cubeOut" type="tweenShaderProperty" startValue="360" name="mirror"/>
+		<Event step="1692" time="4" value="-0.05" property="hue" ease="cubeIn" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="1696" time="2" value="-30" property="value" ease="quartOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="1696" time="2" value="30" property="value" ease="quartOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="1698" time="4" value="100" property="value" ease="quartOut" type="tweenModifierValue" startValue="-30" name="xO"/>
+		<Event step="1698" time="4" value="-100" property="value" ease="quartOut" type="tweenModifierValue" startValue="30" name="xP"/>
+		<Event step="1702" time="2" value="-30" property="value" ease="quartOut" type="tweenModifierValue" startValue="100" name="xO"/>
+		<Event step="1702" time="2" value="20" property="value" ease="quartOut" type="tweenModifierValue" startValue="-100" name="xP"/>
+		<Event step="1704" time="4" value="100" property="value" ease="quartOut" type="tweenModifierValue" startValue="-30" name="xO"/>
+		<Event step="1704" time="4" value="-100" property="value" ease="quartOut" type="tweenModifierValue" startValue="20" name="xP"/>
+		<Event step="1708" time="2" value="-30" property="value" ease="quartOut" type="tweenModifierValue" startValue="100" name="xO"/>
+		<Event step="1708" time="2" value="20" property="value" ease="quartOut" type="tweenModifierValue" startValue="-100" name="xP"/>
+		<Event step="1710" time="4" value="100" property="value" ease="quartOut" type="tweenModifierValue" startValue="-30" name="xO"/>
+		<Event step="1710" time="4" value="-100" property="value" ease="quartOut" type="tweenModifierValue" startValue="20" name="xP"/>
+		<Event step="1714" time="2" value="-30" property="value" ease="quartOut" type="tweenModifierValue" startValue="100" name="xO"/>
+		<Event step="1714" time="2" value="20" property="value" ease="quartOut" type="tweenModifierValue" startValue="-100" name="xP"/>
+		<Event step="1716" time="4" value="100" property="value" ease="quartOut" type="tweenModifierValue" startValue="-30" name="xO"/>
+		<Event step="1716" time="4" value="-100" property="value" ease="quartOut" type="tweenModifierValue" startValue="20" name="xP"/>
+		<Event step="1720" time="2" value="-30" property="value" ease="quartOut" type="tweenModifierValue" startValue="100" name="xO"/>
+		<Event step="1720" time="2" value="20" property="value" ease="quartOut" type="tweenModifierValue" startValue="-100" name="xP"/>
+		<Event step="1722" time="8" value="320" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-30" name="xO"/>
+		<Event step="1722" time="8" value="-320" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="1725" time="4" value="-0.8" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="1728" time="4" value="0" property="hue" ease="cubeOut" type="tweenShaderProperty" startValue="-0.05" name="colorswap"/>
+		<Event step="1760" time="4" value="1" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="reverseP"/>
+		<Event step="1776" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="1" name="reverseP"/>
+		<Event step="1776" time="4" value="1" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="reverseO"/>
+		<Event step="1824" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-320" name="xP"/>
+		<Event step="1832" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-0.8" name="alphaO"/>
+		<Event step="1832" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="320" name="xO"/>
+		<Event step="1832" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="1" name="reverseO"/>
+		<Event step="1900" time="4" value="0.1" property="hue" ease="cubeIn" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="1904" time="12" value="100" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="1904" time="12" value="-100" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="1920" time="4" value="-0.8" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="1920" time="8" value="1" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="reverseO"/>
+		<Event step="1920" time="4" value="-320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-100" name="xP"/>
+		<Event step="1920" time="4" value="320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="100" name="xO"/>
+		<Event step="1920" time="4" value="0" property="hue" ease="cubeOut" type="tweenShaderProperty" startValue="0.1" name="colorswap"/>
+		<Event step="1968" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="1" name="reverseO"/>
+		<Event step="1968" time="4" value="1" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="reverseP"/>
+		<Event step="1984" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="1" name="reverseP"/>
+		<Event step="2048" time="16" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="320" name="xO"/>
+		<Event step="2048" time="16" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-320" name="xP"/>
+		<Event step="2048" time="4" value="-0.05" property="hue" ease="cubeIn" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="2050" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-0.8" name="alphaO"/>
+		<Event step="2064" time="8" value="-640" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="2064" time="8" value="640" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="2096" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="640" name="xO"/>
+		<Event step="2096" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-640" name="xP"/>
+		<Event step="2128" time="8" value="-640" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="2128" time="8" value="640" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="2160" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="640" name="xO"/>
+		<Event step="2160" time="8" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-640" name="xP"/>
+		<Event step="2176" time="4" value="0.05" property="hue" ease="cubeIn" type="tweenShaderProperty" startValue="-0.05" name="colorswap"/>
+		<Event step="2272" time="8" value="-320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="2272" time="8" value="320" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="2272" time="4" value="-0.8" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="2272" time="4" value="0" property="hue" ease="cubeIn" type="tweenShaderProperty" startValue="0.05" name="colorswap"/>
+		<Event step="2544" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-0.8" name="alphaO"/>
+		<Event step="2544" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="320" name="xO"/>
+		<Event step="2552" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-320" name="xP"/>
+		<Event step="2784" time="8" value="10" property="angle" ease="cubeOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="2792" time="8" value="-10" property="angle" ease="cubeOut" type="tweenShaderProperty" startValue="10" name="mirror"/>
+		<Event step="2800" time="8" value="10" property="angle" ease="cubeOut" type="tweenShaderProperty" startValue="-10" name="mirror"/>
+		<Event step="2808" time="8" value="-10" property="angle" ease="cubeOut" type="tweenShaderProperty" startValue="10" name="mirror"/>
+		<Event step="2816" time="16" value="0" property="angle" ease="cubeOut" type="tweenShaderProperty" startValue="-10" name="mirror"/>
+		<Event step="2832" time="4" value="1300" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="2832" time="4" value="-1300" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+	</Events>
+</Modchart>

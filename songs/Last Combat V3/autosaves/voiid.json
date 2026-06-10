@@ -1,0 +1,188 @@
+{
+	"meta": {
+		"opponentModeAllowed": true,
+		"icon": "Wiik4VoiidMatt-icons",
+		"difficulties": [
+			"Voiid"
+		],
+		"color": "#296A00",
+		"coopAllowed": true,
+		"stepsPerBeat": 4,
+		"displayName": "Last Combat",
+		"needsVoices": true,
+		"beatsPerMeasure": 4,
+		"bpm": 200
+	},
+	"events": [],
+	"codenameChart": true,
+	"strumLines": [
+		{
+			"keyCount": 4,
+			"strumScale": 1,
+			"position": "dad",
+			"notes": [
+				{
+					"id": 1,
+					"sLen": 0,
+					"time": 10200,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 0,
+					"time": 10500,
+					"type": 0
+				},
+				{
+					"id": 3,
+					"sLen": 0,
+					"time": 10575,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 0,
+					"time": 10650,
+					"type": 0
+				},
+				{
+					"id": 3,
+					"sLen": 525,
+					"time": 10800,
+					"type": 0
+				},
+				{
+					"id": 0,
+					"sLen": 525,
+					"time": 11400,
+					"type": 0
+				},
+				{
+					"id": 1,
+					"sLen": 525,
+					"time": 12000,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 525,
+					"time": 12600,
+					"type": 0
+				},
+				{
+					"id": 3,
+					"sLen": 0,
+					"time": 13200,
+					"type": 0
+				},
+				{
+					"id": 1,
+					"sLen": 0,
+					"time": 13350,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 0,
+					"time": 13575,
+					"type": 0
+				},
+				{
+					"id": 3,
+					"sLen": 0,
+					"time": 13650,
+					"type": 0
+				},
+				{
+					"id": 1,
+					"sLen": 0,
+					"time": 14025,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 0,
+					"time": 14175,
+					"type": 0
+				}
+			],
+			"characters": [
+				"Last Combat Matt"
+			],
+			"type": 0,
+			"visible": true,
+			"strumSpacing": 1,
+			"strumPos": [
+				0,
+				50
+			],
+			"strumLinePos": 0.25,
+			"vocalsSuffix": ""
+		},
+		{
+			"keyCount": 4,
+			"strumScale": 1,
+			"position": "boyfriend",
+			"notes": [
+				{
+					"id": 1,
+					"sLen": 525,
+					"time": 15000,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 525,
+					"time": 15600,
+					"type": 0
+				},
+				{
+					"id": 0,
+					"sLen": 525,
+					"time": 16200,
+					"type": 0
+				},
+				{
+					"id": 1,
+					"sLen": 525,
+					"time": 16800,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 525,
+					"time": 17400,
+					"type": 0
+				},
+				{
+					"id": 3,
+					"sLen": 525,
+					"time": 18000,
+					"type": 0
+				},
+				{
+					"id": 0,
+					"sLen": 225,
+					"time": 18600,
+					"type": 0
+				}
+			],
+			"characters": [
+				"Voiid BF Wiik 4"
+			],
+			"type": 1,
+			"visible": true,
+			"strumSpacing": 1,
+			"strumPos": [
+				0,
+				50
+			],
+			"strumLinePos": 0.75,
+			"vocalsSuffix": ""
+		}
+	],
+	"stage": "Volcano",
+	"scrollSpeed": 3.6,
+	"chartVersion": "1.6.0",
+	"noteTypes": []
+}

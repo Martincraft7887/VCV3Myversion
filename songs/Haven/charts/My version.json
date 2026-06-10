@@ -1,0 +1,59 @@
+{
+	"stage": "VoiidBoxingRingFar",
+	"events": [],
+	"scrollSpeed": 2.5,
+	"codenameChart": true,
+	"strumLines": [
+		{
+			"notes": [],
+			"visible": true,
+			"strumPos": [
+				0,
+				50
+			],
+			"position": "dad",
+			"scrollSpeed": 2.5,
+			"strumScale": 1,
+			"strumLinePos": 0.25,
+			"type": 0,
+			"characters": [
+				"VoiidShaggyxm",
+				"MW"
+			]
+		},
+		{
+			"notes": [],
+			"visible": true,
+			"strumPos": [
+				0,
+				50
+			],
+			"position": "boyfriend",
+			"scrollSpeed": 2.5,
+			"strumScale": 1,
+			"strumLinePos": 0.75,
+			"type": 1,
+			"characters": [
+				"BFVOIID"
+			]
+		},
+		{
+			"notes": [],
+			"visible": false,
+			"strumPos": [
+				0,
+				50
+			],
+			"position": "girlfriend",
+			"scrollSpeed": 2.5,
+			"strumScale": 1,
+			"strumLinePos": 0.5,
+			"type": 2,
+			"characters": [
+				"Melody"
+			]
+		}
+	],
+	"meta": null,
+	"noteTypes": []
+}

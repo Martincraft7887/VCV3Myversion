@@ -1,0 +1,28 @@
+{
+	"composer": "TheOnlyVolume,Wolfinu,ImSilv4,Aron_Aurora",
+	"charter": "Sharik,Sanek,Parko",
+	"originalComposer": "Srperez",
+	"startTime": 19200,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#6d0091",
+	"midBorderBot": "#1c1c1c",
+	"innerBorderTop": "#300d14",
+	"innerBorderBot": "#212121",
+    "logo": "LogoSXMCensored",
+	"sobelStrength": 0.5,
+	"sobelIntensity": 1.0,
+    "vipFont": "dumbnerd.ttf",
+
+	"outerBorderTopVIP": "#000000",
+	"outerBorderBotVIP": "#000000",
+	"midBorderTopVIP": "#30101b",
+	"midBorderBotVIP": "#6d0091",
+	"innerBorderTopVIP": "#000000",
+	"innerBorderBotVIP": "#15001c",
+
+	"outerBorderSize": 13
+}
