@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character x="-50" y="-60" sprite="Voiid17bucksDarnell" scale="0.9" flipX="true" icon="Voiid Darnell" color="#3E3E3E" imagePath="Voiid17bucksDarnell.png">
+	<anim name="idle" anim="Idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="Down0" x="0" y="-50" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="Left0" x="-30" y="-7" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="Right0" x="20" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="Up0" x="-15" y="35" fps="24" loop="false"/>
+	<anim name="singLEFT-dodge" anim="Dodge0" x="10" y="50" fps="24" loop="false"/>
+	<anim name="singRIGHT-dodge" anim="Dodge0" x="10" y="50" fps="24" loop="false"/>
+	<anim name="singUP-dodge" anim="Dodge0" x="10" y="50" fps="24" loop="false"/>
+	<anim name="singDOWN-dodge" anim="Dodge0" x="10" y="50" fps="24" loop="false"/>
+</character>

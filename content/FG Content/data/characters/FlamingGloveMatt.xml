@@ -1,0 +1,16 @@
+<!DOCTYPE codename-engine-character>
+<character x="-5" y="30" sprite="Matthew_Lewis" camy="-100" icon="FlamingGloveMatt-icons" color="#393434" isGF="false">
+	<anim name="idle" anim="idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="attackdown0" x="35" y="-33" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="attackleft0" x="-17" y="-31" fps="24" loop="false"/>
+	<anim name="singUP" anim="attackup0" x="94" y="-31" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="attackright0" x="-4" y="-37" fps="24" loop="false"/>
+	<anim name="singLEFT-block" anim="blockleft0" x="-23" y="-37" fps="24" loop="false"/>
+	<anim name="singDOWN-block" anim="blockdown0" x="-24" y="-34" fps="24" loop="false"/>
+	<anim name="singUP-block" anim="blockup0" x="-23" y="-37" fps="24" loop="false"/>
+	<anim name="singRIGHT-block" anim="blockright0" x="-23" y="-32" fps="24" loop="false"/>
+	<anim name="singLEFT-parry" anim="parrydown0" x="-19" y="-33" fps="24" loop="false"/>
+	<anim name="singDOWN-parry" anim="parrydown0" x="-25" y="-42" fps="24" loop="false"/>
+	<anim name="singUP-parry" anim="parryup0" x="-25" y="-35" fps="24" loop="false"/>
+	<anim name="singRIGHT-parry" anim="parryup0" x="-25" y="-31" fps="24" loop="false"/>
+</character>

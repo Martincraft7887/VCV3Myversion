@@ -1,0 +1,16 @@
+<!DOCTYPE codename-engine-character>
+<character x="75" y="130" sprite="Voiid17bucksBF" flipX="true" camx="-450" camy="-270" isPlayer="true" icon="Wiik1BFRTX-icons" color="#3B3B3B" imagePath="Voiid17bucksBF.png">
+	<anim name="idle" anim="BF idle dance0" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="BF NOTE DOWN0" x="40" y="-80" fps="24" loop="false"/>
+	<anim name="singDOWNmiss" anim="BF NOTE DOWN MISS0" x="40" y="-80" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="BF NOTE LEFT0" x="30" y="-5" fps="24" loop="false"/>
+	<anim name="singLEFTmiss" anim="BF NOTE LEFT MISS0" x="30" y="-5" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="BF NOTE RIGHT0" x="-20" y="-10" fps="24" loop="false"/>
+	<anim name="singRIGHTmiss" anim="BF NOTE RIGHT MISS0" x="-20" y="-10" fps="24" loop="false"/>
+	<anim name="singUP" anim="BF NOTE UP0" x="10" y="30" fps="24" loop="false"/>
+	<anim name="singUPmiss" anim="BF NOTE UP MISS0" x="10" y="30" fps="24" loop="false"/>
+	<anim name="singDOWN-dodge" anim="dodge DOWN0" x="130" y="-80" fps="24" loop="false"/>
+	<anim name="singLEFT-dodge" anim="dodge LEFT0" x="80" y="-80" fps="24" loop="false"/>
+	<anim name="singRIGHT-dodge" anim="dodge RIGHT0" x="10" y="-65" fps="24" loop="false"/>
+	<anim name="singUP-dodge" anim="dodge UP0" x="100" y="-10" fps="24" loop="false"/>
+</character>

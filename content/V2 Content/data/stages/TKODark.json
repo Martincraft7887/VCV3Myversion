@@ -1,0 +1,15 @@
+﻿{
+    "rtxData":  {
+                    "overlay":  "0x000000",
+                    "overlayAlpha":  0.0103092783505155,
+                    "inner":  "0xC5C5CD",
+                    "innerAlpha":  0.474226804123711,
+                    "innerAngle":  263.505154639175,
+                    "lightX":  465.5,
+                    "lightY":  38.600000000001,
+                    "satinAlpha":  0.793814432989691,
+                    "innerDistance":  18.8659793814433,
+                    "pointLight":  false,
+                    "satin":  "0x0B0315"
+                }
+}

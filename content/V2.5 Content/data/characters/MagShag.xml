@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="-235" y="-125" sprite="MagShag" scale="1.02" camx="300" icon="VC_Mag_Shaggy_Matt" color="#343434" imagePath="michael.png">
+	<anim name="idle" anim="shaggy stand idle instance" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="stand down instance" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="stand left instance" x="200" y="-50" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="stand right instance" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="stand up instance" x="75" y="0" fps="24" loop="false"/>
+</character>

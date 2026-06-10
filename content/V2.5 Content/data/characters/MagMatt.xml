@@ -1,0 +1,13 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="MagMatt" scale="0.92" icon="VC_Mag_Shaggy_Matt" color="#363636" imagePath="magmatt.png">
+	<anim name="idle" anim="magmatt idle" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="magmatt left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="magmatt down" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="magmatt up" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="magmatt right" x="0" y="0" fps="24" loop="false"/>
+	<anim name="attack" anim="magmatt attack" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFTmiss" anim="magmatt leftmiss" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWNmiss" anim="magmatt downmiss" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUPmiss" anim="magmatt upmiss" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHTmiss" anim="magmatt rightmiss" x="0" y="0" fps="24" loop="false"/>
+</character>

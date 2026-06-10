@@ -1,0 +1,7 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/PaperBG/" name="PaperBG" zoom="0.5">
+	<sprite x="-1046" updateHitbox="true" sprite="paper normal" y="-552" scale="1.5" name="paper normal"/>
+	<girlfriend x="630" y="762"/>
+	<dad x="900" y="1340"/>
+	<boyfriend x="2000" y="1350"/>
+</stage>

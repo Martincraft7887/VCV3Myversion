@@ -1,0 +1,7 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.55" name="NewVoiidMansion" folder="stages/NewVoiidMansion" >
+	<sprite name="bg" x="-450" y="-75" sprite="bg" scroll="1" scale="1" updateHitbox="true"/>
+	<girlfriend x="8286," y="-4308"/>
+	<boyfriend x="1750" y="1700"/>
+	<dad x="800" y="1700"/>
+</stage>

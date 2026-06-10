@@ -1,0 +1,11 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.6" name="Knocked" folder="stages/Knocked" >
+	<sprite name="unknown0" x="-300" y="-280" sprite="BG" scroll="1" scale="2.5" updateHitbox="true"/>
+	<sprite name="unknown1" x="-600" y="10" sprite="knockGrey" scroll="1.8" scale="0.6" updateHitbox="true"/>
+	<sprite name="unknown2" x="-600" y="-422" sprite="Pe" scroll="1.8" scale="2" updateHitbox="true"/>
+	<girlfriend x="730" y="700"/>
+	<dad x="500" y="850" camxoffset="-120" camyoffset="140"/>
+	<boyfriend x="1100" y="820" camxoffset="70" camyoffset="100"/>
+	<sprite name="unknown3" x="-450" y="-480" sprite="Nis" scroll="0" scale="2" updateHitbox="true"/>
+	<sprite name="unknown4" x="-830" y="-480" sprite="Nis" scroll="0" scale="2" updateHitbox="true"/>
+</stage>

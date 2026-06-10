@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.47" name="VoiidBoxingRingFarVIP" folder="stages/VoiidBoxingRingFarVIP">
+	<sprite name="ring0" x="-95" y="-238" sprite="Ring" scroll="1" scale="2" updateHitbox="true"/>
+	<sprite name="ring1" x="-95" y="-238" sprite="Ring2" scroll="1" scale="2" updateHitbox="true" alpha="0"/>
+	<sprite name="ring2" x="-95" y="-238" sprite="Ring3" scroll="1" scale="2" updateHitbox="true" alpha="0"/>
+	
+	<girlfriend x="1700" y="1125"/>
+	<combo x="1600"/>
+	<dad x="1037" y="1152"/>
+	<boyfriend x="2393" y="1195" camxoffset="50" camyoffset="-200"/>
+	<sprite name="unknown7" x="-850" y="-660" sprite="ruido" scroll="0" scale="4" updateHitbox="true"/>
+</stage>

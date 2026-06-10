@@ -1,0 +1,13 @@
+{
+	"categories": [
+		{
+			"name": "Story Mode",
+			"songs": [
+				{
+					"name": "Flaming Glove",
+					"port": "Wiik_FG"
+				}
+			]
+		}
+	]
+}

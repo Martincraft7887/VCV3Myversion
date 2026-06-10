@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="-250" y="100" sprite="Voiid17BucksMatt" icon="icon-Wiik2VoiidMatt" color="#464646" imagePath="Voiid17BucksMatt.png">
+	<anim name="idle" anim="Idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="Down0" x="-12" y="-100" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="Left0" x="80" y="-50" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="Right0" x="27" y="-28" fps="24" loop="false"/>
+	<anim name="singUP" anim="Up0" x="45" y="45" fps="24" loop="false"/>
+</character>

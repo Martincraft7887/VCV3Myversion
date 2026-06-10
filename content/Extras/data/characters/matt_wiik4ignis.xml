@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="matt_wiik4_ignis" camx="300" icon="totalbravery-icons" color="#E9E96A">
+	<anim name="idle" anim="matt idle" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="matt down note" x="0" y="-30" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note" x="-19" y="80" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note" x="60" y="105" fps="24" loop="false"/>
+	<anim name="singUP" anim="matt up note" x="280" y="100" fps="24" loop="false"/>
+</character>

@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="-100" sprite="mlommer" camx="475" icon="Interregnum-Icons" color="#626772" isGF="false">
+	<anim name="idle" anim="mlommer idle" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="mlommer left0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="mlommer down0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="mlommer up0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="mlommer right0" x="0" y="0" fps="24" loop="false"/>
+</character>

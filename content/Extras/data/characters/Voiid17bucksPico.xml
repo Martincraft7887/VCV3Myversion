@@ -1,0 +1,13 @@
+<!DOCTYPE codename-engine-character>
+<character x="-120" y="-10" sprite="Voiid17bucksPico" scale="0.9" flipX="true" camx="-300" camy="-140" isPlayer="true" icon="Ronin" color="#3E3E3E" imagePath="Voiid17bucksPico.png">
+	<anim name="idle" anim="Idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="Down0" x="85" y="-100" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="Left0" x="70" y="5" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="Right0" x="-15" y="5" fps="24" loop="false"/>
+	<anim name="singUP" anim="Up0" x="0" y="45" fps="24" loop="false"/>
+	<anim name="Shoot" anim="Shoot0" x="430" y="-5" fps="24" loop="false"/>
+	<anim name="singUPmiis" anim="Up MISS0" x="0" y="45" fps="24" loop="false"/>
+	<anim name="singRIGHTmiss" anim="Right MISS0" x="-15" y="5" fps="24" loop="false"/>
+	<anim name="singLEFTmiss" anim="Left MISS0" x="70" y="5" fps="24" loop="false"/>
+	<anim name="singDOWNmiss" anim="Down MISS0" x="85" y="-100" fps="24" loop="false"/>
+</character>

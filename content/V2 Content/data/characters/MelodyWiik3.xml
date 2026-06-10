@@ -1,0 +1,6 @@
+<!DOCTYPE codename-engine-character>
+<character x="50" sprite="MEL_TKO1" icon="Melody-icon" isGF="true">
+	<anim name="danceLeft" anim="GF Dancing Beat" x="0" y="30" fps="24" loop="false" indices="30,1..14"/>
+	<anim name="danceRight" anim="GF Dancing Beat" x="0" y="30" fps="24" loop="false" indices="15..29"/>
+	<anim name="cheer" anim="GF Cheer" x="-6" y="39" fps="24" loop="false"/>
+</character>

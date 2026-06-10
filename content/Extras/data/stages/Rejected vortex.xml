@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.5" name="Rejected" folder="stages/Rejected" >
+	<!--<solid name="vortex" x="-700" y="-1000" width="4500" height="4500" scroll="0.4" scale="1" updateHitbox="true" color="#FFFFFF"/>-->
+	<girlfriend x="1625" y="9999" alpha="0"/>
+	<dad x="2000" y="1500"/>
+	<boyfriend x="2416" y="9999"/>
+	<sprite name="unknown3" x="-900" y="-516" sprite="ruido" scroll="0" scale="1" updateHitbox="true"/>
+	<combo x="1916" y="9999"/>
+</stage>

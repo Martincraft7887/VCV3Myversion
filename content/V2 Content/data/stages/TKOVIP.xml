@@ -1,0 +1,11 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/TKOVIP/" name="TKOVIP" zoom="0.6">
+	<sprite x="524.73640838298" sprite="tkoVip" y="54.2174604851626" scalex="11.6571627544207" scaley="10.7032505131046" name="tkoVip"/>
+	<sprite x="1241.16411099481" updateHitbox="true" sprite="rock1" y="-195.593501305794" scalex="2.50698071274823" scaley="3.05597407126948" name="unknown2"/>
+	<sprite x="-2406.85690746615" updateHitbox="true" sprite="rock2" y="-524.26712940863" scalex="3.01014268465543" angle="-0.356720718358851" scaley="3.30701691466805" name="unknown3"/>
+	<sprite x="-868.169014430771" updateHitbox="true" sprite="floor" y="-512.337728019151" scalex="4.2330781593605" scaley="4.3" name="unknown1"/>
+	<sprite x="-1355.93052867522" updateHitbox="true" sprite="floor2" y="-217.489850738102" scalex="5.49500733724485" scaley="3.52321572984455" name="unknown4"/>
+	<girlfriend x="740" y="860"/>
+	<dad x="200" y="955"/>
+	<boyfriend x="1234" y="950"/>
+</stage>

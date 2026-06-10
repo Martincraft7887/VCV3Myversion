@@ -1,0 +1,18 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.54" name="Total Bravery" folder="stages/Total Bravery" >
+
+	<sprite name="unknown0"
+		x="-867"
+		y="-148"
+		sprite="Total Bravery"
+		scroll="0.3"
+		scale="1.26"
+		updateHitbox="true"/>
+
+	<girlfriend x="1332" y="1214" scale="0.74"/>
+
+	<dad x="444" y="1480" scale="1"/>
+
+	<boyfriend x="1776" y="1500" scale="1"/>
+
+</stage>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Funkin Packer v0.1.3 https://neeeoo.github.io/funkin-packer/
+-->
+<TextureAtlas imagePath="tkoVip.png" width="2238" height="2238">
+	<SubTexture name="SÃ­mbolo 710000" x="0" y="0" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710001" x="284" y="0" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710002" x="567" y="0" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710003" x="849.5" y="0" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710004" x="1133.5" y="0" width="283" height="116.5" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710005" x="1416.5" y="0" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710006" x="1699" y="0" width="283.5" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710007" x="0" y="116.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710008" x="283" y="116.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710009" x="566" y="116.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710010" x="849" y="116.5" width="282" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710011" x="1131" y="116.5" width="284.5" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710012" x="1415.5" y="116.5" width="282.5" height="116.5" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710013" x="1698" y="116.5" width="285" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710014" x="0" y="233" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710015" x="284" y="233" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710016" x="567" y="233" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710017" x="849.5" y="233" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710018" x="1133.5" y="233" width="282.5" height="116.5" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710019" x="1416" y="233" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710020" x="1698.5" y="233" width="283.5" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710021" x="0" y="349.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710022" x="283" y="349.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710023" x="566" y="349.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710024" x="1983" y="0" width="116.5" height="282" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710025" x="849" y="349.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710026" x="1133" y="349.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710027" x="1416" y="349.5" width="285" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710028" x="1701" y="349.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710029" x="0" y="466" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710030" x="283" y="466" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710031" x="565.5" y="466" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710032" x="849.5" y="466" width="282.5" height="116.5" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710033" x="1132" y="466" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710034" x="1414.5" y="466" width="283.5" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710035" x="1698" y="466" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710036" x="0" y="582.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710037" x="283" y="582.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710038" x="2099.5" y="0" width="116.5" height="282" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710039" x="566" y="582.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710040" x="850" y="582.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710041" x="1133" y="582.5" width="285" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710042" x="1418" y="582.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710043" x="1702" y="582.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710044" x="0" y="699" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710045" x="282.5" y="699" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710046" x="566.5" y="699" width="282.5" height="116.5" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710047" x="849" y="699" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710048" x="1131.5" y="699" width="283.5" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710049" x="1415" y="699" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710050" x="1698" y="699" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710051" x="0" y="815.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710052" x="1985" y="282" width="116.5" height="282" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710053" x="283" y="815.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710054" x="567" y="815.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710055" x="850" y="815.5" width="285" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710056" x="1135" y="815.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710057" x="1419" y="815.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710058" x="1702" y="815.5" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710059" x="0" y="932" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710060" x="284" y="932" width="283" height="116.5" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710061" x="567" y="932" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710062" x="849.5" y="932" width="283.5" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710063" x="1133" y="932" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710064" x="1416" y="932" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710065" x="1699" y="932" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710066" x="2101.5" y="282" width="116.5" height="282" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710067" x="0" y="1048.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710068" x="284" y="1048.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710069" x="567" y="1048.5" width="285" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710070" x="852" y="1048.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710071" x="1136" y="1048.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710072" x="1419" y="1048.5" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710073" x="0" y="1165" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710074" x="1701.5" y="1048.5" width="282.5" height="116.5" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710075" x="284" y="1165" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710076" x="566.5" y="1165" width="283.5" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710077" x="850" y="1165" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710078" x="1133" y="1165" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710079" x="1416" y="1165" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710080" x="1985" y="564" width="116.5" height="282" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710081" x="1699" y="1165" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710082" x="0" y="1281.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710083" x="283" y="1281.5" width="285" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710084" x="568" y="1281.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710085" x="852" y="1281.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710086" x="1135" y="1281.5" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710087" x="1417.5" y="1281.5" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710088" x="1701.5" y="1281.5" width="282.5" height="116.5" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710089" x="2100.5" y="1128" width="116.5" height="282.5" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710090" x="0" y="1398" width="283.5" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710091" x="283.5" y="1398" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710092" x="566.5" y="1398" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710093" x="849.5" y="1398" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710094" x="2101.5" y="564" width="116.5" height="282" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710095" x="1132.5" y="1398" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710096" x="1416.5" y="1398" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710097" x="0" y="1514.5" width="285" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710098" x="1699.5" y="1398" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710099" x="285" y="1514.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710100" x="568" y="1514.5" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710101" x="850.5" y="1514.5" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710102" x="1134.5" y="1514.5" width="282.5" height="116.5" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710103" x="1417" y="1514.5" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710104" x="1699.5" y="1514.5" width="283.5" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710105" x="0" y="1631" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710106" x="283" y="1631" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710107" x="566" y="1631" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710108" x="1984.5" y="846" width="116.5" height="282" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710109" x="849" y="1631" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710110" x="1133" y="1631" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710111" x="1416" y="1631" width="285" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710112" x="0" y="1747.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710113" x="284" y="1747.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710114" x="1983.5" y="1410" width="116.5" height="282.5" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710115" x="567" y="1747.5" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710116" x="2100" y="1410.5" width="116.5" height="282.5" rotated="true" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710117" x="1701" y="1631" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710118" x="851" y="1747.5" width="283.5" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710119" x="1134.5" y="1747.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710120" x="1417.5" y="1747.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710121" x="1700.5" y="1747.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710122" x="2101" y="846" width="116.5" height="282" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710123" x="0" y="1864" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710124" x="284" y="1864" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710125" x="567" y="1864" width="285" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710126" x="852" y="1864" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710127" x="1136" y="1864" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710128" x="1983.5" y="1692.5" width="116.5" height="282.5" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710129" x="1419" y="1864" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710130" x="2100" y="1693" width="116.5" height="282.5" rotated="true" frameX="-1.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710131" x="1703" y="1975" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710132" x="0" y="1980.5" width="283.5" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710133" x="283.5" y="1980.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710134" x="566.5" y="1980.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710135" x="849.5" y="1980.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710136" x="1984" y="1128" width="116.5" height="282" rotated="true" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710137" x="1132.5" y="1980.5" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710138" x="1416.5" y="1980.5" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710139" x="1699.5" y="2091.5" width="285" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710140" x="0" y="2097" width="284" height="116.5" frameX="-0" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710141" x="284" y="2097" width="283" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710142" x="567" y="2097" width="282.5" height="116.5" frameX="-1" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+	<SubTexture name="SÃ­mbolo 710143" x="849.5" y="2097" width="284" height="116.5" frameX="-0.5" frameY="-0" frameWidth="286" frameHeight="116.5"/>
+</TextureAtlas>

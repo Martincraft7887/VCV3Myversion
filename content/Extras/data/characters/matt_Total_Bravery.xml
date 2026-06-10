@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="matt_Total_Bravery" camx="300" camy="-10" icon="totalbravery-icons" color="#FFDB00" imagePath="matt_Total_Bravery.png">
+	<anim name="idle" anim="matt idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="matt down note0" x="-140" y="-65" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note0" x="-150" y="-60" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note0" x="-10" y="-45" fps="24" loop="false"/>
+	<anim name="singUP" anim="matt up note0" x="30" y="-10" fps="24" loop="false"/>
+</character>

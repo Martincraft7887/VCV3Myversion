@@ -1,0 +1,4 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="Voiid17bucksGF" scale="0.85" icon="Melody-icon" color="#2A2A2A" imagePath="Voiid17bucksGF.png">
+	<anim name="idle" anim="dance0" x="0" y="0" fps="24" loop="true"/>
+</character>

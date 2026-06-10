@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/VoiidWiik3Old/" name="VoiidWiik3Old" zoom="0.53">
+	<sprite x="-231" updateHitbox="true" scroll="0.7" sprite="Voiid3" y="-226" scale="2" name="Voiid3_bg"/>
+	<sprite x="-375" updateHitbox="true" scroll="0.9" sprite="Voiid2" y="-200" scale="2" name="Voiid2_mid"/>
+	<sprite x="-274" updateHitbox="true" sprite="Voiid1" y="-186" scale="2" name="Voiid1_front"/>
+	<girlfriend x="1606" y="1090"/>
+	<boyfriend x="1875" y="1207"/>
+	<dad x="1475" y="1207"/>
+</stage>

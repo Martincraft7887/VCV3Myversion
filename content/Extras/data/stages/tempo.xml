@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.7" name="tempo" folder="stages/tempo" >
+	<sprite name="unknown0" x="-500" y="-600" sprite="tempo-front" scroll="0.3" scale="0.6" updateHitbox="true"/>
+	
+	<girlfriend x="1040" y="725"/>
+	<dad x="634" y="741"/>
+	<boyfriend x="1460" y="741"/>
+</stage>

@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character x="105" y="25" sprite="VoiidGodMattRTX" scale="1.5" camx="40" camy="-10" icon="VoiidGodShagXMatt-icons" isGF="false">
+	<anim name="idle" anim="idlegod0" x="0" y="-5" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="leftgod0" x="-70" y="-17" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="downgod0" x="-55" y="-19" fps="24" loop="false"/>
+	<anim name="singUP" anim="upgod0" x="-5" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="rightgod0" x="-65" y="-26" fps="24" loop="false"/>
+	<anim name="dodgeLEFT" anim="leftgod0" x="-70" y="-17" fps="24" loop="false"/>
+	<anim name="dodgeDOWN" anim="downgod0" x="-55" y="-19" fps="24" loop="false"/>
+	<anim name="dodgeUP" anim="upgod0" x="-5" y="0" fps="24" loop="false"/>
+	<anim name="dodgeRIGHT" anim="rightgod0" x="-65" y="-26" fps="24" loop="false"/>
+</character>

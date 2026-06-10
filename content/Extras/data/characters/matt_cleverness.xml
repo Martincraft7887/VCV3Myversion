@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="matt_cleverness" camx="300" icon="cleverness-icons" color="#B6B6B6" imagePath="matt_cleverness.png">
+	<anim name="idle" anim="matt idle0" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="matt down note0" x="-3" y="-57" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note0" x="75" y="-55" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note0" x="-25" y="-10" fps="24" loop="false"/>
+	<anim name="singUP" anim="matt up note0" x="85" y="25" fps="24" loop="false"/>
+</character>

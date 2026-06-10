@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.7" name="Cleverness" folder="stages/Cleverness" >
+	<sprite name="unknown0" x="-810" y="-1100" sprite="Cleverness" scroll="0.3" scale="0.6" updateHitbox="true"/>
+	<sprite name="unknown1" x="-195" y="-600" sprite="Cleverness_fog" scroll="1" scale="1" updateHitbox="true"/>
+	
+	<girlfriend x="1040" y="725"/>
+	<dad x="634" y="741"/>
+	<boyfriend x="1460" y="741"/>
+</stage>

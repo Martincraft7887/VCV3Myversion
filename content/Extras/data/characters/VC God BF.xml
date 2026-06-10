@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="VC God BF" flipX="true" isPlayer="true" icon="GodBF-icons" color="#101010" imagePath="VoiidBFGodMode.png">
+	<anim name="idle" anim="BF idle dance" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="BF NOTE DOWN" x="10" y="-45" fps="24" loop="false"/>
+	<anim name="singUP" anim="BF NOTE UP" x="-30" y="55" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="BF NOTE LEFT" x="25" y="10" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="BF NOTE RIGHT" x="-40" y="0" fps="24" loop="false"/>
+</character>

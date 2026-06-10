@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="325" y="-70" sprite="WIIK_2_SPRITES_GOD" camx="500" icon="icon-rev-shaggy-matt-god" color="#363636" imagePath="WIIK 2 SPRITES GOD.png">
+	<anim name="idle" anim="idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="down0" x="-50" y="5" fps="24" loop="false"/>
+	<anim name="singUP" anim="up0" x="-15" y="70" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="left0" x="75" y="-10" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="right0" x="-100" y="2" fps="24" loop="false"/>
+</character>

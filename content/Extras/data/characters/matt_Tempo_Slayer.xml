@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="matt_Tempo_Slayer" camx="200" icon="icon-tempomatt" color="#FF8241" imagePath="matt_Tempo_Slayer.png">
+	<anim name="idle" anim="matt idle0" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="matt down note0" x="30" y="-85" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note0" x="150" y="-40" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note0" x="65" y="-100" fps="24" loop="false"/>
+	<anim name="singUP" anim="matt up note0" x="41" y="0" fps="24" loop="false"/>
+</character>

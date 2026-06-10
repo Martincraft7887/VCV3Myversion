@@ -1,0 +1,80 @@
+{
+	"categories": [
+		{
+			"name": "Story Mode",
+			"songs": [
+				{
+					"name": "Power Link",
+					"port": "Wiik_2",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "Revenge",
+					"port": "Wiik_2",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Final Destination",
+					"port": "Wiik_2",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "Final Destination God",
+					"port": "Wiik_2",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "Soothing Power",
+					"port": "ShagBG"
+				},
+				{
+					"name": "Thunderstorm",
+					"port": "ShagBG"
+				},
+				{
+					"name": "Disassembler",
+					"port": "ShagBG"
+				},
+				{
+					"name": "Cosmic Memories",
+					"port": "ShagBG"
+				},
+				{
+					"name": "New Horizon",
+					"port": "ShagBG",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "Galactic Storm",
+					"port": "Wiik_2",
+					"loadingScreen": "ShaggyXMatt"
+				}
+			]
+		},
+		{
+			"name": "Collabs",
+			"songs": [
+				{
+					"name": "Multiversal Slash",
+					"port": "AxV",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "Glowing Collision",
+					"port": "AxV",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "Radical Showdown",
+					"port": "AxV",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "Defamation Of Reality",
+					"port": "AxV",
+					"loadingScreen": "ShaggyXMatt"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,46 @@
+{
+	"categories": [
+		{
+			"name": "Story Mode",
+			"songs": [
+				{
+					"name": "Light It Up",
+					"port": "Wiik_1"
+				},
+				{
+					"name": "Ruckus",
+					"port": "Wiik_1"
+				},
+				{
+					"name": "Target Practice",
+					"port": "Wiik_1"
+				},
+				{
+					"name": "Burnout",
+					"port": "Wiik_2",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Sporting",
+					"port": "Wiik_2",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Boxing Match",
+					"port": "Wiik_2",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Sport Swinging",
+					"port": "Wiik_2",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Boxing Gladiators",
+					"port": "Wiik_2",
+					"loadingScreen": "Wiik2"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.53" name="exodus" folder="stages/exodus" >
+	<sprite name="unknown0" x="-791" y="-667" sprite="floor_4" scroll="0.5" scale="2" updateHitbox="true"/>
+	<sprite name="unknown1" x="500" y="350" sprite="floor_3" scroll="1" scale="0.6" updateHitbox="true"/>
+	<sprite name="unknown2" x="-50" y="-125" sprite="The_void" scroll="0.6" scale="2.5" updateHitbox="true"/>
+	<sprite name="unknown3" x="690" y="200" sprite="floor_2" scroll="1" scale="0.6" updateHitbox="true"/>
+	<sprite name="unknown4" x="-8700" y="-4350" sprite="floor_3" scroll="1" scale="6.8" updateHitbox="true"/>
+
+	<girlfriend x="1556" y="1240" scroll="1.0" scale="0.9" camyoffset="-110"/>
+	<dad x="1000" y="1400" camxoffset="0"/>
+	<boyfriend x="2200" y="1450" camxoffset="-180"/>
+</stage>

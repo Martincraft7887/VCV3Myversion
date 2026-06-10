@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-stage>
+<stage startCamPosX="1000" startCamPosY="600" folder="stages/voiidmattbg/" zoom="0.6" name="voiidmattbg">
+	<sprite x="-611.483999781686" scroll="0.9" sprite="boxingnight2" y="-342.433041910335" scalex="1.02601390564068" scaley="1.05776148844299" name="sky"/>
+	<sprite x="-526.480230741032" sprite="buildings" y="-379.857864376269" type="none" scalex="1.00928932188135" scaley="1.02747206768329" name="bg"/>
+	<sprite x="-594.336167919347" scroll="0.9" sprite="boxingnight3" y="-300" scalex="1.00663457750422" name="stageFront"/>
+	<girlfriend x="800" y="850"/>
+	<dad x="0" y="850"/>
+	<boyfriend x="1306" y="900" camyoffset="-70"/>
+</stage>

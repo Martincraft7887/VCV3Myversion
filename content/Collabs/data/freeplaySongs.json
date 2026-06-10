@@ -1,0 +1,44 @@
+{
+	"categories": [
+		{
+			"name": "Collabs",
+			"songs": [
+				{
+					"name": "Alter Ego",
+					"port": "Alter_Ego",
+					"loadingScreen": "RevLoad"
+				},
+				{
+					"name": "Turmoil",
+					"port": "Alter_Ego",
+					"loadingScreen": "RevLoad"
+				},
+				{
+					"name": "Interregnum",
+					"port": "paperBG",
+					"loadingScreen": "PaperLoad"
+				},
+				{
+					"name": "Ballin",
+					"port": "Wiik_2",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Insano",
+					"port": "InsanoBG",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Sweet Dreams",
+					"port": "Wiik_4",
+					"loadingScreen": "Wiik4"
+				},
+				{
+					"name": "Sweet Dreams II",
+					"port": "Wiik_4",
+					"loadingScreen": "SDLoad"
+				}
+			]
+		}
+	]
+}

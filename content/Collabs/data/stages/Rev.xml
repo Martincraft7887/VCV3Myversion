@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.95" folder="stages/Rev/" name="Rev">
+	<sprite x="-1282.62937225358" sprite="final-background" y="-706.572036702472" type="none" scaley="1" name="sprite_4"/>
+	<sprite x="-1298.93397660229" sprite="final-glow" y="-703.261742682809" type="none" scaley="1" name="sprite_6"/>
+	<sprite x="-1286.32565859736" sprite="final-arena" y="-701.78555110448" type="none" scaley="1.00679546922859" name="sprite_5"/>
+	<girlfriend x="6905" y="-2890"/>
+	<dad x="-745.398254351054" y="524.225828237434"/>
+	<boyfriend x="464.563357097694" y="534.902754978732" camxoffset="-160" camyoffset="-140"/>
+	<sprite x="-2045.05976095855" updateHitbox="true" scroll="0" sprite="ruido" y="-641.165030766892" scalex="1.00834918411864" scaley="0.855464209561589" name="unknown1"/>
+</stage>

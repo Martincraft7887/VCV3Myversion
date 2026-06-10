@@ -1,0 +1,19 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="BOYFRIEND-TEMPO" flipX="true" isPlayer="true" icon="RevBF-icons" color="#FF8A3E" imagePath="BOYFRIENDMIIdhootie.png">
+	<anim name="idle" anim="BF idle dance0" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singDOWN" anim="BF NOTE DOWN0" x="-30" y="-60" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="BF NOTE LEFT0" x="-30" y="-2" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="BF NOTE RIGHT0" x="-35" y="-5" fps="24" loop="false"/>
+	<anim name="singUP" anim="BF NOTE UP0" x="-40" y="10" fps="24" loop="false"/>
+	<anim name="HEY" anim="BF HEY!!0" x="2" y="5" fps="24" loop="false"/>
+	<anim name="singDOWNmiss" anim="BF NOTE DOWN MISS0" x="-25" y="-60" fps="24" loop="false"/>
+	<anim name="singLEFTmiss" anim="BF NOTE LEFT MISS0" x="-25" y="-2" fps="24" loop="false"/>
+	<anim name="singRIGHTmiss" anim="BF NOTE RIGHT MISS0" x="-40" y="7" fps="24" loop="false"/>
+	<anim name="singUPmiss" anim="BF NOTE UP MISS0" x="-35" y="15" fps="24" loop="false"/>
+	<anim name="idle-alt" anim="BF alt idle dance0" x="3" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN-alt" anim="BFCOOLDOWN0" x="-20" y="-60" fps="24" loop="false"/>
+	<anim name="singUP-alt" anim="BFCOOLUP0" x="-20" y="60" fps="24" loop="false"/>
+	<anim name="singLEFT-alt" anim="BFCOOLLEFT0" x="-30" y="-5" fps="24" loop="false"/>
+	<anim name="singRIGHT-alt" anim="BFCOOLRIGHT0" x="-12" y="-8" fps="24" loop="false"/>
+	<anim name="HEY2" anim="HEY COOL0" x="17" y="32" fps="24" loop="false"/>
+</character>

@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="100" y="200" sprite="ZEPHMATT_PHASE1" scale="1.5" camx="-100" camy="-100" icon="Wiik4ZephMatt-icons" color="#47444B" isGF="false">
+	<anim name="idle" anim="idle0" x="-2" y="53" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="left0" x="100" y="65" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="down0" x="62" y="39" fps="24" loop="false"/>
+	<anim name="singUP" anim="up0" x="100" y="120" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="right0" x="-15" y="60" fps="24" loop="false"/>
+</character>

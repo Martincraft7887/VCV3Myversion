@@ -1,0 +1,18 @@
+<!DOCTYPE codename-engine-character>
+<character x="-340" y="-50" flipX="true" camx="290" camy="60" isPlayer="true" icon="gfv3" color="#EA4792">
+	<anim name="danceLeft" anim="gfDanceLeft"/>
+	<anim name="danceRight" anim="gfDanceRight" x="-13"/>
+	<anim name="singLEFT" anim="gfLeft" x="40" y="-1"/>
+	<anim name="singRIGHT" anim="gfRight" x="-108" y="-38"/>
+	<anim name="singDOWN" anim="gfDown" x="2" y="-30"/>
+	<anim name="singUP" anim="gfUp" y="26"/>
+	<anim name="preAttack" anim="gfPreAttack" x="-55" y="-19"/>
+	<anim name="attack" anim="gfAttack" x="315" y="-25"/>
+	<anim name="hurt" anim="gfHurt" x="-59" y="-44"/>
+	<anim name="hey" anim="gfHey" x="-26" y="1"/>
+	<anim name="singLEFTmiss" anim="gfMISSLeft" x="42" y="-32"/>
+	<anim name="singRIGHTmiss" anim="gfMISSRight" x="-98" y="-53"/>
+	<anim name="singDOWNmiss" anim="gfMISSDown" x="-6" y="-34"/>
+	<anim name="singUPmiss" anim="gfMISSUp" x="-13" y="39"/>
+	<anim name="dodge" anim="gfDodge" x="40" y="-40"/>
+</character>

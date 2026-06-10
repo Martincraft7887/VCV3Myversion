@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="-250" y="100" sprite="AntarkhMatt" icon="AntarkhMatt-icons" isGF="false">
+	<anim name="idle" anim="matt idle" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="matt left note" x="30" y="-30" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="matt down note" x="-65" y="-13" fps="24" loop="false"/>
+	<anim name="singUP" anim="matt up note" x="-45" y="25" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="matt right note" x="-40" y="-15" fps="24" loop="false"/>
+</character>

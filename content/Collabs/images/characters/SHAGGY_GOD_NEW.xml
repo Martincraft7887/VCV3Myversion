@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="SHAGGY_GOD_NEW.png">
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="SHAG_DOWN0000" x="0" y="0" width="512" height="825" frameX="0" frameY="-21" frameWidth="519" frameHeight="846"/>
+	<SubTexture name="SHAG_DOWN0001" x="512" y="0" width="512" height="825" frameX="0" frameY="-21" frameWidth="519" frameHeight="846"/>
+	<SubTexture name="SHAG_DOWN0002" x="1024" y="0" width="518" height="843" frameX="0" frameY="-3" frameWidth="519" frameHeight="846"/>
+	<SubTexture name="SHAG_DOWN0003" x="1542" y="0" width="518" height="843" frameX="0" frameY="-3" frameWidth="519" frameHeight="846"/>
+	<SubTexture name="SHAG_DOWN0004" x="2060" y="0" width="519" height="846"/>
+	<SubTexture name="SHAG_DOWN0005" x="2579" y="0" width="519" height="846"/>
+	<SubTexture name="SHAG_DOWN0006" x="3098" y="0" width="519" height="846"/>
+	<SubTexture name="SHAG_DOWN0007" x="3617" y="0" width="519" height="846"/>
+	<SubTexture name="SHAG_DOWN0008" x="4136" y="0" width="519" height="846"/>
+	<SubTexture name="SHAG_DOWN0009" x="4655" y="0" width="519" height="846"/>
+	<SubTexture name="SHAG_DOWN0010" x="5174" y="0" width="519" height="846"/>
+	<SubTexture name="SHAG_DOWN0011" x="5693" y="0" width="519" height="846"/>
+	<SubTexture name="SHAG_DOWN0012" x="6212" y="0" width="519" height="846"/>
+	<SubTexture name="SHAG_DOWN0013" x="6731" y="0" width="519" height="846"/>
+	<SubTexture name="SHAG_IDLE0000" x="7250" y="0" width="444" height="832" frameX="0" frameY="-33" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0001" x="7694" y="0" width="444" height="832" frameX="0" frameY="-33" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0002" x="0" y="846" width="442" height="840" frameX="-3" frameY="-25" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0003" x="442" y="846" width="442" height="865" frameX="-3" frameY="0" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0004" x="884" y="846" width="428" height="851" frameX="-16" frameY="-14" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0005" x="1312" y="846" width="428" height="851" frameX="-16" frameY="-14" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0006" x="1740" y="846" width="426" height="854" frameX="-18" frameY="-11" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0007" x="2166" y="846" width="426" height="854" frameX="-18" frameY="-11" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0008" x="2592" y="846" width="426" height="854" frameX="-18" frameY="-11" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0009" x="3018" y="846" width="426" height="854" frameX="-18" frameY="-11" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0010" x="3444" y="846" width="426" height="854" frameX="-18" frameY="-11" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0011" x="3870" y="846" width="426" height="854" frameX="-18" frameY="-11" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0012" x="4296" y="846" width="426" height="854" frameX="-18" frameY="-11" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_IDLE0013" x="4722" y="846" width="426" height="854" frameX="-18" frameY="-11" frameWidth="445" frameHeight="865"/>
+	<SubTexture name="SHAG_LEFTT0000" x="5148" y="846" width="631" height="847" frameX="0" frameY="0" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0001" x="5779" y="846" width="631" height="847" frameX="0" frameY="0" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0002" x="6410" y="846" width="648" height="847" frameX="-2" frameY="0" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0003" x="7058" y="846" width="648" height="847" frameX="-2" frameY="0" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0004" x="0" y="1711" width="618" height="846" frameX="-40" frameY="-1" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0005" x="618" y="1711" width="618" height="846" frameX="-40" frameY="-1" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0006" x="1236" y="1711" width="615" height="846" frameX="-43" frameY="-1" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0007" x="1851" y="1711" width="615" height="846" frameX="-43" frameY="-1" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0008" x="2466" y="1711" width="615" height="846" frameX="-43" frameY="-1" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0009" x="3081" y="1711" width="615" height="846" frameX="-43" frameY="-1" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0010" x="3696" y="1711" width="615" height="846" frameX="-43" frameY="-1" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0011" x="4311" y="1711" width="615" height="846" frameX="-43" frameY="-1" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0012" x="4926" y="1711" width="615" height="846" frameX="-43" frameY="-1" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_LEFTT0013" x="5541" y="1711" width="615" height="846" frameX="-43" frameY="-1" frameWidth="658" frameHeight="847"/>
+	<SubTexture name="SHAG_RIGHT0000" x="6156" y="1711" width="581" height="845" frameX="0" frameY="-1" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0001" x="6737" y="1711" width="581" height="845" frameX="0" frameY="-1" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0002" x="7318" y="1711" width="559" height="845" frameX="-19" frameY="-1" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0003" x="0" y="2557" width="559" height="845" frameX="-19" frameY="-1" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0004" x="559" y="2557" width="540" height="846" frameX="-23" frameY="0" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0005" x="1099" y="2557" width="540" height="846" frameX="-23" frameY="0" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0006" x="1639" y="2557" width="540" height="846" frameX="-23" frameY="0" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0007" x="2179" y="2557" width="540" height="846" frameX="-23" frameY="0" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0008" x="2719" y="2557" width="540" height="846" frameX="-23" frameY="0" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0009" x="3259" y="2557" width="540" height="846" frameX="-23" frameY="0" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0010" x="3799" y="2557" width="540" height="846" frameX="-23" frameY="0" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0011" x="4339" y="2557" width="540" height="846" frameX="-23" frameY="0" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0012" x="4879" y="2557" width="540" height="846" frameX="-23" frameY="0" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_RIGHT0013" x="5419" y="2557" width="540" height="846" frameX="-23" frameY="0" frameWidth="581" frameHeight="846"/>
+	<SubTexture name="SHAG_UP0000" x="5959" y="2557" width="566" height="854"/>
+	<SubTexture name="SHAG_UP0001" x="6525" y="2557" width="566" height="854"/>
+	<SubTexture name="SHAG_UP0002" x="7091" y="2557" width="559" height="844" frameX="-5" frameY="-10" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0003" x="0" y="3411" width="559" height="844" frameX="-5" frameY="-10" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0004" x="559" y="3411" width="555" height="838" frameX="-8" frameY="-16" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0005" x="1114" y="3411" width="555" height="838" frameX="-8" frameY="-16" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0006" x="1669" y="3411" width="555" height="838" frameX="-8" frameY="-16" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0007" x="2224" y="3411" width="555" height="838" frameX="-8" frameY="-16" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0008" x="2779" y="3411" width="555" height="838" frameX="-8" frameY="-16" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0009" x="3334" y="3411" width="555" height="838" frameX="-8" frameY="-16" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0010" x="3889" y="3411" width="555" height="838" frameX="-8" frameY="-16" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0011" x="4444" y="3411" width="555" height="838" frameX="-8" frameY="-16" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0012" x="4999" y="3411" width="555" height="838" frameX="-8" frameY="-16" frameWidth="566" frameHeight="854"/>
+	<SubTexture name="SHAG_UP0013" x="5554" y="3411" width="555" height="838" frameX="-8" frameY="-16" frameWidth="566" frameHeight="854"/>
+</TextureAtlas>

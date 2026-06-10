@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.37" name="IgnisGladiusStage" folder="stages/IgnisGladiusStage" >
+	<sprite name="unknown0" x="-1020" y="-600" sprite="BG" scroll="1" scale="1" updateHitbox="true"/>
+	<sprite name="unknown1" x="-1350" y="-1150" sprite="PLATFORM" scroll="1" scale="1.1" updateHitbox="true"/>
+	<girlfriend x="6905" y="-2900"/>
+	<dad x="500" y="850" camxoffset="-120" camyoffset="140"/>
+	<boyfriend x="1200" y="850" camxoffset="-70" camyoffset="100"/>
+	<sprite name="unknown2" x="-1500" y="-800" sprite="GRAIN" scroll="0" scale="2" updateHitbox="true"/>
+</stage>

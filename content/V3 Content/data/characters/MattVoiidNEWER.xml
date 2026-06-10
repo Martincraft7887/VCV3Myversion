@@ -1,0 +1,15 @@
+<!DOCTYPE codename-engine-character>
+<character x="100" y="150" sprite="MattVoiidNEWER" camx="125" camy="-400" icon="icon-Wiik2VoiidMatt" color="#4C4C51" isGF="false">
+	<anim name="idle" anim="idle0" x="61" y="81" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="left0" x="30" y="79" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="down0" x="0" y="70" fps="24" loop="false"/>
+	<anim name="singUP" anim="up0" x="91" y="85" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="right0" x="-74" y="76" fps="24" loop="false"/>
+	<anim name="trans" anim="trans" x="0" y="520" fps="24" loop="false"/>
+	<anim name="destrans" anim="destrans" x="50" y="520" fps="21" loop="false"/>
+	<anim name="idle-alt" anim="idlealt0" x="61" y="800" fps="26" loop="false"/>
+	<anim name="singLEFT-alt" anim="leftalt0" x="300" y="500" fps="26" loop="false"/>
+	<anim name="singDOWN-alt" anim="downalt0" x="0" y="500" fps="26" loop="false"/>
+	<anim name="singUP-alt" anim="upalt0" x="100" y="900" fps="26" loop="false"/>
+	<anim name="singRIGHT-alt" anim="rightalt0" x="50" y="500" fps="26" loop="false"/>
+</character>

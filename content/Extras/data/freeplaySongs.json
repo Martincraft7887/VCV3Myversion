@@ -1,0 +1,128 @@
+{
+	"categories": [
+		{
+			"name": "Extras",
+			"songs": [
+				{
+					"name": "Knocked",
+					"port": "KnockedBG"
+				},
+				{
+					"name": "Edgelord",
+					"port": "arena"
+				},
+				{
+					"name": "Rejected",
+					"port": "Rejected"
+				},
+				{
+					"name": "Old Enemies",
+					"port": "Rejected"
+				},
+				{
+					"name": "Wastelands",
+					"port": "VOIID TRICKYs"
+				},
+				{
+					"name": "Toxic",
+					"port": "VOIID TRICKYs"
+				},
+				{
+					"name": "APOTHEOSIS",
+					"port": "VOIID TRICKYs"
+				},
+				{
+					"name": "Veteran",
+					"port": "Wiik_100",
+					"loadingScreen": "Wiik100"
+				},
+				{
+					"name": "Flaming Glove III",
+					"port": "Wiik_FG"
+				},
+				{
+					"name": "Bombastic",
+					"port": "Pivot"
+				},
+				{
+					"name": "Warm up",
+					"port": "Pivot"
+				},
+				{
+					"name": "Super Saiyan",
+					"port": "ShagBG",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "1CORE KILLER",
+					"port": "Wiik_2",
+					"loadingScreen": "Wiik2"
+				},
+				{
+					"name": "Haven",
+					"port": "Wiik_2",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "Intervention",
+					"port": "Wiik_2",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "RAGE",
+					"port": "Wiik_2",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "Mattpurgation",
+					"port": "Mattpurgation"
+				},
+				{
+					"name": "Exodus",
+					"port": "Agoti stage"
+				},
+				{
+					"name": "Take It",
+					"port": "Wiik_4Alt"
+				},
+				{
+					"name": "Fishycuffs",
+					"port": "Fish"
+				},
+				{
+					"name": "Cleverness",
+					"port": "tempo-front"
+				},
+				{
+					"name": "Tempo Slayer",
+					"port": "tempo-front"
+				},
+				{
+					"name": "Total Bravery",
+					"port": "Total"
+				},
+				{
+					"name": "Ignis Gladius",
+					"port": "Total"
+				},
+				{
+					"name": "Final Destination Old",
+					"port": "Wiik_2",
+					"loadingScreen": "ShaggyXMatt"
+				},
+				{
+					"name": "King Hit Wawa",
+					"port": "Wiik_3"
+				},
+				{
+					"name": "damnale",
+					"port": ""
+				},
+				{
+					"name": "penismatt",
+					"port": ""
+				}
+			]
+		}
+	]
+}

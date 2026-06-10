@@ -1,0 +1,6 @@
+<!DOCTYPE codename-engine-character>
+<character x="100" sprite="GF_MII_assets" scale="1.5" camx="-100" camy="-100" icon="icon-gf" isGF="true">
+	<anim name="sad" anim="gf sad" x="-2" y="-21" fps="24" loop="false" indices="0..12"/>
+	<anim name="danceLeft" anim="GF Dancing Beat" x="0" y="-9" fps="24" loop="false" indices="30,0..14"/>
+	<anim name="danceRight" anim="GF Dancing Beat" x="0" y="-9" fps="24" loop="false" indices="15..29"/>
+</character>

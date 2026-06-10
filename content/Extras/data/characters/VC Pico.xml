@@ -1,0 +1,9 @@
+<!DOCTYPE codename-engine-character>
+<character x="225" sprite="VC Pico" scale="0.9" flipX="true" camx="-450" isPlayer="true" icon="Ronin" color="#5A0000" imagePath="voiid pico.png">
+	<anim name="idle" anim="Pico Idle" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singUP" anim="pico Up note" x="10" y="15" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="Pico Down Note" x="90" y="-70" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="Pico NOTE LEFT" x="100" y="-15" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="Pico Note Right" x="-50" y="10" fps="24" loop="false"/>
+	<anim name="Pico Shootin" anim="Pico Shootin" x="400" y="50" fps="24" loop="false"/>
+</character>
