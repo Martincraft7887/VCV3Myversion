@@ -1,0 +1,6 @@
+uPosX 0
+uPosY 0
+uAngle 0
+uScaleX 0
+uScaleY 0
+uAlpha 0

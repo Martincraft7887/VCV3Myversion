@@ -1,0 +1,4 @@
+strength 0
+dirX 0
+dirY 0
+ 

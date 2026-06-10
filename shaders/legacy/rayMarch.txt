@@ -1,0 +1,4 @@
+Xdirection 0
+Ydirection 0
+direction360 0
+Ydirection360 0

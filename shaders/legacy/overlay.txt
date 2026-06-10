@@ -1,0 +1,6 @@
+posX 0
+posY 0
+scale 0
+scale 0
+angle 0
+alpha 0

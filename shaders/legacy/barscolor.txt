@@ -1,0 +1,4 @@
+effect 0
+effect2 0
+angle1 0
+angle2 0
