@@ -1,0 +1,177 @@
+{
+	"events": [
+		{
+			"params": [
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				300,
+				-300
+			],
+			"time": 41142.8571428571,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				false,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				0,
+				0,
+				true
+			],
+			"time": 54857.1428571429,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				300,
+				-300
+			],
+			"time": 96000,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				false,
+				-13470059,
+				4,
+				"camHUD"
+			],
+			"time": 109660.714285714,
+			"name": "Camera Flash"
+		},
+		{
+			"params": [
+				false,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				600,
+				-600,
+				true
+			],
+			"time": 109660.714285714,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				"bf",
+				"TaroOnii"
+			],
+			"time": 109714.285714286,
+			"name": "Change Characters"
+		},
+		{
+			"params": [
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				300,
+				-300
+			],
+			"time": 137142.857142857,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				false,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				0,
+				0,
+				true
+			],
+			"time": 150857.142857143,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				"bf",
+				"TaroWiik3"
+			],
+			"name": "Change Characters",
+			"time": 164571.428571429
+		},
+		{
+			"params": [
+				"dad",
+				"Wiik3VoiidMatt"
+			],
+			"time": 164571.428571429,
+			"name": "Change Characters"
+		},
+		{
+			"params": [
+				"bf",
+				"TaroOnii"
+			],
+			"name": "Change Characters",
+			"time": 178339.285714286
+		},
+		{
+			"params": [
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				300,
+				-300,
+				false,
+				"custom",
+				true,
+				true,
+				false,
+				false,
+				true,
+				0.008
+			],
+			"name": "Punching Control",
+			"time": 178339.285714286
+		},
+		{
+			"params": [
+				"dad",
+				"Wiik3VoiidMatt"
+			],
+			"time": 178339.285714286,
+			"name": "Change Characters"
+		}
+	]
+}

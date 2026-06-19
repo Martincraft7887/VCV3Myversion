@@ -1,0 +1,29 @@
+{
+	"composer": "kittycass190‬,invalid_bruh‬,joa1597‬,revilofficiall‬ and FxckVoiid",
+	"charter": "RhysRJJ",
+	"originalComposer": "",
+	"startTime": 0,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#490096",
+	"midBorderBot": "#5f00ff",
+	"innerBorderTop": "#142332",
+	"innerBorderBot": "#142332",
+
+	"sobelStrength": 0.5,
+	"sobelIntensity": 0.7,
+	"mixGap": 2.2,
+    "vipFont": "Onslaughter.otf",
+
+	"outerBorderTopVIP": "#000000",
+	"outerBorderBotVIP": "#000000",
+	"midBorderTopVIP": "#842c8f",
+	"midBorderBotVIP": "#6414ea",
+	"innerBorderTopVIP": "#142332",
+	"innerBorderBotVIP": "#000000",
+
+	"outerBorderSize": 13
+}

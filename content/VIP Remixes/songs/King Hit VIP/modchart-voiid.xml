@@ -1,0 +1,572 @@
+<Modchart>
+	<Init>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="colorswap" name="color" color="#545454">
+			<Property value="0" name="brt"/>
+			<Property value="0" name="sat"/>
+			<Property value="0" name="hue"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="negative" name="negative" color="#545454">
+			<Property value="0" name="strength"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="MirrorRepeatWarpEffect" name="mirror" color="#545454">
+			<Property value="0" name="warp"/>
+			<Property value="0" name="x"/>
+			<Property value="0" name="y"/>
+			<Property value="1" name="zoom"/>
+			<Property value="0" name="angle"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="MirrorRepeatWarpEffect" name="mirror2" color="#545454">
+			<Property value="0" name="warp"/>
+			<Property value="0" name="x"/>
+			<Property value="0" name="y"/>
+			<Property value="1" name="zoom"/>
+			<Property value="0" name="angle"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="BarrelBlurEffect" name="BarrelBlurEffect" color="#545454">
+			<Property value="0" name="x"/>
+			<Property value="0" name="doChroma"/>
+			<Property value="0" name="y"/>
+			<Property value="0" name="barrel"/>
+			<Property value="1" name="zoom"/>
+			<Property value="0" name="angle"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="SpeedEffect" name="SpeedEffect" color="#545454">
+			<Property value="0" name="iTime"/>
+			<Property value="0" name="effect"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="BlurEffect" name="blur" color="#545454">
+			<Property value="0" name="strengthY"/>
+			<Property value="0" name="strength"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="MosaicEffect" name="MosaicEffect" color="#545454">
+			<Property value="0" name="strength"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="SparkEffect" name="sparks" color="#545454">
+			<Property value="0" name="warp"/>
+			<Property value="140" name="size"/>
+			<Property value="0.82" name="red"/>
+			<Property value="1.2" name="scale"/>
+			<Property value="0" name="iTime"/>
+			<Property value="0.82" name="blue"/>
+			<Property value="1" name="speed"/>
+			<Property value="0.1" name="green"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="GreyscaleEffect" name="grey" color="#545454">
+			<Property value="0" name="strength"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="ChromAbEffect" name="chromAb" color="#545454">
+			<Property value="0.0005" name="strength"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="BarsEffect" name="bars" color="#545454">
+			<Property value="0" name="effect"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="GlitchEffect" name="GlitchEffect" color="#545454">
+			<Property value="0" name="iTime"/>
+			<Property value="0" name="strength"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="blur" name="blurFrag" color="#545454">
+			<Property value="0" name="dirY"/>
+			<Property value="0" name="dirX"/>
+			<Property value="0" name="strength"/>
+		</Shader>
+		<Shader camHUD="true" camOther="true" camGame="true" shader="colorswap" name="colorswap" color="#545454">
+			<Property value="0" name="brt"/>
+			<Property value="0" name="sat"/>
+			<Property value="0" name="hue"/>
+		</Shader>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="RaymarchDepthEffect" name="RayMarchGAME" color="#545454">
+			<Property value="0" name="boxDepth"/>
+			<Property value="0" name="boxAngleX0"/>
+			<Property value="0" name="pitch"/>
+			<Property value="0" name="x"/>
+			<Property value="0" name="boxZ0"/>
+			<Property value="0" name="y"/>
+			<Property value="0" name="boxY0"/>
+			<Property value="2.1" name="z"/>
+			<Property value="0" name="boxX0"/>
+			<Property value="0" name="tilt"/>
+			<Property value="0" name="boxAngleZ0"/>
+			<Property value="0" name="boxAngleY0"/>
+			<Property value="-90" name="yaw"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="SobelEffect" name="Sobel" color="#545454">
+			<Property value="1" name="intensity"/>
+			<Property value="0" name="strength"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="false" shader="SobelAlphaVignetteEffect" name="Alpha" color="#545454">
+			<Property value="1" name="intensity"/>
+			<Property value="0" name="strength"/>
+		</Shader>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="X" modifier="x" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="XP" modifier="x" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="XO" modifier="x" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="250" name="Y" modifier="y" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="YP" modifier="y" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="YO" modifier="y" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="Z" modifier="Z" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="ZP" modifier="Z" color="#5600FF"/>
+		<Modifier strumID="0" strumLineID="1" value="0" name="ZPLeft" modifier="Z" color="#E200FF"/>
+		<Modifier strumID="1" strumLineID="1" value="0" name="ZPDown" modifier="Z" color="#00F8FF"/>
+		<Modifier strumID="2" strumLineID="1" value="0" name="ZPUp" modifier="Z" color="#2CFF00"/>
+		<Modifier strumID="3" strumLineID="1" value="0" name="ZPRight" modifier="Z" color="#FF0000"/>
+		<Modifier strumID="4" strumLineID="1" value="0" name="ZPRightE" modifier="Z" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="ZO" modifier="Z" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="0" value="0" name="ZOLeft" modifier="Z" color="#E200FF"/>
+		<Modifier strumID="1" strumLineID="0" value="0" name="ZODown" modifier="Z" color="#00F8FF"/>
+		<Modifier strumID="2" strumLineID="0" value="0" name="ZOUp" modifier="Z" color="#2CFF00"/>
+		<Modifier strumID="4" strumLineID="0" value="0" name="ZORightE" modifier="Z" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="AngleZ" modifier="angleZ" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="AngleZP" modifier="angleZ" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="AngleZO" modifier="angleZ" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="AngleY" modifier="angleY" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="AngleYP" modifier="angleY" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="AngleYO" modifier="angleY" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="AngleX" modifier="angleX" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="AngleXP" modifier="angleX" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="AngleXO" modifier="angleX" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="tipsy" modifier="tipsy" color="#545454">
+			<SubMod value="1" name="speed"/>
+		</Modifier>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="drunk" modifier="drunk" color="#545454">
+			<SubMod value="0" name="time"/>
+			<SubMod value="0" name="speed"/>
+		</Modifier>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="IncomingAngleXP" modifier="incomingAngleX" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="IncomingAngleXO" modifier="incomingAngleX" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="incomingAngleYP" modifier="incomingAngleY" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="incomingAngleYO" modifier="incomingAngleY" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="incomingAngleZP" modifier="incomingAngleZ" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="incomingAngleZO" modifier="incomingAngleZ" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="1" value="0" name="XPLeft" modifier="x" color="#E200FF"/>
+		<Modifier strumID="1" strumLineID="1" value="0" name="XPDown" modifier="x" color="#00F8FF"/>
+		<Modifier strumID="2" strumLineID="1" value="0" name="XPUp" modifier="x" color="#2CFF00"/>
+		<Modifier strumID="3" strumLineID="1" value="0" name="XPRight" modifier="x" color="#FF0000"/>
+		<Modifier strumID="4" strumLineID="1" value="0" name="XPRightE" modifier="x" color="#FF0000"/>
+		<Modifier strumID="0" strumLineID="1" value="0" name="YPLeft" modifier="y" color="#E200FF"/>
+		<Modifier strumID="1" strumLineID="1" value="0" name="YPDown" modifier="y" color="#00F8FF"/>
+		<Modifier strumID="2" strumLineID="1" value="0" name="YPUp" modifier="y" color="#2CFF00"/>
+		<Modifier strumID="3" strumLineID="1" value="0" name="YPRight" modifier="y" color="#FF0000"/>
+		<Modifier strumID="4" strumLineID="1" value="0" name="YPRightE" modifier="y" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="AngleZAlt" modifier="angleZAlternating" color="#545454"/>
+	</Init>
+	<Events>
+		<Event step="0" time="128" value="10000" property="boxAngleZ0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="0" time="224" value="15" property="z" ease="cubeInOut" type="tweenShaderProperty" startValue="2.1" name="RayMarchGAME"/>
+		<Event step="64" time="64" value="130" property="boxAngleY0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="128" time="24" value="-20" property="boxAngleY0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="120" name="RayMarchGAME"/>
+		<Event step="151" time="8" value="0" property="boxAngleY0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-19.905" name="RayMarchGAME"/>
+		<Event step="192" time="32" value="0" property="boxAngleZ0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="10000" name="RayMarchGAME"/>
+		<Event step="224" time="4" value="10" property="z" ease="cubeInOut" type="tweenShaderProperty" startValue="15" name="RayMarchGAME"/>
+		<Event step="224" time="4" value="125" property="value" ease="backOut" type="tweenModifierValue" startValue="250" name="Y"/>
+		<Event step="232" time="4" value="5" property="z" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="RayMarchGAME"/>
+		<Event step="232" time="4" value="75" property="value" ease="backOut" type="tweenModifierValue" startValue="125" name="Y"/>
+		<Event step="240" time="4" value="2.1" property="z" ease="cubeInOut" type="tweenShaderProperty" startValue="5" name="RayMarchGAME"/>
+		<Event step="240" time="4" value="0" property="value" ease="backOut" type="tweenModifierValue" startValue="75" name="Y"/>
+		<Event step="256" time="4" value="1" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="tipsy"/>
+		<Event step="256" time="4" value="1" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="negative"/>
+		<Event step="272" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="1" name="tipsy"/>
+		<Event step="272" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="negative"/>
+		<Event step="768" type="addCameraZoom" value="0.1"/>
+		<Event step="768" type="addHUDZoom" value="0.1"/>
+		<Event step="776" type="addCameraZoom" value="0.1"/>
+		<Event step="776" type="addHUDZoom" value="0.1"/>
+		<Event step="784" type="addCameraZoom" value="0.1"/>
+		<Event step="784" type="addHUDZoom" value="0.1"/>
+		<Event step="792" type="addCameraZoom" value="0.1"/>
+		<Event step="792" type="addHUDZoom" value="0.1"/>
+		<Event step="800" type="addCameraZoom" value="0.1"/>
+		<Event step="800" type="addHUDZoom" value="0.1"/>
+		<Event step="808" type="addCameraZoom" value="0.1"/>
+		<Event step="808" type="addHUDZoom" value="0.1"/>
+		<Event step="816" type="addHUDZoom" value="0.1"/>
+		<Event step="816" type="addCameraZoom" value="0.1"/>
+		<Event step="824" type="addHUDZoom" value="0.1"/>
+		<Event step="824" type="addCameraZoom" value="0.1"/>
+		<Event step="832" type="addHUDZoom" value="0.1"/>
+		<Event step="832" type="addCameraZoom" value="0.1"/>
+		<Event step="840" type="addHUDZoom" value="0.1"/>
+		<Event step="840" type="addCameraZoom" value="0.1"/>
+		<Event step="848" type="addHUDZoom" value="0.1"/>
+		<Event step="848" type="addCameraZoom" value="0.1"/>
+		<Event step="856" type="addHUDZoom" value="0.1"/>
+		<Event step="856" type="addCameraZoom" value="0.1"/>
+		<Event step="864" type="addHUDZoom" value="0.1"/>
+		<Event step="864" type="addCameraZoom" value="0.1"/>
+		<Event step="872" type="addHUDZoom" value="0.1"/>
+		<Event step="872" type="addCameraZoom" value="0.1"/>
+		<Event step="880" type="addHUDZoom" value="0.1"/>
+		<Event step="880" type="addCameraZoom" value="0.1"/>
+		<Event step="888" type="addHUDZoom" value="0.1"/>
+		<Event step="888" type="addCameraZoom" value="0.1"/>
+		<Event step="896" type="addHUDZoom" value="0.1"/>
+		<Event step="896" type="addCameraZoom" value="0.2"/>
+		<Event step="904" type="addHUDZoom" value="0.1"/>
+		<Event step="904" type="addCameraZoom" value="0.1"/>
+		<Event step="912" type="addHUDZoom" value="0.1"/>
+		<Event step="912" type="addCameraZoom" value="0.1"/>
+		<Event step="920" type="addHUDZoom" value="0.1"/>
+		<Event step="920" type="addCameraZoom" value="0.1"/>
+		<Event step="928" type="addHUDZoom" value="0.1"/>
+		<Event step="928" type="addCameraZoom" value="0.1"/>
+		<Event step="936" type="addHUDZoom" value="0.1"/>
+		<Event step="936" type="addCameraZoom" value="0.1"/>
+		<Event step="944" type="addHUDZoom" value="0.1"/>
+		<Event step="944" type="addCameraZoom" value="0.1"/>
+		<Event step="952" type="addHUDZoom" value="0.1"/>
+		<Event step="952" type="addCameraZoom" value="0.1"/>
+		<Event step="960" type="addHUDZoom" value="0.1"/>
+		<Event step="960" type="addCameraZoom" value="0.2"/>
+		<Event step="968" type="addHUDZoom" value="0.1"/>
+		<Event step="968" type="addCameraZoom" value="0.1"/>
+		<Event step="976" type="addHUDZoom" value="0.1"/>
+		<Event step="976" type="addCameraZoom" value="0.1"/>
+		<Event step="984" type="addHUDZoom" value="0.1"/>
+		<Event step="984" type="addCameraZoom" value="0.1"/>
+		<Event step="992" type="addCameraZoom" value="0.1"/>
+		<Event step="992" type="addHUDZoom" value="0.1"/>
+		<Event step="1000" type="addCameraZoom" value="0.1"/>
+		<Event step="1000" type="addHUDZoom" value="0.1"/>
+		<Event step="1008" type="addCameraZoom" value="0.1"/>
+		<Event step="1008" type="addHUDZoom" value="0.1"/>
+		<Event step="1024" time="0" value="0.1" ease="linear" type="tweenStageHue" startValue="0"/>
+		<Event step="1024" type="addHUDZoom" value="0.1"/>
+		<Event step="1024" type="addCameraZoom" value="0.4"/>
+		<Event step="1040" time="0" value="0.2" ease="linear" type="tweenStageHue" startValue="0.1"/>
+		<Event step="1048" time="0" value="0.3" ease="linear" type="tweenStageHue" startValue="0.2"/>
+		<Event step="1056" time="0" value="0.4" ease="linear" type="tweenStageHue" startValue="0.3"/>
+		<Event step="1072" time="0" value="0.3" ease="linear" type="tweenStageHue" startValue="0.5"/>
+		<Event step="1080" time="0" value="0.2" ease="linear" type="tweenStageHue" startValue="0.3"/>
+		<Event step="1088" time="0" value="0.1" ease="linear" type="tweenStageHue" startValue="0.2"/>
+		<Event step="1131" time="0" value="0.2" ease="linear" type="tweenStageHue" startValue="0.1"/>
+		<Event step="1147" time="0" value="0.3" ease="linear" type="tweenStageHue" startValue="0"/>
+		<Event step="1408" time="60" value="0" ease="linear" type="tweenStageHue" startValue="0.3"/>
+		<Event step="1468" time="16" value="0" ease="linear" type="tweenStageHue" startValue="0.2"/>
+		<Event step="1484" time="16" value="0" ease="linear" type="tweenStageHue" startValue="0.4"/>
+		<Event step="1500" time="12" value="0" ease="linear" type="tweenStageHue" startValue="0.5"/>
+		<Event step="1512" time="16" value="0" ease="linear" type="tweenStageHue" startValue="0.6"/>
+		<Event step="1528" time="8" value="0" ease="linear" type="tweenStageHue" startValue="0.7"/>
+		<Event step="2032" time="16" value="0.15" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="2032" time="16" value="45" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="2032" time="16" value="0.2" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="bars"/>
+		<Event step="2032" time="16" value="0.5" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="2032" time="16" value="1" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="GlitchEffect"/>
+		<Event step="2047" time="0" value="1" property="doChroma" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="BarrelBlurEffect"/>
+		<Event step="2048" time="0" value="-0.1" property="hue" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="2048" time="4" value="0" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="bars"/>
+		<Event step="2048" time="4" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="45" name="mirror"/>
+		<Event step="2048" time="4" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1.5" name="mirror"/>
+		<Event step="2048" time="4" value="3" property="z" ease="cubeInOut" type="tweenShaderProperty" startValue="2.1" name="RayMarchGAME"/>
+		<Event step="2048" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="GlitchEffect"/>
+		<Event step="2048" time="4" value="-0.5" property="brt" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="2048" time="16" value="0.2" property="barrel" ease="expoOut" type="tweenShaderProperty" startValue="3" name="BarrelBlurEffect"/>
+		<Event step="2048" time="4" value="1" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Alpha"/>
+		<Event step="2064" time="4" value="0" property="boxAngleY0" ease="cubeInOut" type="tweenShaderProperty" startValue="25" name="RayMarchGAME"/>
+		<Event step="2068" time="4" value="0" property="boxAngleY0" ease="backOut" type="tweenShaderProperty" startValue="-25" name="RayMarchGAME"/>
+		<Event step="2072" time="4" value="0" property="boxAngleZ0" ease="backOut" type="tweenShaderProperty" startValue="-25" name="RayMarchGAME"/>
+		<Event step="2088" time="8" value="25" property="boxAngleZ0" ease="expoOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2096" time="16" value="-25" property="boxAngleZ0" ease="backOut" type="tweenShaderProperty" startValue="25" name="RayMarchGAME"/>
+		<Event step="2112" time="24" value="360" property="boxAngleZ0" ease="expoOut" type="tweenShaderProperty" startValue="-25" name="RayMarchGAME"/>
+		<Event step="2124" time="16" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="360" name="RayMarchGAME"/>
+		<Event step="2144" time="4" value="3" property="boxX0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2148" time="4" value="0" property="boxX0" ease="cubeInOut" type="tweenShaderProperty" startValue="-3" name="RayMarchGAME"/>
+		<Event step="2150" time="4" value="-25" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2150" time="8" value="25" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2156" time="4" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="-25" name="RayMarchGAME"/>
+		<Event step="2158" time="4" value="0" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="-25" name="RayMarchGAME"/>
+		<Event step="2164" time="4" value="40" property="boxAngleZ0" ease="expoOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2168" time="4" value="80" property="boxAngleZ0" ease="expoOut" type="tweenShaderProperty" startValue="40" name="RayMarchGAME"/>
+		<Event step="2172" time="4" value="160" property="boxAngleZ0" ease="expoOut" type="tweenShaderProperty" startValue="80" name="RayMarchGAME"/>
+		<Event step="2176" time="12" value="720" property="boxAngleZ0" ease="backOut" type="tweenShaderProperty" startValue="160" name="RayMarchGAME"/>
+		<Event step="2196" time="4" value="-1" property="boxZ0" ease="expoOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2200" time="4" value="-40" property="boxAngleZ0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2204" time="4" value="-180" property="boxAngleZ0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-40" name="RayMarchGAME"/>
+		<Event step="2210" time="8" value="180" property="boxAngleY0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2218" time="8" value="180" property="boxAngleX0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2226" time="4" value="0" property="boxZ0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-1" name="RayMarchGAME"/>
+		<Event step="2240" time="20" value="360" property="boxAngleZ0" ease="backOut" type="tweenShaderProperty" startValue="-180" name="RayMarchGAME"/>
+		<Event step="2240" time="8" value="0" property="boxAngleX0" ease="backOut" type="tweenShaderProperty" startValue="180" name="RayMarchGAME"/>
+		<Event step="2264" time="16" value="-180" property="boxAngleY0" ease="smootherStepInOut" type="tweenShaderProperty" startValue="180" name="RayMarchGAME"/>
+		<Event step="2280" time="12" value="0" property="boxAngleZ0" ease="sineOut" type="tweenShaderProperty" startValue="360" name="RayMarchGAME"/>
+		<Event step="2292" time="8" value="0" property="boxAngleY0" ease="cubeInOut" type="tweenShaderProperty" startValue="-180" name="RayMarchGAME"/>
+		<Event step="2304" time="28" value="16" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="2304" time="28" value="16" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="2304" time="28" value="8" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="2324" time="4" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="2336" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="RayMarchGAME"/>
+		<Event step="2338" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="RayMarchGAME"/>
+		<Event step="2340" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="RayMarchGAME"/>
+		<Event step="2342" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="RayMarchGAME"/>
+		<Event step="2344" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="RayMarchGAME"/>
+		<Event step="2346" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="RayMarchGAME"/>
+		<Event step="2348" time="4" value="4" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2348" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="RayMarchGAME"/>
+		<Event step="2350" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="RayMarchGAME"/>
+		<Event step="2352" time="4" value="0" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-4" name="RayMarchGAME"/>
+		<Event step="2352" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="RayMarchGAME"/>
+		<Event step="2354" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="RayMarchGAME"/>
+		<Event step="2356" time="4" value="10" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2356" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="RayMarchGAME"/>
+		<Event step="2358" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="RayMarchGAME"/>
+		<Event step="2360" time="4" value="0" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="RayMarchGAME"/>
+		<Event step="2360" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="10" name="RayMarchGAME"/>
+		<Event step="2362" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="-10" name="RayMarchGAME"/>
+		<Event step="2364" time="4" value="4" property="z" ease="cubeInOut" type="tweenShaderProperty" startValue="3" name="RayMarchGAME"/>
+		<Event step="2368" time="4" value="3" property="z" ease="cubeInOut" type="tweenShaderProperty" startValue="-4" name="RayMarchGAME"/>
+		<Event step="2392" time="4" value="4" property="boxY0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2392" time="4" value="4" property="boxX0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2396" time="4" value="0" property="boxX0" ease="cubeInOut" type="tweenShaderProperty" startValue="-4" name="RayMarchGAME"/>
+		<Event step="2396" time="4" value="0" property="boxY0" ease="cubeInOut" type="tweenShaderProperty" startValue="-4" name="RayMarchGAME"/>
+		<Event step="2409" time="4" value="4" property="boxX0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2413" time="4" value="0" property="boxX0" ease="cubeInOut" type="tweenShaderProperty" startValue="-4" name="RayMarchGAME"/>
+		<Event step="2424" time="4" value="5" property="boxY0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2428" time="4" value="0" property="boxY0" ease="cubeInOut" type="tweenShaderProperty" startValue="-5" name="RayMarchGAME"/>
+		<Event step="2432" time="4" value="3" property="z" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="RayMarchGAME"/>
+		<Event step="2448" time="16" value="1" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2448" time="16" value="2" property="x" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2464" time="16" value="-2" property="x" ease="smootherStepInOut" type="tweenShaderProperty" startValue="2" name="RayMarchGAME"/>
+		<Event step="2472" time="8" value="-1" property="y" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1" name="RayMarchGAME"/>
+		<Event step="2480" time="8" value="0" property="y" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-1" name="RayMarchGAME"/>
+		<Event step="2480" time="8" value="0" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-2" name="RayMarchGAME"/>
+		<Event step="2486" time="2" value="4" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="2488" time="10" value="0" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="4" name="mirror"/>
+		<Event step="2488" time="20" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="4" name="mirror"/>
+		<Event step="2512" time="2" value="4" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="2514" time="12" value="0" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="6" name="mirror"/>
+		<Event step="2514" time="16" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="4" name="mirror"/>
+		<Event step="2530" time="2" value="4" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="2532" time="10" value="0" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="-4" name="mirror"/>
+		<Event step="2532" time="16" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="4" name="mirror"/>
+		<Event step="2548" time="2" value="4" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="2550" time="8" value="0" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-6" name="mirror"/>
+		<Event step="2550" time="12" value="1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="4" name="mirror"/>
+		<Event step="2556" time="4" value="40" property="boxAngleZ0" ease="expoOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2559" time="13" value="0" property="boxAngleZ0" ease="cubeOut" type="tweenShaderProperty" startValue="400" name="RayMarchGAME"/>
+		<Event step="2592" time="2" value="4" property="boxX0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2594" time="4" value="0" property="boxX0" ease="cubeInOut" type="tweenShaderProperty" startValue="-4" name="RayMarchGAME"/>
+		<Event step="2598" time="2" value="5" property="boxY0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2600" time="4" value="0" property="boxY0" ease="cubeInOut" type="tweenShaderProperty" startValue="-5" name="RayMarchGAME"/>
+		<Event step="2608" time="2" value="3" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2610" time="2" value="-3" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2612" time="2" value="-3" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="3" name="RayMarchGAME"/>
+		<Event step="2614" time="2" value="3" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="-3" name="RayMarchGAME"/>
+		<Event step="2616" time="2" value="5" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-3" name="RayMarchGAME"/>
+		<Event step="2618" time="2" value="-2" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="3" name="RayMarchGAME"/>
+		<Event step="2620" time="2" value="-5" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="5" name="RayMarchGAME"/>
+		<Event step="2622" time="2" value="4" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="-2" name="RayMarchGAME"/>
+		<Event step="2624" time="4" value="3" property="z" ease="cubeInOut" type="tweenShaderProperty" startValue="2" name="RayMarchGAME"/>
+		<Event step="2624" time="2" value="0" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="4" name="RayMarchGAME"/>
+		<Event step="2624" time="2" value="0" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-5" name="RayMarchGAME"/>
+		<Event step="2636" time="2" value="0" property="boxAngleY0" ease="cubeInOut" type="tweenShaderProperty" startValue="20" name="RayMarchGAME"/>
+		<Event step="2640" time="2" value="0" property="boxAngleY0" ease="cubeInOut" type="tweenShaderProperty" startValue="-20" name="RayMarchGAME"/>
+		<Event step="2648" time="3" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="25" name="RayMarchGAME"/>
+		<Event step="2652" time="3" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="-25" name="RayMarchGAME"/>
+		<Event step="2656" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="20" name="RayMarchGAME"/>
+		<Event step="2658" time="2" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="40" name="RayMarchGAME"/>
+		<Event step="2660" time="2" value="0" property="boxAngleY0" ease="cubeInOut" type="tweenShaderProperty" startValue="60" name="RayMarchGAME"/>
+		<Event step="2662" time="2" value="0" property="boxAngleY0" ease="cubeInOut" type="tweenShaderProperty" startValue="80" name="RayMarchGAME"/>
+		<Event step="2664" time="4" value="180" property="boxAngleX0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2668" time="2" value="-90" property="boxAngleX0" ease="cubeInOut" type="tweenShaderProperty" startValue="180" name="RayMarchGAME"/>
+		<Event step="2670" time="2" value="0" property="boxAngleX0" ease="cubeInOut" type="tweenShaderProperty" startValue="-90" name="RayMarchGAME"/>
+		<Event step="2672" time="3" value="40" property="boxAngleY0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2674" time="3" value="80" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2676" time="3" value="180" property="boxAngleX0" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2678" time="3" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="80" name="RayMarchGAME"/>
+		<Event step="2680" time="3" value="0" property="boxAngleY0" ease="cubeInOut" type="tweenShaderProperty" startValue="40" name="RayMarchGAME"/>
+		<Event step="2682" time="4" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="360" name="RayMarchGAME"/>
+		<Event step="2688" time="5" value="0" property="boxAngleX0" ease="expoOut" type="tweenShaderProperty" startValue="180" name="RayMarchGAME"/>
+		<Event step="2932" time="4" value="45" property="boxAngleZ0" ease="quartOut" type="tweenShaderProperty" startValue="0" name="RayMarchGAME"/>
+		<Event step="2936" time="4" value="90" property="boxAngleZ0" ease="sineOut" type="tweenShaderProperty" startValue="45" name="RayMarchGAME"/>
+		<Event step="2940" time="4" value="180" property="boxAngleZ0" ease="sineOut" type="tweenShaderProperty" startValue="90" name="RayMarchGAME"/>
+		<Event step="2944" time="6" value="720" property="boxAngleZ0" ease="quartOut" type="tweenShaderProperty" startValue="180" name="RayMarchGAME"/>
+		<Event step="3000" time="24" value="0" property="boxAngleZ0" ease="cubeInOut" type="tweenShaderProperty" startValue="720" name="RayMarchGAME"/>
+		<Event step="3020" time="24" value="0" property="boxAngleX0" ease="cubeInOut" type="tweenShaderProperty" startValue="720" name="RayMarchGAME"/>
+		<Event step="3040" time="24" value="0" property="boxAngleY0" ease="cubeInOut" type="tweenShaderProperty" startValue="720" name="RayMarchGAME"/>
+		<Event step="3056" time="16" value="0" property="boxAngleX0" ease="cubeInOut" type="tweenShaderProperty" startValue="720" name="RayMarchGAME"/>
+		<Event step="3072" time="4" value="0" property="barrel" ease="cubeInOut" type="tweenShaderProperty" startValue="1.2" name="BarrelBlurEffect"/>
+		<Event step="3072" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="Alpha"/>
+		<Event step="3072" time="0" value="0" property="hue" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.1" name="colorswap"/>
+		<Event step="3072" time="0" value="0" property="size" ease="cubeInOut" type="tweenShaderProperty" startValue="140" name="sparks"/>
+		<Event step="3072" time="48" value="2.1" property="z" ease="smootherStepInOut" type="tweenShaderProperty" startValue="3" name="RayMarchGAME"/>
+		<Event step="3072" time="16" value="0" property="brt" ease="cubeInOut" type="tweenShaderProperty" startValue="20" name="colorswap"/>
+		<Event step="3328" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3328" type="addHUDZoom" value="0.05"/>
+		<Event step="3328" type="addCameraZoom" value="0.1"/>
+		<Event step="3336" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3336" type="addHUDZoom" value="0.05"/>
+		<Event step="3336" type="addCameraZoom" value="0.1"/>
+		<Event step="3344" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3345" type="addHUDZoom" value="0.05"/>
+		<Event step="3345" type="addCameraZoom" value="0.1"/>
+		<Event step="3350" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3351" type="addHUDZoom" value="0.05"/>
+		<Event step="3351" type="addCameraZoom" value="0.1"/>
+		<Event step="3356" type="addHUDZoom" value="0.05"/>
+		<Event step="3356" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3356" type="addCameraZoom" value="0.1"/>
+		<Event step="3360" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3362" type="addHUDZoom" value="0.05"/>
+		<Event step="3362" type="addHUDZoom" value="0.05"/>
+		<Event step="3362" type="addCameraZoom" value="0.1"/>
+		<Event step="3362" type="addCameraZoom" value="0.1"/>
+		<Event step="3368" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3370" type="addHUDZoom" value="0.05"/>
+		<Event step="3370" type="addCameraZoom" value="0.1"/>
+		<Event step="3376" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3380" type="addHUDZoom" value="0.05"/>
+		<Event step="3380" type="addCameraZoom" value="0.1"/>
+		<Event step="3382" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3385" type="addHUDZoom" value="0.05"/>
+		<Event step="3385" type="addCameraZoom" value="0.1"/>
+		<Event step="3388" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3390" type="addHUDZoom" value="0.05"/>
+		<Event step="3390" type="addCameraZoom" value="0.1"/>
+		<Event step="3392" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3394" type="addHUDZoom" value="0.05"/>
+		<Event step="3394" type="addCameraZoom" value="0.1"/>
+		<Event step="3400" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3403" type="addHUDZoom" value="0.05"/>
+		<Event step="3403" type="addCameraZoom" value="0.1"/>
+		<Event step="3408" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3411" type="addHUDZoom" value="0.05"/>
+		<Event step="3411" type="addCameraZoom" value="0.1"/>
+		<Event step="3414" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3417" type="addHUDZoom" value="0.05"/>
+		<Event step="3417" type="addCameraZoom" value="0.1"/>
+		<Event step="3420" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3423" type="addHUDZoom" value="0.05"/>
+		<Event step="3423" type="addCameraZoom" value="0.1"/>
+		<Event step="3428" type="addHUDZoom" value="0.05"/>
+		<Event step="3428" type="addCameraZoom" value="0.1"/>
+		<Event step="3432" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3435" type="addHUDZoom" value="0.05"/>
+		<Event step="3435" type="addCameraZoom" value="0.1"/>
+		<Event step="3440" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3443" type="addHUDZoom" value="0.05"/>
+		<Event step="3443" type="addCameraZoom" value="0.1"/>
+		<Event step="3448" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3449" type="addHUDZoom" value="0.05"/>
+		<Event step="3449" type="addCameraZoom" value="0.1"/>
+		<Event step="3454" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3455" type="addHUDZoom" value="0.05"/>
+		<Event step="3455" type="addCameraZoom" value="0.1"/>
+		<Event step="3458" type="addHUDZoom" value="0.05"/>
+		<Event step="3458" type="addCameraZoom" value="0.1"/>
+		<Event step="3460" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3467" type="addHUDZoom" value="0.05"/>
+		<Event step="3467" type="addCameraZoom" value="0.1"/>
+		<Event step="3468" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3475" type="addHUDZoom" value="0.05"/>
+		<Event step="3475" type="addCameraZoom" value="0.1"/>
+		<Event step="3477" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3481" type="addHUDZoom" value="0.05"/>
+		<Event step="3481" type="addCameraZoom" value="0.1"/>
+		<Event step="3487" type="addHUDZoom" value="0.05"/>
+		<Event step="3487" type="addCameraZoom" value="0.1"/>
+		<Event step="3489" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3493" type="addHUDZoom" value="0.05"/>
+		<Event step="3493" type="addCameraZoom" value="0.1"/>
+		<Event step="3500" type="addHUDZoom" value="0.05"/>
+		<Event step="3500" type="addCameraZoom" value="0.1"/>
+		<Event step="3506" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3508" type="addHUDZoom" value="0.05"/>
+		<Event step="3508" type="addCameraZoom" value="0.1"/>
+		<Event step="3513" type="addHUDZoom" value="0.05"/>
+		<Event step="3513" type="addCameraZoom" value="0.1"/>
+		<Event step="3520" type="addHUDZoom" value="0.05"/>
+		<Event step="3520" type="addCameraZoom" value="0.1"/>
+		<Event step="3520" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3524" type="addHUDZoom" value="0.05"/>
+		<Event step="3524" type="addCameraZoom" value="0.1"/>
+		<Event step="3531" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3532" type="addHUDZoom" value="0.05"/>
+		<Event step="3532" type="addCameraZoom" value="0.1"/>
+		<Event step="3539" type="addHUDZoom" value="0.05"/>
+		<Event step="3539" type="addCameraZoom" value="0.1"/>
+		<Event step="3540" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3551" type="addHUDZoom" value="0.05"/>
+		<Event step="3551" type="addCameraZoom" value="0.1"/>
+		<Event step="3552" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3556" type="addHUDZoom" value="0.05"/>
+		<Event step="3556" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3556" type="addCameraZoom" value="0.1"/>
+		<Event step="3564" type="addHUDZoom" value="0.05"/>
+		<Event step="3564" type="addCameraZoom" value="0.1"/>
+		<Event step="3571" type="addHUDZoom" value="0.05"/>
+		<Event step="3571" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3571" type="addCameraZoom" value="0.1"/>
+		<Event step="3584" time="128" value="-0.1" property="hue" ease="linear" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="3584" time="128" value="1" property="sat" ease="linear" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="3600" type="addHUDZoom" value="0.1"/>
+		<Event step="3600" type="addCameraZoom" value="0.2"/>
+		<Event step="3600" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3629" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3629" type="addHUDZoom" value="0.1"/>
+		<Event step="3629" type="addCameraZoom" value="0.2"/>
+		<Event step="3634" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3634" type="addHUDZoom" value="0.1"/>
+		<Event step="3634" type="addCameraZoom" value="0.2"/>
+		<Event step="3642" type="addHUDZoom" value="0.1"/>
+		<Event step="3642" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3642" type="addCameraZoom" value="0.2"/>
+		<Event step="3663" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3663" type="addHUDZoom" value="0.1"/>
+		<Event step="3663" type="addCameraZoom" value="0.2"/>
+		<Event step="3665" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3665" type="addHUDZoom" value="0.1"/>
+		<Event step="3665" type="addCameraZoom" value="0.2"/>
+		<Event step="3674" type="addHUDZoom" value="0.1"/>
+		<Event step="3674" type="addCameraZoom" value="0.2"/>
+		<Event step="3675" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3698" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3698" type="addHUDZoom" value="0.1"/>
+		<Event step="3698" type="addCameraZoom" value="0.2"/>
+		<Event step="3704" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3704" type="addHUDZoom" value="0.1"/>
+		<Event step="3704" type="addCameraZoom" value="0.2"/>
+		<Event step="3706" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3706" type="addHUDZoom" value="0.1"/>
+		<Event step="3706" type="addCameraZoom" value="0.2"/>
+		<Event step="3708" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3708" type="addHUDZoom" value="0.1"/>
+		<Event step="3708" type="addCameraZoom" value="0.2"/>
+		<Event step="3714" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3714" type="addHUDZoom" value="0.1"/>
+		<Event step="3714" type="addCameraZoom" value="0.2"/>
+		<Event step="3731" type="addHUDZoom" value="0.1"/>
+		<Event step="3731" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3731" type="addCameraZoom" value="0.2"/>
+		<Event step="3758" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3758" type="addHUDZoom" value="0.1"/>
+		<Event step="3758" type="addCameraZoom" value="0.2"/>
+		<Event step="3763" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3763" type="addHUDZoom" value="0.1"/>
+		<Event step="3763" type="addCameraZoom" value="0.2"/>
+		<Event step="3770" type="addHUDZoom" value="0.1"/>
+		<Event step="3770" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3770" type="addCameraZoom" value="0.2"/>
+		<Event step="3790" type="addHUDZoom" value="0.1"/>
+		<Event step="3790" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3790" type="addCameraZoom" value="0.2"/>
+		<Event step="3794" type="addHUDZoom" value="0.1"/>
+		<Event step="3794" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3794" type="addCameraZoom" value="0.2"/>
+		<Event step="3802" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3802" type="addHUDZoom" value="0.1"/>
+		<Event step="3802" type="addCameraZoom" value="0.2"/>
+		<Event step="3826" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3826" type="addHUDZoom" value="0.1"/>
+		<Event step="3826" type="addCameraZoom" value="0.2"/>
+		<Event step="3832" type="addHUDZoom" value="0.1"/>
+		<Event step="3832" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3832" type="addCameraZoom" value="0.2"/>
+		<Event step="3834" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="75" name="AngleZAlt"/>
+		<Event step="3834" type="addHUDZoom" value="0.1"/>
+		<Event step="3834" type="addCameraZoom" value="0.2"/>
+		<Event step="3839" time="8" value="0" property="value" ease="expoOut" type="tweenModifierValue" startValue="-75" name="AngleZAlt"/>
+		<Event step="3839" type="addCameraZoom" value="0.2"/>
+		<Event step="3839" type="addHUDZoom" value="0.1"/>
+		<Event step="3842" time="4" value="0" property="value" ease="backOut" type="tweenModifierValue" startValue="360" name="AngleZAlt"/>
+		<Event step="3842" time="4" value="2" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="mirror2"/>
+		<Event step="3842" type="addCameraZoom" value="0.3"/>
+	</Events>
+</Modchart>

@@ -1,0 +1,16 @@
+{
+	"beatsPerMeasure": 4,
+	"opponentModeAllowed": true,
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"bpm": 200,
+	"difficulties": [
+		"voiid"
+	],
+	"needsVoices": false,
+	"parsedColor": -1,
+	"displayName": "Veteran VIP",
+	"icon": "Wiik100VoiidMatt-icons",
+	"name": "veteran VIP",
+	"color": "#FFFFFF"
+}

@@ -1,0 +1,29 @@
+{
+	"composer": "TheOnlyVolume (Inst), Silv4 (Voices)",
+	"charter": "Xyriax, RhysRJJ",
+	"originalComposer": "TheOnlyVolume",
+	"startTime": 6770,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 22,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#ff57f3",
+	"midBorderBot": "#8f802c",
+	"innerBorderTop": "#8730a2",
+	"innerBorderBot": "#190c2c",
+
+	"sobelStrength": 0.5,
+	"sobelIntensity": 1.0,
+	"mixGap": 2.5,
+    "vipFont": "Onslaughter.otf",
+
+	"outerBorderTopVIP": "#000000",
+	"outerBorderBotVIP": "#000000",
+	"midBorderTopVIP": "#842c8f",
+	"midBorderBotVIP": "#ffdf29",
+	"innerBorderTopVIP": "#142322",
+	"innerBorderBotVIP": "#000000",
+
+	"outerBorderSize": 13
+}

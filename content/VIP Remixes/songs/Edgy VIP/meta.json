@@ -1,0 +1,16 @@
+{
+	"beatsPerMeasure": 4,
+	"opponentModeAllowed": true,
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"bpm": 145,
+	"difficulties": [
+		"voiid"
+	],
+	"needsVoices": false,
+	"parsedColor": -1,
+	"displayName": "Edgy VIP",
+	"icon": "Wiik100VoiidMatt-icons",
+	"name": "Edgy VIP",
+	"color": "#FFFFFF"
+}

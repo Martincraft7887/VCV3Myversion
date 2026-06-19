@@ -1,0 +1,28 @@
+{
+	"composer": "Doggy_UwU",
+	"charter": "Sharik",
+	"originalComposer": "st4rcannon",
+	"startTime": 13252,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#491796",
+	"midBorderBot": "#0E0030",
+	"innerBorderTop": "#2A0947",
+	"innerBorderBot": "#212121",
+
+	"sobelStrength": 0.5,
+	"sobelIntensity": 1.0,
+    "vipFont": "Onslaughter.otf",
+
+	"outerBorderTopVIP": "#000000",
+	"outerBorderBotVIP": "#000000",
+	"midBorderTopVIP": "#491796",
+	"midBorderBotVIP": "#0E0030",
+	"innerBorderTopVIP": "#000000",
+	"innerBorderBotVIP": "#15001c",
+
+	"outerBorderSize": 13
+}
