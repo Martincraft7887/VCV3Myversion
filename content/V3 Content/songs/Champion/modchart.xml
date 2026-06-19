@@ -1,0 +1,118 @@
+<Modchart>
+	<Init>
+		<Event type="initShader" shader="SpeedEffect" name="speed"/>
+		<Event type="setCameraShader" camera="game" name="speed"/>
+		<Event type="initShader" shader="SparkEffect" name="sparks"/>
+		<Event type="setCameraShader" camera="game" name="sparks"/>
+		<Event type="setShaderProperty" value="0.82" property="red" name="sparks"/>
+		<Event type="setShaderProperty" value="0.1" property="green" name="sparks"/>
+		<Event type="setShaderProperty" value="0.82" property="blue" name="sparks"/>
+		<Event type="setShaderProperty" value="-450" property="warp" name="sparks"/>
+		<Event type="initShader" name="greyscale" shader="GreyscaleEffect"/>
+		<Event type="setCameraShader" name="greyscale" camera="game"/>
+		<Event type="setCameraShader" name="greyscale" camera="hud"/>
+		<Event type="setShaderProperty" name="greyscale" property="strength" value="1"/>
+		<Event type="initShader" name="bloom" shader="BloomEffect"/>
+		<Event type="setCameraShader" name="bloom" camera="game"/>
+		<Event type="setCameraShader" name="bloom" camera="hud"/>
+		<Event type="setShaderProperty" name="bloom" property="effect" value="0"/>
+		<Event type="setShaderProperty" name="bloom" property="strength" value="0"/>
+		<Event type="initShader" shader="MirrorRepeatWarpEffect" name="mirror"/>
+		<Event type="setCameraShader" camera="game" name="mirror"/>
+		<Event type="setShaderProperty" value="4" property="zoom" name="mirror"/>
+		<Event type="setShaderProperty" value="0" property="angle" name="mirror"/>
+		<Event type="initShader" shader="MirrorRepeatWarpEffect" name="mirrorHud"/>
+		<Event type="setCameraShader" camera="hud" name="mirrorHud"/>
+		<Event type="setShaderProperty" value="1" property="zoom" name="mirrorHud"/>
+		<Event type="setShaderProperty" value="0" property="angle" name="mirrorHud"/>
+		<Event type="initShader" shader="BarsEffect" name="bars"/>
+		<Event type="setCameraShader" camera="game" name="bars"/>
+		<Event type="setShaderProperty" value="0.6" property="effect" name="bars"/>
+		<Event type="initShader" shader="PerlinMirrorRepeatEffect" name="mirror"/>
+		<Event type="setCameraShader" camera="game" name="mirror"/>
+		<Event type="setShaderProperty" value="1" property="zoom" name="mirror"/>
+	</Init>
+	<Events>
+		<Event step="0" time="26" value="0" property="angle" ease="smootherStepIn" type="tweenShaderProperty" startValue="20" name="mirror"/>
+		<Event step="0" time="24" value="0" property="strength" ease="smootherStepIn" type="tweenShaderProperty" startValue="0.9" name="greyscale"/>
+		<Event step="0" time="28" value="0" property="effect" ease="quadIn" type="tweenShaderProperty" startValue="0.6" name="bars"/>
+		<Event step="0" time="0" value="0.2" property="angleRange" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="0" time="0" value="0.015" property="yRange" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="0" time="0" value="0.015" property="xRange" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="0" time="24" value="1" property="zoom" ease="quadIn" type="tweenShaderProperty" startValue="1.2" name="mirror"/>
+		<Event step="140" time="20" value="1.1" property="zoom" ease="quadIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="160" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1.1" name="mirror"/>
+		<Event step="440" time="20" value="1.1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="480" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1.1" name="mirror"/>
+		<Event step="600" time="20" value="1.1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="620" time="8" value="0.5" property="strength" ease="expoOut" type="tweenShaderProperty" startValue="0" name="greyscale"/>
+		<Event step="620" time="8" value="0.1" property="effect" ease="circOut" type="tweenShaderProperty" startValue="0" name="bars"/>
+		<Event step="620" time="20" value="1" property="zoom" ease="quadOut" type="tweenShaderProperty" startValue="1.1" name="mirror"/>
+		<Event step="628" time="12" value="0" property="strength" ease="circIn" type="tweenShaderProperty" startValue="0.5" name="greyscale"/>
+		<Event step="628" time="12" value="0" property="effect" ease="circIn" type="tweenShaderProperty" startValue="0.1" name="bars"/>
+		<Event step="780" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="794" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="800" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="820" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="840" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="860" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="866" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="872" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="876" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="896" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="916" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="920" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="932" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="944" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="952" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="956" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="1240" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="1260" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="1280" time="0" value="0" property="speed" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1280" time="0" value="0.6" property="green" ease="cubeInOut" type="tweenShaderProperty" startValue="0.1" name="sparks"/>
+		<Event step="1280" time="0" value="0.2" property="blue" ease="cubeInOut" type="tweenShaderProperty" startValue="0.82" name="sparks"/>
+		<Event step="1280" time="0" value="0.2" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="greyscale"/>
+		<Event step="1600" time="0" value="1.2" property="speed" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="1600" time="0" value="0.1" property="green" ease="cubeInOut" type="tweenShaderProperty" startValue="0.6" name="sparks"/>
+		<Event step="1600" time="0" value="0.9" property="blue" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="sparks"/>
+		<Event step="1600" time="0" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="greyscale"/>
+		<Event step="1900" time="4" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="5" name="mirror"/>
+		<Event step="1900" time="4" value="0.1" property="effect" ease="expoOut" type="tweenShaderProperty" startValue="0" name="bars"/>
+		<Event step="1900" time="20" value="3" property="speed" ease="smootherStepIn" type="tweenShaderProperty" startValue="1.2" name="mirror"/>
+		<Event step="1900" time="4" value="1.1" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="1" name="mirrorHud"/>
+		<Event step="1900" time="4" value="0.3" property="strength" ease="expoOut" type="tweenShaderProperty" startValue="0" name="greyscale"/>
+		<Event step="1900" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="1906" time="4" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="-5" name="mirror"/>
+		<Event step="1906" time="4" value="0.5" property="strength" ease="expoOut" type="tweenShaderProperty" startValue="0.3" name="greyscale"/>
+		<Event step="1906" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="1912" time="2" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="1912" time="2" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="5" name="mirror"/>
+		<Event step="1914" time="2" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="5" name="mirror"/>
+		<Event step="1914" time="2" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="1916" time="2" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="5" name="mirror"/>
+		<Event step="1916" time="2" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="1918" time="2" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="5" name="mirror"/>
+		<Event step="1918" time="2" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="1920" time="0" value="0.1" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="speed"/>
+		<Event step="1920" time="0" value="0.4" property="angleRange" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="mirror"/>
+		<Event step="1920" time="4" value="1" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="1.1" name="mirrorHud"/>
+		<Event step="1920" time="4" value="0" property="strength" ease="expoOut" type="tweenShaderProperty" startValue="0.2" name="greyscale"/>
+		<Event step="1920" time="4" value="0" property="effect" ease="expoOut" type="tweenShaderProperty" startValue="0.1" name="bars"/>
+		<Event step="2200" time="40" value="0" property="effect" ease="linear" type="tweenShaderProperty" startValue="0.1" name="speed"/>
+		<Event step="2220" time="4" value="1" property="speed" ease="expoIn" type="tweenShaderProperty" startValue="3" name="mirror"/>
+		<Event step="2224" time="4" value="1" property="speed" ease="expoIn" type="tweenShaderProperty" startValue="3" name="mirror"/>
+		<Event step="2228" time="4" value="1" property="speed" ease="expoIn" type="tweenShaderProperty" startValue="3" name="mirror"/>
+		<Event step="2232" time="4" value="1.5" property="speed" ease="expoIn" type="tweenShaderProperty" startValue="3" name="mirror"/>
+		<Event step="2236" time="4" value="1" property="speed" ease="smootherStepIn" type="tweenShaderProperty" startValue="1.5" name="mirror"/>
+		<Event step="2240" time="0" value="0.3" property="angleRange" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="mirror"/>
+		<Event step="2240" time="20" value="1.1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="2240" time="20" value="1.1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="mirrorHud"/>
+		<Event step="2260" time="20" value="1.15" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1.1" name="mirrorHud"/>
+		<Event step="2280" time="20" value="1.25" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1.1" name="mirror"/>
+		<Event step="2300" time="60" value="1" property="zoom" ease="smootherStepOut" type="tweenShaderProperty" startValue="1.15" name="mirrorHud"/>
+		<Event step="2300" time="60" value="1" property="zoom" ease="smootherStepIn" type="tweenShaderProperty" startValue="1.25" name="mirror"/>
+		<Event step="2360" time="16" value="0" property="contrast" ease="circOut" type="tweenShaderProperty" startValue="1" name="bloom"/>
+		<Event step="2360" time="16" value="0.3" property="x" ease="circOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="2360" time="12" value="360" property="angle" ease="circOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+	</Events>
+</Modchart>

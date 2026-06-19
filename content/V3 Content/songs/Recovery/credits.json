@@ -1,0 +1,15 @@
+{
+	"composer": "Lord jopa and Joa",
+	"charter": "RhysRJJ",
+	"originalComposer": "",
+	"startTime": 9100,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#a773ff",
+	"midBorderBot": "#351e5c",
+	"innerBorderTop": "#3f3f3f",
+	"innerBorderBot": "#121617"
+}
