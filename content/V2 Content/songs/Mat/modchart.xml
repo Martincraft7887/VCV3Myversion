@@ -1,0 +1,866 @@
+<Modchart noteModchart="true">
+	<Init>
+		<Event type="initShader" shader="RainEffect" name="rain"/>
+		<Event type="setCameraShader" camera="game" name="rain"/>
+		<Event type="setCameraShader" camera="hud" name="rain"/>
+		<Event type="initShader" shader="BarrelBlurEffect" name="mirror"/>
+		<Event type="setCameraShader" camera="game" name="mirror"/>
+		<Event type="setCameraShader" camera="hud" name="mirror"/>
+		<Event type="setShaderProperty" value="1" property="zoom" name="mirror"/>
+		<Event type="setShaderProperty" value="0" property="barrel" name="mirror"/>
+		<Event type="setShaderProperty" value="1" property="doChroma" name="mirror"/>
+		<Event type="initShader" shader="MirrorRepeatEffect" name="mirror2"/>
+		<Event type="setCameraShader" camera="game" name="mirror2"/>
+		<Event type="setCameraShader" camera="hud" name="mirror2"/>
+		<Event type="setShaderProperty" value="1" property="zoom" name="mirror2"/>
+		<Event type="initShader" shader="GreyscaleEffect" name="grey"/>
+		<Event type="setCameraShader" camera="game" name="grey"/>
+		<Event type="setCameraShader" camera="hud" name="grey"/>
+		<Event type="setShaderProperty" value="1" property="strength" name="grey"/>
+		<Event type="initShader" shader="VignetteEffect" name="vignette"/>
+		<Event type="setCameraShader" camera="hud" name="vignette"/>
+		<Event type="setCameraShader" camera="game" name="vignette"/>
+		<Event type="setShaderProperty" value="15" property="strength" name="vignette"/>
+		<Event type="setShaderProperty" value="0.75" property="size" name="vignette"/>
+		<Event type="initModifier" code="x += x_value;" name="x" value="0"/>
+		<Event type="initModifier" code="y += y_value;" name="y" value="0"/>
+		<Event type="initModifier" code="z += z_value;" name="z" value="0"/>
+		<Event strumLineID="0" code="x += xO_value;" value="0" type="initModifier" name="xO"/>
+		<Event strumLineID="0" code="y += yO_value;" value="0" type="initModifier" name="yO"/>
+		<Event strumLineID="0" code="z += zO_value;" value="0" type="initModifier" name="zO"/>
+		<Event strumLineID="0" code="a += alphaO_value;" value="0" type="initModifier" name="alphaO"/>
+		<Event strumLineID="1" code="x += xP_value;" value="0" type="initModifier" name="xP"/>
+		<Event strumLineID="1" code="y += yP_value;" value="0" type="initModifier" name="yP"/>
+		<Event strumLineID="1" code="z += zP_value;" value="0" type="initModifier" name="zP"/>
+		<Event strumLineID="1" code="a += alphaP_value;" value="0" type="initModifier" name="alphaP"/>
+		<Event strumLineID="0" code="angleX += angleXO_value;" value="0" type="initModifier" name="angleXO"/>
+		<Event strumLineID="0" code="angleY += angleYO_value;" value="0" type="initModifier" name="angleYO"/>
+		<Event strumLineID="0" code="angleZ += angleZO_value;" value="0" type="initModifier" name="angleZO"/>
+		<Event strumLineID="1" code="angleX += angleXP_value;" value="0" type="initModifier" name="angleXP"/>
+		<Event strumLineID="1" code="angleY += angleYP_value;" value="0" type="initModifier" name="angleYP"/>
+		<Event strumLineID="1" code="angleZ += angleZP_value;" value="0" type="initModifier" name="angleZP"/>
+	</Init>
+	<Events>
+		<Event step="0" time="0" value="1000" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="0" time="0" value="325" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="0" time="100" value="0" ease="smootherStepIn" type="tweenModifierValue" startValue="-1" name="alphaO"/>
+		<Event step="0" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="4" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="8" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="12" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="16" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="20" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="24" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="28" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="32" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="36" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="40" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="44" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="48" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="52" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="56" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="60" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="64" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="68" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="72" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="76" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="80" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="84" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="88" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="92" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="96" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="96" time="34" value="0" property="strength" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="grey"/>
+		<Event step="100" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="104" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="108" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="112" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="116" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="119" time="8" value="1.3" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="119" time="8" value="15" property="barrel" ease="cubeIn" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="120" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="angleZO"/>
+		<Event step="124" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-7" name="angleZO"/>
+		<Event step="127" time="8" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.7" name="mirror"/>
+		<Event step="127" time="8" value="0" property="barrel" ease="cubeOut" type="tweenShaderProperty" startValue="-4" name="mirror"/>
+		<Event step="128" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="7" name="yO"/>
+		<Event step="130" time="1" value="0" ease="expoOut" type="tweenModifierValue" startValue="15" name="zO"/>
+		<Event step="131" time="1" value="0" ease="expoOut" type="tweenModifierValue" startValue="-15" name="zO"/>
+		<Event step="132" time="1" value="300" ease="expoOut" type="tweenModifierValue" startValue="325" name="xO"/>
+		<Event step="133" time="1" value="325" ease="expoOut" type="tweenModifierValue" startValue="300" name="xO"/>
+		<Event step="134" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="10" name="yO"/>
+		<Event step="135" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="10" name="zO"/>
+		<Event step="137" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="10" name="yO"/>
+		<Event step="138" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="10" name="zO"/>
+		<Event step="140" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="-15" name="yO"/>
+		<Event step="142" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="15" name="yO"/>
+		<Event step="144" time="1" value="0" ease="expoOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="144" time="1" value="315" ease="expoOut" type="tweenModifierValue" startValue="325" name="xO"/>
+		<Event step="145" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="145" time="2" value="325" ease="expoOut" type="tweenModifierValue" startValue="315" name="xO"/>
+		<Event step="147" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="15" name="angleYO"/>
+		<Event step="148" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="15" name="angleXO"/>
+		<Event step="150" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="-10" name="angleXO"/>
+		<Event step="150" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="-10" name="angleYO"/>
+		<Event step="152" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="15" name="yO"/>
+		<Event step="153" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="15" name="zO"/>
+		<Event step="154" time="1" value="0" ease="expoOut" type="tweenModifierValue" startValue="20" name="angleZO"/>
+		<Event step="154" time="1" value="0" ease="expoOut" type="tweenModifierValue" startValue="20" name="angleXO"/>
+		<Event step="155" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="-20" name="angleXO"/>
+		<Event step="156" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="-20" name="angleZO"/>
+		<Event step="158" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="30" name="angleYO"/>
+		<Event step="160" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="20" name="angleXO"/>
+		<Event step="162" time="1" value="0" ease="circOut" type="tweenModifierValue" startValue="20" name="angleZO"/>
+		<Event step="163" time="1" value="0" ease="circOut" type="tweenModifierValue" startValue="-20" name="angleZO"/>
+		<Event step="164" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-20" name="angleXO"/>
+		<Event step="166" time="1" value="0" ease="circOut" type="tweenModifierValue" startValue="20" name="angleZO"/>
+		<Event step="167" time="1" value="0" ease="circOut" type="tweenModifierValue" startValue="-20" name="angleZO"/>
+		<Event step="168" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="yO"/>
+		<Event step="170" time="1" value="0" ease="expoOut" type="tweenModifierValue" startValue="-25" name="zO"/>
+		<Event step="171" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="10" name="angleXO"/>
+		<Event step="171" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="20" name="zO"/>
+		<Event step="174" time="1" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleXO"/>
+		<Event step="175" time="1" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleXO"/>
+		<Event step="176" time="1" value="0" ease="expoOut" type="tweenModifierValue" startValue="20" name="angleZO"/>
+		<Event step="176" time="1" value="0" ease="expoOut" type="tweenModifierValue" startValue="20" name="angleXO"/>
+		<Event step="178" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="-20" name="angleXO"/>
+		<Event step="178" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="-20" name="angleZO"/>
+		<Event step="178" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="30" name="angleYO"/>
+		<Event step="180" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-20" name="angleXO"/>
+		<Event step="182" time="1" value="0" ease="circOut" type="tweenModifierValue" startValue="20" name="angleZO"/>
+		<Event step="183" time="1" value="0" ease="circOut" type="tweenModifierValue" startValue="-20" name="angleZO"/>
+		<Event step="184" time="1" value="300" ease="expoOut" type="tweenModifierValue" startValue="325" name="xO"/>
+		<Event step="185" time="1" value="325" ease="expoOut" type="tweenModifierValue" startValue="300" name="xO"/>
+		<Event step="186" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="10" name="yO"/>
+		<Event step="188" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="15" name="zO"/>
+		<Event step="188" time="4" value="-0.5" ease="smootherStepOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="188" time="4" value="-325" ease="circOut" type="tweenModifierValue" startValue="1000" name="xP"/>
+		<Event step="190" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="10" name="yO"/>
+		<Event step="191" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="10" name="angleXO"/>
+		<Event step="192" time="2" value="0" ease="expoOut" type="tweenModifierValue" startValue="30" name="angleYO"/>
+		<Event step="192" time="4" value="300" ease="circOut" type="tweenModifierValue" startValue="0" name="zO"/>
+		<Event step="192" time="8" value="-1" ease="expoOut" type="tweenModifierValue" startValue="-0.5" name="alphaO"/>
+		<Event step="196" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="200" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="212" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="216" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="228" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="232" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="244" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="248" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="256" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-325" name="xP"/>
+		<Event step="256" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="325" name="xO"/>
+		<Event step="256" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-1" name="alphaO"/>
+		<Event step="260" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="264" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="272" time="4" value="0.9" property="zoom" ease="backOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="272" time="4" value="-0.5" ease="circOut" type="tweenModifierValue" startValue="0" name="alphaP"/>
+		<Event step="272" time="4" value="325" ease="expoOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="276" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="280" time="8" value="-1" ease="circIn" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="280" time="8" value="1" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="280" time="6" value="0" ease="circIn" type="tweenModifierValue" startValue="-0.5" name="alphaP"/>
+		<Event step="280" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="280" time="6" value="0" ease="smootherStepIn" type="tweenModifierValue" startValue="325" name="xO"/>
+		<Event step="292" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="296" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="304" time="4" value="0.9" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="308" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="312" time="8" value="0" ease="sineIn" type="tweenModifierValue" startValue="300" name="zO"/>
+		<Event step="312" time="8" value="0" ease="circIn" type="tweenModifierValue" startValue="-1" name="alphaO"/>
+		<Event step="312" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="316" time="4" value="1" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="324" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="324" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="328" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="328" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="340" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="340" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="344" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="344" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="350" time="4" value="-0.3" ease="linear" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="356" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="356" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="360" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="360" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="384" type="addHUDZoom" value="0.01"/>
+		<Event step="384" type="addCameraZoom" value="0.01"/>
+		<Event step="384" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="384" time="4" value="0" ease="expoOut" type="tweenModifierValue" startValue="-0.3" name="alphaO"/>
+		<Event step="384" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="388" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="388" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="392" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="392" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="396" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="396" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="400" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="400" time="4" value="-50" ease="circOut" type="tweenModifierValue" startValue="0" name="zO"/>
+		<Event step="400" time="4" value="-50" ease="circOut" type="tweenModifierValue" startValue="0" name="yO"/>
+		<Event step="400" time="4" value="-0.5" ease="circOut" type="tweenModifierValue" startValue="0" name="alphaP"/>
+		<Event step="400" time="4" value="0.9" property="zoom" ease="backOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="400" time="4" value="75" ease="circOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="400" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="404" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="404" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="404" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="408" time="8" value="1" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="408" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="408" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="408" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="412" time="4" value="0" ease="circIn" type="tweenModifierValue" startValue="-50" name="yO"/>
+		<Event step="412" time="4" value="0" ease="circIn" type="tweenModifierValue" startValue="-50" name="zO"/>
+		<Event step="412" time="4" value="0" ease="circIn" type="tweenModifierValue" startValue="75" name="xO"/>
+		<Event step="412" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="412" time="4" value="0" ease="circIn" type="tweenModifierValue" startValue="-0.5" name="alphaP"/>
+		<Event step="412" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="416" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="416" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="420" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="420" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="424" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="424" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="428" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="428" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="432" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="432" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="436" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="436" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="440" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="440" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="444" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="444" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="448" time="4" value="-0.1" ease="circOut" type="tweenModifierValue" startValue="0" name="alphaP"/>
+		<Event step="448" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="448" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="452" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="452" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="456" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="456" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="460" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="460" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="464" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="464" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="468" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="468" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="472" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="472" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="476" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="476" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="480" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="480" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-0.1" name="alphaP"/>
+		<Event step="480" time="4" value="-0.2" ease="circOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="480" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="484" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="484" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="488" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="488" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="492" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="492" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="496" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="496" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="500" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="500" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="504" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="504" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="508" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="508" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="512" time="8" value="325" ease="circOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="512" time="4" value="-100" ease="circOut" type="tweenModifierValue" startValue="0" name="yO"/>
+		<Event step="512" time="8" value="-325" ease="circOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="512" time="8" value="-0.9" ease="circOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="512" time="8" value="100" ease="circOut" type="tweenModifierValue" startValue="0" name="zO"/>
+		<Event step="512" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="512" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="516" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="516" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="520" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="520" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="524" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="524" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="528" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="528" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="532" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="532" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="536" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="536" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="540" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="540" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="544" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="544" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="548" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="548" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="552" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="552" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="556" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="556" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="560" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="560" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="564" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="564" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="568" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="568" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="572" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="572" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="576" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="576" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="580" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="580" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="584" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="584" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="588" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="588" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="592" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="592" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="596" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="596" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="600" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="600" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="604" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="604" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="608" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="608" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="612" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="612" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="616" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="616" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="620" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="620" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="624" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="624" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="628" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="628" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="632" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="632" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="636" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="636" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="640" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-0.8" name="alphaO"/>
+		<Event step="640" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="100" name="zO"/>
+		<Event step="640" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-325" name="xP"/>
+		<Event step="640" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-100" name="yO"/>
+		<Event step="640" type="addCameraZoom" value="0.01"/>
+		<Event step="640" type="addHUDZoom" value="0.01"/>
+		<Event step="640" time="4" value="-1" ease="expoOut" type="tweenModifierValue" startValue="0" name="alphaP"/>
+		<Event step="644" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="644" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="648" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="648" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="660" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="660" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="664" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="664" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="676" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="676" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="680" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="680" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="692" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="692" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="696" time="6" value="-325" ease="circIn" type="tweenModifierValue" startValue="-100" name="xP"/>
+		<Event step="696" time="8" value="-1" ease="circIn" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="696" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="696" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="696" time="6" value="0" ease="circIn" type="tweenModifierValue" startValue="-200" name="zP"/>
+		<Event step="696" time="8" value="0" ease="circIn" type="tweenModifierValue" startValue="-1" name="alphaP"/>
+		<Event step="696" time="6" value="-550" ease="circIn" type="tweenModifierValue" startValue="325" name="xO"/>
+		<Event step="708" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="708" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="712" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="712" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="724" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="724" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="728" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="728" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="740" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="740" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="744" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="744" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="756" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="756" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="760" time="8" value="0" ease="circIn" type="tweenModifierValue" startValue="-550" name="xO"/>
+		<Event step="760" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="760" time="8" value="0" ease="expoIn" type="tweenModifierValue" startValue="-1" name="alphaO"/>
+		<Event step="760" time="8" value="0" ease="circIn" type="tweenModifierValue" startValue="-325" name="xP"/>
+		<Event step="760" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="772" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="772" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="776" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="776" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="784" time="4" value="0.02" property="y" ease="circOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="784" time="4" value="0.9" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="788" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="788" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="792" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="792" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="796" time="4" value="0" property="y" ease="circIn" type="tweenShaderProperty" startValue="0.02" name="mirror"/>
+		<Event step="796" time="4" value="1" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="804" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="804" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="808" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="808" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="816" time="12" value="360" ease="circOut" type="tweenModifierValue" startValue="0" name="angleYO"/>
+		<Event step="816" time="4" value="-200" ease="circOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="816" time="4" value="-1" ease="circOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="816" time="4" value="0.9" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="820" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="820" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="824" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="824" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="828" time="4" value="0" ease="circIn" type="tweenModifierValue" startValue="-200" name="xP"/>
+		<Event step="828" time="4" value="0" ease="circIn" type="tweenModifierValue" startValue="-1" name="alphaO"/>
+		<Event step="828" time="5" value="0" ease="circOut" type="tweenModifierValue" startValue="-180" name="angleYO"/>
+		<Event step="828" time="4" value="1" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="836" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="836" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="840" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="840" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="852" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="852" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="856" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="856" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="860" time="4" value="-0.2" ease="circIn" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="868" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="868" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="872" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="872" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="884" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="884" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="888" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="888" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="896" type="addHUDZoom" value="0.01"/>
+		<Event step="896" type="addCameraZoom" value="0.01"/>
+		<Event step="896" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-0.2" name="alphaO"/>
+		<Event step="896" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="896" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="900" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="900" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="904" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="904" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="908" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="908" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="912" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="912" time="8" value="0.9" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="912" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="916" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="916" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="920" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="920" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="924" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="924" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="928" time="8" value="1" property="zoom" ease="quadOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="928" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="928" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="932" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="932" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="936" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="936" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="940" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="940" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="944" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="944" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="948" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="948" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="952" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="952" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="956" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="956" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="960" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="960" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="964" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="964" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="968" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="968" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="972" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="972" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="976" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="976" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="980" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="980" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="984" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="984" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="988" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="988" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="992" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="992" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="996" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="996" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1000" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1000" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1004" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1004" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1008" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1008" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1012" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1012" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1016" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1016" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1020" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1020" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1028" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1028" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1032" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1032" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1044" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1044" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1048" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1048" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1060" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1060" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1064" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1064" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1076" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1076" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1080" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1080" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1088" time="4" value="-150" ease="circOut" type="tweenModifierValue" startValue="0" name="yO"/>
+		<Event step="1088" time="4" value="-0.9" ease="expoOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="1088" time="4" value="20" ease="circOut" type="tweenModifierValue" startValue="0" name="yP"/>
+		<Event step="1088" time="4" value="325" ease="circOut" type="tweenModifierValue" startValue="0" name="xO"/>
+		<Event step="1088" time="4" value="-325" ease="smootherStepOut" type="tweenModifierValue" startValue="0" name="xP"/>
+		<Event step="1092" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1092" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1096" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1096" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1108" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1108" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1112" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1112" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1124" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1124" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1128" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1128" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1140" time="4" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1140" time="4" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1144" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1144" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1152" time="0" value="0" ease="cubeInOut" type="tweenModifierValue" startValue="-150" name="yO"/>
+		<Event step="1152" time="0" value="0" ease="cubeInOut" type="tweenModifierValue" startValue="-550" name="xO"/>
+		<Event step="1152" time="0" value="0" ease="cubeInOut" type="tweenModifierValue" startValue="20" name="yP"/>
+		<Event step="1152" time="0" value="0" ease="cubeInOut" type="tweenModifierValue" startValue="-325" name="xP"/>
+		<Event step="1152" time="8" value="-0.5" ease="circOut" type="tweenModifierValue" startValue="0" name="alphaP"/>
+		<Event step="1152" time="8" value="-0.5" ease="circOut" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="1152" time="12" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.5" name="mirror"/>
+		<Event step="1152" time="64" value="1" property="size" ease="linear" type="tweenShaderProperty" startValue="0.75" name="vignette"/>
+		<Event step="1152" time="12" value="0" property="barrel" ease="cubeOut" type="tweenShaderProperty" startValue="-10" name="mirror"/>
+		<Event step="1154" time="62" value="60" ease="smootherStepIn" type="tweenModifierValue" startValue="0" name="angleXP"/>
+		<Event step="1154" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1154" time="62" value="60" ease="smootherStepIn" type="tweenModifierValue" startValue="0" name="angleXO"/>
+		<Event step="1154" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1156" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1156" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1158" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1158" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1160" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1160" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1162" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1162" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1164" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1164" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1166" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1166" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1168" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1168" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1170" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1170" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1172" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1172" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1174" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1174" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1176" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1176" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1178" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1178" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1180" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1180" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1182" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1182" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1184" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1184" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1186" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1186" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1188" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1188" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1190" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1190" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1192" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1192" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1194" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1194" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1196" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1196" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1198" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1198" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1200" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1200" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1202" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1202" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1204" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1204" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1206" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1206" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1208" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZO"/>
+		<Event step="1208" time="2" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZP"/>
+		<Event step="1210" time="2" value="-15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZP"/>
+		<Event step="1210" time="2" value="15" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZO"/>
+		<Event step="1212" time="4" value="-1" ease="circIn" type="tweenModifierValue" startValue="-0.5" name="alphaO"/>
+		<Event step="1212" time="4" value="-1" ease="circIn" type="tweenModifierValue" startValue="-0.5" name="alphaP"/>
+		<Event step="1212" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="-15" name="angleZP"/>
+		<Event step="1212" time="4" value="0" ease="circOut" type="tweenModifierValue" startValue="15" name="angleZO"/>
+		<Event step="1216" time="16" value="1.1" property="size" ease="smootherStepOut" type="tweenShaderProperty" startValue="1" name="vignette"/>
+		<Event step="1332" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1334" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1336" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1338" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1340" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1340" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1340" type="addCameraZoom" value="0.07"/>
+		<Event step="1340" type="addHUDZoom" value="0.07"/>
+		<Event step="1342" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1342" type="addCameraZoom" value="0.07"/>
+		<Event step="1342" type="addHUDZoom" value="0.07"/>
+		<Event step="1344" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1344" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1344" type="addCameraZoom" value="0.07"/>
+		<Event step="1344" type="addHUDZoom" value="0.07"/>
+		<Event step="1346" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1348" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1348" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1350" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1352" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1352" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1352" type="addCameraZoom" value="0.07"/>
+		<Event step="1352" type="addHUDZoom" value="0.07"/>
+		<Event step="1354" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1356" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1356" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1356" type="addCameraZoom" value="0.07"/>
+		<Event step="1356" type="addHUDZoom" value="0.07"/>
+		<Event step="1358" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1360" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1360" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1362" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1364" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1364" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1364" type="addCameraZoom" value="0.07"/>
+		<Event step="1364" type="addHUDZoom" value="0.07"/>
+		<Event step="1365" type="addCameraZoom" value="0.07"/>
+		<Event step="1365" type="addHUDZoom" value="0.07"/>
+		<Event step="1366" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1366" type="addCameraZoom" value="0.07"/>
+		<Event step="1366" type="addHUDZoom" value="0.07"/>
+		<Event step="1368" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1368" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1368" type="addCameraZoom" value="0.07"/>
+		<Event step="1368" type="addHUDZoom" value="0.07"/>
+		<Event step="1370" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1372" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1372" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1372" type="addCameraZoom" value="0.07"/>
+		<Event step="1372" type="addHUDZoom" value="0.07"/>
+		<Event step="1374" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1376" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1376" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1376" type="addCameraZoom" value="0.07"/>
+		<Event step="1376" type="addHUDZoom" value="0.07"/>
+		<Event step="1378" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1380" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1380" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1382" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1384" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1384" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1384" type="addCameraZoom" value="0.07"/>
+		<Event step="1384" type="addHUDZoom" value="0.07"/>
+		<Event step="1386" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1388" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1388" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1388" type="addCameraZoom" value="0.07"/>
+		<Event step="1388" type="addHUDZoom" value="0.07"/>
+		<Event step="1390" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1392" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1392" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1394" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1396" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1396" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1396" type="addCameraZoom" value="0.07"/>
+		<Event step="1396" type="addHUDZoom" value="0.07"/>
+		<Event step="1398" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1398" type="addCameraZoom" value="0.07"/>
+		<Event step="1398" type="addHUDZoom" value="0.07"/>
+		<Event step="1400" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1400" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1400" type="addCameraZoom" value="0.07"/>
+		<Event step="1400" type="addHUDZoom" value="0.07"/>
+		<Event step="1402" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1404" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1404" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1404" type="addCameraZoom" value="0.07"/>
+		<Event step="1404" type="addHUDZoom" value="0.07"/>
+		<Event step="1404" type="addCameraZoom" value="0.07"/>
+		<Event step="1404" type="addHUDZoom" value="0.07"/>
+		<Event step="1406" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1406" type="addCameraZoom" value="0.07"/>
+		<Event step="1406" type="addHUDZoom" value="0.07"/>
+		<Event step="1408" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1408" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1408" type="addCameraZoom" value="0.07"/>
+		<Event step="1408" type="addHUDZoom" value="0.07"/>
+		<Event step="1410" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1412" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1412" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1414" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1416" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1416" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1416" type="addCameraZoom" value="0.07"/>
+		<Event step="1416" type="addHUDZoom" value="0.07"/>
+		<Event step="1418" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1420" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1420" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1420" type="addCameraZoom" value="0.07"/>
+		<Event step="1420" type="addHUDZoom" value="0.07"/>
+		<Event step="1422" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1424" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1424" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1426" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1428" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1428" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1428" type="addCameraZoom" value="0.07"/>
+		<Event step="1428" type="addHUDZoom" value="0.07"/>
+		<Event step="1429" type="addCameraZoom" value="0.07"/>
+		<Event step="1429" type="addHUDZoom" value="0.07"/>
+		<Event step="1430" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1430" type="addCameraZoom" value="0.07"/>
+		<Event step="1430" type="addHUDZoom" value="0.07"/>
+		<Event step="1432" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1432" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1432" type="addCameraZoom" value="0.07"/>
+		<Event step="1432" type="addHUDZoom" value="0.07"/>
+		<Event step="1434" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1436" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1436" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1436" type="addCameraZoom" value="0.07"/>
+		<Event step="1436" type="addHUDZoom" value="0.07"/>
+		<Event step="1438" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1440" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1440" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1440" type="addCameraZoom" value="0.07"/>
+		<Event step="1440" type="addHUDZoom" value="0.07"/>
+		<Event step="1442" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1444" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1444" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1446" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1448" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1448" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1448" type="addCameraZoom" value="0.07"/>
+		<Event step="1448" type="addHUDZoom" value="0.07"/>
+		<Event step="1450" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1452" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1452" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1452" type="addCameraZoom" value="0.07"/>
+		<Event step="1452" type="addHUDZoom" value="0.07"/>
+		<Event step="1454" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1456" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1456" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1458" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1460" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1460" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1460" type="addCameraZoom" value="0.07"/>
+		<Event step="1460" type="addHUDZoom" value="0.07"/>
+		<Event step="1462" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1462" type="addCameraZoom" value="0.07"/>
+		<Event step="1462" type="addHUDZoom" value="0.07"/>
+		<Event step="1464" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1464" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1464" type="addCameraZoom" value="0.07"/>
+		<Event step="1464" type="addHUDZoom" value="0.07"/>
+		<Event step="1466" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1468" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1468" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1468" type="addCameraZoom" value="0.07"/>
+		<Event step="1468" type="addHUDZoom" value="0.07"/>
+		<Event step="1470" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1470" type="addCameraZoom" value="0.07"/>
+		<Event step="1470" type="addHUDZoom" value="0.07"/>
+		<Event step="1472" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1472" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1472" type="addCameraZoom" value="0.07"/>
+		<Event step="1472" type="addHUDZoom" value="0.07"/>
+		<Event step="1474" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1476" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1476" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1478" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1480" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1480" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1480" type="addCameraZoom" value="0.07"/>
+		<Event step="1480" type="addHUDZoom" value="0.07"/>
+		<Event step="1482" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1484" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1484" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1484" type="addCameraZoom" value="0.07"/>
+		<Event step="1484" type="addHUDZoom" value="0.07"/>
+		<Event step="1486" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1488" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1488" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1490" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1492" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1492" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1492" type="addCameraZoom" value="0.07"/>
+		<Event step="1492" type="addHUDZoom" value="0.07"/>
+		<Event step="1493" type="addCameraZoom" value="0.07"/>
+		<Event step="1493" type="addHUDZoom" value="0.07"/>
+		<Event step="1494" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1494" type="addCameraZoom" value="0.07"/>
+		<Event step="1494" type="addHUDZoom" value="0.07"/>
+		<Event step="1496" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1496" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1496" type="addCameraZoom" value="0.07"/>
+		<Event step="1496" type="addHUDZoom" value="0.07"/>
+		<Event step="1498" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1500" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1500" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1500" type="addCameraZoom" value="0.07"/>
+		<Event step="1500" type="addHUDZoom" value="0.07"/>
+		<Event step="1502" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1504" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1504" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1504" type="addCameraZoom" value="0.07"/>
+		<Event step="1504" type="addHUDZoom" value="0.07"/>
+		<Event step="1506" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1508" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1508" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1510" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1512" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1512" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1512" type="addCameraZoom" value="0.07"/>
+		<Event step="1512" type="addHUDZoom" value="0.07"/>
+		<Event step="1514" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1516" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1516" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1516" type="addCameraZoom" value="0.07"/>
+		<Event step="1516" type="addHUDZoom" value="0.07"/>
+		<Event step="1518" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1520" value="0.6" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1520" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1522" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1524" value="0.2" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1524" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1524" type="addCameraZoom" value="0.07"/>
+		<Event step="1524" type="addHUDZoom" value="0.07"/>
+		<Event step="1526" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1526" type="addCameraZoom" value="0.07"/>
+		<Event step="1526" type="addHUDZoom" value="0.07"/>
+		<Event step="1528" value="0.4" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1528" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1528" type="addCameraZoom" value="0.07"/>
+		<Event step="1528" type="addHUDZoom" value="0.07"/>
+		<Event step="1530" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1532" value="0" property="hue" type="setShaderProperty" name="colorswap"/>
+		<Event step="1532" time="2" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="1532" type="addCameraZoom" value="0.07"/>
+		<Event step="1532" type="addHUDZoom" value="0.07"/>
+		<Event step="1532" type="addCameraZoom" value="0.07"/>
+		<Event step="1532" type="addHUDZoom" value="0.07"/>
+		<Event step="1534" time="2" value="0.9" property="zoom" ease="cubeIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1534" type="addCameraZoom" value="0.07"/>
+		<Event step="1534" type="addHUDZoom" value="0.07"/>
+		<Event step="1536" time="8" value="1" property="zoom" ease="cubeOut" type="tweenShaderProperty" startValue="0.2" name="mirror"/>
+		<Event step="1536" time="8" value="0" property="barrel" ease="cubeOut" type="tweenShaderProperty" startValue="-10" name="mirror"/>
+		<Event step="1616" time="16" value="1" property="strength" ease="cubeOut" type="tweenShaderProperty" startValue="0" name="grey"/>
+	</Events>
+</Modchart>

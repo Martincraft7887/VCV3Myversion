@@ -1,0 +1,14 @@
+{
+	"opponentModeAllowed": true,
+	"icon": "Wiik4ZephMatt-icons",
+	"difficulties": [
+		"Voiid"
+	],
+	"color": "#296A00",
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"displayName": "Vulgrath",
+	"needsVoices": true,
+	"beatsPerMeasure": 4,
+	"bpm": 215
+}

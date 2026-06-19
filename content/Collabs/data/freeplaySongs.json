@@ -6,37 +6,45 @@
 				{
 					"name": "Alter Ego",
 					"port": "Alter_Ego",
-					"loadingScreen": "RevLoad"
+					"loadingScreen": "RevLoad",
+					"wg price": "1"
 				},
 				{
 					"name": "Turmoil",
 					"port": "Alter_Ego",
-					"loadingScreen": "RevLoad"
+					"loadingScreen": "RevLoad",
+					"wg price": "100"
 				},
 				{
 					"name": "Interregnum",
 					"port": "paperBG",
-					"loadingScreen": "PaperLoad"
+					"loadingScreen": "PaperLoad",
+					"wg price": "200"
 				},
 				{
 					"name": "Ballin",
 					"port": "Wiik_2",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"wg price": "150"
 				},
 				{
 					"name": "Insano",
 					"port": "InsanoBG",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"wg price": "100"
 				},
 				{
 					"name": "Sweet Dreams",
 					"port": "Wiik_4",
-					"loadingScreen": "Wiik4"
+					"loadingScreen": "Wiik4",
+					"wg price": "500"
 				},
 				{
 					"name": "Sweet Dreams II",
 					"port": "Wiik_4",
-					"loadingScreen": "SDLoad"
+					"loadingScreen": "SDLoad",
+					"next of": "Sweet Dreams"
+					
 				}
 			]
 		}

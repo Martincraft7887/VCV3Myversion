@@ -1,0 +1,16 @@
+{
+	"beatsPerMeasure": 4,
+	"opponentModeAllowed": true,
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"bpm": 160,
+	"difficulties": [
+		"voiid"
+	],
+	"needsVoices": true,
+	"parsedColor": -1,
+	"displayName": "Flaming Glove III",
+	"icon": "FlamingGloveMatt-icons",
+	"name": "Flaming Glove III",
+	"color": "#FFFFFF"
+}

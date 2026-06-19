@@ -5,11 +5,13 @@
 			"songs": [
 				{
 					"name": "Knocked",
-					"port": "KnockedBG"
+					"port": "KnockedBG",
+					"wg price": "100"
 				},
 				{
 					"name": "Edgelord",
-					"port": "arena"
+					"port": "arena",
+					"wg price": "150"
 				},
 				{
 					"name": "Rejected",
@@ -17,77 +19,95 @@
 				},
 				{
 					"name": "Old Enemies",
-					"port": "Rejected"
+					"port": "Rejected",
+					"wg price": "200"
 				},
 				{
 					"name": "Wastelands",
-					"port": "VOIID TRICKYs"
+					"port": "VOIID TRICKYs",
+					"wg price": "150"
 				},
 				{
 					"name": "Toxic",
-					"port": "VOIID TRICKYs"
+					"port": "VOIID TRICKYs",
+					"wg price": "150"
 				},
 				{
 					"name": "APOTHEOSIS",
-					"port": "VOIID TRICKYs"
+					"port": "VOIID TRICKYs",
+					"loadingScreen": "deidad_chart",
+					"wg price": "100"
 				},
 				{
 					"name": "Veteran",
 					"port": "Wiik_100",
-					"loadingScreen": "Wiik100"
+					"loadingScreen": "Wiik100",
+					"wg price": "100"
 				},
 				{
 					"name": "Flaming Glove III",
-					"port": "Wiik_FG"
+					"port": "Wiik_FG",
+					"next of": "Flaming Glove"
 				},
 				{
 					"name": "Bombastic",
-					"port": "Pivot"
+					"port": "Pivot",
+					"wg price": "50"
 				},
 				{
 					"name": "Warm up",
-					"port": "Pivot"
+					"port": "Pivot",
+					"wg price": "50"
 				},
 				{
 					"name": "Super Saiyan",
 					"port": "ShagBG",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"wg price": "100"
 				},
 				{
 					"name": "1CORE KILLER",
 					"port": "Wiik_2",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"wg price": "100"
 				},
 				{
 					"name": "Haven",
 					"port": "Wiik_2",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"wg price": "200"
 				},
 				{
 					"name": "Intervention",
 					"port": "Wiik_2",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"wg price": "200"
 				},
 				{
 					"name": "RAGE",
 					"port": "Wiik_2",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"wg price": "150"
 				},
 				{
 					"name": "Mattpurgation",
-					"port": "Mattpurgation"
+					"port": "Mattpurgation",
+					"wg price": "100"
 				},
 				{
 					"name": "Exodus",
-					"port": "Agoti stage"
+					"port": "Agoti stage",
+					"wg price": "100"
 				},
 				{
 					"name": "Take It",
-					"port": "Wiik_4Alt"
+					"port": "Wiik_4Alt",
+					"wg price": "150"
 				},
 				{
 					"name": "Fishycuffs",
-					"port": "Fish"
+					"port": "Fish",
+					"wg price": "100"
 				},
 				{
 					"name": "Cleverness",
@@ -95,32 +115,39 @@
 				},
 				{
 					"name": "Tempo Slayer",
-					"port": "tempo-front"
+					"port": "tempo-front",
+					"next of": "Cleverness"
 				},
 				{
 					"name": "Total Bravery",
-					"port": "Total"
+					"port": "Total",
+					"next of": "Tempo Slayer"
 				},
 				{
 					"name": "Ignis Gladius",
-					"port": "Total"
+					"port": "Total",
+					"next of": "Total Bravery"
 				},
 				{
 					"name": "Final Destination Old",
 					"port": "Wiik_2",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"next of": "Final Destination"
 				},
 				{
 					"name": "King Hit Wawa",
-					"port": "Wiik_3"
+					"port": "Wiik_3",
+					"next of": "king hit"
 				},
 				{
 					"name": "damnale",
-					"port": ""
+					"port": "",
+					"wg price": "67"
 				},
 				{
 					"name": "penismatt",
-					"port": ""
+					"port": "",
+					"wg price": "69"
 				}
 			]
 		}

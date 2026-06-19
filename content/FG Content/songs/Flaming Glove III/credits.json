@@ -1,0 +1,16 @@
+{
+	"composer": "Singular,ImPaper",
+	"charter": "Sharik",
+	"originalComposer": "",
+	"startTime": 12000,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#ce4eff",
+	"midBorderBot": "#2b0a57",
+	"innerBorderTop": "#291938",
+	"innerBorderBot": "#121617",
+	"mixGap": 2.5
+}

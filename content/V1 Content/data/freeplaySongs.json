@@ -9,36 +9,43 @@
 				},
 				{
 					"name": "Ruckus",
-					"port": "Wiik_1"
+					"port": "Wiik_1",
+					"next of": "Light It Up"
 				},
 				{
 					"name": "Target Practice",
-					"port": "Wiik_1"
+					"port": "Wiik_1",
+					"next of": "Ruckus"
 				},
 				{
 					"name": "Burnout",
 					"port": "Wiik_2",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"next of": "Target Practice"
 				},
 				{
 					"name": "Sporting",
 					"port": "Wiik_2",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"next of": "Burnout"
 				},
 				{
 					"name": "Boxing Match",
 					"port": "Wiik_2",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"next of": "Sporting"
 				},
 				{
 					"name": "Sport Swinging",
 					"port": "Wiik_2",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"next of": "boxing match"
 				},
 				{
 					"name": "Boxing Gladiators",
 					"port": "Wiik_2",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"next of": "sport swinging"
 				}
 			]
 		}

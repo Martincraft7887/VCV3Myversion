@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character x="350" y="100" sprite="Wiik2VoiidMatt" scale="1.55" camx="250" camy="-100" icon="Wiik2VoiidMatt-icons" color="#3B3334" isGF="false">
+<character x="350" y="100" sprite="Matt2_NO_RTX" scale="1" camx="250" camy="-100" icon="Wiik2VoiidMatt-icons" color="#3B3334" isGF="false">
 	<anim name="idle" anim="idle0" x="1" y="-2" fps="24" loop="false"/>
 	<anim name="singLEFT" anim="left0" x="-20" y="-32" fps="24" loop="false"/>
 	<anim name="singDOWN" anim="down0" x="-15" y="-45" fps="24" loop="false"/>

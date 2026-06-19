@@ -17,6 +17,18 @@ var rainParticles:Array<FlxSprite> = [];
 
 var piss:Bool = false;
 var pis:Int = 0;
+var rainShader:CustomShader = null;
+var rainShaderTime:Float = 0;
+var shaderRainSongs:Array<String> = [
+	"veteran",
+	"venom",
+	"edgy vip",
+	"veteran vip"
+];
+
+function shouldUseShaderRain():Bool {
+	return SONG != null && SONG.meta != null && shaderRainSongs.contains(SONG.meta.name.toLowerCase());
+}
 
 function postCreate() {
 	if (SONG.meta.name.toLowerCase() == "banger") {
@@ -25,10 +37,22 @@ function postCreate() {
 		particleSpawnTime = 0.003;
 	}
 
+	if (shouldUseShaderRain()) {
+		rainShader = new CustomShader("rain");
+		camGame.addShader(rainShader);
+		rainShader.iIntensity = 0.05;
+		rainShader.iTimescale = 0.7;
+	}
+
 	initPool();
 }
 
 function update(elapsed:Float) {
+	if (rainShader != null) {
+		rainShaderTime += elapsed;
+		rainShader.iTime = rainShaderTime;
+	}
+
 	particleTime += elapsed;
 
 	while (particleTime >= particleSpawnTime) {

@@ -6,48 +6,58 @@
 				{
 					"name": "Power Link",
 					"port": "Wiik_2",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"next of": "Edgy"
 				},
 				{
 					"name": "Revenge",
 					"port": "Wiik_2",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"next of": "Power Link"
 				},
 				{
 					"name": "Final Destination",
 					"port": "Wiik_2",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"next of": "Revenge"
 				},
 				{
 					"name": "Final Destination God",
 					"port": "Wiik_2",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "SXMGodLoadScreen",
+					"next of": "Final Destination"
 				},
 				{
 					"name": "Soothing Power",
-					"port": "ShagBG"
+					"port": "ShagBG",
+					"next of": "Final Destination"
 				},
 				{
 					"name": "Thunderstorm",
-					"port": "ShagBG"
+					"port": "ShagBG",
+					"next of": "Soothing Power"
 				},
 				{
 					"name": "Disassembler",
-					"port": "ShagBG"
+					"port": "ShagBG",
+					"next of": "Thunderstorm"
 				},
 				{
 					"name": "Cosmic Memories",
-					"port": "ShagBG"
+					"port": "ShagBG",
+					"next of": "Disassembler"
 				},
 				{
 					"name": "New Horizon",
 					"port": "ShagBG",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"next of": "Cosmic Memories"
 				},
 				{
 					"name": "Galactic Storm",
 					"port": "Wiik_2",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"next of": "New Horizon"
 				}
 			]
 		},
@@ -57,22 +67,26 @@
 				{
 					"name": "Multiversal Slash",
 					"port": "AxV",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"wg price": "300"
 				},
 				{
 					"name": "Glowing Collision",
 					"port": "AxV",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"wg price": "250"
 				},
 				{
 					"name": "Radical Showdown",
 					"port": "AxV",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"wg price": "250"
 				},
 				{
 					"name": "Defamation Of Reality",
 					"port": "AxV",
-					"loadingScreen": "ShaggyXMatt"
+					"loadingScreen": "ShaggyXMatt",
+					"wg price": "250"
 				}
 			]
 		}

@@ -1,0 +1,140 @@
+{
+	"events": [
+		{
+			"params": [
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				600,
+				-600,
+				false
+			],
+			"time": 38400,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				false,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				600,
+				-600,
+				false
+			],
+			"time": 51200,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				600,
+				-600,
+				false
+			],
+			"time": 63800,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				false,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				600,
+				-600,
+				false
+			],
+			"time": 76800,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				600,
+				-600,
+				false
+			],
+			"time": 95200,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				600,
+				-600,
+				false
+			],
+			"time": 96000,
+			"name": "Punching Control"
+		},
+		{
+			"params": [
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				600,
+				-600,
+				false
+			],
+			"name": "Punching Control",
+			"time": 108800
+		},
+		{
+			"params": [
+				true,
+				false,
+				true,
+				true,
+				false,
+				false,
+				false,
+				10,
+				600,
+				-600,
+				false
+			],
+			"time": 115200,
+			"name": "Punching Control"
+		}
+	]
+}

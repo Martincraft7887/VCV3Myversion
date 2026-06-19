@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/FDVIP/" name="FDVIP" zoom="0.54">
+	<sprite x="-800" updateHitbox="true" scroll="0.3" sprite="BG" y="-570" scale="1.67" name="BG"/>
+	<girlfriend scale="0.9" x="1100" y="900"/>
+	<dad x="850" spacingx="25" spacingy="-50" y="1007"/>
+	<boyfriend camxoffset="-400" camyoffset="-200" x="1730" spacingx="300" y="1007"/>
+	<sprite name="unknown5" x="-800" y="-300" sprite="ruido" scroll="0" scale="5" updateHitbox="true"/>
+</stage>
