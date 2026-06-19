@@ -1,0 +1,21 @@
+{
+	"composer": "Fuckin Vo##d",
+	"charter": "RhysRJJ",
+	"originalComposer": "srPerez",
+	"startTime": 6400,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#6d0099",
+	"midBorderBot": "#9d0099",
+	"innerBorderTop": "#300d14",
+	"innerBorderBot": "#232323",
+
+	"mixGap": 3,
+
+	"sobelStrength": 0.4,
+	"sobelIntensity": 1.0,
+	"outerBorderSize": 12
+}

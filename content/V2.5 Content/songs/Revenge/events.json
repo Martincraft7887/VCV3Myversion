@@ -1,0 +1,32 @@
+{
+	"events": [
+		{
+			"params": [
+				"VoiidWiik3"
+			],
+			"time": 51000,
+			"name": "Change Stage"
+		},
+		{
+			"params": [
+				"TKO"
+			],
+			"time": 63000,
+			"name": "Change Stage"
+		},
+		{
+			"params": [
+				"TKODark"
+			],
+			"time": 75000,
+			"name": "Change Stage"
+		},
+		{
+			"params": [
+				"VoiidBoxingRingFar"
+			],
+			"time": 88500,
+			"name": "Change Stage"
+		}
+	]
+}

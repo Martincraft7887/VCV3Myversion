@@ -1,0 +1,11 @@
+{
+	"events": [
+		{
+			"params": [
+				true
+			],
+			"time": 72000,
+			"name": "Rain Toggle"
+		}
+	]
+}
