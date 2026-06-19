@@ -14,8 +14,41 @@ import funkin.editors.ui.UIWindow;
 import funkin.editors.ui.UITextBox;
 import funkin.editors.ui.UIAutoCompleteTextBox;
 import funkin.backend.utils.IniUtil;
+import funkin.backend.utils.NdllUtil;
 import Xml;
 
+var raymarchChromaKeyActive:Bool = false;
+var raymarchChromaKeyColor = FlxColor.fromRGB(17, 254, 201, 255);
+static var SET_TRANSPARENT = NdllUtil.getFunction("ndllexample", "ndllexample_set_windows_transparent", 4);
+
+function isRaymarchShaderName(name:String):Bool {
+    if (name == null) return false;
+    var lower = name.toLowerCase();
+    return lower.indexOf("raymarch") != -1 || lower.indexOf("raytracing") != -1 || lower.indexOf("spiraltunnel") != -1;
+}
+
+function enableRaymarchChromaKey() {
+    if (raymarchChromaKeyActive) return;
+    raymarchChromaKeyActive = true;
+
+    SET_TRANSPARENT(true, 17, 254, 201);
+    if (camGame != null) camGame.bgColor = raymarchChromaKeyColor;
+}
+
+function disableRaymarchChromaKey() {
+    if (!raymarchChromaKeyActive) return;
+    raymarchChromaKeyActive = false;
+
+    SET_TRANSPARENT(false, 17, 254, 201);
+}
+
+function onGameOver(event) {
+    disableRaymarchChromaKey();
+}
+
+function destroy() {
+    disableRaymarchChromaKey();
+}
 
 function getItemTypeName() {
     return "shader";
@@ -36,6 +69,7 @@ function setupItemsFromXMLGame(xml) {
         }
 
         if (node.exists("camGame") && node.get("camGame") == "true") {
+            if (isRaymarchShaderName(node.get("shader"))) enableRaymarchChromaKey();
             camGame.addShader(s);
         }
         if (node.exists("camHUD") && node.get("camHUD") == "true") {

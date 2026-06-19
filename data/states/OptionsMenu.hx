@@ -1,7 +1,11 @@
 import funkin.options.type.TextOption;
+import funkin.options.OptionsMenu;
 import funkin.options.TreeMenuScreen;
 import funkin.options.keybinds.ChangeKeybindSubState;
 import flixel.input.gamepad.FlxGamepadInputID;
+import flixel.text.FlxTextBorderStyle;
+import flixel.util.FlxColor;
+import funkin.backend.FunkinText;
 import funkin.backend.MusicBeatSubstate;
 import flixel.input.keyboard.FlxKey;
 import haxe.io.Path;
@@ -17,7 +21,59 @@ public static var multikeyRebindController = false;
 
 function create()
 {
+	setupLeatherOptionsStyle();
 	importScript("data/scripts/controlsCheck.hx");
+}
+
+var leatherOptionsStyle:Array<FlxSprite> = [];
+function setupLeatherOptionsStyle() {
+	if (!Assets.exists(Paths.image("main menu/new/LOCKED_BG")))
+		return;
+
+	var bg = new FlxSprite().loadGraphic(Paths.image("main menu/new/LOCKED_BG"));
+	bg.setGraphicSize(FlxG.width);
+	bg.updateHitbox();
+	bg.screenCenter();
+	bg.antialiasing = Options.antialiasing;
+	bg.alpha = 0.95;
+	insert(0, bg);
+	leatherOptionsStyle.push(bg);
+
+	var wiikBG = new FlxSprite().loadGraphic(Paths.image("main menu/new/3_BG"));
+	wiikBG.setGraphicSize(FlxG.width);
+	wiikBG.updateHitbox();
+	wiikBG.screenCenter();
+	wiikBG.antialiasing = Options.antialiasing;
+	wiikBG.alpha = 0.25;
+	insert(1, wiikBG);
+	leatherOptionsStyle.push(wiikBG);
+
+	for (name in ["DOT_DOWN", "DOT_UP", "BLACK_STAINS"]) {
+		var overlay = new FlxSprite().loadGraphic(Paths.image("main menu/new/" + name));
+		overlay.setGraphicSize(FlxG.width);
+		overlay.updateHitbox();
+		overlay.screenCenter();
+		overlay.antialiasing = Options.antialiasing;
+		overlay.alpha = name == "BLACK_STAINS" ? 0.85 : 0.55;
+		insert(2, overlay);
+		leatherOptionsStyle.push(overlay);
+	}
+
+	var logo = new FlxSprite().loadGraphic(Paths.image("main menu/new/LOGO_V2"));
+	logo.antialiasing = Options.antialiasing;
+	logo.setGraphicSize(Std.int(logo.width * 0.42));
+	logo.updateHitbox();
+	logo.x = 24;
+	logo.y = 10;
+	add(logo);
+	leatherOptionsStyle.push(logo);
+
+	var title = new FunkinText(0, 24, FlxG.width - 24, "OPTIONS", 48, true);
+	title.alignment = "right";
+	title.font = Paths.font("vcr.ttf");
+	title.borderStyle = FlxTextBorderStyle.OUTLINE;
+	title.borderColor = FlxColor.BLACK;
+	add(title);
 }
 var firstFrame = true;
 function update(elapsed) {
@@ -104,6 +160,10 @@ function generateMenu()
 		Reflect.setField(FlxG.save.data, "voiidNoDeath", false);
 		FlxG.save.flush();
 	}
+	if (Reflect.field(FlxG.save.data, "voiidDebugLogs") == null) {
+		Reflect.setField(FlxG.save.data, "voiidDebugLogs", false);
+		FlxG.save.flush();
+	}
 
 	main.add(new TextOption("Voiid Gameplay", "", " >", function() {
 		var menu = new TreeMenuScreen("Voiid Gameplay", "");
@@ -113,6 +173,7 @@ function generateMenu()
 		menu.add(createToggleOption("No death", "voiidNoDeath", updateNoDeathOptionText));
 		menu.add(createToggleOption("Punch position", "voiidPunchCenterScreen", updatePunchPositionOptionText));
 		menu.add(createToggleOption("Alt note type textures", "voiidAltNoteTypeTextures", updateAltNoteTypeTexturesOptionText));
+		menu.add(createToggleOption("Debug logs", "voiidDebugLogs", updateDebugLogsOptionText));
 		addMenu(menu);
 	}));
 
@@ -190,6 +251,47 @@ function generateMenu()
 	
         addMenu(mkMenu);
 	}));
+
+	openRequestedVoiidOptionCategory(main);
+}
+
+function openRequestedVoiidOptionCategory(main:TreeMenuScreen) {
+	var target = Reflect.field(FlxG.save.data, "voiidOptionsTargetCategory");
+	if (target == null || Std.string(target) == "")
+		return;
+
+	Reflect.setField(FlxG.save.data, "voiidOptionsTargetCategory", "");
+	FlxG.save.flush();
+
+	var index = -1;
+	switch(Std.string(target)) {
+		case "gameplay": index = 1;
+		case "appearance": index = 2;
+		case "misc": index = OptionsMenu.mainOptions.length - 1;
+		case "voiid": index = findOptionByText(main, "Voiid Gameplay");
+	}
+	if (index < 0 || index >= main.members.length)
+		return;
+
+	main.curSelected = index;
+	var member = main.members[index];
+	if (member is TextOption) {
+		var option:TextOption = cast member;
+		if (option.selectCallback != null)
+			option.selectCallback();
+	}
+}
+
+function findOptionByText(main:TreeMenuScreen, text:String):Int {
+	for (i in 0...main.members.length) {
+		var member = main.members[i];
+		if (member is TextOption) {
+			var option:TextOption = cast member;
+			if (option.text == text)
+				return i;
+		}
+	}
+	return -1;
 }
 
 function updateModchartsOptionText(option:TextOption) {
@@ -220,6 +322,11 @@ function updateNoMechanicsOptionText(option:TextOption) {
 function updateNoDeathOptionText(option:TextOption) {
 	var enabled = Reflect.field(FlxG.save.data, "voiidNoDeath") == true;
 	option.text = "No death: " + (enabled ? "ON" : "OFF");
+}
+
+function updateDebugLogsOptionText(option:TextOption) {
+	var enabled = Reflect.field(FlxG.save.data, "voiidDebugLogs") == true;
+	option.text = "Debug logs: " + (enabled ? "ON" : "OFF");
 }
 
 function createToggleOption(name:String, savePath:String, updateText:Dynamic):TextOption {

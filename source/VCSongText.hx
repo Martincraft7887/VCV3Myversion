@@ -158,6 +158,9 @@ var defaultData = '
 }';
 
 function createSongText(song:String, size:Float, spacing:Float, ?data = null) {
+	if (data == null) {
+		data = Json.parse(defaultData);
+	}
 
 	var isVIP = false;
 	if (StringTools.endsWith(song, " VIP")) {
@@ -180,14 +183,12 @@ function createSongText(song:String, size:Float, spacing:Float, ?data = null) {
 	var shader = new CustomShader(data.shader != null ? data.shader : "TextShader");
 	songText.shader = shader;
 
-	if (data == null) {
-		data = Json.parse(defaultData);
-	}
-
 	shader.outerColorTop = getColorArray(data.outerBorderTop, 0);
 	shader.outerColorBot = getColorArray(data.outerBorderBot, 0);
 	shader.midColorTop = getColorArray(data.midBorderTop, -0.1);
 	shader.midColorBot = getColorArray(data.midBorderBot, 0.1);
+	shader.innerColorTop = getColorArray(data.innerBorderTop, -0.3);
+	shader.innerColorBot = getColorArray(data.innerBorderBot, 0.3);
 	shader.diagonalSplit = data.diagonalSplit != null && data.diagonalSplit ? 1 : 0;
 	shader.splitAngle = data.splitAngle != null ? data.splitAngle : 45;
 	shader.splitSoftness = data.splitSoftness != null ? data.splitSoftness : 0.015;
@@ -264,11 +265,11 @@ function createSongText(song:String, size:Float, spacing:Float, ?data = null) {
 		vipShader.rightMidColorBot = vipShader.leftMidColorBot;
 		vipShader.rightInnerColorTop = vipShader.leftInnerColorTop;
 		vipShader.rightInnerColorBot = vipShader.leftInnerColorBot;
-		vipShader.outerColorBot = getColorArray(data.outerBorderBotVIP, 0);
-		vipShader.midColorTop = getColorArray(data.midBorderTopVIP, -0.1);
-		vipShader.midColorBot = getColorArray(data.midBorderBotVIP, 0.1);
-		vipShader.innerColorTop = getColorArray(data.innerBorderTopVIP, -0.3);
-		vipShader.innerColorBot = getColorArray(data.innerBorderBotVIP, 0.3);
+		vipShader.outerColorBot = getColorArray(data.outerBorderBotVIP != null ? data.outerBorderBotVIP : data.outerBorderBot, 0);
+		vipShader.midColorTop = getColorArray(data.midBorderTopVIP != null ? data.midBorderTopVIP : data.midBorderTop, -0.1);
+		vipShader.midColorBot = getColorArray(data.midBorderBotVIP != null ? data.midBorderBotVIP : data.midBorderBot, 0.1);
+		vipShader.innerColorTop = getColorArray(data.innerBorderTopVIP != null ? data.innerBorderTopVIP : data.innerBorderTop, -0.3);
+		vipShader.innerColorBot = getColorArray(data.innerBorderBotVIP != null ? data.innerBorderBotVIP : data.innerBorderBot, 0.3);
 
 		vipShader.strength = 0;
 		vipShader.intensity = 0;

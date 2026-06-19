@@ -1,12 +1,81 @@
+import VCSongText;
 import flixel.FlxG;
+import flixel.FlxCamera;
 import flixel.FlxSprite;
 import flixel.group.FlxTypedGroup;
 import flixel.math.FlxMath;
+import flixel.text.FlxText.FlxTextBorderStyle;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import funkin.backend.FunkinText;
+import funkin.backend.scripting.ModState;
 import funkin.backend.utils.Paths;
+import haxe.Json;
+import lime.utils.Assets;
+
+var pauseCam:FlxCamera;
+var pauseBG:FlxSprite;
+var pauseInfoTexts:FlxTypedGroup<FunkinText>;
+var pauseMenuTexts:FlxTypedGroup<FunkinText>;
+var pauseOptions:Array<String> = [];
+var pauseSongText:FlxSprite = null;
+var pauseLogo:FlxSprite = null;
+var pauseTitleRevealed:Bool = false;
+var pauseLogoHasIdleAnim:Bool = false;
+var pauseLogoBaseScaleX:Float = 1;
+var pauseLogoBaseScaleY:Float = 1;
+var pauseLogoBumpTimer:Float = 0;
+var pauseLogoBumpTween:FlxTween = null;
+var songData:Dynamic = null;
+var oldMouseVisible:Bool = false;
+
+var logoTable = [
+    {
+        songs: [
+            "light it up", "ruckus", "target practice", "burnout", "sporting", "boxing match",
+            "sport swinging", "boxing gladiators", "flaming glove", "punch and gun", "fisticuffs",
+            "blastout", "immortal", "king hit", "tko", "mat", "banger", "edgy", "venom",
+            "disadvantage", "champion", "recovery", "last combat", "greedoom", "purgatory",
+            "krakatoa", "showdown", "alter ego", "interregnum", "insano", "ballin",
+            "sweet dreams", "sweet dreams ii", "flaming glove iii", "knocked", "edgelord",
+            "rejected", "wastelands", "toxic", "veteran", "bombastic", "mattpurgation",
+            "exodus", "take it", "cleverness", "tempo slayer", "total bravery", "ignis gladius",
+            "king hit wawa", "warm up", "fishycuffs", "average voiid song", "penismatt",
+            "wii remote", "damnale", "boxing match vip", "immortal vip", "king hit vip",
+            "tko vip", "veteran vip", "edgy vip", "burnout vip", "alter ego vip",
+            "target practice vip", "rejected vip"
+        ],
+        logo: "Logo"
+    },
+    {
+        songs: [
+            "power link", "revenge", "final destination", "final destination god",
+            "shooting power", "thunderstorm", "disassembler", "cosmic memories",
+            "new horizon", "galactic storm", "multiversal slash", "glowing collision",
+            "radical showdown", "defamation of reality", "super saiyan", "haven",
+            "rage", "intervention", "final destination old"
+        ],
+        logo: "LogoSXM"
+    }
+];
+
+var defaultSong = '
+{
+    "composer": "",
+    "charter": "",
+    "originalComposer": "",
+    "songFont": "dumbnerd.ttf",
+    "songFontSize": 128,
+    "infoFontSize": 24,
+    "outerBorderTop": "#000000",
+    "outerBorderBot": "#000000",
+    "midBorderTop": "#c735ff",
+    "midBorderBot": "#6414ea",
+    "innerBorderTop": "#3f3f3f",
+    "innerBorderBot": "#121617"
+}';
 
 var afkTime:Float = 0;
 var hamsterLines:FlxTypedGroup<FlxSprite>;
@@ -77,30 +146,421 @@ function quickItemLabel(index:Int):String
 
 function create(event)
 {
+
     if (!event.options.contains(quickOptionName))
         event.options.insert(Std.int(Math.max(1, event.options.length - 1)), quickOptionName);
+
+    event.cancel();
+    pauseOptions = event.options;
+    curSelected = 0;
+    loadPauseCredits();
+
+    pauseCam = new FlxCamera();
+    pauseCam.bgColor = 0;
+    FlxG.cameras.add(pauseCam, false);
+    cameras = [pauseCam];
+    oldMouseVisible = FlxG.mouse.visible;
+    FlxG.mouse.visible = true;
+
+    pauseBG = new FlxSprite().makeSolid(FlxG.width + 8, FlxG.height + 8, FlxColor.BLACK);
+    pauseBG.alpha = 0;
+    pauseBG.scrollFactor.set();
+    pauseBG.screenCenter();
+    add(pauseBG);
+    FlxTween.tween(pauseBG, {alpha: 0.62}, 0.18, {ease: FlxEase.quadOut});
+
+    createPauseSongHeader();
+
+    pauseInfoTexts = new FlxTypedGroup<FunkinText>();
+    add(pauseInfoTexts);
+    addCreditInfoTexts();
+    addInfoText("Blue balled: " + PlayState.deathCounter, 101);
+    if (PlayState.opponentMode)
+        addInfoText("OPPONENT MODE", 133);
+    else if (PlayState.coopMode)
+        addInfoText("CO-OP MODE", 133);
+
+    pauseMenuTexts = new FlxTypedGroup<FunkinText>();
+    add(pauseMenuTexts);
+    for (i in 0...pauseOptions.length)
+    {
+        var txt = new FunkinText(90, FlxG.height * 0.46 + (i * 45), 0, getPauseOptionLabel(pauseOptions[i]), 32, true);
+        txt.setFormat(Paths.font("Contb___.ttf"), 32, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        txt.borderSize = 1.25;
+        txt.ID = i;
+        txt.scrollFactor.set();
+        txt.alpha = 0;
+        pauseMenuTexts.add(txt);
+        FlxTween.tween(txt, {alpha: 0.6, x: 110}, 0.16, {ease: FlxEase.quadOut, startDelay: i * 0.025});
+    }
+
+    hamsterLines = new FlxTypedGroup<FlxSprite>();
+    add(hamsterLines);
+
+    refreshPauseMenu();
+    game.updateDiscordPresence();
 }
 
 function postCreate()
 {
-    hamsterLines = new FlxTypedGroup<FlxSprite>();
-    add(hamsterLines);
-    refreshQuickOptionLabels();
+}
+
+function loadPauseCredits()
+{
+    var basePath = "songs/" + PlayState.SONG.meta.name + "/credits.json";
+    var diffPath = "songs/" + PlayState.SONG.meta.name + "/credits-" + PlayState.difficulty + ".json";
+
+    try
+    {
+        if (Assets.exists(Paths.getPath(diffPath)))
+            songData = Json.parse(Assets.getText(Paths.getPath(diffPath)));
+        else if (Assets.exists(Paths.getPath(basePath)))
+            songData = Json.parse(Assets.getText(Paths.getPath(basePath)));
+        else
+            songData = Json.parse(defaultSong);
+    }
+    catch(e:Dynamic)
+    {
+        songData = Json.parse(defaultSong);
+    }
+}
+
+function getCreditField(name:String):String
+{
+    if (songData == null || Reflect.field(songData, name) == null) return "";
+    return Std.string(Reflect.field(songData, name));
+}
+
+function getPauseSongDisplayName():String
+{
+    if (songData != null && Reflect.field(songData, "overrideName") != null)
+        return Std.string(Reflect.field(songData, "overrideName"));
+    return PlayState.SONG.meta.displayName;
+}
+
+function isFinalDestinationVip():Bool
+{
+    return PlayState.SONG != null && PlayState.SONG.meta != null
+        && PlayState.SONG.meta.name.toLowerCase() == "final destination vip";
+}
+
+function getRevealTime():Float
+{
+    var jsonTime = getJsonFloat("startTime", -1);
+    if (jsonTime >= 0) return jsonTime;
+    return 0;
+}
+
+function shouldRevealPauseTitle():Bool
+{
+    return Conductor.songPosition >= getRevealTime();
+}
+
+function getPauseTitleText():String
+{
+    return shouldRevealPauseTitle() ? getPauseSongDisplayName() : "???";
+}
+
+function getPauseSongTextData():Dynamic
+{
+    if (!isFinalDestinationVip() || Conductor.songPosition < 156800)
+        return songData;
+
+    return Json.parse('
+    {
+        "songFont": "dumbnerd.ttf",
+        "songFontSize": 64,
+        "outerBorderTop": "#000000",
+        "outerBorderBot": "#000000",
+        "midBorderTop": "#1ffbfe",
+        "midBorderBot": "#ffa8f2",
+        "innerBorderTop": "#1595f1",
+        "innerBorderBot": "#5a3cb1",
+        "diagonalSplit": true,
+        "splitAngle": 45,
+        "splitSoftness": 0.25,
+        "splitOffset": 0.15,
+        "vipFont": "Onslaughter.otf",
+        "outerBorderTopVIP": "#000000",
+        "outerBorderBotVIP": "#000000",
+        "midBorderTopVIP": "#474747",
+        "midBorderBotVIP": "#474747",
+        "innerBorderTopVIP": "#FFFFFF",
+        "innerBorderBotVIP": "#FFFFFF",
+        "outerBorderSize": 5,
+        "midBorderSize": 2,
+        "innerBorderSize": 2,
+        "sobelStrength": 0.6,
+        "sobelIntensity": 1.0
+    }');
+}
+
+function getJsonFloat(field:String, fallback:Float):Float
+{
+    if (songData == null || Reflect.field(songData, field) == null)
+        return fallback;
+
+    var value = Std.parseFloat(Std.string(Reflect.field(songData, field)));
+    return Math.isNaN(value) ? fallback : value;
+}
+
+function logoExists(logoName:String):Bool
+{
+    return Assets.exists(Paths.image("logos/" + logoName));
+}
+
+function getPauseLogoName():String
+{
+    if (!shouldRevealPauseTitle())
+        return "";
+
+    if (isFinalDestinationVip() && Conductor.songPosition >= 156800 && logoExists("FDVIP"))
+        return "FDVIP";
+
+    if (songData != null && Reflect.field(songData, "logo") != null && Std.string(Reflect.field(songData, "logo")) != "")
+    {
+        var jsonLogo = Std.string(Reflect.field(songData, "logo"));
+        if (logoExists(jsonLogo)) return jsonLogo;
+    }
+
+    var curSongName = PlayState.SONG.meta.name.toLowerCase();
+    for (entry in logoTable)
+    {
+        for (song in entry.songs)
+        {
+            if (curSongName == song.toLowerCase() && logoExists(entry.logo))
+                return entry.logo;
+        }
+    }
+
+    return logoExists("Logo") ? "Logo" : "";
+}
+
+function getPauseLogoScale():Float
+{
+    if (isFinalDestinationVip() && Conductor.songPosition >= 156800)
+        return 1.75;
+
+    return getJsonFloat("logoScale", 0.8) * 1.8375;
+}
+
+function fitSpriteToBox(sprite:FlxSprite, maxW:Float, maxH:Float)
+{
+    if (sprite == null || sprite.width <= 0 || sprite.height <= 0) return;
+
+    var scale = Math.min(maxW / sprite.width, maxH / sprite.height);
+    if (scale < 1)
+    {
+        sprite.scale.set(sprite.scale.x * scale, sprite.scale.y * scale);
+        sprite.updateHitbox();
+    }
+}
+
+function tweenInFromRight(sprite:FlxSprite, targetX:Float, targetY:Float, delay:Float = 0)
+{
+    sprite.x = FlxG.width + 80;
+    sprite.y = targetY;
+    sprite.alpha = 0;
+    FlxTween.tween(sprite, {x: targetX, alpha: 1}, 0.55, {ease: FlxEase.expoOut, startDelay: delay});
+}
+
+function createPauseSongHeader()
+{
+    var centerX = FlxG.width * 0.53;
+    pauseTitleRevealed = shouldRevealPauseTitle();
+
+    var logoName = getPauseLogoName();
+    if (logoName != "")
+    {
+        try
+        {
+            pauseLogo = new FlxSprite();
+            pauseLogo.frames = Paths.getFrames("logos/" + logoName);
+            pauseLogo.animation.addByPrefix("idle", "idle", 24, true);
+            pauseLogoHasIdleAnim = pauseLogo.animation.exists("idle");
+            if (pauseLogoHasIdleAnim) pauseLogo.animation.play("idle");
+            pauseLogo.setGraphicSize(Std.int(pauseLogo.width * getPauseLogoScale()));
+            pauseLogo.updateHitbox();
+            fitSpriteToBox(pauseLogo, 900, 360);
+            pauseLogoBaseScaleX = pauseLogo.scale.x;
+            pauseLogoBaseScaleY = pauseLogo.scale.y;
+            pauseLogo.cameras = [pauseCam];
+            pauseLogo.scrollFactor.set();
+            add(pauseLogo);
+            tweenInFromRight(pauseLogo, centerX - (pauseLogo.width * 0.5), 118 + getJsonFloat("logoOffsetY", 0) * 0.5, 0.05);
+        }
+        catch(e:Dynamic) {}
+    }
+
+    try
+    {
+        var titleData = getPauseSongTextData();
+        var size = (pauseTitleRevealed ? getJsonFloat("songFontSize", 128) : 120) * 0.68;
+        if (isFinalDestinationVip() && Conductor.songPosition >= 156800)
+            size = 64 * 0.86;
+
+        pauseSongText = createSongText(getPauseTitleText(), size, 10, titleData);
+        fitSpriteToBox(pauseSongText, 560, 170);
+        pauseSongText.cameras = [pauseCam];
+        pauseSongText.scrollFactor.set();
+        add(pauseSongText);
+        tweenInFromRight(pauseSongText, centerX - (pauseSongText.width * 0.5), 455, 0.14);
+    }
+    catch(e:Dynamic) {}
+}
+
+function scaleSpriteFromCenter(sprite:FlxSprite, scaleX:Float, scaleY:Float)
+{
+    if (sprite == null) return;
+
+    var centerX = sprite.x + sprite.width * 0.5;
+    var centerY = sprite.y + sprite.height * 0.5;
+    sprite.scale.set(scaleX, scaleY);
+    sprite.updateHitbox();
+    sprite.x = centerX - sprite.width * 0.5;
+    sprite.y = centerY - sprite.height * 0.5;
+}
+
+function bumpPauseLogo()
+{
+    if (pauseLogo == null || pauseLogoHasIdleAnim) return;
+
+    if (pauseLogoBumpTween != null)
+        pauseLogoBumpTween.cancel();
+
+    scaleSpriteFromCenter(pauseLogo, pauseLogoBaseScaleX * 1.08, pauseLogoBaseScaleY * 1.08);
+
+    pauseLogoBumpTween = FlxTween.tween(pauseLogo.scale, {
+        x: pauseLogoBaseScaleX,
+        y: pauseLogoBaseScaleY
+    }, 0.18, {
+        ease: FlxEase.quadOut,
+        onUpdate: function(_)
+        {
+            scaleSpriteFromCenter(pauseLogo, pauseLogo.scale.x, pauseLogo.scale.y);
+        }
+    });
+}
+
+function updatePauseLogoBump(elapsed:Float)
+{
+    if (pauseLogo == null || pauseLogoHasIdleAnim) return;
+
+    pauseLogoBumpTimer += elapsed;
+    var interval = Math.max(0.18, Conductor.crochet / 1000);
+    if (pauseLogoBumpTimer >= interval)
+    {
+        pauseLogoBumpTimer = 0;
+        bumpPauseLogo();
+    }
+}
+
+function addCreditInfoTexts()
+{
+    var y = 18;
+    var composer = getCreditField("composer");
+    var charter = getCreditField("charter");
+    var originalComposer = getCreditField("originalComposer");
+
+    if (composer != "") { addInfoText("Composer: " + composer, y); y += 24; }
+    if (charter != "") { addInfoText("Charter: " + charter, y); y += 24; }
+    if (originalComposer != "") { addInfoText("Original: " + originalComposer, y); y += 24; }
+}
+
+function addInfoText(text:String, y:Float)
+{
+    if (text == null || text == "") return;
+
+    var label = new FunkinText(FlxG.width - 560, y, 540, text, 18, false);
+    label.setFormat(Paths.font("Contb___.ttf"), 18, FlxColor.WHITE, "right");
+    label.scrollFactor.set();
+    label.alpha = 0;
+    label.updateHitbox();
+    pauseInfoTexts.add(label);
+    FlxTween.tween(label, {alpha: 1, y: y + 4}, 0.18, {ease: FlxEase.quadOut});
+}
+
+function getPauseOptionLabel(option:String):String
+{
+    return switch(option)
+    {
+        case "Restart Song": "Restart Song";
+        case "Change Controls": "Controls";
+        case "Change Options": "Options";
+        case "Exit to menu": "Exit to Menu";
+        case "Exit to charter": "Exit to Charter";
+        default: option;
+    }
+}
+
+function refreshPauseMenu()
+{
+    if (pauseMenuTexts == null) return;
+
+    for (i in 0...pauseMenuTexts.members.length)
+    {
+        var txt = pauseMenuTexts.members[i];
+        if (txt == null) continue;
+
+        txt.text = (i == curSelected ? "> " : "  ") + getPauseOptionLabel(pauseOptions[i]);
+        txt.alpha = i == curSelected ? 1 : 0.55;
+        txt.color = i == curSelected ? 0xFFFFFFFF : 0xFFBBBBBB;
+        txt.x = i == curSelected ? 118 : 105;
+    }
+}
+
+function changePauseSelection(change:Dynamic)
+{
+    if (pauseOptions.length < 1) return;
+    var amount = Std.int(change);
+    if (amount == 0) return;
+    curSelected = FlxMath.wrap(curSelected + amount, 0, pauseOptions.length - 1);
+    refreshPauseMenu();
+}
+
+function clickPauseOption():Bool
+{
+    if (pauseMenuTexts == null || !FlxG.mouse.justPressed) return false;
+
+    var mx = FlxG.mouse.x;
+    var my = FlxG.mouse.y;
+
+    for (i in 0...pauseMenuTexts.members.length)
+    {
+        var txt = pauseMenuTexts.members[i];
+        if (txt == null) continue;
+
+        var hitW = Math.max(txt.width, 300);
+        if (mx >= txt.x - 18 && mx <= txt.x + hitW + 18 && my >= txt.y - 8 && my <= txt.y + txt.height + 8)
+        {
+            curSelected = i;
+            refreshPauseMenu();
+            if (pauseOptions[curSelected] == quickOptionName)
+                openQuickOptions();
+            else if (pauseOptions[curSelected] == "Change Options")
+                openVoiidOptionsMenu();
+            else
+                selectOption();
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function refreshQuickOptionLabels()
 {
     try
     {
-        if (grpMenuShit == null || menuItems == null) return;
+        if (pauseMenuTexts == null || pauseOptions == null) return;
 
-        for (i in 0...menuItems.length)
+        for (i in 0...pauseOptions.length)
         {
-            var option = menuItems[i];
+            var option = pauseOptions[i];
             if (option != quickOptionName) continue;
 
-            var item = grpMenuShit.members[i];
-            if (item != null) item.text = "Quick Options";
+            var item = pauseMenuTexts.members[i];
+            if (item != null) item.text = (i == curSelected ? "> " : "  ") + "Quick Options";
         }
     }
     catch(e:Dynamic) {}
@@ -179,6 +639,38 @@ function refreshQuickMenu()
     }
 }
 
+function changeQuickSelection(change:Dynamic)
+{
+    var amount = Std.int(change);
+    if (amount == 0) return;
+    quickSelected = FlxMath.wrap(quickSelected + amount, 0, quickItems.length - 1);
+    refreshQuickMenu();
+}
+
+function clickQuickOption():Bool
+{
+    if (quickTexts == null || !FlxG.mouse.justPressed) return false;
+
+    var mx = FlxG.mouse.x;
+    var my = FlxG.mouse.y;
+
+    for (i in 0...quickTexts.members.length)
+    {
+        var txt = quickTexts.members[i];
+        if (txt == null) continue;
+
+        if (mx >= txt.x && mx <= txt.x + txt.width && my >= txt.y - 8 && my <= txt.y + txt.height + 8)
+        {
+            quickSelected = i;
+            refreshQuickMenu();
+            toggleQuickSelected();
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function toggleQuickSelected()
 {
     var item = quickItems[quickSelected];
@@ -213,11 +705,33 @@ function onSelectOption(event)
         return;
     }
 
+    if (event.name == "Change Options" || event.name == "Options")
+    {
+        event.cancel();
+        openVoiidOptionsMenu();
+        return;
+    }
+
     if (event.name == quickOptionName)
     {
         event.cancel();
         openQuickOptions();
     }
+}
+
+function openVoiidOptionsMenu()
+{
+    Reflect.setField(FlxG.save.data, "voiidOptionsOpenedFromPause", true);
+    if (PlayState.SONG != null && PlayState.SONG.meta != null)
+        Reflect.setField(FlxG.save.data, "voiidPauseSong", PlayState.SONG.meta.name);
+    Reflect.setField(FlxG.save.data, "voiidPauseDifficulty", PlayState.difficulty);
+    Reflect.setField(FlxG.save.data, "voiidPauseVariation", PlayState.variation);
+    Reflect.setField(FlxG.save.data, "voiidPauseStoryMode", PlayState.isStoryMode);
+    Reflect.setField(FlxG.save.data, "voiidPauseOpponentMode", PlayState.opponentMode);
+    Reflect.setField(FlxG.save.data, "voiidPauseCoopMode", PlayState.coopMode);
+    Reflect.setField(FlxG.save.data, "voiidPauseChartingMode", PlayState.chartingMode);
+    FlxG.save.flush();
+    FlxG.switchState(new ModState("VoiidOptionsState"));
 }
 
 function onChangeItem(event)
@@ -228,19 +742,24 @@ function onChangeItem(event)
 
 function update(elapsed:Float)
 {
+    updatePauseLogoBump(elapsed);
+
     if (quickMenuOpen)
     {
+        if (FlxG.mouse.wheel != 0)
+            changeQuickSelection(-FlxG.mouse.wheel);
+
+        if (clickQuickOption())
+            return;
+
         if (FlxG.keys.justPressed.UP)
-        {
-            quickSelected = FlxMath.wrap(quickSelected - 1, 0, quickItems.length - 1);
-            refreshQuickMenu();
-        }
+            changeQuickSelection(-1);
 
         if (FlxG.keys.justPressed.DOWN)
-        {
-            quickSelected = FlxMath.wrap(quickSelected + 1, 0, quickItems.length - 1);
-            refreshQuickMenu();
-        }
+            changeQuickSelection(1);
+
+        if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.RIGHT)
+            toggleQuickSelected();
 
         if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE)
             toggleQuickSelected();
@@ -249,6 +768,28 @@ function update(elapsed:Float)
             closeQuickOptions();
 
         return;
+    }
+
+    if (FlxG.mouse.wheel != 0)
+        changePauseSelection(-FlxG.mouse.wheel);
+
+    if (clickPauseOption())
+        return;
+
+    if (FlxG.keys.justPressed.UP)
+        changePauseSelection(-1);
+
+    if (FlxG.keys.justPressed.DOWN)
+        changePauseSelection(1);
+
+    if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE)
+    {
+        if (pauseOptions[curSelected] == quickOptionName)
+            openQuickOptions();
+        else if (pauseOptions[curSelected] == "Change Options")
+            openVoiidOptionsMenu();
+        else
+            selectOption();
     }
 
     afkTime += elapsed;
@@ -504,4 +1045,27 @@ function resetIntersectionPositions()
         h.y = -220 - (pos * hamsterSpacing) - FlxG.random.int(0, 250);
         h.alpha = 1;
     }
+}
+
+function destroy()
+{
+    if (pauseLogoBumpTween != null)
+        pauseLogoBumpTween.cancel();
+
+    if (quickMenuOpen)
+        closeQuickOptions();
+
+    if (hamsterLines != null)
+    {
+        for (spr in hamsterLines.members)
+        {
+            if (spr != null)
+                FlxTween.cancelTweensOf(spr);
+        }
+    }
+
+    if (pauseCam != null && FlxG.cameras.list.contains(pauseCam))
+        FlxG.cameras.remove(pauseCam, true);
+
+    FlxG.mouse.visible = oldMouseVisible;
 }

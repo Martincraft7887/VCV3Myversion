@@ -36,7 +36,14 @@ function postUpdate(elapsed)
 {
 	if (!didSelect)
 	{
-		if (selected)
+		var pickerSelected = false;
+		try {
+			pickerSelected = selected == true;
+		} catch(e:Dynamic) {
+			pickerSelected = false;
+		}
+
+		if (pickerSelected)
 		{
 			didSelect = true;
 			if (curSelected == modchartEditorID)

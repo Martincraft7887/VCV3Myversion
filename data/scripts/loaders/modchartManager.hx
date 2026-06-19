@@ -143,6 +143,11 @@ public var modchartManagerKeyCount:Int = 4;
 var debugShaderAppliedCount:Int = 0;
 var debugShaderTraceDone:Bool = false;
 
+function voiidDebugTrace(message:String) {
+	if (Reflect.field(FlxG.save.data, "voiidDebugLogs") == true)
+		trace(message);
+}
+
 function postUpdate(elapsed)
 {
 	if (!initialized)
@@ -532,7 +537,7 @@ public function generateShaderCode()
 function postDraw() {
 	if (!debugShaderTraceDone && initialized) {
 		debugShaderTraceDone = true;
-		trace("legacy modchartManager: notePerspective assigned to notes=" + debugShaderAppliedCount);
+		voiidDebugTrace("legacy modchartManager: notePerspective assigned to notes=" + debugShaderAppliedCount);
 	}
 }
 

@@ -5,33 +5,251 @@ import funkin.backend.system.Controls.Control;
 
 import funkin.backend.assets.ModsFolderLibrary;
 import funkin.backend.assets.ModsFolder;
+import funkin.backend.utils.DiscordUtil;
+import funkin.backend.utils.NdllUtil;
+import funkin.backend.utils.WindowUtils;
+import funkin.game.GameOverSubstate;
+import funkin.game.PlayState;
 import funkin.menus.FreeplayState;
 import funkin.menus.MainMenuState;
+import funkin.menus.StoryMenuState;
 
 var redirectedInitialMenuToPortFreeplay:Bool = false;
+var windowTitleBase:String = "Voiid Chronicles v3";
+var lastAppliedWindowTitle:String = "";
+var lastAppliedDiscordState:String = "";
+var windowTitleUpdateTimer:Float = 0;
+var discordWasDisabled:Bool = false;
+static var SET_TRANSPARENT = NdllUtil.getFunction("ndllexample", "ndllexample_set_windows_transparent", 4);
+
+function disableRaymarchWindowChroma() {
+	SET_TRANSPARENT(false, 17, 254, 201);
+}
+
+function new() {
+	setVoiidWindowTitle("");
+	disableRaymarchWindowChroma();
+}
+
+function destroy() {
+	disableRaymarchWindowChroma();
+	WindowUtils.winTitle = window.title = "Friday Night Funkin' - Codename Engine";
+}
+
+function setVoiidWindowTitle(detail:String) {
+	var title = windowTitleBase;
+	if (detail != null && StringTools.trim(detail) != "")
+		title += " - " + detail;
+
+	if (title == lastAppliedWindowTitle)
+		return;
+
+	lastAppliedWindowTitle = title;
+	WindowUtils.winTitle = window.title = title;
+}
+
+function cleanWindowTitleName(name:String):String {
+	if (name == null || name == "")
+		return "";
+
+	var slash = name.lastIndexOf("/");
+	if (slash >= 0)
+		name = name.substr(slash + 1);
+
+	var dot = name.lastIndexOf(".");
+	if (dot >= 0)
+		name = name.substr(dot + 1);
+
+	switch(name) {
+		case "TitleState": return "Title Screen";
+		case "MainMenuState" | "VoiidMainMenuState": return "Main Menu";
+		case "VoiidOptionsState": return "Options Menu";
+		case "VoiidKeybindState": return "Controls";
+		case "StoryMenuState": return "Story Menu";
+		case "FreeplayState" | "PortFreeState": return "Freeplay";
+		case "OptionsMenu": return "Options Menu";
+		case "CreditsMain" | "VoiidCreditsState": return "Credits Menu";
+		case "VoiidAwardsState": return "Awards Menu";
+		case "EditorTreeMenu": return "Editor Menu";
+		case "ModchartEditor": return "Modchart Editor";
+		case "StageEditor": return "Stage Editor";
+		case "RTXStageEditor": return "RTX Stage Editor";
+	}
+
+	var out = "";
+	for (i in 0...name.length) {
+		var char = name.charAt(i);
+		if (i > 0 && char == char.toUpperCase() && char != char.toLowerCase())
+			out += " ";
+		out += char;
+	}
+	return out;
+}
+
+function getSavedBool(field:String, def:Bool):Bool {
+	var value = Reflect.field(FlxG.save.data, field);
+	if (value == null) {
+		Reflect.setField(FlxG.save.data, field, def);
+		FlxG.save.flush();
+		return def;
+	}
+	return value == true;
+}
+
+function dynamicWindowRpcEnabled():Bool {
+	return getSavedBool("voiidDynamicWindowRpc", true);
+}
+
+function discordRpcEnabled():Bool {
+	return getSavedBool("voiidDiscordRpc", true);
+}
+
+function getVoiidSongDisplayName():String {
+	if (PlayState.SONG == null || PlayState.SONG.meta == null)
+		return "";
+
+	var songName = PlayState.SONG.meta.displayName;
+	if (songName == null || songName == "" || Std.string(songName) == "null")
+		songName = PlayState.SONG.meta.name;
+
+	return Std.string(songName);
+}
+
+function getVoiidDifficultyDisplayName():String {
+	var diff = "";
+	try {
+		diff = Std.string(PlayState.difficulty);
+	} catch(e:Dynamic) {}
+
+	if (diff == null || diff == "" || diff == "null")
+		return "";
+
+	return diff.toUpperCase();
+}
+
+function getVoiidPlayModeName():String {
+	try {
+		if (PlayState.isStoryMode) {
+			if (PlayState.storyWeek != null && PlayState.storyWeek.name != null && Std.string(PlayState.storyWeek.name) != "")
+				return "Story Mode: " + Std.string(PlayState.storyWeek.name);
+			return "Story Mode";
+		}
+	} catch(e:Dynamic) {}
+
+	return "Freeplay";
+}
+
+function getVoiidGameplayTitleDetail():String {
+	var songName = getVoiidSongDisplayName();
+	if (songName == "")
+		return "";
+
+	var diff = getVoiidDifficultyDisplayName();
+	var mode = getVoiidPlayModeName();
+	var detail = songName;
+	if (diff != "")
+		detail += " - " + diff;
+	if (mode != "")
+		detail += " (" + mode + ")";
+
+	var playState:Dynamic = PlayState.instance;
+	if (playState != null && Reflect.field(playState, "paused") == true)
+		detail = "Paused - " + detail;
+
+	return detail;
+}
+
+function getCurrentWindowTitleDetail():String {
+	if (Std.isOfType(FlxG.state, PlayState) && PlayState.SONG != null && PlayState.SONG.meta != null) {
+		if (dynamicWindowRpcEnabled()) {
+			var detail = getVoiidGameplayTitleDetail();
+			if (detail != "")
+				return detail;
+		}
+
+		var songName = getVoiidSongDisplayName();
+		var diff = getVoiidDifficultyDisplayName();
+		if (songName != "")
+			return songName + (diff == "" ? "" : " (" + diff + ")");
+	}
+
+	var scriptName:Dynamic = Reflect.field(FlxG.state, "scriptName");
+	if (scriptName != null && Std.string(scriptName) != "")
+		return cleanWindowTitleName(Std.string(scriptName));
+
+	var className = Type.getClassName(Type.getClass(FlxG.state));
+	return cleanWindowTitleName(className);
+}
+
+function updateVoiidWindowTitle(force:Bool = false) {
+	if (FlxG.state == null)
+		return;
+
+	if (!force && windowTitleUpdateTimer > 0)
+		return;
+
+	windowTitleUpdateTimer = 0.25;
+	setVoiidWindowTitle(getCurrentWindowTitleDetail());
+}
+
+function updateVoiidDiscordState(force:Bool = false) {
+	if (FlxG.state == null || Std.isOfType(FlxG.state, PlayState))
+		return;
+
+	if (!discordRpcEnabled()) {
+		if (!discordWasDisabled) {
+			discordWasDisabled = true;
+			lastAppliedDiscordState = "";
+			DiscordUtil.clearPresence();
+		}
+		return;
+	}
+	discordWasDisabled = false;
+
+	var detail = getCurrentWindowTitleDetail();
+	if (detail == null || StringTools.trim(detail) == "")
+		return;
+
+	if (!force && detail == lastAppliedDiscordState)
+		return;
+
+	lastAppliedDiscordState = detail;
+	DiscordUtil.changePresenceSince(detail, null);
+}
 
 function preStateSwitch() {
+	// Mantiene la redirección del Freeplay normal al PortFreeState
 	if (Std.isOfType(FlxG.game._requestedState, FreeplayState)) {
 		trace("Global redirect: FreeplayState -> PortFreeState");
 		FlxG.game._requestedState = new ModState("PortFreeState");
 		return;
 	}
 
-	var forcePortFreeplay = Reflect.field(FlxG.save.data, "voiidReturnToPortFreeplayFromModSwitch") == true;
-	if ((forcePortFreeplay || !redirectedInitialMenuToPortFreeplay) && Std.isOfType(FlxG.game._requestedState, MainMenuState)) {
+	// Ya NO redirige el MainMenuState.
+	// El menú principal ahora cargará normal.
+	if (Std.isOfType(FlxG.game._requestedState, MainMenuState)) {
 		Reflect.setField(FlxG.save.data, "voiidReturnToPortFreeplayFromModSwitch", false);
 		redirectedInitialMenuToPortFreeplay = true;
-		trace("Global redirect: MainMenuState -> PortFreeState");
-		FlxG.game._requestedState = new ModState("PortFreeState");
+		FlxG.game._requestedState = new ModState("VoiidMainMenuState");
+	}
+
+	if (Std.isOfType(FlxG.game._requestedState, StoryMenuState)) {
+		FlxG.game._requestedState = new ModState("VoiidMainMenuState");
 	}
 }
-
 var ogModFolder = ModsFolder.currentModFolder;
 var loadedPaths:Array<String> = [];
 var init = false;
 function postStateSwitch()
 {
 	PauseSubState.script = "data/scripts/pause";
+	if (Std.isOfType(FlxG.state, StoryMenuState)) {
+		FlxG.switchState(new ModState("VoiidMainMenuState"));
+		return;
+	}
+	disableRaymarchWindowChroma();
+	updateVoiidWindowTitle(true);
+	updateVoiidDiscordState(true);
 	
 	if (init)
 		return;
@@ -55,6 +273,14 @@ function postStateSwitch()
 			loadedPaths.push(f);
 		}
 	}
+}
+
+function postUpdate(elapsed:Float) {
+	windowTitleUpdateTimer -= elapsed;
+	if (GameOverSubstate.instance != null)
+		disableRaymarchWindowChroma();
+	updateVoiidWindowTitle(false);
+	updateVoiidDiscordState(false);
 }
 //make sure that saving charts/characters go to the correct content folder
 function normalizeAssetPath(path:String):String {

@@ -26,7 +26,7 @@
 		<Event type="setShaderProperty" name="mirrorHud" property="x" value="0"/>
 		<Event type="setShaderProperty" name="mirrorHud" property="y" value="0"/>
 		<Event type="setShaderProperty" name="mirrorHud" property="warp" value="0"/>
-		<Event type="setShaderProperty" value="1" property="effect" name="bars"/>
+		<Event type="setShaderProperty" value="0" property="effect" name="bars"/>
 		<Event type="initShader" shader="MirrorRepeatWarpEffect" name="mirror2"/>
 		<Event type="setCameraShader" camera="game" name="mirror2"/>
 		<Event type="setCameraShader" camera="other" name="mirror2"/>

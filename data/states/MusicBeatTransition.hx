@@ -62,7 +62,13 @@ function postCreate()
 				{
 					nextFrameSkip = true;
 				}});
-				FlxG.sound.music.fadeOut(2/3, 0);
+				if (FlxG.sound.music != null) {
+					try {
+						FlxG.sound.music.fadeOut(2/3, 0);
+					} catch(e:Dynamic) {
+						FlxTween.tween(FlxG.sound.music, {volume: 0}, 2/3, {ease: FlxEase.sineOut});
+					}
+				}
 			}
 		}
 	}

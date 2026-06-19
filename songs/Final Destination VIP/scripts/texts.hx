@@ -6,14 +6,14 @@ import VCSongText;
 // ==========================
 // VARIABLES
 // ==========================
-var t1;
-var t2;
-var t3;
-var t4;
-var t5;
-var t6;
-var t7;
-var t8;
+var lyric1;
+var lyric2;
+var lyric3;
+var lyric4;
+var lyric5;
+var lyric6;
+var lyric7;
+var lyric8;
 
 var centerX:Float;
 var centerY:Float;
@@ -27,7 +27,7 @@ function postCreate()
     centerY = FlxG.height / 2;
 
     // BOW (rosa)
-    t1 = makeCoolText("BOW", 128, 16, '{
+    lyric1 = makeCoolText("BOW", 128, 16, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
         "outerBorderBot": "#000000",
@@ -38,7 +38,7 @@ function postCreate()
     }');
 
     // BEFORE ME (azul)
-    t2 = makeCoolText("BEFORE ME", 128, 16, '{
+    lyric2 = makeCoolText("BEFORE ME", 128, 16, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
         "outerBorderBot": "#000000",
@@ -49,7 +49,7 @@ function postCreate()
     }');
 
     // MORTALS (rojo)
-    t3 = makeCoolText("MORTALS", 128, 16, '{
+    lyric3 = makeCoolText("MORTALS", 128, 16, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
         "outerBorderBot": "#000000",
@@ -59,7 +59,7 @@ function postCreate()
         "innerBorderBot": "#000000"
     }');
 
-    t4 = makeCoolText("UNTAPPED", 128, 16, '{
+    lyric4 = makeCoolText("UNTAPPED", 128, 16, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
         "outerBorderBot": "#000000",
@@ -68,7 +68,7 @@ function postCreate()
         "innerBorderTop": "#363636",
         "innerBorderBot": "#000000"
     }');
-    t5 = makeCoolText("POWERS", 128, 16, '{
+    lyric5 = makeCoolText("POWERS", 128, 16, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
         "outerBorderBot": "#000000",
@@ -77,7 +77,7 @@ function postCreate()
         "innerBorderTop": "#363636",
         "innerBorderBot": "#000000"
     }');
-    t6 = makeCoolText("I MADE IT", 128, 16, '{
+    lyric6 = makeCoolText("I MADE IT", 128, 16, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
         "outerBorderBot": "#000000",
@@ -86,7 +86,7 @@ function postCreate()
         "innerBorderTop": "#363636",
         "innerBorderBot": "#000000"
     }');
-    t7 = makeCoolText("Can you even", 50, 10, '{
+    lyric7 = makeCoolText("Can you even", 50, 10, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
         "outerBorderBot": "#000000",
@@ -95,7 +95,7 @@ function postCreate()
         "innerBorderTop": "#363636",
         "innerBorderBot": "#000000"
     }');
-    t8 = makeCoolText("KEEP UP WITH THIS!?", 50, 10, '{
+    lyric8 = makeCoolText("KEEP UP WITH THIS!?", 50, 10, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
         "outerBorderBot": "#000000",
@@ -200,23 +200,23 @@ function stepHit()
 {
     if(curStep == 832)
     {
-        showText(t1, "down", "left", 20, 0, -120);
-        showText(t2, "up", "right", 20, 0, 0);
-        showText(t3, "down", "left", 20, 0, 120);
+        showText(lyric1, "down", "left", 20, 0, -120);
+        showText(lyric2, "up", "right", 20, 0, 0);
+        showText(lyric3, "down", "left", 20, 0, 120);
     }
 
     if(curStep == 854)
     {
-        showText(t4, "up", "right", 5, 0, -60);
-        showText(t5, "down", "left", 5, 0, 60);
+        showText(lyric4, "up", "right", 5, 0, -60);
+        showText(lyric5, "down", "left", 5, 0, 60);
     }
     if(curStep == 1017)
-        showText(t6, "down", "up", 1, 0, 0);
+        showText(lyric6, "down", "up", 1, 0, 0);
     if(curStep == 1808)
-        showText(t7, "down", "down", 6, 0, 200);
+        showText(lyric7, "down", "down", 6, 0, 200);
     if(curStep == 1816)
-        showText(t8, "down", "down", 5, 0, 200);
+        showText(lyric8, "down", "down", 5, 0, 200);
     if(curStep == 2393)
-        showText(t6, "down", "up", 1, 0, 0);
+        showText(lyric6, "down", "up", 1, 0, 0);
 
 }

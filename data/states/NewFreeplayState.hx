@@ -3,6 +3,8 @@ import flixel.text.FlxTextBorderStyle;
 import flixel.util.FlxAxes;
 import flixel.util.FlxStringUtil;
 import flixel.group.FlxTypedGroup;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 
 import funkin.menus.FreeplaySonglist;
 import funkin.game.PlayState;
@@ -12,6 +14,7 @@ import funkin.backend.utils.AudioAnalyzer;
 import Type;
 import Reflect;
 import haxe.Json;
+import lime.utils.Assets;
 import VCSongText;
 using StringTools;
 
@@ -99,6 +102,106 @@ function makeSongBack(selected:Bool = false) {
     return spr;
 }
 
+function makeLockSprite(gold:Bool = false) {
+    var spr = new FlxSprite();
+    spr.frames = Paths.getSparrowAtlas(gold ? "main menu/freeplay/lockGold" : "main menu/freeplay/lock");
+    spr.animation.addByPrefix("idle", "lock", 24, false);
+    spr.animation.addByPrefix("open", "lock open", 30, false);
+    spr.animation.play("idle", true);
+    spr.setGraphicSize(58, 58);
+    spr.updateHitbox();
+    spr.antialiasing = Options.antialiasing;
+    spr.visible = false;
+    return spr;
+}
+
+function createGloveHud() {
+    var x = FlxG.width - 270;
+    var y = 78;
+
+    var pill = new FlxSprite(x - 14, y + 5).makeGraphic(254, 48, 0x88000000);
+    add(pill);
+
+    gloveHudWhite = new FlxSprite(x, y).loadGraphic(Paths.image("main menu/freeplay/glove_white"));
+    gloveHudWhite.setGraphicSize(44, 44);
+    gloveHudWhite.updateHitbox();
+    gloveHudWhite.antialiasing = Options.antialiasing;
+    add(gloveHudWhite);
+
+    gloveHudWhiteText = new FunkinText(x + 46, y + 7, 82, "0", 30, true);
+    gloveHudWhiteText.font = Paths.font("vcr.ttf");
+    add(gloveHudWhiteText);
+
+    gloveHudPurple = new FlxSprite(x + 132, y).loadGraphic(Paths.image("main menu/freeplay/glove_lean"));
+    gloveHudPurple.setGraphicSize(44, 44);
+    gloveHudPurple.updateHitbox();
+    gloveHudPurple.antialiasing = Options.antialiasing;
+    add(gloveHudPurple);
+
+    gloveHudPurpleText = new FunkinText(x + 178, y + 7, 72, "0", 30, true);
+    gloveHudPurpleText.font = Paths.font("vcr.ttf");
+    add(gloveHudPurpleText);
+
+    priceIcon = new FlxSprite(FlxG.width - 250, 160).loadGraphic(Paths.image("main menu/freeplay/glove_white"));
+    priceIcon.setGraphicSize(54, 54);
+    priceIcon.updateHitbox();
+    priceIcon.color = 0xFF000000;
+    priceIcon.antialiasing = Options.antialiasing;
+    priceIcon.visible = false;
+    add(priceIcon);
+
+    priceText = new FunkinText(FlxG.width - 190, 168, 170, "", 34, true);
+    priceText.font = Paths.font("vcr.ttf");
+    priceText.color = 0xFF000000;
+    priceText.borderColor = 0xFFFFFFFF;
+    priceText.borderSize = 2.5;
+    priceText.visible = false;
+    add(priceText);
+
+}
+
+function updateGloveHud() {
+    if (gloveHudWhiteText != null)
+        gloveHudWhiteText.text = Std.string(getGloveInt(WHITE_GLOVE_FIELD));
+    if (gloveHudPurpleText != null)
+        gloveHudPurpleText.text = Std.string(getGloveInt(PURPLE_GLOVE_FIELD));
+}
+
+function selectedSongLocked():Bool {
+    return songList != null && songList.songs != null && songList.songs[selection] != null && !isSongUnlocked(songList.songs[selection].name);
+}
+
+function canBuySelectedSong():Bool {
+    if (!selectedSongLocked())
+        return false;
+    var data = getUnlockData(songList.songs[selection].name);
+    if (data == null) return false;
+    var field = data.currency == "purple" ? PURPLE_GLOVE_FIELD : WHITE_GLOVE_FIELD;
+    return getGloveInt(field) >= data.price;
+}
+
+function buySelectedSong():Bool {
+    if (!canBuySelectedSong())
+        return false;
+
+    var songName = songList.songs[selection].name;
+    var data = getUnlockData(songName);
+    var field = data.currency == "purple" ? PURPLE_GLOVE_FIELD : WHITE_GLOVE_FIELD;
+    setGloveInt(field, getGloveInt(field) - Std.int(data.price));
+    Reflect.setField(getGloveSave(), songUnlockField(songName), true);
+    FlxG.save.flush();
+    updateGloveHud();
+
+    unlockingSongKey = songKey(songName);
+    unlockingTimer = 0.75;
+    if (lockSprites[selection] != null) {
+        lockSprites[selection].visible = true;
+        lockSprites[selection].animation.play("open", true);
+    }
+    CoolUtil.playMenuSFX(1);
+    return true;
+}
+
 function loadFreeplayBGPorts() {
     freeplayBGPorts = [];
 
@@ -127,6 +230,92 @@ function getFreeplayBGPort(songName:String) {
     return null;
 }
 
+function getGloveSave():Dynamic {
+    var data = Reflect.field(FlxG.save.data, GLOVE_SAVE_FIELD);
+    if (data == null) {
+        data = {};
+        Reflect.setField(FlxG.save.data, GLOVE_SAVE_FIELD, data);
+    }
+
+    for (field in [WHITE_GLOVE_FIELD, PURPLE_GLOVE_FIELD, "voiidWhiteGlovesEarnedTotal", "voiidPurpleGlovesEarnedTotal"]) {
+        var oldValue = Reflect.field(FlxG.save.data, field);
+        if (oldValue != null && Reflect.field(data, field) == null)
+            Reflect.setField(data, field, oldValue);
+    }
+
+    return data;
+}
+
+function getGloveInt(field:String):Int {
+    var value = Reflect.field(getGloveSave(), field);
+    if (value == null) return 0;
+    var parsed = Std.parseInt(Std.string(value));
+    return parsed == null ? 0 : parsed;
+}
+
+function setGloveInt(field:String, value:Int) {
+    Reflect.setField(getGloveSave(), field, value);
+    FlxG.save.flush();
+}
+
+function songKey(name:String):String {
+    return name == null ? "" : Std.string(name).toLowerCase().trim();
+}
+
+function songUnlockField(songName:String):String {
+    return "song_" + songKey(songName).replace(" ", "_").replace("-", "_");
+}
+
+function getUnlockData(songName:String):Dynamic {
+    return Reflect.field(freeplayUnlockData, songKey(songName));
+}
+
+function isSongUnlocked(songName:String):Bool {
+    var data = getUnlockData(songName);
+    if (data == null || data.price <= 0)
+        return true;
+    return Reflect.field(getGloveSave(), songUnlockField(songName)) == true;
+}
+
+function parsePrice(song:Dynamic, fields:Array<String>):Int {
+    for (field in fields) {
+        if (Reflect.hasField(song, field)) {
+            var parsed = Std.parseInt(Std.string(Reflect.field(song, field)));
+            if (parsed != null) return parsed;
+        }
+    }
+    return 0;
+}
+
+function loadFreeplayUnlockData() {
+    freeplayUnlockData = {};
+
+    for (lib in Paths.assetsTree.libraries) {
+        if (!lib.exists(Paths.getPath("data/freeplaySongs.json"), "TEXT"))
+            continue;
+
+        var freeplaySongs = Json.parse(lib.getText(Paths.getPath("data/freeplaySongs.json")));
+        for (cat in freeplaySongs.categories) {
+            var catName = cat.name == null ? "" : Std.string(cat.name);
+            for (song in cat.songs) {
+                if (song.name == null) continue;
+
+                var whitePrice = parsePrice(song, ["wg price", "white price", "white gloves", "white glove"]);
+                var purplePrice = parsePrice(song, ["pw glove", "pg price", "purple price", "purple gloves", "purple glove"]);
+                var usePurple = purplePrice > 0;
+                var price = usePurple ? purplePrice : whitePrice;
+
+                Reflect.setField(freeplayUnlockData, songKey(song.name), {
+                    content: catName,
+                    price: price,
+                    currency: usePurple ? "purple" : "white",
+                    lock: usePurple ? "main menu/freeplay/lockGold" : "main menu/freeplay/lock"
+                });
+            }
+        }
+    }
+}
+
 var selection = 0;
 function changeSelection(delta, reference) {
     if (delta == 0 || reference == null) return;
@@ -135,6 +324,8 @@ function changeSelection(delta, reference) {
     if (selection < 0) selection = reference.length - 1;
 
     CoolUtil.playMenuSFX(0);
+    if (Reflect.field(FlxG.save.data, "voiidFreeplayMusic") != false)
+        playSelectedInstPreview();
 }
 
 var visBar:FlxSprite;
@@ -156,6 +347,21 @@ var songTextSize:Int = 128;
 var songTextWidth:Float = 900;
 var lastLoadedSongBG:String = "";
 var freeplayBGPorts = [];
+var freeplayUnlockData = {};
+var lockSprites:Array<FlxSprite> = [];
+var gloveHudWhite:FlxSprite;
+var gloveHudPurple:FlxSprite;
+var gloveHudWhiteText:FunkinText;
+var gloveHudPurpleText:FunkinText;
+var priceIcon:FlxSprite;
+var priceText:FunkinText;
+var staticOverlay:FlxSprite;
+var unlockingSongKey:String = "";
+var unlockingTimer:Float = 0;
+
+var WHITE_GLOVE_FIELD:String = "voiidWhiteGloves";
+var PURPLE_GLOVE_FIELD:String = "voiidPurpleGloves";
+var GLOVE_SAVE_FIELD:String = "voiidGloveSave";
 
 var diffText;
 
@@ -205,6 +411,7 @@ function create() {
 
     if (!FlxG.sound.music.playing) CoolUtil.playMenuSong();
     loadFreeplayBGPorts();
+    loadFreeplayUnlockData();
 
     bg = new FlxSprite(0, 0).loadGraphic(Paths.image('menus/freeplay/BG'));
     bg.setGraphicSize(FlxG.width);
@@ -214,6 +421,11 @@ function create() {
     songBG = new FlxSprite(0, 0).makeGraphic(1, 1, 0xFF000000);
     songBG.alpha = 0;
     add(songBG);
+
+    staticOverlay = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xAA000000);
+    staticOverlay.visible = false;
+    staticOverlay.alpha = 0;
+    add(staticOverlay);
 
     dotsTop = new FlxSprite(0, 0).loadGraphic(Paths.image('menus/freeplay/dot_up'));
     dotsTop.setGraphicSize(FlxG.width);
@@ -237,6 +449,8 @@ function create() {
     freeplayTitle.x = FlxG.width - freeplayTitle.width - 8;
     add(freeplayTitle);
 
+    createGloveHud();
+
     visBar = makeRect(1, 1, visualizerBarWidth, visualizerBarThickness, 0x95ffffff);
     visBar.origin.set(visualizerBarWidth, 0);
     add(visBar);
@@ -259,14 +473,20 @@ function create() {
     for (i in 0...songList.songs.length) {
         var back = makeSongBack(false);
         var selectedBack = makeSongBack(true);
+        var song = songList.songs[i];
         groupBacks.push(back);
         groupSelectedBacks.push(selectedBack);
         add(back);
         add(selectedBack);
 
-        var text = makeSongText(0, i * gap, (songList.songs[i] == null ? "Random" : songList.songs[i].displayName));
+        var text = makeSongText(0, i * gap, (song == null ? "Random" : song.displayName));
         group.push(text);
         add(text);
+
+        var lockData = song == null ? null : getUnlockData(song.name);
+        var lock = makeLockSprite(lockData != null && lockData.currency == "purple");
+        lockSprites.push(lock);
+        add(lock);
     }
 
     spect = new AudioAnalyzer(FlxG.sound.music, 512);
@@ -279,10 +499,14 @@ function setFreeplayVisible(visible:Bool) {
     for (item in group) item.visible = visible;
     for (item in groupBacks) item.visible = visible;
     for (item in groupSelectedBacks) item.visible = visible;
+    for (item in lockSprites) item.visible = false;
     diffText.visible = visible;
     customValuesText.visible = visible;
     pbText.visible = visible;
     freeplayTitle.visible = visible;
+    if (priceIcon != null) priceIcon.visible = false;
+    if (priceText != null) priceText.visible = false;
+    if (staticOverlay != null) staticOverlay.visible = false;
 }
 
 function createCategoryMenu() {
@@ -358,12 +582,16 @@ function enterSongSelector(targetCategory:String = null) {
             if (songList.songs[i] != null && songList.songs[i].displayName == targetCategory) {
                 selection = i;
                 selectionY = selection * gap;
+                if (Reflect.field(FlxG.save.data, "voiidFreeplayMusic") != false)
+                    playSelectedInstPreview();
                 return;
             }
         }
 
         trace("Categoria no encontrada en songList: " + targetCategory);
     }
+    if (Reflect.field(FlxG.save.data, "voiidFreeplayMusic") != false)
+        playSelectedInstPreview();
 }
 
 var levels = [];
@@ -440,6 +668,35 @@ function formatCaps(input) {
 }
 
 var playingInst = false;
+
+function playSelectedInstPreview() {
+    if (songList == null || songList.songs == null || songList.songs[selection] == null)
+        return;
+
+    if (!playingInst) {
+        menuSong_Seekhead = Conductor.songPosition;
+        menuSong_Tempo = Conductor.bpm;
+        menuSong_TimeSig = Conductor.beatsPerMeasure + " " + Conductor.stepsPerBeat;
+    }
+
+    FlxG.sound.music.stop();
+    FlxG.sound.music = FlxG.sound.load(Paths.inst(songList.songs[selection].name));
+    FlxG.sound.music.play();
+    Conductor.changeBPM(songList.songs[selection].bpm, songList.songs[selection].beatsPerMeasure, songList.songs[selection].stepsPerBeat);
+    spect = new AudioAnalyzer(FlxG.sound.music, 512);
+    analyzerTimeCache = -1;
+    playingInst = true;
+}
+
+function restoreMenuMusicPreview() {
+    FlxG.sound.music.stop();
+    CoolUtil.playMenuSong();
+    FlxG.sound.music.time = Conductor.songPosition = menuSong_Seekhead;
+    Conductor.changeBPM(menuSong_Tempo, menuSong_TimeSig.split(" ")[0], menuSong_TimeSig.split(" ")[1]);
+    spect = new AudioAnalyzer(FlxG.sound.music, 512);
+    analyzerTimeCache = -1;
+    playingInst = false;
+}
 
 var randomPeak = 0;
 var randomDelta = 0;
@@ -564,6 +821,12 @@ function postUpdate(delta) {
         group[i].x -= clefInterp(delta, group[i].x, (selection == i ? (isSelected ? 32 : 64) : (isSelected ? 0 : 16)), 10);
         group[i].alpha = group[i].x / 32;
 
+        var song = songList.songs[i];
+        var locked = song != null && !isSongUnlocked(song.name);
+        var opening = song != null && unlockingSongKey == songKey(song.name) && unlockingTimer > 0;
+        group[i].color = locked ? 0xFF000000 : 0xFFFFFFFF;
+        group[i].border2Color = locked ? 0xFFFFFFFF : 0xFF000000;
+
         groupBacks[i].x = group[i].x - 150;
         groupBacks[i].y = group[i].y;
         groupBacks[i].alpha = (selection == i ? 0 : 0.85) * Math.min(1, group[i].alpha);
@@ -571,10 +834,40 @@ function postUpdate(delta) {
         groupSelectedBacks[i].x = Math.min(-50, group[i].x - 150);
         groupSelectedBacks[i].y = groupBacks[i].y + ((groupBacks[i].height / 2) - (groupSelectedBacks[i].height / 2));
         groupSelectedBacks[i].alpha += ((selection == i ? 1 : 0) - groupSelectedBacks[i].alpha) * Math.min(1, delta * 10);
+
+        if (lockSprites[i] != null) {
+            lockSprites[i].x = group[i].x + Math.min(group[i].width * 0.5, 310) - lockSprites[i].width * 0.5;
+            lockSprites[i].y = group[i].y + group[i].height * 0.5 - lockSprites[i].height * 0.5;
+            lockSprites[i].alpha = Math.min(1, group[i].alpha);
+            lockSprites[i].visible = (locked || opening) && !inCategoryMenu;
+        }
     }
+
+    if (unlockingTimer > 0)
+        unlockingTimer -= delta;
 
     bg.color = (songList.songs[selection] == null ? 0xffffffff : songList.songs[selection].color);
     updateSongBackground();
+    updateGloveHud();
+
+    var curSong = songList.songs[selection];
+    var curLocked = curSong != null && !isSongUnlocked(curSong.name);
+    var curData = curSong == null ? null : getUnlockData(curSong.name);
+    if (priceIcon != null && priceText != null) {
+        priceIcon.visible = curLocked && curData != null && curData.price > 0;
+        priceText.visible = priceIcon.visible;
+        if (priceIcon.visible) {
+            priceIcon.loadGraphic(Paths.image(curData.currency == "purple" ? "main menu/freeplay/glove_lean" : "main menu/freeplay/glove_white"));
+            priceIcon.setGraphicSize(54, 54);
+            priceIcon.updateHitbox();
+            priceIcon.color = 0xFF000000;
+            priceText.text = Std.string(curData.price);
+        }
+    }
+    if (staticOverlay != null) {
+        staticOverlay.visible = curLocked;
+        staticOverlay.alpha = curLocked ? 0.18 + (Math.sin(Conductor.songPosition * 0.08) * 0.04) : 0;
+    }
 
     if (controls.RESET) {
         randomPeak = randomDelta = FlxG.random.int(0 - songList.songs.length - 2, songList.songs.length - 2);
@@ -583,27 +876,10 @@ function postUpdate(delta) {
 
     if (controls.SWITCHMOD && isSelected) {
         if (!playingInst) {
-            menuSong_Seekhead = Conductor.songPosition;
-            menuSong_Tempo = Conductor.bpm;
-            menuSong_TimeSig = Conductor.beatsPerMeasure + " " + Conductor.stepsPerBeat;
-
-            FlxG.sound.music.stop();
-            FlxG.sound.music = FlxG.sound.load(Paths.inst(songList.songs[selection].name));
-            FlxG.sound.music.play();
-            Conductor.changeBPM(songList.songs[selection].bpm, songList.songs[selection].beatsPerMeasure, songList.songs[selection].stepsPerBeat);
-
-            spect = new AudioAnalyzer(FlxG.sound.music, 512);
-            analyzerTimeCache = -1;
+            playSelectedInstPreview();
         } else {
-            FlxG.sound.music.stop();
-            CoolUtil.playMenuSong();
-            FlxG.sound.music.time = Conductor.songPosition = menuSong_Seekhead;
-            Conductor.changeBPM(menuSong_Tempo, menuSong_TimeSig.split(" ")[0], menuSong_TimeSig.split(" ")[1]);
-
-            spect = new AudioAnalyzer(FlxG.sound.music, 512);
-            analyzerTimeCache = -1;
+            restoreMenuMusicPreview();
         }
-        playingInst = !playingInst;
     }
 
     if (controls.ACCEPT) {
@@ -616,6 +892,11 @@ function postUpdate(delta) {
                 isSelected = true;
             }
         } else {
+            if (selectedSongLocked()) {
+                if (!buySelectedSong())
+                    CoolUtil.playMenuSFX(2);
+                return;
+            }
             PlayState.loadSong(songList.songs[selection].name, (songList.songs[selection].difficulties == null ? null : songList.songs[selection].difficulties[selectedDiff]), (modeNum == 1 || modeNum == 3), modeNum > 1);
             FlxG.switchState(new PlayState());
         }
