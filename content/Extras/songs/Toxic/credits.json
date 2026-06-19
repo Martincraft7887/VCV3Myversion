@@ -1,0 +1,15 @@
+{
+	"composer": "Invalid",
+	"charter": "RhysRJJ",
+	"originalComposer": "",
+	"startTime": 1632,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#01910b",
+	"midBorderBot": "#14ff24",
+	"innerBorderTop": "#283629",
+	"innerBorderBot": "#121617"
+}

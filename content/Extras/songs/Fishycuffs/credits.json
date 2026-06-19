@@ -1,0 +1,16 @@
+{
+	"composer": "LordVo##d",
+	"charter": "Official_YS",
+	"originalComposer": "HamillUn",
+	"startTime": 0,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#5c00b3",
+	"midBorderBot": "#21d3ff",
+	"innerBorderTop": "#3f3f3f",
+	"innerBorderBot": "#121617",
+	"mixGap": 1
+}

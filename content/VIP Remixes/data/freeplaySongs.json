@@ -6,58 +6,75 @@
 				{
 					"name": "Boxing Match VIP",
 					"port": "Wiik_2Vip",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"pg price": "5",
+					"next of": "Boxing Match"
 				},
 				{
 					"name": "Immortal VIP",
-					"port": "Wiik_3"
+					"port": "Wiik_3",
+					"pg price": "5",
+					"next of": "Immortal"
 				},
 				{
 					"name": "King Hit VIP",
-					"port": "Wiik_3"
+					"port": "Wiik_3",
+					"pg price": "10",
+					"next of": "King Hit"
 				},
 				{
 					"name": "TKO VIP",
-					"port": "TKO"
+					"port": "TKO",
+					"pg price": "10",
+					"next of": "TKO"
 				},
 				{
 					"name": "Veteran VIP",
 					"port": "Wiik_100",
-					"loadingScreen": "Wiik100"
+					"loadingScreen": "Wiik100",
+					"pg price": "5",
+					"next of": "Veteran"
 				},
 				{
 					"name": "Edgy VIP",
 					"port": "Wiik_100",
-					"loadingScreen": "Wiik100"
+					"loadingScreen": "Wiik100",
+					"pg price": "5",
+					"next of": "Edgy"
 				},
 				{
 					"name": "Burnout VIP",
 					"port": "Wiik_2Vip",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"pg price": "2",
+					"next of": "Burnout"
 				},
 				{
 					"name": "Alter Ego VIP",
 					"port": "Wiik_2Vip",
-					"loadingScreen": "Wiik2"
+					"loadingScreen": "Wiik2",
+					"pg price": "2",
+					"next of": "Alter Ego"
 				},
 				{
 					"name": "Target Practice VIP",
-					"port": "Wiik_1"
-				},
-				{
-					"name": "DETERMINANT VIP",
-					"port": "Greed",
-					"loadingScreen": "Wiik4"
+					"port": "Wiik_1",
+					"pg price": "5",
+					"next of": "Target Practice"
 				},
 				{
 					"name": "Rejected VIP",
 					"port": "Rejected",
-					"loadingScreen": "RejectVIP"
+					"loadingScreen": "RejectVIP",
+					"pg price": "15",
+					"next of": "Rejected"
 				},
 				{
 					"name": "Final Destination VIP",
 					"port": "BG_2",
-					"loadingScreen": "SXMGodLoadScreen"
+					"loadingScreen": "SXXXMGOD",
+					"pg price": "20",
+					"next of": "Final Destination God"
 				}
 			]
 		}

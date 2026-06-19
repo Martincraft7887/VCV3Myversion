@@ -1,0 +1,16 @@
+{
+	"beatsPerMeasure": 4,
+	"opponentModeAllowed": true,
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"bpm": 150,
+	"difficulties": [
+		"Voiid"
+	],
+	"needsVoices": false,
+	"parsedColor": -16717569,
+	"displayName": "Alter Egs",
+	"icon": "lord-icons",
+	"name": "Alter Egs",
+	"color": "#00E8FF"
+}

@@ -1,0 +1,16 @@
+{
+	"composer": "lord pdf file",
+	"charter": "Xyriax, RhysRJJ",
+	"originalComposer": "",
+	"startTime": 19200,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#9f132c",
+	"midBorderBot": "#9c1477",
+	"innerBorderTop": "#3f3f3f",
+	"innerBorderBot": "#121617",
+	"mixGap": 2.5
+}

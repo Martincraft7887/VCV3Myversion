@@ -1,0 +1,16 @@
+{
+	"composer": "prodbyang3l aka Mars",
+	"charter": "Xyriax, RhysRJJ",
+	"originalComposer": "",
+	"startTime": 0,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#8723c2",
+	"midBorderBot": "#3e0073",
+	"innerBorderTop": "#3f3f3f",
+	"innerBorderBot": "#121617",
+	"mixGap": 2
+}

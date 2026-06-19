@@ -1,0 +1,15 @@
+{
+	"composer": "Lird Voiiii",
+	"charter": "RhysRJJ",
+	"originalComposer": "",
+	"startTime": 4200,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#ffcbb3",
+	"midBorderBot": "#bfb900",
+	"innerBorderTop": "#3f3f3f",
+	"innerBorderBot": "#121617"
+}

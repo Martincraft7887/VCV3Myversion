@@ -1,0 +1,16 @@
+{
+	"beatsPerMeasure": 4,
+	"opponentModeAllowed": true,
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"bpm": 185,
+	"difficulties": [
+		"voiid"
+	],
+	"needsVoices": false,
+	"parsedColor": -1,
+	"displayName": "KrakatoaV2",
+	"icon": "Wiik4ZephMatt-icons",
+	"name": "KrakatoaV2",
+	"color": "#FFFFFF"
+}

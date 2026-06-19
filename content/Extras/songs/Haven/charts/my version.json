@@ -1,0 +1,338 @@
+{
+	"events": [
+		{
+			"params": [
+				9,
+				false,
+				true,
+				0
+			],
+			"time": 0,
+			"name": "Set Key Count"
+		}
+	],
+	"codenameChart": true,
+	"stage": "VoiidBoxingRingFar",
+	"scrollSpeed": 2.5,
+	"chartVersion": "1.6.0",
+	"strumLines": [
+		{
+			"scrollSpeed": 2.5,
+			"keyCount": 9,
+			"notes": [
+				{
+					"id": 8,
+					"sLen": 0,
+					"time": 0,
+					"type": 0
+				},
+				{
+					"id": 7,
+					"sLen": 0,
+					"time": 100,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 0,
+					"time": 200,
+					"type": 0
+				},
+				{
+					"id": 3,
+					"sLen": 0,
+					"time": 300,
+					"type": 0
+				},
+				{
+					"id": 5,
+					"sLen": 0,
+					"time": 400,
+					"type": 0
+				},
+				{
+					"id": 6,
+					"sLen": 0,
+					"time": 500,
+					"type": 0
+				},
+				{
+					"id": 7,
+					"sLen": 0,
+					"time": 600,
+					"type": 0
+				},
+				{
+					"id": 3,
+					"sLen": 0,
+					"time": 700,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 0,
+					"time": 800,
+					"type": 0
+				},
+				{
+					"id": 6,
+					"sLen": 0,
+					"time": 900,
+					"type": 0
+				},
+				{
+					"id": 0,
+					"sLen": 0,
+					"time": 1000,
+					"type": 0
+				},
+				{
+					"id": 7,
+					"sLen": 0,
+					"time": 1100,
+					"type": 0
+				},
+				{
+					"id": 8,
+					"sLen": 200,
+					"time": 1200,
+					"type": 0
+				},
+				{
+					"id": 1,
+					"sLen": 0,
+					"time": 1500,
+					"type": 0
+				},
+				{
+					"id": 8,
+					"sLen": 0,
+					"time": 1600,
+					"type": 0
+				},
+				{
+					"id": 3,
+					"sLen": 0,
+					"time": 1700,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 0,
+					"time": 1800,
+					"type": 0
+				},
+				{
+					"id": 6,
+					"sLen": 0,
+					"time": 1900,
+					"type": 0
+				},
+				{
+					"id": 0,
+					"sLen": 0,
+					"time": 2000,
+					"type": 0
+				},
+				{
+					"id": 8,
+					"sLen": 0,
+					"time": 2100,
+					"type": 0
+				},
+				{
+					"id": 4,
+					"sLen": 300,
+					"time": 2400,
+					"type": 0
+				},
+				{
+					"id": 1,
+					"sLen": 300,
+					"time": 2800,
+					"type": 0
+				},
+				{
+					"id": 4,
+					"sLen": 700,
+					"time": 3200,
+					"type": 0
+				},
+				{
+					"id": 0,
+					"sLen": 0,
+					"time": 3400,
+					"type": 1
+				},
+				{
+					"id": 1,
+					"sLen": 0,
+					"time": 3500,
+					"type": 1
+				},
+				{
+					"id": 8,
+					"sLen": 300,
+					"time": 3600,
+					"type": 0
+				},
+				{
+					"id": 0,
+					"sLen": 0,
+					"time": 3700,
+					"type": 1
+				},
+				{
+					"id": 1,
+					"sLen": 0,
+					"time": 3800,
+					"type": 1
+				},
+				{
+					"id": 7,
+					"sLen": 100,
+					"time": 3800,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 0,
+					"time": 4000,
+					"type": 1
+				},
+				{
+					"id": 3,
+					"sLen": 0,
+					"time": 4100,
+					"type": 1
+				},
+				{
+					"id": 2,
+					"sLen": 0,
+					"time": 4300,
+					"type": 1
+				},
+				{
+					"id": 2,
+					"sLen": 0,
+					"time": 4500,
+					"type": 1
+				},
+				{
+					"id": 3,
+					"sLen": 0,
+					"time": 4700,
+					"type": 1
+				},
+				{
+					"id": 0,
+					"sLen": 0,
+					"time": 4800,
+					"type": 1
+				},
+				{
+					"id": 7,
+					"sLen": 100,
+					"time": 4800,
+					"type": 0
+				},
+				{
+					"id": 8,
+					"sLen": 100,
+					"time": 5000,
+					"type": 0
+				},
+				{
+					"id": 4,
+					"sLen": 100,
+					"time": 5200,
+					"type": 0
+				},
+				{
+					"id": 5,
+					"sLen": 100,
+					"time": 5400,
+					"type": 0
+				},
+				{
+					"id": 2,
+					"sLen": 300,
+					"time": 5600,
+					"type": 1
+				},
+				{
+					"id": 7,
+					"sLen": 300,
+					"time": 5600,
+					"type": 0
+				},
+				{
+					"id": 1,
+					"sLen": 300,
+					"time": 6000,
+					"type": 1
+				},
+				{
+					"id": 6,
+					"sLen": 300,
+					"time": 6000,
+					"type": 0
+				}
+			],
+			"visible": true,
+			"strumSpacing": 1,
+			"strumPos": [
+				0,
+				50
+			],
+			"position": "dad",
+			"strumScale": 1,
+			"vocalsSuffix": "",
+			"strumLinePos": 0.25,
+			"type": 0,
+			"characters": [
+				"VoiidShaggyxm",
+				"MW"
+			]
+		},
+		{
+			"scrollSpeed": 2.5,
+			"keyCount": 9,
+			"notes": [],
+			"visible": true,
+			"strumSpacing": 1,
+			"strumPos": [
+				0,
+				50
+			],
+			"position": "boyfriend",
+			"strumScale": 1,
+			"vocalsSuffix": "",
+			"strumLinePos": 0.75,
+			"type": 1,
+			"characters": [
+				"BFVOIID"
+			]
+		},
+		{
+			"keyCount": 4,
+			"strumScale": 1,
+			"position": "girlfriend",
+			"notes": [],
+			"characters": [
+				"Melody"
+			],
+			"type": 2,
+			"scrollSpeed": 2.5,
+			"visible": false,
+			"strumPos": [
+				0,
+				50
+			],
+			"strumLinePos": 0.5
+		}
+	],
+	"noteTypes": [
+		"char[1]"
+	]
+}

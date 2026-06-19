@@ -1,0 +1,17 @@
+{
+	"composer": "DarkM7",
+	"charter": "Sharik,Parko",
+	"originalComposer": "",
+	"startTime": 12000,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#8800ad",
+	"midBorderBot": "#ad001d",
+	"innerBorderTop": "#3f3f3f",
+	"innerBorderBot": "#121617",
+	"sobelStrength": 0.5,
+	"sobelIntensity": 0.6
+}

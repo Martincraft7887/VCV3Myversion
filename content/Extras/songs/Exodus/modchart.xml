@@ -1,0 +1,531 @@
+<Modchart>
+	<Init>
+		<Event type="initShader" name="mirror" shader="MirrorRepeatEffect"/>
+		<Event type="initShader" name="mirrorHUD" shader="MirrorRepeatEffect"/>
+		<Event type="setCameraShader" name="mirror" camera="game"/>
+		<Event type="setCameraShader" name="mirrorHUD" camera="hud"/>
+		<Event type="setShaderProperty" name="mirror" property="zoom" value="0"/>
+		<Event type="setShaderProperty" name="mirrorHUD" property="zoom" value="0"/>
+		<Event type="initShader" name="blur" shader="BlurEffect"/>
+		<Event type="setCameraShader" name="blur" camera="game"/>
+		<Event type="setCameraShader" name="blur" camera="hud"/>
+		<Event type="setShaderProperty" name="blur" property="strength" value="0"/>
+		<Event type="initShader" name="vignette" shader="VignetteEffect"/>
+		<Event type="setCameraShader" name="vignette" camera="hud"/>
+		<Event type="setCameraShader" name="vignette" camera="game"/>
+		<Event type="setShaderProperty" name="vignette" property="strength" value="1"/>
+		<Event type="setShaderProperty" name="vignette" property="size" value="1"/>
+		<Event type="initShader" name="smoke" shader="PerlinSmokeEffect"/>
+		<Event type="setCameraShader" name="smoke" camera="game"/>
+		<Event type="initShader" name="grey" shader="GreyscaleEffect"/>
+	</Init>
+	<Events>
+		<Event step="0" time="62" value="0" property="angle" ease="quadIn" type="tweenShaderProperty" startValue="-7" name="mirror"/>
+		<Event step="0" time="60" value="1" property="zoom" ease="quadOut" type="tweenShaderProperty" startValue="1.5" name="mirror"/>
+		<Event step="0" time="0" value="0" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirrorHUD"/>
+		<Event step="0" time="62" value="2" property="strength" ease="quadIn" type="tweenShaderProperty" startValue="0" name="vignette"/>
+		<Event step="0" time="62" value="0" property="x" ease="quadIn" type="tweenShaderProperty" startValue="-0.2" name="mirror"/>
+		<Event step="0" time="62" value="0.5" property="size" ease="quadOut" type="tweenShaderProperty" startValue="0.8" name="vignette"/>
+		<Event step="60" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="62" time="4" value="9" property="strength" ease="expoOut" type="tweenShaderProperty" startValue="0.1" name="vignette"/>
+		<Event step="62" time="3" value="0.3" property="smokeStrength" ease="smootherStepInOut" type="tweenShaderProperty" startValue="1" name="smoke"/>
+		<Event step="62" time="4" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-7" name="mirror"/>
+		<Event step="62" time="4" value="0.2" property="size" ease="circOut" type="tweenShaderProperty" startValue="0.5" name="vignette"/>
+		<Event step="62" time="2" value="1" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="0" name="mirrorHUD"/>
+		<Event step="64" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="68" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="72" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="76" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="80" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="84" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="88" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="92" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="96" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="100" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="104" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="110" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="112" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="114" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="116" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="118" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="120" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="122" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="124" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="126" time="2" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="128" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="132" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="136" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="140" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="144" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="148" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="152" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="156" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="160" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="164" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="168" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="172" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="176" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="180" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="184" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="188" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="192" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="196" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="200" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="204" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="208" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="212" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="216" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="222" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="224" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="226" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="228" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="230" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="232" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="234" time="2" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="236" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="238" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="240" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="242" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="244" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="246" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="248" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="250" time="2" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="260" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="269" type="addHUDZoom" value="0.01"/>
+		<Event step="277" type="addHUDZoom" value="0.01"/>
+		<Event step="281" type="addHUDZoom" value="0.01"/>
+		<Event step="291" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="293" type="addHUDZoom" value="0.01"/>
+		<Event step="293" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="293" type="addCameraZoom" value="0.01"/>
+		<Event step="295" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="297" type="addHUDZoom" value="0.01"/>
+		<Event step="297" type="addCameraZoom" value="0.01"/>
+		<Event step="297" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="299" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="301" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="301" type="addCameraZoom" value="0.01"/>
+		<Event step="303" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="305" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="305" type="addCameraZoom" value="0.01"/>
+		<Event step="307" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="309" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="309" type="addCameraZoom" value="0.01"/>
+		<Event step="311" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="313" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="313" type="addCameraZoom" value="0.01"/>
+		<Event step="315" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="317" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="317" type="addCameraZoom" value="0.01"/>
+		<Event step="319" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="321" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="321" type="addCameraZoom" value="0.01"/>
+		<Event step="323" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="325" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="325" type="addCameraZoom" value="0.01"/>
+		<Event step="327" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="329" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="329" type="addCameraZoom" value="0.01"/>
+		<Event step="331" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="333" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="333" type="addCameraZoom" value="0.01"/>
+		<Event step="335" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="337" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="337" type="addCameraZoom" value="0.01"/>
+		<Event step="339" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="341" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="341" type="addCameraZoom" value="0.01"/>
+		<Event step="343" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="345" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="345" type="addCameraZoom" value="0.01"/>
+		<Event step="347" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="349" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="349" type="addCameraZoom" value="0.01"/>
+		<Event step="351" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="353" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="353" type="addCameraZoom" value="0.01"/>
+		<Event step="355" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="357" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="357" type="addCameraZoom" value="0.01"/>
+		<Event step="359" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="361" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="361" type="addCameraZoom" value="0.01"/>
+		<Event step="363" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="365" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="365" type="addCameraZoom" value="0.01"/>
+		<Event step="367" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="369" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="369" type="addCameraZoom" value="0.01"/>
+		<Event step="371" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="373" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="373" type="addCameraZoom" value="0.01"/>
+		<Event step="375" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="377" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="377" type="addCameraZoom" value="0.01"/>
+		<Event step="379" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="381" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="381" type="addCameraZoom" value="0.01"/>
+		<Event step="383" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="385" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="385" type="addCameraZoom" value="0.01"/>
+		<Event step="387" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="389" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="389" type="addCameraZoom" value="0.01"/>
+		<Event step="391" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="393" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="393" type="addCameraZoom" value="0.01"/>
+		<Event step="395" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="397" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="397" type="addCameraZoom" value="0.01"/>
+		<Event step="399" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="401" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="401" type="addCameraZoom" value="0.01"/>
+		<Event step="403" type="addHUDZoom" value="0.01"/>
+		<Event step="403" time="2" value="0.9" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="417" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="421" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="425" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="429" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="433" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="437" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="441" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="445" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="449" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="453" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="457" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="461" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="465" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="469" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="473" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="477" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="481" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="485" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="489" time="4" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="493" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="497" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="501" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="509" type="addHUDZoom" value="0.01"/>
+		<Event step="512" time="2" value="0.95" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="513" type="addHUDZoom" value="0.01"/>
+		<Event step="513" type="addCameraZoom" value="0.02"/>
+		<Event step="517" type="addHUDZoom" value="0.01"/>
+		<Event step="517" type="addCameraZoom" value="0.02"/>
+		<Event step="521" type="addHUDZoom" value="0.01"/>
+		<Event step="521" type="addCameraZoom" value="0.02"/>
+		<Event step="525" type="addHUDZoom" value="0.01"/>
+		<Event step="525" type="addCameraZoom" value="0.02"/>
+		<Event step="529" type="addHUDZoom" value="0.01"/>
+		<Event step="529" type="addCameraZoom" value="0.02"/>
+		<Event step="531" type="addHUDZoom" value="0.01"/>
+		<Event step="531" type="addCameraZoom" value="0.02"/>
+		<Event step="533" type="addHUDZoom" value="0.01"/>
+		<Event step="533" type="addCameraZoom" value="0.02"/>
+		<Event step="535" type="addHUDZoom" value="0.01"/>
+		<Event step="535" type="addCameraZoom" value="0.02"/>
+		<Event step="537" type="addHUDZoom" value="0.01"/>
+		<Event step="537" type="addCameraZoom" value="0.02"/>
+		<Event step="538" type="addHUDZoom" value="0.01"/>
+		<Event step="538" type="addCameraZoom" value="0.02"/>
+		<Event step="539" type="addHUDZoom" value="0.01"/>
+		<Event step="539" type="addCameraZoom" value="0.02"/>
+		<Event step="540" type="addHUDZoom" value="0.01"/>
+		<Event step="540" type="addCameraZoom" value="0.02"/>
+		<Event step="541" type="addHUDZoom" value="0.01"/>
+		<Event step="541" type="addCameraZoom" value="0.02"/>
+		<Event step="542" type="addCameraZoom" value="0.02"/>
+		<Event step="542" type="addHUDZoom" value="0.01"/>
+		<Event step="543" type="addHUDZoom" value="0.01"/>
+		<Event step="543" type="addCameraZoom" value="0.02"/>
+		<Event step="544" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.95" name="mirror"/>
+		<Event step="550" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="554" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="558" time="3" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="561" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="566" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="570" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="574" time="3" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="577" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="582" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="586" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="590" time="3" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="593" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="598" time="4" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="602" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="607" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="609" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="611" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="613" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="615" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="617" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="619" time="2" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="621" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="623" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="625" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="627" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="629" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="631" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="633" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="635" time="2" value="0.9" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="637" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="639" time="2" value="0.9" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="641" type="addHUDZoom" value="0.01"/>
+		<Event step="641" type="addCameraZoom" value="0.02"/>
+		<Event step="643" type="addHUDZoom" value="0.01"/>
+		<Event step="643" type="addCameraZoom" value="0.02"/>
+		<Event step="645" type="addHUDZoom" value="0.01"/>
+		<Event step="645" type="addCameraZoom" value="0.02"/>
+		<Event step="647" type="addCameraZoom" value="0.02"/>
+		<Event step="647" type="addHUDZoom" value="0.01"/>
+		<Event step="649" type="addHUDZoom" value="0.01"/>
+		<Event step="649" type="addCameraZoom" value="0.02"/>
+		<Event step="651" type="addHUDZoom" value="0.01"/>
+		<Event step="651" type="addCameraZoom" value="0.02"/>
+		<Event step="653" type="addHUDZoom" value="0.01"/>
+		<Event step="653" type="addCameraZoom" value="0.02"/>
+		<Event step="655" type="addCameraZoom" value="0.02"/>
+		<Event step="656" type="addHUDZoom" value="0.01"/>
+		<Event step="656" time="16" value="1.1" property="zoom" ease="backOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="656" time="4" value="0.01" property="y" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="656" type="addCameraZoom" value="0.02"/>
+		<Event step="656" time="4" value="-0.02" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="657" type="addCameraZoom" value="0.02"/>
+		<Event step="658" type="addHUDZoom" value="0.01"/>
+		<Event step="658" type="addCameraZoom" value="0.02"/>
+		<Event step="659" type="addCameraZoom" value="0.02"/>
+		<Event step="660" type="addHUDZoom" value="0.01"/>
+		<Event step="660" type="addCameraZoom" value="0.02"/>
+		<Event step="661" type="addCameraZoom" value="0.02"/>
+		<Event step="662" type="addHUDZoom" value="0.01"/>
+		<Event step="662" type="addCameraZoom" value="0.02"/>
+		<Event step="663" type="addCameraZoom" value="0.02"/>
+		<Event step="664" type="addHUDZoom" value="0.01"/>
+		<Event step="664" type="addCameraZoom" value="0.02"/>
+		<Event step="665" type="addCameraZoom" value="0.02"/>
+		<Event step="666" type="addHUDZoom" value="0.01"/>
+		<Event step="666" type="addCameraZoom" value="0.02"/>
+		<Event step="667" type="addCameraZoom" value="0.02"/>
+		<Event step="668" type="addHUDZoom" value="0.01"/>
+		<Event step="668" type="addCameraZoom" value="0.02"/>
+		<Event step="669" type="addCameraZoom" value="0.02"/>
+		<Event step="670" type="addHUDZoom" value="0.01"/>
+		<Event step="670" type="addCameraZoom" value="0.02"/>
+		<Event step="671" type="addCameraZoom" value="0.02"/>
+		<Event step="672" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1.1" name="mirror"/>
+		<Event step="672" time="4" value="0.02" property="hue" ease="circOut" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="672" time="4" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="0.01" name="mirror"/>
+		<Event step="672" time="4" value="0" property="x" ease="circOut" type="tweenShaderProperty" startValue="-0.02" name="mirror"/>
+		<Event step="675" type="addCameraZoom" value="0.02"/>
+		<Event step="678" type="addCameraZoom" value="0.02"/>
+		<Event step="682" type="addCameraZoom" value="0.02"/>
+		<Event step="688" type="addCameraZoom" value="0.02"/>
+		<Event step="691" type="addCameraZoom" value="0.02"/>
+		<Event step="692" type="addCameraZoom" value="0.02"/>
+		<Event step="694" type="addCameraZoom" value="0.02"/>
+		<Event step="698" type="addCameraZoom" value="0.02"/>
+		<Event step="702" type="addCameraZoom" value="0.02"/>
+		<Event step="704" type="addCameraZoom" value="0.02"/>
+		<Event step="707" type="addCameraZoom" value="0.02"/>
+		<Event step="708" type="addCameraZoom" value="0.02"/>
+		<Event step="710" type="addCameraZoom" value="0.02"/>
+		<Event step="714" type="addCameraZoom" value="0.02"/>
+		<Event step="718" type="addCameraZoom" value="0.02"/>
+		<Event step="720" type="addCameraZoom" value="0.02"/>
+		<Event step="723" type="addCameraZoom" value="0.02"/>
+		<Event step="724" type="addCameraZoom" value="0.02"/>
+		<Event step="726" type="addCameraZoom" value="0.02"/>
+		<Event step="730" type="addCameraZoom" value="0.02"/>
+		<Event step="734" type="addCameraZoom" value="0.02"/>
+		<Event step="736" type="addCameraZoom" value="0.02"/>
+		<Event step="739" type="addCameraZoom" value="0.02"/>
+		<Event step="740" type="addCameraZoom" value="0.02"/>
+		<Event step="742" type="addCameraZoom" value="0.02"/>
+		<Event step="746" type="addCameraZoom" value="0.02"/>
+		<Event step="750" type="addCameraZoom" value="0.02"/>
+		<Event step="752" type="addCameraZoom" value="0.02"/>
+		<Event step="755" type="addCameraZoom" value="0.02"/>
+		<Event step="756" type="addCameraZoom" value="0.02"/>
+		<Event step="758" type="addCameraZoom" value="0.02"/>
+		<Event step="762" type="addCameraZoom" value="0.02"/>
+		<Event step="766" type="addCameraZoom" value="0.02"/>
+		<Event step="768" type="addCameraZoom" value="0.02"/>
+		<Event step="771" type="addCameraZoom" value="0.02"/>
+		<Event step="772" type="addCameraZoom" value="0.02"/>
+		<Event step="774" type="addCameraZoom" value="0.02"/>
+		<Event step="778" type="addCameraZoom" value="0.02"/>
+		<Event step="782" type="addCameraZoom" value="0.02"/>
+		<Event step="784" type="addCameraZoom" value="0.02"/>
+		<Event step="788" type="addCameraZoom" value="0.02"/>
+		<Event step="792" type="addCameraZoom" value="0.02"/>
+		<Event step="794" type="addCameraZoom" value="0.02"/>
+		<Event step="796" type="addHUDZoom" value="0.01"/>
+		<Event step="796" type="addCameraZoom" value="0.02"/>
+		<Event step="796" time="4" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="3" name="mirror"/>
+		<Event step="797" type="addCameraZoom" value="0.02"/>
+		<Event step="798" type="addCameraZoom" value="0.02"/>
+		<Event step="799" type="addCameraZoom" value="0.02"/>
+		<Event step="800" time="4" value="-0.08" property="x" ease="circOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="800" time="4" value="0.9" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="803" type="addCameraZoom" value="0.02"/>
+		<Event step="803" type="addHUDZoom" value="0.01"/>
+		<Event step="806" type="addCameraZoom" value="0.02"/>
+		<Event step="806" type="addHUDZoom" value="0.01"/>
+		<Event step="810" type="addHUDZoom" value="0.01"/>
+		<Event step="810" type="addCameraZoom" value="0.02"/>
+		<Event step="816" type="addHUDZoom" value="0.01"/>
+		<Event step="816" type="addCameraZoom" value="0.02"/>
+		<Event step="819" type="addHUDZoom" value="0.01"/>
+		<Event step="819" type="addCameraZoom" value="0.02"/>
+		<Event step="820" type="addHUDZoom" value="0.01"/>
+		<Event step="820" type="addCameraZoom" value="0.02"/>
+		<Event step="822" type="addHUDZoom" value="0.01"/>
+		<Event step="822" type="addCameraZoom" value="0.02"/>
+		<Event step="826" type="addHUDZoom" value="0.01"/>
+		<Event step="826" type="addCameraZoom" value="0.02"/>
+		<Event step="830" type="addHUDZoom" value="0.01"/>
+		<Event step="830" type="addCameraZoom" value="0.02"/>
+		<Event step="832" type="addHUDZoom" value="0.01"/>
+		<Event step="832" type="addCameraZoom" value="0.02"/>
+		<Event step="834" time="2" value="0.85" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="835" type="addHUDZoom" value="0.01"/>
+		<Event step="835" type="addCameraZoom" value="0.02"/>
+		<Event step="836" type="addCameraZoom" value="0.02"/>
+		<Event step="836" time="2" value="0.9" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.85" name="mirror"/>
+		<Event step="836" type="addHUDZoom" value="0.01"/>
+		<Event step="838" type="addHUDZoom" value="0.01"/>
+		<Event step="838" type="addCameraZoom" value="0.02"/>
+		<Event step="842" type="addHUDZoom" value="0.01"/>
+		<Event step="842" type="addCameraZoom" value="0.02"/>
+		<Event step="846" type="addHUDZoom" value="0.01"/>
+		<Event step="846" type="addCameraZoom" value="0.02"/>
+		<Event step="848" type="addHUDZoom" value="0.01"/>
+		<Event step="848" type="addCameraZoom" value="0.02"/>
+		<Event step="848" time="2" value="0.8" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="851" type="addHUDZoom" value="0.01"/>
+		<Event step="851" type="addCameraZoom" value="0.02"/>
+		<Event step="852" type="addHUDZoom" value="0.01"/>
+		<Event step="852" type="addCameraZoom" value="0.02"/>
+		<Event step="854" type="addHUDZoom" value="0.01"/>
+		<Event step="854" type="addCameraZoom" value="0.02"/>
+		<Event step="856" time="2" value="0.84" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="0.8" name="mirror"/>
+		<Event step="858" type="addHUDZoom" value="0.01"/>
+		<Event step="858" type="addCameraZoom" value="0.02"/>
+		<Event step="858" time="1" value="0.88" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.84" name="mirror"/>
+		<Event step="859" time="1" value="0.92" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.88" name="mirror"/>
+		<Event step="860" time="2" value="0.96" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.92" name="mirror"/>
+		<Event step="860" type="addHUDZoom" value="0.01"/>
+		<Event step="861" time="3" value="0" property="x" ease="circIn" type="tweenShaderProperty" startValue="-0.08" name="mirror"/>
+		<Event step="862" type="addHUDZoom" value="0.01"/>
+		<Event step="862" type="addCameraZoom" value="0.02"/>
+		<Event step="862" time="2" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.96" name="mirror"/>
+		<Event step="863" type="addHUDZoom" value="0.01"/>
+		<Event step="864" type="addHUDZoom" value="0.01"/>
+		<Event step="864" type="addCameraZoom" value="0.02"/>
+		<Event step="867" type="addHUDZoom" value="0.01"/>
+		<Event step="867" type="addCameraZoom" value="0.02"/>
+		<Event step="868" type="addHUDZoom" value="0.01"/>
+		<Event step="868" type="addCameraZoom" value="0.02"/>
+		<Event step="870" type="addHUDZoom" value="0.01"/>
+		<Event step="870" type="addCameraZoom" value="0.02"/>
+		<Event step="874" type="addHUDZoom" value="0.01"/>
+		<Event step="874" type="addCameraZoom" value="0.02"/>
+		<Event step="878" type="addHUDZoom" value="0.01"/>
+		<Event step="878" type="addCameraZoom" value="0.02"/>
+		<Event step="880" type="addHUDZoom" value="0.01"/>
+		<Event step="880" type="addCameraZoom" value="0.02"/>
+		<Event step="883" type="addCameraZoom" value="0.02"/>
+		<Event step="883" type="addHUDZoom" value="0.01"/>
+		<Event step="884" type="addHUDZoom" value="0.01"/>
+		<Event step="884" type="addCameraZoom" value="0.02"/>
+		<Event step="886" type="addHUDZoom" value="0.01"/>
+		<Event step="886" type="addCameraZoom" value="0.02"/>
+		<Event step="890" type="addCameraZoom" value="0.02"/>
+		<Event step="890" type="addHUDZoom" value="0.01"/>
+		<Event step="894" type="addHUDZoom" value="0.01"/>
+		<Event step="894" type="addCameraZoom" value="0.02"/>
+		<Event step="896" type="addHUDZoom" value="0.01"/>
+		<Event step="896" type="addCameraZoom" value="0.02"/>
+		<Event step="899" type="addHUDZoom" value="0.01"/>
+		<Event step="899" type="addCameraZoom" value="0.02"/>
+		<Event step="900" type="addHUDZoom" value="0.01"/>
+		<Event step="900" type="addCameraZoom" value="0.02"/>
+		<Event step="902" type="addHUDZoom" value="0.01"/>
+		<Event step="902" type="addCameraZoom" value="0.02"/>
+		<Event step="906" type="addHUDZoom" value="0.01"/>
+		<Event step="906" type="addCameraZoom" value="0.02"/>
+		<Event step="910" type="addHUDZoom" value="0.01"/>
+		<Event step="910" type="addCameraZoom" value="0.02"/>
+		<Event step="912" type="addHUDZoom" value="0.01"/>
+		<Event step="912" type="addCameraZoom" value="0.02"/>
+		<Event step="914" type="addHUDZoom" value="0.01"/>
+		<Event step="914" type="addCameraZoom" value="0.02"/>
+		<Event step="916" type="addHUDZoom" value="0.01"/>
+		<Event step="916" type="addCameraZoom" value="0.02"/>
+		<Event step="918" type="addCameraZoom" value="0.02"/>
+		<Event step="918" type="addHUDZoom" value="0.01"/>
+		<Event step="920" type="addCameraZoom" value="0.02"/>
+		<Event step="921" type="addCameraZoom" value="0.02"/>
+		<Event step="922" type="addCameraZoom" value="0.02"/>
+		<Event step="923" type="addCameraZoom" value="0.02"/>
+		<Event step="924" type="addCameraZoom" value="0.02"/>
+		<Event step="925" type="addCameraZoom" value="0.02"/>
+		<Event step="926" type="addCameraZoom" value="0.02"/>
+		<Event step="927" type="addCameraZoom" value="0.02"/>
+		<Event step="927" time="16" value="0" property="hue" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0.02" name="colorswap"/>
+		<Event step="928" type="addCameraZoom" value="0.02"/>
+		<Event step="932" type="addCameraZoom" value="0.02"/>
+		<Event step="935" type="addCameraZoom" value="0.02"/>
+		<Event step="939" type="addCameraZoom" value="0.02"/>
+		<Event step="946" type="addCameraZoom" value="0.02"/>
+		<Event step="949" type="addCameraZoom" value="0.02"/>
+		<Event step="953" type="addCameraZoom" value="0.02"/>
+		<Event step="957" type="addCameraZoom" value="0.02"/>
+		<Event step="964" type="addCameraZoom" value="0.02"/>
+		<Event step="968" type="addCameraZoom" value="0.02"/>
+		<Event step="975" type="addCameraZoom" value="0.02"/>
+		<Event step="981" type="addCameraZoom" value="0.02"/>
+		<Event step="985" type="addCameraZoom" value="0.02"/>
+		<Event step="992" type="addCameraZoom" value="0.02"/>
+		<Event step="999" type="addCameraZoom" value="0.02"/>
+		<Event step="1005" type="addCameraZoom" value="0.02"/>
+		<Event step="1016" type="addCameraZoom" value="0.02"/>
+		<Event step="1033" time="2" value="0.96" property="zoom" ease="smootherStepOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="1034" type="addHUDZoom" value="0.01"/>
+		<Event step="1034" type="addCameraZoom" value="0.02"/>
+		<Event step="1038" type="addHUDZoom" value="0.01"/>
+		<Event step="1038" type="addCameraZoom" value="0.02"/>
+		<Event step="1043" type="addHUDZoom" value="0.01"/>
+		<Event step="1043" type="addCameraZoom" value="0.02"/>
+		<Event step="1047" type="addHUDZoom" value="0.01"/>
+		<Event step="1047" type="addCameraZoom" value="0.02"/>
+		<Event step="1051" type="addHUDZoom" value="0.01"/>
+		<Event step="1051" type="addCameraZoom" value="0.02"/>
+		<Event step="1054" type="addHUDZoom" value="0.01"/>
+		<Event step="1054" type="addCameraZoom" value="0.02"/>
+		<Event step="1056" type="addHUDZoom" value="0.01"/>
+		<Event step="1056" type="addCameraZoom" value="0.02"/>
+		<Event step="1058" type="addHUDZoom" value="0.01"/>
+		<Event step="1058" type="addCameraZoom" value="0.02"/>
+		<Event step="1060" type="addHUDZoom" value="0.01"/>
+		<Event step="1060" type="addCameraZoom" value="0.02"/>
+		<Event step="1061" type="addHUDZoom" value="0.01"/>
+		<Event step="1061" type="addCameraZoom" value="0.02"/>
+		<Event step="1062" type="addHUDZoom" value="0.01"/>
+		<Event step="1062" type="addCameraZoom" value="0.02"/>
+		<Event step="1063" type="addHUDZoom" value="0.01"/>
+		<Event step="1063" type="addCameraZoom" value="0.02"/>
+		<Event step="1064" type="addCameraZoom" value="0.02"/>
+		<Event step="1064" type="addHUDZoom" value="0.01"/>
+		<Event step="1065" type="addHUDZoom" value="0.01"/>
+		<Event step="1065" type="addCameraZoom" value="0.02"/>
+		<Event step="1066" type="addHUDZoom" value="0.01"/>
+		<Event step="1066" type="addCameraZoom" value="0.02"/>
+		<Event step="1067" type="addHUDZoom" value="0.01"/>
+		<Event step="1067" type="addCameraZoom" value="0.02"/>
+		<Event step="1068" time="4" value="0.3" property="size" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="vignette"/>
+		<Event step="1068" time="12" value="0.1" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="mirrorHUD"/>
+		<Event step="1068" time="4" value="12" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="15" name="vignette"/>
+		<Event step="1068" time="8" value="1.3" property="zoom" ease="smootherStepInOut" type="tweenShaderProperty" startValue="0.96" name="mirror"/>
+		<Event step="1069" time="2" value="-90" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="1071" time="3" value="-360" property="angle" ease="smootherStepInOut" type="tweenShaderProperty" startValue="-90" name="mirror"/>
+	</Events>
+</Modchart>

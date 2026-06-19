@@ -1,0 +1,16 @@
+{
+	"composer": "voiid",
+	"charter": "Xyriax, RhysRJJ",
+	"originalComposer": "",
+	"startTime": 0,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#8223fa",
+	"midBorderBot": "#391265",
+	"innerBorderTop": "#37224a",
+	"innerBorderBot": "#121617",
+	"mixGap": 2.5
+}

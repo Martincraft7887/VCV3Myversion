@@ -1,0 +1,20 @@
+{
+	"composer": "DreDreHarp",
+	"charter": "Sharik,Park",
+	"originalComposer": "Spurk",
+	"startTime": 6857.142,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#8c00de",
+	"midBorderBot": "#510080",
+	"innerBorderTop": "#3f3f3f",
+	"innerBorderBot": "#121617",
+	"mixGap": 5.5,
+
+	"sobelStrength": 0.6,
+	"sobelIntensity": 0.5,
+	"outerBorderSize": 10
+}

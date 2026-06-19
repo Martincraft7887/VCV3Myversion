@@ -1,0 +1,16 @@
+{
+	"beatsPerMeasure": 4,
+	"opponentModeAllowed": true,
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"bpm": 220,
+	"difficulties": [
+		"canon"
+	],
+	"needsVoices": true,
+	"parsedColor": -1,
+	"displayName": "Super Saiyan",
+	"icon": "VoiidShaggy-icons",
+	"name": "Super Saiyan",
+	"color": "#FFFFFF"
+}

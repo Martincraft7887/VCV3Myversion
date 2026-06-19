@@ -1,0 +1,16 @@
+{
+	"composer": "joa1597 (Inst), lord (Voices)",
+	"charter": "Xyriax, RhysRJJ",
+	"originalComposer": "",
+	"startTime": 0,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#151118",
+	"outerBorderBot": "#392840",
+	"midBorderTop": "#d4c4d5",
+	"midBorderBot": "#392840",
+	"innerBorderTop": "#392840",
+	"innerBorderBot": "#392840",
+	"mixGap": 2.5
+}

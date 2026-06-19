@@ -1,0 +1,838 @@
+<Modchart noteModchart="true">
+	<Init>
+		<Event type="initShader" shader="GreyscaleEffect" name="greyscale"/>
+		<Event type="setCameraShader" camera="game" name="greyscale"/>
+		<Event type="setCameraShader" camera="hud" name="greyscale"/>
+		<Event type="setShaderProperty" value="0" property="strength" name="greyscale"/>
+		<Event type="initShader" shader="MosaicEffect" name="Mosaic"/>
+		<Event type="setCameraShader" camera="game" name="Mosaic"/>
+		<Event type="setCameraShader" camera="hud" name="Mosaic"/>
+		<Event type="initShader" shader="ChromAbEffect" name="ca"/>
+		<Event type="setCameraShader" camera="game" name="ca"/>
+		<Event type="setCameraShader" camera="hud" name="ca"/>
+		<Event type="setShaderProperty" value="0" property="strength" name="ca"/>
+		<Event type="initModifier" code="scaleX += noteScale_value; scaleY += noteScale_value;" value="0" name="noteScale"/>
+		<Event type="initShader" name="bars" shader="BarsEffect"/>
+		<Event type="setCameraShader" name="bars" camera="game"/>
+		<Event type="setShaderProperty" name="bars" property="effect" value="0.6"/>
+		<Event type="initShader" shader="BloomEffect" name="bloom"/>
+		<Event type="setCameraShader" camera="game" name="bloom"/>
+		<Event type="setCameraShader" camera="hud" name="bloom"/>
+		<Event type="setShaderProperty" value="-1" property="effect" name="bloom"/>
+		<Event type="initShader" name="mirror" shader="MirrorRepeatWarpEffect"/>
+		<Event type="setCameraShader" name="mirror" camera="game"/>
+		<Event type="setShaderProperty" name="mirror" property="zoom" value="0.5"/>
+		<Event type="setShaderProperty" name="mirror" property="angle" value="0"/>
+		<Event type="initShader" name="mirrorHud" shader="MirrorRepeatWarpEffect"/>
+		<Event type="setCameraShader" name="mirrorHud" camera="hud"/>
+		<Event type="setShaderProperty" name="mirrorHud" property="zoom" value="1"/>
+		<Event type="setShaderProperty" name="mirrorHud" property="angle" value="0"/>
+		<Event type="initShader" name="mirrorOther" shader="MirrorRepeatWarpEffect"/>
+		<Event type="setCameraShader" name="mirrorOther" camera="game"/>
+		<Event type="setShaderProperty" name="mirrorOther" property="zoom" value="1"/>
+		<Event type="setShaderProperty" name="mirrorOther" property="angle" value="0"/>
+		<Event type="initShader" shader="PerlinSmokeEffect" name="smoke"/>
+		<Event type="setCameraShader" camera="game" name="smoke"/>
+		<Event type="setShaderProperty" value="0" property="waveStrength" name="smoke"/>
+		<Event type="initModifier" code="x += x_value;" name="x" value="0"/>
+		<Event type="initModifier" code="y += y_value;" name="y" value="0"/>
+		<Event type="initModifier" code="z += z_value;" name="z" value="0"/>
+		<Event strumLineID="0" code="x += xO_value;" value="0" type="initModifier" name="xO"/>
+		<Event strumLineID="0" code="y += yO_value;" value="0" type="initModifier" name="yO"/>
+		<Event strumLineID="0" code="z += zO_value;" value="0" type="initModifier" name="zO"/>
+		<Event strumLineID="0" code="a += alphaO_value;" value="-1" type="initModifier" name="alphaO"/>
+		<Event strumLineID="1" code="x += xP_value;" value="0" type="initModifier" name="xP"/>
+		<Event strumLineID="1" code="y += yP_value;" value="0" type="initModifier" name="yP"/>
+		<Event strumLineID="1" code="z += zP_value;" value="0" type="initModifier" name="zP"/>
+		<Event strumLineID="1" code="a += alphaP_value;" value="-1" type="initModifier" name="alphaP"/>
+		<Event strumLineID="0" code="angleX += angleXO_value;" value="0" type="initModifier" name="angleXO"/>
+		<Event strumLineID="0" code="angleY += angleYO_value;" value="0" type="initModifier" name="angleYO"/>
+		<Event strumLineID="0" code="angleZ += angleZO_value;" value="0" type="initModifier" name="angleZO"/>
+		<Event strumLineID="1" code="angleX += angleXP_value;" value="0" type="initModifier" name="angleXP"/>
+		<Event strumLineID="1" code="angleY += angleYP_value;" value="0" type="initModifier" name="angleYP"/>
+		<Event strumLineID="1" code="angleZ += angleZP_value;" value="0" type="initModifier" name="angleZP"/>
+		<Event strumID="0" strumLineID="0" code="y += yOleft_value;" value="0" type="initModifier" name="yOleft"/>
+		<Event strumID="1" strumLineID="0" code="y += yOdown_value;" value="0" type="initModifier" name="yOdown"/>
+		<Event strumID="2" strumLineID="0" code="y += yOup_value;" value="0" type="initModifier" name="yOup"/>
+		<Event strumID="3" strumLineID="0" code="y += yOright_value;" value="0" type="initModifier" name="yOright"/>
+		<Event strumID="0" strumLineID="1" code="y += yPleft_value;" value="0" type="initModifier" name="yPleft"/>
+		<Event strumID="1" strumLineID="1" code="y += yPdown_value;" value="0" type="initModifier" name="yPdown"/>
+		<Event strumID="2" strumLineID="1" code="y += yPup_value;" value="0" type="initModifier" name="yPup"/>
+		<Event strumID="3" strumLineID="1" code="y += yPright_value;" value="0" type="initModifier" name="yPright"/>
+		<Event type="initShader" name="wiggle" shader="WiggleEffect"/>
+		<Event type="setCameraShader" name="wiggle" camera="game"/>
+		<Event type="setCameraShader" name="wiggle" camera="hud"/>
+		<Event type="setShaderProperty" name="wiggle" property="waveSpeed" value="0"/>
+		<Event type="setShaderProperty" name="wiggle" property="waveFrequency" value="1"/>
+		<Event type="setShaderProperty" name="wiggle" property="waveAmplitude" value="0"/>
+		<Event type="initShader" name="mirror" shader="PerlinMirrorRepeatEffect"/>
+		<Event type="setCameraShader" name="mirror" camera="game"/>
+		<Event type="setCameraShader" name="mirror" camera="hud"/>
+		<Event type="setShaderProperty" name="mirror" property="zoom" value="1"/>
+		<Event type="setShaderProperty" name="mirror" property="xRange" value="0"/>
+		<Event type="setShaderProperty" name="mirror" property="yRange" value="0"/>
+		<Event type="setShaderProperty" name="mirror" property="angleRange" value="0"/>
+		<Event type="setShaderProperty" name="mirror" property="speed" value="0"/>
+	</Init>
+	<Events>
+		<Event step="0" time="4" value="0.5" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="0.5" name="mirror"/>
+		<Event step="0" time="8" value="-50" ease="sineOut" type="tweenModifierValue" startValue="0" name="y"/>
+		<Event step="0" time="0" value="0" property="smokeStrength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="smoke"/>
+		<Event step="0" time="12" value="0.1" property="effect" ease="smootherStepOut" type="tweenShaderProperty" startValue="0.6" name="bars"/>
+		<Event step="0" time="8" value="0" property="brightness" ease="linear" type="tweenShaderProperty" startValue="0.5" name="bloom"/>
+		<Event step="0" time="4" value="2" property="angleRange" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="0" time="4" value="0.5" property="speed" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="0" time="4" value="0.01" property="yRange" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="0" time="4" value="0.01" property="xRange" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="8" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="8" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="9" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="9" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="12" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="13" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="16" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="17" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="26" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="26" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="27" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="27" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="28" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="29" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="30" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="31" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="32" time="1" value="0.5" property="brightness" ease="expoOut" type="tweenShaderProperty" startValue="0" name="bloom"/>
+		<Event step="33" time="8" value="0" property="brightness" ease="linear" type="tweenShaderProperty" startValue="0.5" name="bloom"/>
+		<Event step="40" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="40" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="41" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="41" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="44" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="45" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="48" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="49" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="58" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="58" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="59" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="59" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="60" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="61" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="62" time="0" value="0" ease="cubeInOut" type="tweenModifierValue" startValue="-1" name="alphaO"/>
+		<Event step="62" time="1" value="0" property="brightness" ease="linear" type="tweenShaderProperty" startValue="1" name="bloom"/>
+		<Event step="62" type="addHUDZoom" value="0.05"/>
+		<Event step="62" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="63" time="1" value="0" property="brightness" ease="linear" type="tweenShaderProperty" startValue="1" name="bloom"/>
+		<Event step="63" type="addHUDZoom" value="0.05"/>
+		<Event step="63" time="0" value="0" ease="cubeInOut" type="tweenModifierValue" startValue="-1" name="alphaP"/>
+		<Event step="63" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="64" time="8" value="0" property="effect" ease="sineOut" type="tweenShaderProperty" startValue="0.3" name="bars"/>
+		<Event step="64" time="8" value="0" ease="cubeInOut" type="tweenModifierValue" startValue="-50" name="y"/>
+		<Event step="64" type="addCameraZoom" value="0.05"/>
+		<Event step="64" time="8" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.5" name="mirror"/>
+		<Event step="68" type="addHUDZoom" value="0.05"/>
+		<Event step="72" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="72" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="73" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="73" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="74" type="addCameraZoom" value="0.05"/>
+		<Event step="76" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="76" type="addHUDZoom" value="0.05"/>
+		<Event step="77" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="78" type="addCameraZoom" value="0.05"/>
+		<Event step="80" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="80" type="addCameraZoom" value="0.05"/>
+		<Event step="81" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="84" type="addHUDZoom" value="0.05"/>
+		<Event step="87" type="addHUDZoom" value="0.05"/>
+		<Event step="90" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="90" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="90" type="addCameraZoom" value="0.05"/>
+		<Event step="91" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="91" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="92" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="92" type="addHUDZoom" value="0.05"/>
+		<Event step="93" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="94" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="94" type="addCameraZoom" value="0.05"/>
+		<Event step="95" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="96" type="addCameraZoom" value="0.05"/>
+		<Event step="100" type="addHUDZoom" value="0.05"/>
+		<Event step="104" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="104" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="105" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="105" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="106" type="addCameraZoom" value="0.05"/>
+		<Event step="108" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="108" type="addHUDZoom" value="0.05"/>
+		<Event step="109" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="110" type="addCameraZoom" value="0.05"/>
+		<Event step="112" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="112" type="addCameraZoom" value="0.05"/>
+		<Event step="113" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="116" type="addHUDZoom" value="0.05"/>
+		<Event step="119" type="addHUDZoom" value="0.05"/>
+		<Event step="122" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="122" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="122" type="addCameraZoom" value="0.05"/>
+		<Event step="123" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="123" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="124" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="124" type="addHUDZoom" value="0.05"/>
+		<Event step="125" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="126" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="126" type="addCameraZoom" value="0.05"/>
+		<Event step="127" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="128" type="addCameraZoom" value="0.05"/>
+		<Event step="132" type="addHUDZoom" value="0.05"/>
+		<Event step="136" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="136" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="137" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="137" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="138" type="addCameraZoom" value="0.05"/>
+		<Event step="140" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="140" type="addHUDZoom" value="0.05"/>
+		<Event step="141" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="142" type="addCameraZoom" value="0.05"/>
+		<Event step="144" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="144" type="addCameraZoom" value="0.05"/>
+		<Event step="145" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="148" type="addHUDZoom" value="0.05"/>
+		<Event step="151" type="addHUDZoom" value="0.05"/>
+		<Event step="154" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="154" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="154" type="addCameraZoom" value="0.05"/>
+		<Event step="155" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="155" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="156" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="156" type="addHUDZoom" value="0.05"/>
+		<Event step="157" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="158" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="158" type="addCameraZoom" value="0.05"/>
+		<Event step="159" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="160" type="addCameraZoom" value="0.05"/>
+		<Event step="164" type="addHUDZoom" value="0.05"/>
+		<Event step="168" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="168" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="169" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="169" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="170" type="addCameraZoom" value="0.05"/>
+		<Event step="172" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="172" type="addHUDZoom" value="0.05"/>
+		<Event step="173" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="174" type="addCameraZoom" value="0.05"/>
+		<Event step="176" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="176" type="addCameraZoom" value="0.05"/>
+		<Event step="177" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="180" type="addHUDZoom" value="0.05"/>
+		<Event step="183" type="addHUDZoom" value="0.05"/>
+		<Event step="186" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="186" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="186" type="addCameraZoom" value="0.05"/>
+		<Event step="187" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="187" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="188" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="188" time="4" value="0.75" property="brightness" ease="expoIn" type="tweenShaderProperty" startValue="0" name="bloom"/>
+		<Event step="188" type="addHUDZoom" value="0.05"/>
+		<Event step="189" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="190" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="190" type="addCameraZoom" value="0.05"/>
+		<Event step="191" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="192" time="4" value="0.7" property="zoom" ease="smoothStepOut" type="tweenShaderProperty" startValue="1" name="mirrorOther"/>
+		<Event step="192" time="8" value="0" property="brightness" ease="linear" type="tweenShaderProperty" startValue="0.75" name="bloom"/>
+		<Event step="192" type="addCameraZoom" value="0.05"/>
+		<Event step="196" type="addHUDZoom" value="0.05"/>
+		<Event step="200" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="200" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="201" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="201" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="202" type="addCameraZoom" value="0.05"/>
+		<Event step="204" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="204" type="addHUDZoom" value="0.05"/>
+		<Event step="205" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="206" type="addCameraZoom" value="0.05"/>
+		<Event step="208" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="208" type="addCameraZoom" value="0.05"/>
+		<Event step="209" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="212" type="addHUDZoom" value="0.05"/>
+		<Event step="215" type="addHUDZoom" value="0.05"/>
+		<Event step="218" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="218" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="218" type="addCameraZoom" value="0.05"/>
+		<Event step="219" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="219" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="220" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="220" type="addHUDZoom" value="0.05"/>
+		<Event step="221" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="222" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="222" type="addCameraZoom" value="0.05"/>
+		<Event step="223" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="224" type="addCameraZoom" value="0.05"/>
+		<Event step="228" type="addHUDZoom" value="0.05"/>
+		<Event step="232" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="232" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="233" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="233" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="234" type="addCameraZoom" value="0.05"/>
+		<Event step="236" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="236" type="addHUDZoom" value="0.05"/>
+		<Event step="237" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="238" type="addCameraZoom" value="0.05"/>
+		<Event step="240" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="240" type="addCameraZoom" value="0.05"/>
+		<Event step="241" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="244" type="addHUDZoom" value="0.05"/>
+		<Event step="247" type="addHUDZoom" value="0.05"/>
+		<Event step="250" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="250" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="250" type="addCameraZoom" value="0.05"/>
+		<Event step="251" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="251" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="252" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="252" type="addHUDZoom" value="0.05"/>
+		<Event step="253" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="254" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="254" type="addCameraZoom" value="0.05"/>
+		<Event step="255" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="256" type="addCameraZoom" value="0.05"/>
+		<Event step="260" type="addHUDZoom" value="0.05"/>
+		<Event step="264" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="264" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="265" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="265" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="266" type="addCameraZoom" value="0.05"/>
+		<Event step="268" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="268" type="addHUDZoom" value="0.05"/>
+		<Event step="269" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="270" type="addCameraZoom" value="0.05"/>
+		<Event step="272" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="272" type="addCameraZoom" value="0.05"/>
+		<Event step="273" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="276" type="addHUDZoom" value="0.05"/>
+		<Event step="279" type="addHUDZoom" value="0.05"/>
+		<Event step="282" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="282" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="282" type="addCameraZoom" value="0.05"/>
+		<Event step="283" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="283" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="284" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="284" type="addHUDZoom" value="0.05"/>
+		<Event step="285" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="286" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="286" type="addCameraZoom" value="0.05"/>
+		<Event step="287" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="288" type="addCameraZoom" value="0.05"/>
+		<Event step="292" type="addHUDZoom" value="0.05"/>
+		<Event step="296" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="296" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="297" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="297" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="298" type="addCameraZoom" value="0.05"/>
+		<Event step="300" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="300" type="addHUDZoom" value="0.05"/>
+		<Event step="301" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="302" type="addCameraZoom" value="0.05"/>
+		<Event step="304" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="304" type="addCameraZoom" value="0.05"/>
+		<Event step="305" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="308" type="addHUDZoom" value="0.05"/>
+		<Event step="311" type="addHUDZoom" value="0.05"/>
+		<Event step="314" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="314" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="314" type="addCameraZoom" value="0.05"/>
+		<Event step="315" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="315" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="316" time="4" value="0.5" property="brightness" ease="expoIn" type="tweenShaderProperty" startValue="0" name="bloom"/>
+		<Event step="316" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="316" type="addHUDZoom" value="0.05"/>
+		<Event step="317" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="318" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="318" type="addCameraZoom" value="0.05"/>
+		<Event step="319" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="320" time="0" value="0.05" property="hue" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="320" type="addCameraZoom" value="0.05"/>
+		<Event step="320" time="6" value="1" property="zoom" ease="sineInOut" type="tweenShaderProperty" startValue="0.7" name="mirrorOther"/>
+		<Event step="320" time="8" value="0" property="brightness" ease="linear" type="tweenShaderProperty" startValue="0.5" name="bloom"/>
+		<Event step="324" type="addHUDZoom" value="0.05"/>
+		<Event step="326" time="8" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="3" name="mirror"/>
+		<Event step="326" type="addCameraZoom" value="0.05"/>
+		<Event step="327" type="addHUDZoom" value="0.05"/>
+		<Event step="329" type="addHUDZoom" value="0.05"/>
+		<Event step="330" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="330" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="330" type="addCameraZoom" value="0.05"/>
+		<Event step="331" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="331" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="332" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="332" type="addHUDZoom" value="0.05"/>
+		<Event step="333" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="334" type="addCameraZoom" value="0.05"/>
+		<Event step="334" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="335" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="336" type="addCameraZoom" value="0.05"/>
+		<Event step="340" type="addHUDZoom" value="0.05"/>
+		<Event step="342" type="addCameraZoom" value="0.05"/>
+		<Event step="343" type="addHUDZoom" value="0.05"/>
+		<Event step="345" type="addHUDZoom" value="0.05"/>
+		<Event step="346" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="346" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="346" type="addCameraZoom" value="0.05"/>
+		<Event step="347" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="347" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="348" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="348" type="addHUDZoom" value="0.05"/>
+		<Event step="349" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="350" type="addHUDZoom" value="0.05"/>
+		<Event step="350" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="350" type="addCameraZoom" value="0.05"/>
+		<Event step="351" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="351" type="addHUDZoom" value="0.05"/>
+		<Event step="352" type="addCameraZoom" value="0.05"/>
+		<Event step="356" type="addHUDZoom" value="0.05"/>
+		<Event step="358" time="8" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-3" name="mirror"/>
+		<Event step="358" type="addCameraZoom" value="0.05"/>
+		<Event step="359" type="addHUDZoom" value="0.05"/>
+		<Event step="361" type="addHUDZoom" value="0.05"/>
+		<Event step="362" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="362" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="362" type="addCameraZoom" value="0.05"/>
+		<Event step="363" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="363" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="364" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="364" type="addHUDZoom" value="0.05"/>
+		<Event step="365" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="366" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="366" type="addCameraZoom" value="0.05"/>
+		<Event step="367" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="368" type="addCameraZoom" value="0.05"/>
+		<Event step="372" type="addHUDZoom" value="0.05"/>
+		<Event step="374" type="addCameraZoom" value="0.05"/>
+		<Event step="375" type="addHUDZoom" value="0.05"/>
+		<Event step="377" type="addHUDZoom" value="0.05"/>
+		<Event step="378" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="378" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="378" type="addCameraZoom" value="0.05"/>
+		<Event step="379" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="379" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="380" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="380" type="addHUDZoom" value="0.05"/>
+		<Event step="381" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="382" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="382" type="addHUDZoom" value="0.05"/>
+		<Event step="382" type="addCameraZoom" value="0.05"/>
+		<Event step="383" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="383" type="addHUDZoom" value="0.05"/>
+		<Event step="384" type="addCameraZoom" value="0.05"/>
+		<Event step="388" type="addHUDZoom" value="0.05"/>
+		<Event step="390" type="addCameraZoom" value="0.05"/>
+		<Event step="391" type="addHUDZoom" value="0.05"/>
+		<Event step="392" time="4" value="375" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="0" name="mirrorOther"/>
+		<Event step="392" time="4" value="0.7" property="zoom" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="mirrorOther"/>
+		<Event step="393" type="addHUDZoom" value="0.05"/>
+		<Event step="394" type="addCameraZoom" value="0.05"/>
+		<Event step="394" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="394" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="395" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="395" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="396" type="addHUDZoom" value="0.05"/>
+		<Event step="396" time="3" value="360" property="angle" ease="circOut" type="tweenShaderProperty" startValue="375" name="mirrorOther"/>
+		<Event step="396" time="3" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.7" name="mirrorOther"/>
+		<Event step="396" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="397" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="398" type="addCameraZoom" value="0.05"/>
+		<Event step="398" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="399" time="0" value="0" property="angle" ease="cubeInOut" type="tweenShaderProperty" startValue="360" name="mirrorOther"/>
+		<Event step="399" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="400" type="addCameraZoom" value="0.05"/>
+		<Event step="404" type="addHUDZoom" value="0.05"/>
+		<Event step="406" type="addCameraZoom" value="0.05"/>
+		<Event step="407" type="addHUDZoom" value="0.05"/>
+		<Event step="409" type="addHUDZoom" value="0.05"/>
+		<Event step="410" type="addCameraZoom" value="0.05"/>
+		<Event step="410" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="410" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="411" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="411" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="412" type="addHUDZoom" value="0.05"/>
+		<Event step="412" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="413" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="414" type="addHUDZoom" value="0.05"/>
+		<Event step="414" type="addCameraZoom" value="0.05"/>
+		<Event step="414" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="415" type="addHUDZoom" value="0.05"/>
+		<Event step="415" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="416" type="addCameraZoom" value="0.05"/>
+		<Event step="420" type="addHUDZoom" value="0.05"/>
+		<Event step="422" type="addCameraZoom" value="0.05"/>
+		<Event step="423" type="addHUDZoom" value="0.05"/>
+		<Event step="425" type="addHUDZoom" value="0.05"/>
+		<Event step="426" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="426" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="426" type="addCameraZoom" value="0.05"/>
+		<Event step="427" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="427" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="428" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="428" type="addHUDZoom" value="0.05"/>
+		<Event step="429" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="430" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="430" type="addCameraZoom" value="0.05"/>
+		<Event step="431" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="432" time="3" value="0.9" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="1" name="mirrorOther"/>
+		<Event step="432" type="addCameraZoom" value="0.05"/>
+		<Event step="435" time="0" value="0.8" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="0.9" name="mirrorOther"/>
+		<Event step="436" time="2" value="0.7" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="0.8" name="mirrorOther"/>
+		<Event step="436" type="addHUDZoom" value="0.05"/>
+		<Event step="438" time="4" value="1" property="zoom" ease="expoOut" type="tweenShaderProperty" startValue="0.7" name="mirrorOther"/>
+		<Event step="438" type="addCameraZoom" value="0.05"/>
+		<Event step="439" type="addHUDZoom" value="0.05"/>
+		<Event step="441" type="addHUDZoom" value="0.05"/>
+		<Event step="442" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="442" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="442" type="addCameraZoom" value="0.05"/>
+		<Event step="443" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="443" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="444" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="444" type="addHUDZoom" value="0.05"/>
+		<Event step="445" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="446" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="446" type="addHUDZoom" value="0.05"/>
+		<Event step="446" type="addCameraZoom" value="0.05"/>
+		<Event step="447" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="447" type="addHUDZoom" value="0.05"/>
+		<Event step="448" type="addCameraZoom" value="0.05"/>
+		<Event step="448" time="4" value="0.22" property="effect" ease="circOut" type="tweenShaderProperty" startValue="0" name="bars"/>
+		<Event step="448" time="4" value="0.7" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="mirrorOther"/>
+		<Event step="448" time="4" value="-50" ease="circOut" type="tweenModifierValue" startValue="0" name="y"/>
+		<Event step="448" time="8" value="0" property="brightness" ease="linear" type="tweenShaderProperty" startValue="0.5" name="bloom"/>
+		<Event step="448" time="0" value="-0.05" property="hue" ease="cubeInOut" type="tweenShaderProperty" startValue="0.05" name="colorswap"/>
+		<Event step="452" type="addHUDZoom" value="0.05"/>
+		<Event step="456" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="456" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="457" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="457" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="458" type="addCameraZoom" value="0.05"/>
+		<Event step="460" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="460" type="addHUDZoom" value="0.05"/>
+		<Event step="461" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="462" type="addCameraZoom" value="0.05"/>
+		<Event step="464" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="464" type="addCameraZoom" value="0.05"/>
+		<Event step="465" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="468" type="addHUDZoom" value="0.05"/>
+		<Event step="471" type="addHUDZoom" value="0.05"/>
+		<Event step="472" time="4" value="1" property="x" ease="expoOut" type="tweenShaderProperty" startValue="0" name="mirrorOther"/>
+		<Event step="474" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="474" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="474" type="addCameraZoom" value="0.05"/>
+		<Event step="475" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="475" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="476" time="4" value="0" property="x" ease="expoOut" type="tweenShaderProperty" startValue="1" name="mirrorOther"/>
+		<Event step="476" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="476" type="addHUDZoom" value="0.05"/>
+		<Event step="477" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="478" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="478" type="addCameraZoom" value="0.05"/>
+		<Event step="479" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="480" type="addCameraZoom" value="0.05"/>
+		<Event step="484" type="addHUDZoom" value="0.05"/>
+		<Event step="488" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="488" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="489" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="489" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="490" type="addCameraZoom" value="0.05"/>
+		<Event step="492" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="492" type="addHUDZoom" value="0.05"/>
+		<Event step="493" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="494" type="addCameraZoom" value="0.05"/>
+		<Event step="496" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="496" type="addCameraZoom" value="0.05"/>
+		<Event step="497" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="500" type="addHUDZoom" value="0.05"/>
+		<Event step="503" type="addHUDZoom" value="0.05"/>
+		<Event step="506" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="506" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="506" type="addCameraZoom" value="0.05"/>
+		<Event step="507" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="507" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="508" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="508" type="addHUDZoom" value="0.05"/>
+		<Event step="509" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="510" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="510" type="addCameraZoom" value="0.05"/>
+		<Event step="511" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="512" time="8" value="0.19" property="effect" ease="circOut" type="tweenShaderProperty" startValue="0.22" name="bars"/>
+		<Event step="512" time="8" value="0.8" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.7" name="mirrorOther"/>
+		<Event step="512" type="addCameraZoom" value="0.05"/>
+		<Event step="516" type="addHUDZoom" value="0.05"/>
+		<Event step="520" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="520" time="8" value="0.22" property="effect" ease="circOut" type="tweenShaderProperty" startValue="0.19" name="bars"/>
+		<Event step="520" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="520" time="8" value="0.7" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.8" name="mirrorOther"/>
+		<Event step="521" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="521" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="522" type="addCameraZoom" value="0.05"/>
+		<Event step="524" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="524" type="addHUDZoom" value="0.05"/>
+		<Event step="525" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="526" type="addCameraZoom" value="0.05"/>
+		<Event step="528" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="528" type="addCameraZoom" value="0.05"/>
+		<Event step="529" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="532" type="addHUDZoom" value="0.05"/>
+		<Event step="535" type="addHUDZoom" value="0.05"/>
+		<Event step="538" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="538" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="538" type="addCameraZoom" value="0.05"/>
+		<Event step="539" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="539" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="540" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="540" type="addHUDZoom" value="0.05"/>
+		<Event step="541" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="542" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="542" type="addCameraZoom" value="0.05"/>
+		<Event step="543" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="544" type="addCameraZoom" value="0.05"/>
+		<Event step="548" type="addHUDZoom" value="0.05"/>
+		<Event step="552" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="552" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="553" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="553" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="554" type="addCameraZoom" value="0.05"/>
+		<Event step="556" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="556" type="addHUDZoom" value="0.05"/>
+		<Event step="557" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="558" type="addCameraZoom" value="0.05"/>
+		<Event step="560" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="560" type="addCameraZoom" value="0.05"/>
+		<Event step="561" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="564" type="addHUDZoom" value="0.05"/>
+		<Event step="567" type="addHUDZoom" value="0.05"/>
+		<Event step="570" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="570" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="570" type="addCameraZoom" value="0.05"/>
+		<Event step="571" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="571" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="572" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="572" type="addHUDZoom" value="0.05"/>
+		<Event step="572" time="4" value="0.5" property="brightness" ease="expoIn" type="tweenShaderProperty" startValue="0" name="bloom"/>
+		<Event step="573" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="574" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="574" type="addCameraZoom" value="0.05"/>
+		<Event step="575" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="576" type="addCameraZoom" value="0.05"/>
+		<Event step="576" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-50" name="y"/>
+		<Event step="576" time="8" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.7" name="mirrorOther"/>
+		<Event step="576" time="8" value="0" property="effect" ease="circOut" type="tweenShaderProperty" startValue="0.22" name="bars"/>
+		<Event step="576" time="0" value="0" property="hue" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.05" name="colorswap"/>
+		<Event step="576" time="8" value="0" property="brightness" ease="linear" type="tweenShaderProperty" startValue="0.5" name="bloom"/>
+		<Event step="580" type="addHUDZoom" value="0.05"/>
+		<Event step="584" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="584" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="585" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="585" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="586" type="addCameraZoom" value="0.05"/>
+		<Event step="588" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="588" type="addHUDZoom" value="0.05"/>
+		<Event step="589" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="590" type="addCameraZoom" value="0.05"/>
+		<Event step="592" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="592" type="addCameraZoom" value="0.05"/>
+		<Event step="593" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="596" type="addHUDZoom" value="0.05"/>
+		<Event step="599" type="addHUDZoom" value="0.05"/>
+		<Event step="602" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="602" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="602" type="addCameraZoom" value="0.05"/>
+		<Event step="603" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="603" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="604" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="604" type="addHUDZoom" value="0.05"/>
+		<Event step="605" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="606" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="606" type="addCameraZoom" value="0.05"/>
+		<Event step="607" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="608" type="addCameraZoom" value="0.05"/>
+		<Event step="612" type="addHUDZoom" value="0.05"/>
+		<Event step="616" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="616" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="617" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="617" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="618" type="addCameraZoom" value="0.05"/>
+		<Event step="620" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="620" type="addHUDZoom" value="0.05"/>
+		<Event step="621" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="622" type="addCameraZoom" value="0.05"/>
+		<Event step="624" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="624" type="addCameraZoom" value="0.05"/>
+		<Event step="625" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="628" type="addHUDZoom" value="0.05"/>
+		<Event step="631" type="addHUDZoom" value="0.05"/>
+		<Event step="634" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="634" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="634" type="addCameraZoom" value="0.05"/>
+		<Event step="635" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="635" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="636" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="636" type="addHUDZoom" value="0.05"/>
+		<Event step="637" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="638" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="638" type="addCameraZoom" value="0.05"/>
+		<Event step="639" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="640" type="addCameraZoom" value="0.05"/>
+		<Event step="644" type="addHUDZoom" value="0.05"/>
+		<Event step="648" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="648" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="649" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="649" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="650" type="addCameraZoom" value="0.05"/>
+		<Event step="652" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="652" type="addHUDZoom" value="0.05"/>
+		<Event step="653" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="654" type="addCameraZoom" value="0.05"/>
+		<Event step="656" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="656" type="addCameraZoom" value="0.05"/>
+		<Event step="657" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="660" type="addHUDZoom" value="0.05"/>
+		<Event step="663" type="addHUDZoom" value="0.05"/>
+		<Event step="666" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="666" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="666" type="addCameraZoom" value="0.05"/>
+		<Event step="667" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="667" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="668" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="668" type="addHUDZoom" value="0.05"/>
+		<Event step="669" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="670" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="670" type="addCameraZoom" value="0.05"/>
+		<Event step="671" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="672" type="addCameraZoom" value="0.05"/>
+		<Event step="676" type="addHUDZoom" value="0.05"/>
+		<Event step="680" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="680" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="681" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="681" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="682" type="addCameraZoom" value="0.05"/>
+		<Event step="684" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="684" type="addHUDZoom" value="0.05"/>
+		<Event step="685" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="686" type="addCameraZoom" value="0.05"/>
+		<Event step="688" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="688" type="addCameraZoom" value="0.05"/>
+		<Event step="689" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="692" type="addHUDZoom" value="0.05"/>
+		<Event step="695" type="addHUDZoom" value="0.05"/>
+		<Event step="698" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="698" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="698" type="addCameraZoom" value="0.05"/>
+		<Event step="699" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="699" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="700" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="700" type="addHUDZoom" value="0.05"/>
+		<Event step="701" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="702" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="702" type="addCameraZoom" value="0.05"/>
+		<Event step="703" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="704" time="8" value="0.1" property="effect" ease="circOut" type="tweenShaderProperty" startValue="0" name="bars"/>
+		<Event step="704" time="8" value="-50" ease="circOut" type="tweenModifierValue" startValue="0" name="y"/>
+		<Event step="704" type="addCameraZoom" value="0.05"/>
+		<Event step="708" type="addHUDZoom" value="0.05"/>
+		<Event step="712" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="712" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="713" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="713" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="714" type="addCameraZoom" value="0.05"/>
+		<Event step="716" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="716" type="addHUDZoom" value="0.05"/>
+		<Event step="717" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="718" type="addCameraZoom" value="0.05"/>
+		<Event step="720" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="720" type="addCameraZoom" value="0.05"/>
+		<Event step="721" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="724" type="addHUDZoom" value="0.05"/>
+		<Event step="727" type="addHUDZoom" value="0.05"/>
+		<Event step="730" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="730" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="730" type="addCameraZoom" value="0.05"/>
+		<Event step="731" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="731" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="732" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="732" type="addHUDZoom" value="0.05"/>
+		<Event step="733" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="734" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="734" type="addCameraZoom" value="0.05"/>
+		<Event step="735" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="736" type="addCameraZoom" value="0.05"/>
+		<Event step="740" type="addHUDZoom" value="0.05"/>
+		<Event step="744" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="744" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="745" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="745" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="746" type="addCameraZoom" value="0.05"/>
+		<Event step="748" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="748" type="addHUDZoom" value="0.05"/>
+		<Event step="749" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="750" type="addCameraZoom" value="0.05"/>
+		<Event step="752" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="752" type="addCameraZoom" value="0.05"/>
+		<Event step="753" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="756" type="addHUDZoom" value="0.05"/>
+		<Event step="759" type="addHUDZoom" value="0.05"/>
+		<Event step="760" time="8" value="1.1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="mirror"/>
+		<Event step="760" time="8" value="0.27" property="effect" ease="smootherStepOut" type="tweenShaderProperty" startValue="0.1" name="bars"/>
+		<Event step="760" time="8" value="15" property="angle" ease="smootherStepOut" type="tweenShaderProperty" startValue="0" name="mirror"/>
+		<Event step="760" time="8" value="1" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="greyscale"/>
+		<Event step="762" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="762" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="762" type="addCameraZoom" value="0.05"/>
+		<Event step="763" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="763" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="764" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="764" time="4" value="1" property="brightness" ease="expoIn" type="tweenShaderProperty" startValue="0" name="bloom"/>
+		<Event step="764" type="addHUDZoom" value="0.05"/>
+		<Event step="765" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="766" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="766" type="addCameraZoom" value="0.05"/>
+		<Event step="767" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="768" time="8" value="0" property="brightness" ease="linear" type="tweenShaderProperty" startValue="1" name="bloom"/>
+		<Event step="768" time="8" value="0" property="effect" ease="circOut" type="tweenShaderProperty" startValue="0.1" name="bars"/>
+		<Event step="768" time="8" value="0" ease="circOut" type="tweenModifierValue" startValue="-50" name="y"/>
+		<Event step="768" time="8" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="15" name="mirror"/>
+		<Event step="768" time="8" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1.1" name="mirror"/>
+		<Event step="768" time="0" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="greyscale"/>
+		<Event step="776" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="776" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="777" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="777" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="780" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="781" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="784" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="785" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="794" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="794" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="795" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="795" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="796" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="797" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="798" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="799" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="808" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOdown"/>
+		<Event step="808" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOleft"/>
+		<Event step="809" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOdown"/>
+		<Event step="809" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yOleft"/>
+		<Event step="812" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOup"/>
+		<Event step="813" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOup"/>
+		<Event step="816" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yOright"/>
+		<Event step="817" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yOright"/>
+		<Event step="826" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPleft"/>
+		<Event step="826" time="1" value="-10" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPdown"/>
+		<Event step="827" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-10" name="yPdown"/>
+		<Event step="827" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPleft"/>
+		<Event step="828" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPup"/>
+		<Event step="829" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPup"/>
+		<Event step="830" time="1" value="-5" ease="expoOut" type="tweenModifierValue" startValue="0" name="yPright"/>
+		<Event step="831" time="8" value="0" ease="smootherStepOut" type="tweenModifierValue" startValue="-5" name="yPright"/>
+		<Event step="832" time="8" value="-1" ease="linear" type="tweenModifierValue" startValue="0" name="alphaP"/>
+		<Event step="832" time="8" value="-1" ease="linear" type="tweenModifierValue" startValue="0" name="alphaO"/>
+		<Event step="894" time="1" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="bloom"/>
+		<Event step="895" time="0" value="0.6" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="bars"/>
+		<Event step="895" time="12" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="bloom"/>
+	</Events>
+</Modchart>

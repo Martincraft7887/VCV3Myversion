@@ -1,0 +1,16 @@
+{
+	"beatsPerMeasure": 4,
+	"opponentModeAllowed": true,
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"bpm": 205,
+	"difficulties": [
+		"voiid"
+	],
+	"needsVoices": false,
+	"parsedColor": -1,
+	"displayName": "APOTHEOSIS",
+	"icon": "Wiik4ZephMatt-icons",
+	"name": "APOTHEOSIS",
+	"color": "#FFFFFF"
+}

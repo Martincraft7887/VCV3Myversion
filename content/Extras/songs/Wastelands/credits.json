@@ -1,0 +1,15 @@
+{
+	"composer": "lordick",
+	"charter": "RhysRJJ",
+	"originalComposer": "",
+	"startTime": 12800,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#007508",
+	"midBorderBot": "#00c90d",
+	"innerBorderTop": "#283629",
+	"innerBorderBot": "#121617"
+}

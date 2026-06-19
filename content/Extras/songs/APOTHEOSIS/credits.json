@@ -1,0 +1,20 @@
+{
+	"composer": "Lord Voiid",
+	"charter": "Sharik",
+	"originalComposer": "",
+	"startTime": 9415,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#0F0000",
+	"outerBorderBot": "#07000F",
+	"midBorderTop": "#FF0000",
+	"midBorderBot": "#6A1DC2",
+	"innerBorderTop": "#36282F",
+	"innerBorderBot": "#020024",
+	"shader": "TextShaderH",
+	"mixGap": 0.7,
+
+	"sobelStrength": 0.3,
+	"sobelIntensity": 0.5
+}
