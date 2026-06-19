@@ -1,0 +1,16 @@
+{
+	"beatsPerMeasure": 4,
+	"opponentModeAllowed": true,
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"bpm": 205,
+	"difficulties": [
+		"voiid"
+	],
+	"needsVoices": true,
+	"parsedColor": -11320930,
+	"displayName": "Sweet Dreams II",
+	"icon": "sdmatt",
+	"name": "Sweet Dreams II",
+	"color": "#2D2D2D"
+}

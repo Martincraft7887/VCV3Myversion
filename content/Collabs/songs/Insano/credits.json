@@ -1,0 +1,17 @@
+{
+	"composer": "Joa",
+	"charter": "RhysRJJ",
+	"originalComposer": "",
+	"startTime": 0,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#00a6ed",
+	"midBorderBot": "#ff3381",
+	"innerBorderTop": "#3f3f3f",
+	"innerBorderBot": "#121617",
+	"sobelStrength": 0.7,
+	"sobelIntensity": 0.6
+}

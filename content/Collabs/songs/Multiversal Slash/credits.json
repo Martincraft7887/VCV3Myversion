@@ -1,0 +1,17 @@
+{
+	"composer": "Antarkh and LiirdVoood",
+	"charter": "RhysRJJ (Canon), TheZoroForce240 (Easy), Wolfinu (Mania)",
+	"originalComposer": "",
+	"startTime": 0,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#c735ff",
+	"midBorderBot": "#520659",
+	"innerBorderTop": "#3f3f3f",
+	"innerBorderBot": "#121617",
+	"sobelStrength": 0.4,
+	"sobelIntensity": 0.2
+}

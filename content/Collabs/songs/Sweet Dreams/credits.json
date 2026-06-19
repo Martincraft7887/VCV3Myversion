@@ -1,0 +1,20 @@
+{
+	"composer": "prodpaperwav‬ and other",
+	"charter": "RhysRJJ",
+	"originalComposer": "",
+	"startTime": 4500,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 22,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#ce4eff",
+	"midBorderBot": "#000000",
+	"innerBorderTop": "#8730a2",
+	"innerBorderBot": "#180c1c",
+
+	"sobelStrength": 0.8,
+	"sobelIntensity": 1.0,
+	"mixGap": 2.5,
+	"outerBorderSize": 13
+}

@@ -1,0 +1,20 @@
+{
+	"composer": "ImPaper (Inst, Voices) and Lord Vo##d (Voices)",
+	"charter": "RhysRJJ",
+	"originalComposer": "Tomz_ and Singular",
+	"startTime": 21942,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 24,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#c9424b",
+	"midBorderBot": "#335da6",
+	"innerBorderTop": "#3f3f3f",
+	"innerBorderBot": "#121617",
+	"mixGap": 2.5,
+
+	"sobelStrength": 0.7,
+	"sobelIntensity": 0.8,
+	"outerBorderSize": 10
+}

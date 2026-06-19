@@ -1,0 +1,476 @@
+<Modchart>
+	<Init>
+		<Event type="initShader" shader="MirrorRepeatEffect" name="mirror"/>
+		<Event type="setCameraShader" camera="game" name="mirror"/>
+		<Event type="setCameraShader" camera="hud" name="mirror"/>
+		<Event type="setShaderProperty" value="0.1" property="zoom" name="mirror"/>
+		<Event type="initShader" shader="MirrorRepeatEffect" name="mirror2"/>
+		<Event type="setCameraShader" camera="hud" name="mirror2"/>
+		<Event type="setShaderProperty" value="1" property="zoom" name="mirror2"/>
+		<Event type="initShader" shader="BarrelBlurEffect" name="barrel"/>
+		<Event type="setCameraShader" camera="game" name="barrel"/>
+		<Event type="setCameraShader" camera="hud" name="barrel"/>
+		<Event type="setShaderProperty" value="1" property="zoom" name="barrel"/>
+		<Event type="setShaderProperty" value="0" property="barrel" name="barrel"/>
+		<Event type="initShader" shader="SobelEffect" name="sobel"/>
+		<Event type="setCameraShader" camera="hud" name="sobel"/>
+		<Event type="setShaderProperty" value="0" property="strength" name="sobel"/>
+		<Event type="setShaderProperty" value="2" property="intensity" name="sobel"/>
+		<Event type="initShader" shader="BloomEffect" name="bloom2"/>
+		<Event type="setCameraShader" camera="game" name="bloom2"/>
+		<Event type="setCameraShader" camera="hud" name="bloom2"/>
+		<Event type="setShaderProperty" value="0" property="effect" name="bloom2"/>
+		<Event type="setShaderProperty" value="0" property="strength" name="bloom2"/>
+		<Event type="initShader" shader="ChromAbEffect" name="caBlue"/>
+		<Event type="setCameraShader" camera="game" name="caBlue"/>
+		<Event type="setCameraShader" camera="hud" name="caBlue"/>
+		<Event type="setShaderProperty" value="0" property="strength" name="caBlue"/>
+		<Event type="initShader" shader="GreyscaleEffect" name="grey"/>
+		<Event type="setCameraShader" camera="game" name="grey"/>
+		<Event type="setCameraShader" camera="hud" name="grey"/>
+		<Event type="setShaderProperty" value="1" property="strength" name="grey"/>
+		<Event type="initShader" shader="ScanlineEffect" name="scanline"/>
+		<Event type="setCameraShader" camera="hud" name="scanline"/>
+		<Event type="setShaderProperty" value="0" property="strength" name="scanline"/>
+		<Event type="setShaderProperty" value="10" property="pixelsBetweenEachLine" name="scanline"/>
+		<Event type="initShader" shader="VignetteEffect" name="vignette"/>
+		<Event type="setCameraShader" camera="hud" name="vignette"/>
+		<Event type="setCameraShader" camera="game" name="vignette"/>
+		<Event type="setShaderProperty" value="15" property="strength" name="vignette"/>
+		<Event type="setShaderProperty" value="1" property="size" name="vignette"/>
+		<Event type="initShader" shader="PerlinSmokeEffect" name="smoke"/>
+		<Event type="setCameraShader" camera="game" name="smoke"/>
+		<Event type="initShader" shader="EchoEffect" name="echo"/>
+	</Init>
+	<Events>
+		<Event step="0" time="68" value="0.1" property="smokeStrength" ease="linear" type="tweenShaderProperty" startValue="1" name="smoke"/>
+		<Event step="0" time="64" value="0.6" property="size" ease="linear" type="tweenShaderProperty" startValue="1" name="vignette"/>
+		<Event step="0" time="64" value="1" property="zoom" ease="sineIn" type="tweenShaderProperty" startValue="0.1" name="mirror"/>
+		<Event step="56" time="40" value="0" property="strength" ease="linear" type="tweenShaderProperty" startValue="1" name="grey"/>
+		<Event step="64" time="16" value="1" property="contrast" ease="sineOut" type="tweenShaderProperty" startValue="2" name="bloom2"/>
+		<Event step="64" type="addCameraZoom" value="0.03"/>
+		<Event step="64" time="16" value="0" property="size" ease="quintOut" type="tweenShaderProperty" startValue="0.6" name="vignette"/>
+		<Event step="64" time="16" value="1" property="zoom" ease="quintOut" type="tweenShaderProperty" startValue="0.9" name="mirror"/>
+		<Event step="112" time="2" value="1.1" property="zoom" ease="sineOut" type="tweenShaderProperty" startValue="1" name="barrel"/>
+		<Event step="114" time="2" value="1.05" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1.1" name="barrel"/>
+		<Event step="116" time="2" value="1.15" property="zoom" ease="sineOut" type="tweenShaderProperty" startValue="1.05" name="barrel"/>
+		<Event step="118" time="2" value="1.1" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1.15" name="barrel"/>
+		<Event step="120" type="addCameraZoom" value="0.02"/>
+		<Event step="120" time="2" value="1.2" property="zoom" ease="sineOut" type="tweenShaderProperty" startValue="1.15" name="barrel"/>
+		<Event step="121" type="addCameraZoom" value="0.02"/>
+		<Event step="122" type="addCameraZoom" value="0.02"/>
+		<Event step="122" time="2" value="1.15" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1.2" name="barrel"/>
+		<Event step="123" type="addCameraZoom" value="0.02"/>
+		<Event step="124" time="4" value="1" property="zoom" ease="circIn" type="tweenShaderProperty" startValue="1.15" name="barrel"/>
+		<Event step="124" type="addCameraZoom" value="0.02"/>
+		<Event step="125" type="addCameraZoom" value="0.02"/>
+		<Event step="126" type="addCameraZoom" value="0.02"/>
+		<Event step="127" type="addCameraZoom" value="0.02"/>
+		<Event step="128" type="addHUDZoom" value="0.02"/>
+		<Event step="128" type="addCameraZoom" value="0.02"/>
+		<Event step="136" type="addHUDZoom" value="0.02"/>
+		<Event step="136" type="addCameraZoom" value="0.02"/>
+		<Event step="137" type="addCameraZoom" value="0.02"/>
+		<Event step="138" type="addCameraZoom" value="0.02"/>
+		<Event step="139" type="addCameraZoom" value="0.02"/>
+		<Event step="152" type="addHUDZoom" value="0.02"/>
+		<Event step="152" type="addCameraZoom" value="0.02"/>
+		<Event step="164" type="addCameraZoom" value="0.02"/>
+		<Event step="165" type="addCameraZoom" value="0.02"/>
+		<Event step="168" type="addHUDZoom" value="0.02"/>
+		<Event step="168" type="addCameraZoom" value="0.02"/>
+		<Event step="184" type="addHUDZoom" value="0.02"/>
+		<Event step="184" type="addCameraZoom" value="0.02"/>
+		<Event step="200" type="addHUDZoom" value="0.02"/>
+		<Event step="200" type="addCameraZoom" value="0.02"/>
+		<Event step="201" type="addCameraZoom" value="0.02"/>
+		<Event step="202" type="addCameraZoom" value="0.02"/>
+		<Event step="203" type="addCameraZoom" value="0.02"/>
+		<Event step="204" type="addCameraZoom" value="0.02"/>
+		<Event step="216" type="addHUDZoom" value="0.02"/>
+		<Event step="216" type="addCameraZoom" value="0.02"/>
+		<Event step="232" type="addHUDZoom" value="0.02"/>
+		<Event step="232" type="addCameraZoom" value="0.02"/>
+		<Event step="234" type="addCameraZoom" value="0.02"/>
+		<Event step="236" type="addCameraZoom" value="0.02"/>
+		<Event step="248" type="addHUDZoom" value="0.02"/>
+		<Event step="248" type="addCameraZoom" value="0.02"/>
+		<Event step="264" type="addHUDZoom" value="0.02"/>
+		<Event step="264" type="addCameraZoom" value="0.02"/>
+		<Event step="265" type="addCameraZoom" value="0.02"/>
+		<Event step="266" type="addCameraZoom" value="0.02"/>
+		<Event step="267" type="addCameraZoom" value="0.02"/>
+		<Event step="268" type="addCameraZoom" value="0.02"/>
+		<Event step="280" type="addHUDZoom" value="0.02"/>
+		<Event step="280" type="addCameraZoom" value="0.02"/>
+		<Event step="292" type="addCameraZoom" value="0.02"/>
+		<Event step="293" type="addCameraZoom" value="0.02"/>
+		<Event step="294" type="addCameraZoom" value="0.02"/>
+		<Event step="296" type="addHUDZoom" value="0.02"/>
+		<Event step="296" type="addCameraZoom" value="0.02"/>
+		<Event step="306" type="addCameraZoom" value="0.02"/>
+		<Event step="308" type="addCameraZoom" value="0.02"/>
+		<Event step="310" type="addCameraZoom" value="0.02"/>
+		<Event step="312" type="addHUDZoom" value="0.02"/>
+		<Event step="312" type="addCameraZoom" value="0.02"/>
+		<Event step="314" type="addCameraZoom" value="0.02"/>
+		<Event step="316" type="addCameraZoom" value="0.02"/>
+		<Event step="328" type="addHUDZoom" value="0.02"/>
+		<Event step="328" type="addCameraZoom" value="0.02"/>
+		<Event step="329" type="addCameraZoom" value="0.02"/>
+		<Event step="330" type="addCameraZoom" value="0.02"/>
+		<Event step="331" type="addCameraZoom" value="0.02"/>
+		<Event step="332" type="addCameraZoom" value="0.02"/>
+		<Event step="344" type="addCameraZoom" value="0.02"/>
+		<Event step="344" type="addHUDZoom" value="0.02"/>
+		<Event step="360" type="addCameraZoom" value="0.02"/>
+		<Event step="360" type="addHUDZoom" value="0.02"/>
+		<Event step="368" type="addHUDZoom" value="0.02"/>
+		<Event step="368" type="addCameraZoom" value="0.02"/>
+		<Event step="372" type="addHUDZoom" value="0.02"/>
+		<Event step="372" type="addCameraZoom" value="0.02"/>
+		<Event step="376" type="addCameraZoom" value="0.02"/>
+		<Event step="376" type="addHUDZoom" value="0.02"/>
+		<Event step="380" type="addHUDZoom" value="0.02"/>
+		<Event step="380" type="addCameraZoom" value="0.02"/>
+		<Event step="384" type="addHUDZoom" value="0.02"/>
+		<Event step="384" type="addCameraZoom" value="0.02"/>
+		<Event step="392" type="addCameraZoom" value="0.02"/>
+		<Event step="392" type="addHUDZoom" value="0.02"/>
+		<Event step="393" type="addCameraZoom" value="0.02"/>
+		<Event step="394" type="addCameraZoom" value="0.02"/>
+		<Event step="395" type="addCameraZoom" value="0.02"/>
+		<Event step="396" type="addCameraZoom" value="0.02"/>
+		<Event step="408" type="addCameraZoom" value="0.02"/>
+		<Event step="408" type="addHUDZoom" value="0.02"/>
+		<Event step="420" type="addCameraZoom" value="0.02"/>
+		<Event step="421" type="addCameraZoom" value="0.02"/>
+		<Event step="422" type="addCameraZoom" value="0.02"/>
+		<Event step="424" type="addCameraZoom" value="0.02"/>
+		<Event step="424" type="addHUDZoom" value="0.02"/>
+		<Event step="440" type="addCameraZoom" value="0.02"/>
+		<Event step="440" type="addHUDZoom" value="0.02"/>
+		<Event step="456" type="addCameraZoom" value="0.02"/>
+		<Event step="456" type="addHUDZoom" value="0.02"/>
+		<Event step="457" type="addCameraZoom" value="0.02"/>
+		<Event step="458" type="addCameraZoom" value="0.02"/>
+		<Event step="459" type="addCameraZoom" value="0.02"/>
+		<Event step="460" type="addCameraZoom" value="0.02"/>
+		<Event step="472" type="addCameraZoom" value="0.02"/>
+		<Event step="472" type="addHUDZoom" value="0.02"/>
+		<Event step="484" type="addCameraZoom" value="0.02"/>
+		<Event step="485" type="addCameraZoom" value="0.02"/>
+		<Event step="486" type="addCameraZoom" value="0.02"/>
+		<Event step="488" type="addCameraZoom" value="0.02"/>
+		<Event step="488" type="addHUDZoom" value="0.02"/>
+		<Event step="496" type="addHUDZoom" value="0.02"/>
+		<Event step="496" type="addCameraZoom" value="0.02"/>
+		<Event step="500" type="addHUDZoom" value="0.02"/>
+		<Event step="500" type="addCameraZoom" value="0.02"/>
+		<Event step="504" type="addCameraZoom" value="0.02"/>
+		<Event step="504" type="addHUDZoom" value="0.02"/>
+		<Event step="508" type="addHUDZoom" value="0.02"/>
+		<Event step="508" type="addCameraZoom" value="0.02"/>
+		<Event step="512" type="addHUDZoom" value="0.02"/>
+		<Event step="512" type="addCameraZoom" value="0.02"/>
+		<Event step="516" type="addHUDZoom" value="0.02"/>
+		<Event step="516" type="addCameraZoom" value="0.02"/>
+		<Event step="517" type="addCameraZoom" value="0.02"/>
+		<Event step="517" type="addHUDZoom" value="0.02"/>
+		<Event step="518" type="addHUDZoom" value="0.02"/>
+		<Event step="518" type="addCameraZoom" value="0.02"/>
+		<Event step="520" type="addCameraZoom" value="0.02"/>
+		<Event step="520" type="addHUDZoom" value="0.02"/>
+		<Event step="536" type="addCameraZoom" value="0.02"/>
+		<Event step="536" type="addHUDZoom" value="0.02"/>
+		<Event step="552" type="addCameraZoom" value="0.02"/>
+		<Event step="552" type="addHUDZoom" value="0.02"/>
+		<Event step="568" type="addCameraZoom" value="0.02"/>
+		<Event step="568" type="addHUDZoom" value="0.02"/>
+		<Event step="584" type="addCameraZoom" value="0.02"/>
+		<Event step="584" type="addHUDZoom" value="0.02"/>
+		<Event step="585" type="addCameraZoom" value="0.02"/>
+		<Event step="586" type="addCameraZoom" value="0.02"/>
+		<Event step="587" type="addCameraZoom" value="0.02"/>
+		<Event step="588" type="addCameraZoom" value="0.02"/>
+		<Event step="600" type="addCameraZoom" value="0.02"/>
+		<Event step="600" type="addHUDZoom" value="0.02"/>
+		<Event step="616" type="addCameraZoom" value="0.02"/>
+		<Event step="616" type="addHUDZoom" value="0.02"/>
+		<Event step="632" type="addCameraZoom" value="0.02"/>
+		<Event step="632" type="addHUDZoom" value="0.02"/>
+		<Event step="638" time="4" value="1" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="grey"/>
+		<Event step="640" time="16" value="1" property="contrast" ease="circOut" type="tweenShaderProperty" startValue="3" name="bloom2"/>
+		<Event step="648" type="addCameraZoom" value="0.02"/>
+		<Event step="648" type="addHUDZoom" value="0.02"/>
+		<Event step="664" type="addCameraZoom" value="0.02"/>
+		<Event step="664" type="addHUDZoom" value="0.02"/>
+		<Event step="680" type="addCameraZoom" value="0.02"/>
+		<Event step="680" type="addHUDZoom" value="0.02"/>
+		<Event step="696" type="addCameraZoom" value="0.02"/>
+		<Event step="696" type="addHUDZoom" value="0.02"/>
+		<Event step="712" type="addCameraZoom" value="0.02"/>
+		<Event step="712" type="addHUDZoom" value="0.02"/>
+		<Event step="728" type="addCameraZoom" value="0.02"/>
+		<Event step="728" type="addHUDZoom" value="0.02"/>
+		<Event step="744" type="addCameraZoom" value="0.02"/>
+		<Event step="744" type="addHUDZoom" value="0.02"/>
+		<Event step="760" type="addCameraZoom" value="0.02"/>
+		<Event step="760" type="addHUDZoom" value="0.02"/>
+		<Event step="764" type="addHUDZoom" value="0.02"/>
+		<Event step="764" type="addCameraZoom" value="0.02"/>
+		<Event step="765" type="addHUDZoom" value="0.02"/>
+		<Event step="765" type="addCameraZoom" value="0.02"/>
+		<Event step="766" type="addHUDZoom" value="0.02"/>
+		<Event step="766" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="grey"/>
+		<Event step="766" type="addCameraZoom" value="0.02"/>
+		<Event step="767" type="addHUDZoom" value="0.02"/>
+		<Event step="767" type="addCameraZoom" value="0.02"/>
+		<Event step="768" time="16" value="1" property="contrast" ease="circOut" type="tweenShaderProperty" startValue="3" name="bloom2"/>
+		<Event step="768" type="addHUDZoom" value="0.02"/>
+		<Event step="768" type="addCameraZoom" value="0.02"/>
+		<Event step="776" type="addCameraZoom" value="0.02"/>
+		<Event step="776" type="addHUDZoom" value="0.02"/>
+		<Event step="777" type="addCameraZoom" value="0.02"/>
+		<Event step="778" type="addCameraZoom" value="0.02"/>
+		<Event step="779" type="addCameraZoom" value="0.02"/>
+		<Event step="780" type="addCameraZoom" value="0.02"/>
+		<Event step="792" type="addCameraZoom" value="0.02"/>
+		<Event step="792" type="addHUDZoom" value="0.02"/>
+		<Event step="808" type="addCameraZoom" value="0.02"/>
+		<Event step="808" type="addHUDZoom" value="0.02"/>
+		<Event step="824" type="addCameraZoom" value="0.02"/>
+		<Event step="824" type="addHUDZoom" value="0.02"/>
+		<Event step="840" type="addCameraZoom" value="0.02"/>
+		<Event step="840" type="addHUDZoom" value="0.02"/>
+		<Event step="841" type="addCameraZoom" value="0.02"/>
+		<Event step="842" type="addCameraZoom" value="0.02"/>
+		<Event step="843" type="addCameraZoom" value="0.02"/>
+		<Event step="844" type="addCameraZoom" value="0.02"/>
+		<Event step="856" type="addHUDZoom" value="0.02"/>
+		<Event step="856" type="addCameraZoom" value="0.02"/>
+		<Event step="872" type="addHUDZoom" value="0.02"/>
+		<Event step="872" type="addCameraZoom" value="0.02"/>
+		<Event step="888" type="addHUDZoom" value="0.02"/>
+		<Event step="888" type="addCameraZoom" value="0.02"/>
+		<Event step="892" type="addCameraZoom" value="0.02"/>
+		<Event step="893" type="addCameraZoom" value="0.02"/>
+		<Event step="894" type="addCameraZoom" value="0.02"/>
+		<Event step="895" type="addCameraZoom" value="0.02"/>
+		<Event step="904" type="addHUDZoom" value="0.02"/>
+		<Event step="904" type="addCameraZoom" value="0.02"/>
+		<Event step="905" type="addCameraZoom" value="0.02"/>
+		<Event step="906" type="addCameraZoom" value="0.02"/>
+		<Event step="907" type="addCameraZoom" value="0.02"/>
+		<Event step="908" type="addCameraZoom" value="0.02"/>
+		<Event step="920" type="addHUDZoom" value="0.02"/>
+		<Event step="920" type="addCameraZoom" value="0.02"/>
+		<Event step="936" type="addHUDZoom" value="0.02"/>
+		<Event step="936" type="addCameraZoom" value="0.02"/>
+		<Event step="952" type="addHUDZoom" value="0.02"/>
+		<Event step="952" type="addCameraZoom" value="0.02"/>
+		<Event step="968" type="addHUDZoom" value="0.02"/>
+		<Event step="968" type="addCameraZoom" value="0.02"/>
+		<Event step="969" type="addCameraZoom" value="0.02"/>
+		<Event step="970" type="addCameraZoom" value="0.02"/>
+		<Event step="971" type="addCameraZoom" value="0.02"/>
+		<Event step="972" type="addCameraZoom" value="0.02"/>
+		<Event step="984" type="addHUDZoom" value="0.02"/>
+		<Event step="984" type="addCameraZoom" value="0.02"/>
+		<Event step="1000" type="addHUDZoom" value="0.02"/>
+		<Event step="1000" type="addCameraZoom" value="0.02"/>
+		<Event step="1008" type="addCameraZoom" value="0.02"/>
+		<Event step="1008" type="addHUDZoom" value="0.02"/>
+		<Event step="1012" type="addCameraZoom" value="0.02"/>
+		<Event step="1012" type="addHUDZoom" value="0.02"/>
+		<Event step="1016" type="addHUDZoom" value="0.02"/>
+		<Event step="1016" type="addCameraZoom" value="0.02"/>
+		<Event step="1020" type="addCameraZoom" value="0.02"/>
+		<Event step="1020" type="addHUDZoom" value="0.02"/>
+		<Event step="1024" type="addCameraZoom" value="0.02"/>
+		<Event step="1024" type="addHUDZoom" value="0.02"/>
+		<Event step="1032" type="addHUDZoom" value="0.02"/>
+		<Event step="1032" type="addCameraZoom" value="0.02"/>
+		<Event step="1033" type="addCameraZoom" value="0.02"/>
+		<Event step="1034" type="addCameraZoom" value="0.02"/>
+		<Event step="1035" type="addCameraZoom" value="0.02"/>
+		<Event step="1036" type="addCameraZoom" value="0.02"/>
+		<Event step="1048" type="addHUDZoom" value="0.02"/>
+		<Event step="1048" type="addCameraZoom" value="0.02"/>
+		<Event step="1064" type="addHUDZoom" value="0.02"/>
+		<Event step="1064" type="addCameraZoom" value="0.02"/>
+		<Event step="1080" type="addHUDZoom" value="0.02"/>
+		<Event step="1080" type="addCameraZoom" value="0.02"/>
+		<Event step="1096" type="addHUDZoom" value="0.02"/>
+		<Event step="1096" type="addCameraZoom" value="0.02"/>
+		<Event step="1097" type="addCameraZoom" value="0.02"/>
+		<Event step="1098" type="addCameraZoom" value="0.02"/>
+		<Event step="1099" type="addCameraZoom" value="0.02"/>
+		<Event step="1100" type="addCameraZoom" value="0.02"/>
+		<Event step="1112" type="addCameraZoom" value="0.02"/>
+		<Event step="1112" type="addHUDZoom" value="0.02"/>
+		<Event step="1128" type="addHUDZoom" value="0.02"/>
+		<Event step="1128" type="addCameraZoom" value="0.02"/>
+		<Event step="1136" type="addCameraZoom" value="0.02"/>
+		<Event step="1136" type="addHUDZoom" value="0.02"/>
+		<Event step="1140" type="addCameraZoom" value="0.02"/>
+		<Event step="1140" type="addHUDZoom" value="0.02"/>
+		<Event step="1144" type="addHUDZoom" value="0.02"/>
+		<Event step="1144" type="addCameraZoom" value="0.02"/>
+		<Event step="1148" type="addCameraZoom" value="0.02"/>
+		<Event step="1148" type="addHUDZoom" value="0.02"/>
+		<Event step="1152" type="addCameraZoom" value="0.02"/>
+		<Event step="1152" type="addHUDZoom" value="0.02"/>
+		<Event step="1156" type="addCameraZoom" value="0.02"/>
+		<Event step="1156" type="addHUDZoom" value="0.02"/>
+		<Event step="1157" type="addCameraZoom" value="0.02"/>
+		<Event step="1157" type="addHUDZoom" value="0.02"/>
+		<Event step="1158" type="addCameraZoom" value="0.02"/>
+		<Event step="1158" type="addHUDZoom" value="0.02"/>
+		<Event step="1160" type="addHUDZoom" value="0.02"/>
+		<Event step="1160" type="addCameraZoom" value="0.02"/>
+		<Event step="1161" type="addCameraZoom" value="0.02"/>
+		<Event step="1162" type="addCameraZoom" value="0.02"/>
+		<Event step="1163" type="addCameraZoom" value="0.02"/>
+		<Event step="1164" type="addCameraZoom" value="0.02"/>
+		<Event step="1176" type="addHUDZoom" value="0.02"/>
+		<Event step="1176" type="addCameraZoom" value="0.02"/>
+		<Event step="1192" type="addHUDZoom" value="0.02"/>
+		<Event step="1192" type="addCameraZoom" value="0.02"/>
+		<Event step="1208" type="addHUDZoom" value="0.02"/>
+		<Event step="1208" type="addCameraZoom" value="0.02"/>
+		<Event step="1224" type="addHUDZoom" value="0.02"/>
+		<Event step="1224" type="addCameraZoom" value="0.02"/>
+		<Event step="1225" type="addCameraZoom" value="0.02"/>
+		<Event step="1226" type="addCameraZoom" value="0.02"/>
+		<Event step="1227" type="addCameraZoom" value="0.02"/>
+		<Event step="1228" type="addCameraZoom" value="0.02"/>
+		<Event step="1240" type="addHUDZoom" value="0.02"/>
+		<Event step="1240" type="addCameraZoom" value="0.02"/>
+		<Event step="1256" type="addHUDZoom" value="0.02"/>
+		<Event step="1256" type="addCameraZoom" value="0.02"/>
+		<Event step="1272" type="addHUDZoom" value="0.02"/>
+		<Event step="1272" type="addCameraZoom" value="0.02"/>
+		<Event step="1278" time="4" value="1" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="grey"/>
+		<Event step="1280" time="16" value="1" property="contrast" ease="circOut" type="tweenShaderProperty" startValue="3" name="bloom2"/>
+		<Event step="1288" type="addHUDZoom" value="0.02"/>
+		<Event step="1288" type="addCameraZoom" value="0.02"/>
+		<Event step="1304" type="addHUDZoom" value="0.02"/>
+		<Event step="1304" type="addCameraZoom" value="0.02"/>
+		<Event step="1320" type="addHUDZoom" value="0.02"/>
+		<Event step="1320" type="addCameraZoom" value="0.02"/>
+		<Event step="1336" type="addHUDZoom" value="0.02"/>
+		<Event step="1336" type="addCameraZoom" value="0.02"/>
+		<Event step="1352" type="addHUDZoom" value="0.02"/>
+		<Event step="1352" type="addCameraZoom" value="0.02"/>
+		<Event step="1368" type="addHUDZoom" value="0.02"/>
+		<Event step="1368" type="addCameraZoom" value="0.02"/>
+		<Event step="1406" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="grey"/>
+		<Event step="1408" time="16" value="1" property="contrast" ease="circOut" type="tweenShaderProperty" startValue="3" name="bloom2"/>
+		<Event step="1416" type="addHUDZoom" value="0.02"/>
+		<Event step="1416" type="addCameraZoom" value="0.02"/>
+		<Event step="1417" type="addCameraZoom" value="0.02"/>
+		<Event step="1418" type="addCameraZoom" value="0.02"/>
+		<Event step="1419" type="addCameraZoom" value="0.02"/>
+		<Event step="1420" type="addCameraZoom" value="0.02"/>
+		<Event step="1432" type="addHUDZoom" value="0.02"/>
+		<Event step="1432" type="addCameraZoom" value="0.02"/>
+		<Event step="1448" type="addHUDZoom" value="0.02"/>
+		<Event step="1448" type="addCameraZoom" value="0.02"/>
+		<Event step="1464" type="addHUDZoom" value="0.02"/>
+		<Event step="1464" type="addCameraZoom" value="0.02"/>
+		<Event step="1480" type="addHUDZoom" value="0.02"/>
+		<Event step="1480" type="addCameraZoom" value="0.02"/>
+		<Event step="1481" type="addCameraZoom" value="0.02"/>
+		<Event step="1482" type="addCameraZoom" value="0.02"/>
+		<Event step="1483" type="addCameraZoom" value="0.02"/>
+		<Event step="1484" type="addCameraZoom" value="0.02"/>
+		<Event step="1496" type="addHUDZoom" value="0.02"/>
+		<Event step="1496" type="addCameraZoom" value="0.02"/>
+		<Event step="1512" type="addHUDZoom" value="0.02"/>
+		<Event step="1512" type="addCameraZoom" value="0.02"/>
+		<Event step="1528" type="addHUDZoom" value="0.02"/>
+		<Event step="1528" type="addCameraZoom" value="0.02"/>
+		<Event step="1544" type="addHUDZoom" value="0.02"/>
+		<Event step="1544" type="addCameraZoom" value="0.02"/>
+		<Event step="1545" type="addCameraZoom" value="0.02"/>
+		<Event step="1546" type="addCameraZoom" value="0.02"/>
+		<Event step="1547" type="addCameraZoom" value="0.02"/>
+		<Event step="1548" type="addCameraZoom" value="0.02"/>
+		<Event step="1560" type="addHUDZoom" value="0.02"/>
+		<Event step="1560" type="addCameraZoom" value="0.02"/>
+		<Event step="1576" type="addHUDZoom" value="0.02"/>
+		<Event step="1576" type="addCameraZoom" value="0.02"/>
+		<Event step="1592" type="addHUDZoom" value="0.02"/>
+		<Event step="1592" type="addCameraZoom" value="0.02"/>
+		<Event step="1608" type="addHUDZoom" value="0.02"/>
+		<Event step="1608" type="addCameraZoom" value="0.02"/>
+		<Event step="1609" type="addCameraZoom" value="0.02"/>
+		<Event step="1610" type="addCameraZoom" value="0.02"/>
+		<Event step="1611" type="addCameraZoom" value="0.02"/>
+		<Event step="1612" type="addCameraZoom" value="0.02"/>
+		<Event step="1624" type="addHUDZoom" value="0.02"/>
+		<Event step="1624" type="addCameraZoom" value="0.02"/>
+		<Event step="1640" type="addHUDZoom" value="0.02"/>
+		<Event step="1640" type="addCameraZoom" value="0.02"/>
+		<Event step="1656" type="addHUDZoom" value="0.02"/>
+		<Event step="1656" type="addCameraZoom" value="0.02"/>
+		<Event step="1660" type="addCameraZoom" value="0.02"/>
+		<Event step="1661" type="addCameraZoom" value="0.02"/>
+		<Event step="1662" type="addCameraZoom" value="0.02"/>
+		<Event step="1663" type="addCameraZoom" value="0.02"/>
+		<Event step="1664" type="addCameraZoom" value="0.02"/>
+		<Event step="1664" type="addHUDZoom" value="0.02"/>
+		<Event step="1672" type="addCameraZoom" value="0.02"/>
+		<Event step="1673" type="addCameraZoom" value="0.02"/>
+		<Event step="1674" type="addCameraZoom" value="0.02"/>
+		<Event step="1675" type="addCameraZoom" value="0.02"/>
+		<Event step="1676" type="addCameraZoom" value="0.02"/>
+		<Event step="1736" type="addCameraZoom" value="0.02"/>
+		<Event step="1737" type="addCameraZoom" value="0.02"/>
+		<Event step="1738" type="addCameraZoom" value="0.02"/>
+		<Event step="1739" type="addCameraZoom" value="0.02"/>
+		<Event step="1740" type="addCameraZoom" value="0.02"/>
+		<Event step="1800" type="addCameraZoom" value="0.02"/>
+		<Event step="1801" type="addCameraZoom" value="0.02"/>
+		<Event step="1802" type="addCameraZoom" value="0.02"/>
+		<Event step="1803" type="addCameraZoom" value="0.02"/>
+		<Event step="1804" type="addCameraZoom" value="0.02"/>
+		<Event step="1864" type="addCameraZoom" value="0.02"/>
+		<Event step="1865" type="addCameraZoom" value="0.02"/>
+		<Event step="1866" type="addCameraZoom" value="0.02"/>
+		<Event step="1867" type="addCameraZoom" value="0.02"/>
+		<Event step="1868" type="addCameraZoom" value="0.02"/>
+		<Event step="1920" time="32" value="1.5" property="zoom" ease="quintOut" type="tweenShaderProperty" startValue="1" name="barrel"/>
+		<Event step="1936" time="4" value="0" property="contrast" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="bloom2"/>
+		<Event step="1998" type="addCameraZoom" value="0.02"/>
+		<Event step="2000" type="addCameraZoom" value="0.01"/>
+		<Event step="2000" type="addHUDZoom" value="0.02"/>
+		<Event step="2003" type="addCameraZoom" value="0.02"/>
+		<Event step="2006" type="addCameraZoom" value="0.02"/>
+		<Event step="2008" type="addCameraZoom" value="0.01"/>
+		<Event step="2008" type="addHUDZoom" value="0.02"/>
+		<Event step="2011" type="addCameraZoom" value="0.02"/>
+		<Event step="2012" type="addCameraZoom" value="0.05"/>
+		<Event step="2014" type="addCameraZoom" value="0.02"/>
+		<Event step="2016" type="addHUDZoom" value="0.03"/>
+		<Event step="2016" type="addCameraZoom" value="0.05"/>
+		<Event step="2032" type="addHUDZoom" value="0.02"/>
+		<Event step="2032" type="addCameraZoom" value="0.01"/>
+		<Event step="2038" type="addHUDZoom" value="0.02"/>
+		<Event step="2038" type="addCameraZoom" value="0.01"/>
+		<Event step="2040" type="addHUDZoom" value="0.02"/>
+		<Event step="2040" type="addCameraZoom" value="0.01"/>
+		<Event step="2043" type="addHUDZoom" value="0.02"/>
+		<Event step="2043" type="addCameraZoom" value="0.01"/>
+		<Event step="2046" type="addHUDZoom" value="0.02"/>
+		<Event step="2046" type="addCameraZoom" value="0.01"/>
+		<Event step="2048" time="68" value="0" property="brightness" ease="cubeInOut" type="tweenShaderProperty" startValue="0.1" name="bloom2"/>
+		<Event step="2048" time="1" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="scanline"/>
+		<Event step="2048" time="56" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0.1" name="sobel"/>
+		<Event step="2048" time="16" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="bloom2"/>
+		<Event step="2048" time="1" value="0" property="strength" ease="cubeOut" type="tweenShaderProperty" startValue="0.003" name="caBlue"/>
+		<Event step="2080" time="48" value="5" property="size" ease="cubeInOut" type="tweenShaderProperty" startValue="0.4" name="vignette"/>
+		<Event step="2110" time="40" value="4" property="smokeStrength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="smoke"/>
+	</Events>
+</Modchart>

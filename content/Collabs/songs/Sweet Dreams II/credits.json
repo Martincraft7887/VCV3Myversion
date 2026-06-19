@@ -1,0 +1,28 @@
+{
+	"composer": "IvanoDrako and other",
+	"charter": "Sharik",
+	"originalComposer": "",
+	"startTime": 4500,
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 128,
+	"infoFontSize": 22,
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+	"midBorderTop": "#ff57f3",
+	"midBorderBot": "#261225",
+	"innerBorderTop": "#8730a2",
+	"innerBorderBot": "#190c2c",
+
+	"sobelStrength": 1.2,
+	"sobelIntensity": 1.0,
+	"mixGap": 2.5,
+
+	"outerBorderTopVIP": "#000000",
+	"outerBorderBotVIP": "#000000",
+	"midBorderTopVIP": "#f3ff18",
+	"midBorderBotVIP": "#381937",
+	"innerBorderTopVIP": "#142332",
+	"innerBorderBotVIP": "#000000",
+
+	"outerBorderSize": 11
+}
