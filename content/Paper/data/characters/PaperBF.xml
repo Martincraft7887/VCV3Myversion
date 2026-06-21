@@ -1,0 +1,12 @@
+<!DOCTYPE codename-engine-character>
+<character x="0" y="125" sprite="Boyfriend_Assets" scale="1.15" flipX="true" camx="-80" camy="-230" isPlayer="true" icon="bf-icons" color="#3C77BD">
+	<anim name="idle" anim="idle"/>
+	<anim name="singLEFT" anim="left" x="106.09" y="-8.7"/>
+	<anim name="singDOWN" anim="down" x="-7.83" y="-26.96"/>
+	<anim name="singUP" anim="up" x="-5.22" y="43.48"/>
+	<anim name="singRIGHT" anim="right" x="-29.57" y="5.22"/>
+	<anim name="singLEFTmiss" anim="mleft" x="90.43" y="19.13"/>
+	<anim name="singDOWNmiss" anim="mdown" x="-8.7" y="30.43"/>
+	<anim name="singUPmiss" anim="mup" x="-11.3" y="47.83"/>
+	<anim name="singRIGHTmiss" anim="mleft" x="82.61" y="15.65"/>
+</character>

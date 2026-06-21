@@ -8,7 +8,7 @@ var enabledExtraCharFade:Bool = false;
 function usesExtraCharFade():Bool {
 	var song = PlayState.SONG;
 	if (song == null || song.meta == null) return false;
-	return ["final destination vip", "intervention"].contains(song.meta.name.toLowerCase());
+	return ["final destination vip", "intervention", "final destination", "final destination god"].contains(song.meta.name.toLowerCase());
 }
 
 function postCreate() {

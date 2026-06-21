@@ -6,9 +6,7 @@ import funkin.backend.system.Controls.Control;
 import funkin.backend.assets.ModsFolderLibrary;
 import funkin.backend.assets.ModsFolder;
 import funkin.backend.utils.DiscordUtil;
-import funkin.backend.utils.NdllUtil;
 import funkin.backend.utils.WindowUtils;
-import funkin.game.GameOverSubstate;
 import funkin.game.PlayState;
 import funkin.menus.FreeplayState;
 import funkin.menus.MainMenuState;
@@ -20,19 +18,12 @@ var lastAppliedWindowTitle:String = "";
 var lastAppliedDiscordState:String = "";
 var windowTitleUpdateTimer:Float = 0;
 var discordWasDisabled:Bool = false;
-static var SET_TRANSPARENT = NdllUtil.getFunction("ndllexample", "ndllexample_set_windows_transparent", 4);
-
-function disableRaymarchWindowChroma() {
-	SET_TRANSPARENT(false, 17, 254, 201);
-}
 
 function new() {
 	setVoiidWindowTitle("");
-	disableRaymarchWindowChroma();
 }
 
 function destroy() {
-	disableRaymarchWindowChroma();
 	WindowUtils.winTitle = window.title = "Friday Night Funkin' - Codename Engine";
 }
 
@@ -247,7 +238,6 @@ function postStateSwitch()
 		FlxG.switchState(new ModState("VoiidMainMenuState"));
 		return;
 	}
-	disableRaymarchWindowChroma();
 	updateVoiidWindowTitle(true);
 	updateVoiidDiscordState(true);
 	
@@ -277,8 +267,6 @@ function postStateSwitch()
 
 function postUpdate(elapsed:Float) {
 	windowTitleUpdateTimer -= elapsed;
-	if (GameOverSubstate.instance != null)
-		disableRaymarchWindowChroma();
 	updateVoiidWindowTitle(false);
 	updateVoiidDiscordState(false);
 }

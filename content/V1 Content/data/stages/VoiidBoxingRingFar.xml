@@ -13,6 +13,6 @@
 	<girlfriend x="1900" y="830"/>
 	<combo x="1600"/>
 	<dad x="1137" y="952"/>
-	<boyfriend x="2393" y="965" camxoffset="-150" camyoffset="25"/>
+	<boyfriend x="2393" y="965" camxoffset="-150" camyoffset="25" spacingx="300"/>
 	<sprite name="unknown7" x="-750" y="-360" sprite="ruido" scroll="0" scale="4" updateHitbox="true"/>
 </stage>

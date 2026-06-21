@@ -93,7 +93,7 @@
 			<Property value="1" name="intensity"/>
 			<Property value="0" name="strength"/>
 		</Shader>
-		<Shader camHUD="true" camOther="false" camGame="false" shader="SobelAlphaVignetteEffect" name="Alpha" color="#545454">
+		<Shader camHUD="true" camOther="false" camGame="false" shader="alpha" name="Alpha" color="#545454">
 			<Property value="1" name="intensity"/>
 			<Property value="0" name="strength"/>
 		</Shader>

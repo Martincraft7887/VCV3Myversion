@@ -5,7 +5,9 @@
 			"songs": [
 				{
 					"name": "Flaming Glove",
-					"port": "Wiik_FG"
+					"port": "Wiik_FG",
+					"next of": "Boxing Gladiators"
+					
 				}
 			]
 		}

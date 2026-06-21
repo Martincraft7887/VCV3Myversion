@@ -100,6 +100,7 @@ vec3 GetRayDir(vec2 uv, vec3 p, vec3 l, float z){
 
 void main() {
     vec2 uv = openfl_TextureCoordv.xy;
+    vec4 originalCol = texture(iChannel0, clamp(uv, vec2(0.001), vec2(0.999)));
     float aspect = iResolution.x / iResolution.y;
 
     uv -= 0.5;
@@ -121,12 +122,12 @@ void main() {
     ro = ro * rotateX(rotation.x) * rotateY(rotation.y) * rotateZ(rotation.z);
     vec3 rd = GetRayDir(uv - vec2(0.5), ro, vec3(0.), 1.0);
 
-    vec4 col = vec4(0.0);
+    vec4 col = originalCol;
     float d = RayMarch(ro, rd);
 
     if (d < MAX_DIST) {
         vec3 p = ro + rd * d;
-        vec2 tuv = vec2(p.x, p.y) * 0.5 + 0.5;
+        vec2 tuv = clamp(vec2(p.x, p.y) * 0.5 + 0.5, vec2(0.001), vec2(0.999));
 
         const float MAX_DIST_PX = 50.0;
         float max_distort_px = MAX_DIST_PX * barrel;
@@ -144,7 +145,7 @@ void main() {
             for (int i = 0; i < num_iter; i++) {
                 vec4 w = spectrum_offset_rgb(t);
                 sumw += w.rgb;
-                vec2 uvd = distort(tuv, t, min_distort, max_distort);
+                vec2 uvd = clamp(distort(tuv, t, min_distort, max_distort), vec2(0.001), vec2(0.999));
                 sumcol += w * render(uvd);
                 t += stepsiz;
             }
@@ -160,10 +161,10 @@ void main() {
             vec4 ru = rd2 * (1.0 + strength * rd2 * rd2);
             vec2 dir = vec2(cos(theta), sin(theta));
 
-            vec2 qr = dir * ru.x / 2.0 + 0.5;
-            vec2 qg = dir * ru.y / 2.0 + 0.5;
-            vec2 qb = dir * ru.z / 2.0 + 0.5;
-            vec2 qa = dir * ru.w / 2.0 + 0.5;
+            vec2 qr = clamp(dir * ru.x / 2.0 + 0.5, vec2(0.001), vec2(0.999));
+            vec2 qg = clamp(dir * ru.y / 2.0 + 0.5, vec2(0.001), vec2(0.999));
+            vec2 qb = clamp(dir * ru.z / 2.0 + 0.5, vec2(0.001), vec2(0.999));
+            vec2 qa = clamp(dir * ru.w / 2.0 + 0.5, vec2(0.001), vec2(0.999));
 
             col = vec4(
                 render(qr).x,

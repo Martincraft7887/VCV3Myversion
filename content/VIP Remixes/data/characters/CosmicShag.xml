@@ -4,7 +4,7 @@
 	flipX="false"
 	antialiasing="true"
 	color="#28282B"
-    icon="VoiidSXM-god"
+    icon="CVoiidSXM-god"
 >
 
 	<anim name="idle" anim="Idle0" fps="24" loop="true" x="0" y="-20"/>

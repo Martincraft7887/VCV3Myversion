@@ -6,6 +6,7 @@ import flixel.util.FlxTimer;
 import funkin.backend.FunkinText;
 import funkin.backend.MusicBeatState;
 import funkin.backend.scripting.ModSubState;
+import flixel.FlxG;
 import lime.utils.Assets;
 
 var awardData:Array<Dynamic> = [
@@ -69,12 +70,12 @@ function isValidCompletion():Bool {
 
 function normalSongKey(name:String):String {
 	if (name == null) return "";
-	var key = Std.string(name).toLowerCase().trim();
-	key = key.replace(" ", "");
-	key = key.replace("-", "");
-	key = key.replace("_", "");
-	key = key.replace("'", "");
-	key = key.replace("\"", "");
+	var key:String = StringTools.trim(Std.string(name).toLowerCase());
+	key = StringTools.replace(key, " ", "");
+	key = StringTools.replace(key, "-", "");
+	key = StringTools.replace(key, "_", "");
+	key = StringTools.replace(key, "'", "");
+	key = StringTools.replace(key, "\"", "");
 	return key;
 }
 
@@ -436,11 +437,16 @@ function unlockWeekIfComplete(songName:String) {
 }
 
 function onSongEnd(event) {
+	if (resultsOpen) {
+		event.cancel();
+		return;
+	}
+
+	if (allowRealSongEnd)
+		return;
+
 	earnSongGlovesNow();
 	unlockSongAwardsNow();
-
-	if (allowRealSongEnd || resultsOpen)
-		return;
 
 	event.cancel();
 	resultsOpen = true;

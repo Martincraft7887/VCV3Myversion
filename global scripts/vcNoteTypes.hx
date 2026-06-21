@@ -17,8 +17,8 @@ var parryAnimTime:Float = 583;
 var punchLateHitTiming:Float = 150;
 var bulletTracerCount:Int = 0;
 var dadBulletShootTimer:FlxTimer = null;
-var bulletTracerOffsetX:Float = 300;
-var bulletTracerOffsetY:Float = 35;
+var bulletTracerOffsetX:Float = 225;
+var bulletTracerOffsetY:Float = -315;
 public var noteTypeData = [
 	"none" => null
 ];

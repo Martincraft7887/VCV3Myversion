@@ -12,6 +12,7 @@ import lime.utils.Assets;
 var bg:FlxSprite;
 var camResults:FlxCamera;
 var ready:Bool = false;
+var acceptReleased:Bool = false;
 var activeAwardPopups:Int = 0;
 
 function create() {
@@ -387,7 +388,13 @@ function update(elapsed:Float) {
 	if (!ready)
 		return;
 
-	if (controls.ACCEPT || FlxG.keys.justPressed.ENTER) {
+	if (!acceptReleased) {
+		if (!controls.ACCEPT && !FlxG.keys.pressed.ENTER && !FlxG.keys.pressed.SPACE)
+			acceptReleased = true;
+		return;
+	}
+
+	if (controls.ACCEPT || FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE) {
 		ready = false;
 		close();
 		try {

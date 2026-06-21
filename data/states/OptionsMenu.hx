@@ -149,7 +149,7 @@ function generateMenu()
 		FlxG.save.flush();
 	}
 	if (Reflect.field(FlxG.save.data, "voiidBotplay") == null) {
-		Reflect.setField(FlxG.save.data, "voiidBotplay", true);
+		Reflect.setField(FlxG.save.data, "voiidBotplay", false);
 		FlxG.save.flush();
 	}
 	if (Reflect.field(FlxG.save.data, "voiidNoMechanics") == null) {

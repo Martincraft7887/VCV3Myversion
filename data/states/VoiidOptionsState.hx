@@ -11,6 +11,7 @@ import funkin.backend.scripting.ModState;
 import funkin.backend.scripting.ModSubState;
 import funkin.game.PlayState;
 import funkin.options.Options;
+import funkin.options.OptionsMenu;
 
 var pages:Dynamic = {};
 var pageStack:Array<String> = [];
@@ -110,7 +111,7 @@ function createPages() {
 	]);
 
 	setPage("Mod Settings", [
-		boolOption("Botplay", "voiidBotplay", true, false),
+		boolOption("Botplay", "voiidBotplay", false, false),
 		boolOption("No Mechanics", "voiidNoMechanics", false, false),
 		boolOption("No Death", "voiidNoDeath", false, false),
 		boolOption("Modcharts", "voiidModcharts", true, false),
@@ -168,7 +169,10 @@ function createPages() {
 		boolOption("Allow Config Warning", "allowConfigWarning", true, true),
 		boolOption("FPS Counter", "fpsCounter", true, true),
 		boolOption("Freeplay Music Auto Play", "voiidFreeplayMusic", true, false),
-		boolOption("Disable Debug Menus", "voiidDisableDebugMenus", false, false)
+		boolOption("Disable Debug Menus", "voiidDisableDebugMenus", false, false),
+		actionOption("Codename Options", function() {
+			FlxG.switchState(new OptionsMenu());
+		})
 	]);
 }
 

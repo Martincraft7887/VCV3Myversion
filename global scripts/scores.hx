@@ -23,7 +23,7 @@ var popupScale:Float = 0.5;
 var popupSpacing:Int = 5;
 var krazyWindowMs:Float = 25;
 var fadeTimer:Float = 0;
-var centerY:Float = FlxG.height * 0.45;
+var centerY:Float = FlxG.height * 0.5;
 
 var countKrazy:Int = 0;
 var countSick:Int = 0;
@@ -104,7 +104,7 @@ function punchCenterScreen():Bool {
 }
 
 function getMsY():Float {
-	return centerY + 145;
+	return centerY + 125;
 }
 
 function hideVanillaScore(ps:PlayState) {
@@ -431,7 +431,7 @@ function showPopupRating(rating:String, combo:Int) {
 	if (!showRating && !showComboPopup)
 		return;
 
-	var centerX = punchCenterScreen() ? FlxG.width * 0.5 : getPlayerStrumlineCenterX();
+	var centerX = FlxG.width * 0.5;
 
 	if (showRating) {
 		var ratingSprite:FlxSprite = new FlxSprite();

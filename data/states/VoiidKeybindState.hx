@@ -5,6 +5,7 @@ import flixel.text.FlxTextBorderStyle;
 import flixel.util.FlxColor;
 import funkin.backend.FunkinText;
 import funkin.backend.scripting.ModState;
+import funkin.options.Options;
 import Xml;
 
 var keyGroups:Array<Dynamic> = [];
@@ -170,9 +171,7 @@ function update(elapsed:Float) {
 				waitingIndex = -1;
 				updatePrompt();
 			} else {
-				var savePath = getSavePath(waitingIndex);
-				Reflect.setProperty(FlxG.save.data, savePath, key);
-				FlxG.save.flush();
+				saveBind(waitingIndex, key);
 				waitingIndex = -1;
 				CoolUtil.playMenuSFX(1, 0.7);
 				buildReceptors();
@@ -302,6 +301,37 @@ function getSavePath(index:Int):String {
 	return playerTwo ? path + "p2" : path;
 }
 
+function saveBind(index:Int, key:FlxKey) {
+	Reflect.setProperty(FlxG.save.data, getSavePath(index), key);
+	mirrorFourKeyBind(index, key);
+	FlxG.save.flush();
+}
+
+function isFourKeyGroup():Bool {
+	if (keyGroups.length <= 0 || curKeyCount < 0 || curKeyCount >= keyGroups.length) return false;
+	var group = keyGroups[curKeyCount];
+	return group.keys.length == 4 && Std.string(group.name).toUpperCase() == "FOUR KEY";
+}
+
+function mirrorFourKeyBind(index:Int, key:FlxKey) {
+	if (!isFourKeyGroup()) return;
+	var noteFields = ["NOTE_LEFT", "NOTE_DOWN", "NOTE_UP", "NOTE_RIGHT"];
+	if (index < 0 || index >= noteFields.length) return;
+
+	var field = (playerTwo ? "P2_" : "P1_") + noteFields[index];
+	Reflect.setField(Options, field, [key]);
+	Options.applyKeybinds();
+	Options.save();
+}
+
+function mirrorAllFourKeyBinds() {
+	if (!isFourKeyGroup()) return;
+	for (i in 0...keyGroups[curKeyCount].keys.length) {
+		var value:FlxKey = cast Reflect.getProperty(FlxG.save.data, getSavePath(i));
+		mirrorFourKeyBind(i, value);
+	}
+}
+
 function getBindText(index:Int):String {
 	var value = Reflect.getProperty(FlxG.save.data, getSavePath(index));
 	var text = CoolUtil.keyToString(value);
@@ -335,6 +365,7 @@ function resetCurrentKeyCount() {
 		Reflect.setProperty(FlxG.save.data, group.keys[i].savePath + "p2", null);
 	}
 	loadKeyData();
+	mirrorAllFourKeyBinds();
 	FlxG.save.flush();
 	CoolUtil.playMenuSFX(2, 0.7);
 }

@@ -1,5 +1,5 @@
 {
-	"composer": "ImPaper (Inst, Voices) and Lord Vo##d (Voices)",
+	"composer": "ImPaper (Inst, Voices) and Lord Voiid (Voices)",
 	"charter": "RhysRJJ",
 	"originalComposer": "Tomz_ and Singular",
 	"startTime": 21942,
@@ -13,7 +13,7 @@
 	"innerBorderTop": "#3f3f3f",
 	"innerBorderBot": "#121617",
 	"mixGap": 2.5,
-
+	"logo": "Paper",
 	"sobelStrength": 0.7,
 	"sobelIntensity": 0.8,
 	"outerBorderSize": 10

@@ -112,7 +112,7 @@ var quickNotice:FunkinText = null;
 var quickTexts:FlxTypedGroup<FunkinText> = null;
 
 var quickItems:Array<Dynamic> = [
-    {label: "Botplay", save: "voiidBotplay", fallback: true, needsRestart: false},
+    {label: "Botplay", save: "voiidBotplay", fallback: false, needsRestart: false},
     {label: "No mechanics", save: "voiidNoMechanics", fallback: false, needsRestart: true},
     {label: "Modcharts", save: "voiidModcharts", fallback: true, needsRestart: true},
     {label: "No death", save: "voiidNoDeath", fallback: false, needsRestart: false}

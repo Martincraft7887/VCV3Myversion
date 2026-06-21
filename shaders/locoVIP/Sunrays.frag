@@ -17,11 +17,13 @@ vec3 attenuation(vec3 c, float d)
 
 vec3 radial_blur_filter(in vec2 origin, in vec2 point)
 {
+    point = clamp(point, vec2(0.001), vec2(0.999));
     vec4 fon = texture2D(bitmap, point);
     vec3 col = fon.rgb * fon.a;
     vec3 light = vec3(0.0);
     vec2 v = point - origin;
     float l = length(v);
+    if (l <= 0.0001) return col;
     v = normalize(v); 
     float dz =  hh / num_samples * ksum;
     float l1 = l/(1.0 + hh);
@@ -29,7 +31,7 @@ vec3 radial_blur_filter(in vec2 origin, in vec2 point)
     for(float s = 0.0; s < num_samples; s++)
     {
         float l2 = l1 + al*s/num_samples;
-        vec2 p = origin + v*l2;
+        vec2 p = clamp(origin + v*l2, vec2(0.001), vec2(0.999));
         
         vec3 c = texture2D(bitmap, p).rgb;
         float pst = smoothstep(kstep, 0.5, c.g);
@@ -50,7 +52,7 @@ vec3 radial_blur_filter(in vec2 origin, in vec2 point)
 
 void main()
 {
-    vec2 pt = (openfl_TextureCoordv.xy*openfl_TextureSize.xy)/openfl_TextureSize.xy;
+    vec2 pt = clamp((openfl_TextureCoordv.xy*openfl_TextureSize.xy)/openfl_TextureSize.xy, vec2(0.001), vec2(0.999));
     vec4 col = texture2D(bitmap, pt);
     vec2 mouse = vec2(0.5+0.1*sin(iTime*2.0),0.25+0.1*cos(iTime*1.25));
     col.rgb = radial_blur_filter(mouse, pt);

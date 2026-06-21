@@ -1,5 +1,5 @@
 <!DOCTYPE codename-engine-character>
-<character sprite="Voiid BF Wiik 4" flipX="true" camx="-150" camy="-50" isPlayer="true" icon="Wiik1BFRTX-icons" color="#E18F8F" isGF="false">
+<character sprite="Taro" flipX="true" camx="-150" camy="-50" isPlayer="true" icon="Wiik1BFRTX-icons" color="#E18F8F" isGF="false">
 	<anim name="idle" anim="BF idle dance0" x="-4" y="-6" fps="24" loop="false"/>
 	<anim name="singRIGHT" anim="BF SING RIGHT0" x="-48" y="-9" fps="24" loop="false"/>
 	<anim name="singDOWN" anim="BF SING DOWN0" x="-11" y="-57" fps="24" loop="false"/>

@@ -4,6 +4,7 @@ import flixel.util.FlxTimer;
 var charactersMap:Array<Dynamic> = [];
 var stageMap = ["" => null];
 var warmObjects:Array<Dynamic> = [];
+var preloadedObjectStates:Array<Dynamic> = [];
 
 function voiidDebugTrace(message:String) {
 	if (Reflect.field(FlxG.save.data, "voiidDebugLogs") == true)
@@ -27,6 +28,7 @@ function warmPreloadedObject(obj:Dynamic, removeAfterWarm:Bool = false) {
 	}
 
 	var wasInState = members != null && members.indexOf(obj) >= 0;
+	rememberPreloadedObjectState(obj, removeAfterWarm);
 	var data = {
 		obj: obj,
 		alpha: obj.alpha,
@@ -80,9 +82,38 @@ function restoreWarmObject(obj:Dynamic) {
 		return;
 	}
 
+	var state = getPreloadedObjectState(obj);
+	if (state != null) {
+		obj.alpha = state.alpha;
+		obj.visible = state.visible;
+		obj.active = state.active;
+		return;
+	}
+
 	obj.alpha = 1;
 	obj.visible = true;
 	obj.active = true;
+}
+
+function rememberPreloadedObjectState(obj:Dynamic, removeAfterWarm:Bool = false) {
+	for (state in preloadedObjectStates) {
+		if (state.obj == obj) return;
+	}
+
+	preloadedObjectStates.push({
+		obj: obj,
+		alpha: obj.alpha,
+		visible: obj.visible,
+		active: obj.active,
+		removeAfterWarm: removeAfterWarm
+	});
+}
+
+function getPreloadedObjectState(obj:Dynamic) {
+	for (state in preloadedObjectStates) {
+		if (state.obj == obj) return state;
+	}
+	return null;
 }
 
 function getCharactersMap(strumlineID:Int):Map<String, Array<Character>> {
@@ -150,6 +181,7 @@ function onCharactersPreload(group:String, characterNames:String) {
 		character.globalOffset.y -= (character.frameHeight*character.scale.y);
 		character.dance();
 		warmPreloadedObject(character);
+		setCharacterScriptsActive(character, false);
 		arr.push(character);
 	}
 	map.set(n, arr);
@@ -166,6 +198,7 @@ function changeCharacters(group:String, characterNames:String) {
 	var strumline = strumLines.members[strumlineID];
 
 	for (char in strumline.characters) {
+		setCharacterScriptsActive(char, false);
 		remove(char);
 	}
 	strumline.characters = [];
@@ -179,12 +212,31 @@ function changeCharacters(group:String, characterNames:String) {
 
 		for (char in newCharacters) {
 			restoreWarmObject(char);
+			setCharacterScriptsActive(char, true);
 			strumline.characters.push(char);
 		}
 		updateCharacterPositions(newCharacters, strumlineID);
 	}
 
 	scripts.call("onCharactersChanged", [strumlineID, characterNames]);
+}
+
+function setCharacterScriptsActive(char:Character, active:Bool) {
+	if (char == null || char.scripts == null) return;
+	if (char.extra["voiidScriptsActive"] == active) return;
+
+	if (active) {
+		for (script in char.scripts.scripts)
+			script.active = true;
+		char.scripts.call("create");
+		char.scripts.call("postCreate");
+	} else {
+		char.scripts.call("destroy");
+		for (script in char.scripts.scripts)
+			script.active = false;
+	}
+
+	char.extra["voiidScriptsActive"] = active;
 }
 
 function parseCharacterNames(names) {

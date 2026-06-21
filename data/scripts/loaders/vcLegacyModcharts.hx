@@ -1,5 +1,4 @@
 import Xml;
-import funkin.backend.utils.NdllUtil;
 var enabled = Options.gameplayShaders;
 
 public var modcharts = Reflect.field(FlxG.save.data, "voiidModcharts") != false;
@@ -69,44 +68,13 @@ function getEventTypeID(name) {
 var legacyNoteModchart:Bool = false;
 var noteModifiers:Array<Int> = [];
 var debugInitModifierCount:Int = 0;
-var raymarchTransparentBackgroundActive:Bool = false;
-var raymarchShaderNames:Array<String> = [];
-var chromaKeyColor = FlxColor.fromRGB(17, 254, 201, 255);
-static var SET_TRANSPARENT = NdllUtil.getFunction("ndllexample", "ndllexample_set_windows_transparent", 4);
 
 function voiidDebugTrace(message:String) {
 	if (Reflect.field(FlxG.save.data, "voiidDebugLogs") == true)
 		trace(message);
 }
 
-function isRaymarchShaderName(name:String):Bool {
-	if (name == null) return false;
-	var lower = name.toLowerCase();
-	return lower.indexOf("raymarch") != -1 || lower.indexOf("raytracing") != -1 || lower.indexOf("spiraltunnel") != -1;
-}
-
-function enableRaymarchChromaKey() {
-	if (raymarchTransparentBackgroundActive) return;
-	raymarchTransparentBackgroundActive = true;
-
-	SET_TRANSPARENT(true, 17, 254, 201);
-	if (camGame != null) camGame.bgColor = chromaKeyColor;
-}
-
-function disableRaymarchChromaKey() {
-	if (!raymarchTransparentBackgroundActive) return;
-	raymarchTransparentBackgroundActive = false;
-
-	SET_TRANSPARENT(false, 17, 254, 201);
-}
-
-function onGameOver(event) {
-	disableRaymarchChromaKey();
-}
-
 function destroy() {
-	disableRaymarchChromaKey();
-
 	for (s in shaders) s = null;
 	shaders.splice(0, shaders.length);
 
@@ -119,7 +87,6 @@ function destroy() {
 	currentValueList.splice(0, currentValueList.length);
 	eventIndexList.splice(0, eventIndexList.length);
 	noteModifiers.splice(0, noteModifiers.length);
-	raymarchShaderNames.splice(0, raymarchShaderNames.length);
 	for (e in events) e = null;
 	events.splice(0, events.length);
 	for (e in originalEvents) e = null;
@@ -155,8 +122,6 @@ function loadEvents() {
 			switch(event.get("type")) {
 				case "initShader":
 					var path = event.get("shader");
-					if (isRaymarchShaderName(path) && !raymarchShaderNames.contains(event.get("name")))
-						raymarchShaderNames.push(event.get("name"));
 
 					var s = new CustomShader(legacyShaderRoot + path);
 					shaders[getShaderIndex(event.get("name"))] = s;
@@ -200,8 +165,6 @@ function loadEvents() {
 					}
 
 					if (s != null) {
-						if (cam == camGame && raymarchShaderNames.contains(event.get("name")))
-							enableRaymarchChromaKey();
 						cam.addShader(s);
 					}
 						

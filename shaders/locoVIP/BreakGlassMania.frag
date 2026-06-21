@@ -6,8 +6,6 @@
 
 uniform float u_pointCount;
 uniform float strength;
-uniform float zoom;
-
 #define MAX_POINTS 30
 
 float random(vec2 p){
@@ -22,16 +20,19 @@ vec2 random2(vec2 p){
 vec4 breakGlass(vec2 uv, float str) {
     vec2 point[MAX_POINTS];
     int POINTS = int(u_pointCount);
+    if(POINTS > MAX_POINTS) POINTS = MAX_POINTS;
+    if(POINTS < 1) POINTS = 1;
     for(int i = 0; i < MAX_POINTS; i++){
         if(i >= POINTS) break;
         point[i] = random2(vec2(float(i)));
     }
 
-    float breakTime = max(str, 0.0);
+    float breakTime = clamp(str, 0.0, 1.0);
 
-    vec4 col = texture(iChannel0, uv);
+    vec4 sourceCol = texture(iChannel0, uv);
+    vec4 col = sourceCol;
     if(breakTime > 0.0){
-        col = vec4(0.0);
+        bool found = false;
 
         for(int i = 0; i < MAX_POINTS; i++){
             if(i >= POINTS) break;
@@ -59,19 +60,18 @@ vec4 breakGlass(vec2 uv, float str) {
 
             if(match){
                 col = texture(iChannel0, U);
+                found = true;
                 break;
             }
         }
+        if(!found) col = sourceCol;
     }
 
     return col;
 }
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord){
-    vec2 uv = fragCoord / iResolution.xy;
-
-    vec2 center = vec2(0.5);
-    uv = (uv - center) / zoom + center;
+    vec2 uv = clamp(openfl_TextureCoordv, vec2(0.001), vec2(0.999));
 
     fragColor = breakGlass(uv, strength);
 }

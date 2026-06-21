@@ -1,7 +1,6 @@
 //
 import haxe.io.Path;
 import Xml;
-import funkin.backend.utils.NdllUtil;
 
 public var modcharts = Reflect.field(FlxG.save.data, "voiidModcharts") != false;
 public var opponentPlay = PlayState.opponentMode;
@@ -17,50 +16,6 @@ var eventUpdateFuncs = [];
 public var modchartItems = [];
 var useNewModchartLoader:Bool = true;
 var legacyModchartLoaded:Bool = false;
-var raymarchChromaKeyActive:Bool = false;
-var raymarchChromaKeyColor = FlxColor.fromRGB(17, 254, 201, 255);
-static var SET_TRANSPARENT = NdllUtil.getFunction("ndllexample", "ndllexample_set_windows_transparent", 4);
-
-function enableRaymarchChromaKey() {
-	if (raymarchChromaKeyActive) return;
-	raymarchChromaKeyActive = true;
-
-	SET_TRANSPARENT(true, 17, 254, 201);
-	if (camGame != null) camGame.bgColor = raymarchChromaKeyColor;
-}
-
-function disableRaymarchChromaKey() {
-	if (!raymarchChromaKeyActive) return;
-	raymarchChromaKeyActive = false;
-
-	SET_TRANSPARENT(false, 17, 254, 201);
-}
-
-function onGameOver(event) {
-	disableRaymarchChromaKey();
-}
-
-function isRaymarchShaderName(name:String):Bool {
-	if (name == null) return false;
-	var lower = name.toLowerCase();
-	return lower.indexOf("raymarch") != -1 || lower.indexOf("raytracing") != -1 || lower.indexOf("spiraltunnel") != -1;
-}
-
-function xmlHasCamGameRaymarch(xml:Xml):Bool {
-	for (shader in xml.elementsNamed("Shader")) {
-		if (shader.get("camGame") == "true" && isRaymarchShaderName(shader.get("shader")))
-			return true;
-	}
-
-	for (list in xml.elementsNamed("Init")) {
-		for (shader in list.elementsNamed("Shader")) {
-			if (shader.get("camGame") == "true" && isRaymarchShaderName(shader.get("shader")))
-				return true;
-		}
-	}
-
-	return false;
-}
 
 public function createModchartItem(n, p, t, v, o) {
 	var item = {
@@ -140,8 +95,6 @@ function isLegacyModchartXML(xml:Xml):Bool {
 }
 
 function destroy() {
-	disableRaymarchChromaKey();
-
 	for (e in modchartItems) e = null;
 	modchartItems.splice(0, modchartItems.length);
 	for (e in events) e = null;
@@ -199,11 +152,6 @@ function loadEvents() {
 		voiidDebugTrace("modchartLoader: skipping legacy modchart xml");
 		return;
 	}
-
-	if (xmlHasCamGameRaymarch(xml))
-		enableRaymarchChromaKey();
-	else
-		disableRaymarchChromaKey();
 
 	for (name => script in itemScripts) {
 		script.call("setupDefaultsGame", []);

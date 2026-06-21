@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character x="-200" y="-200" sprite="paperwiik1matt" flipX="false" isPlayer="false" icon="wiik1matt-icons" color="#0053FF" scale="0.48" camx="100" camy="-200">
+	<anim name="idle" anim="idle" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="left" x="534.74" y="-132.63" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="down" x="292.63" y="-138.95" fps="24" loop="false"/>
+	<anim name="singUP" anim="up" x="178.95" y="153.68" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="right" x="18.95" y="-162.11" fps="24" loop="false"/>
+</character>

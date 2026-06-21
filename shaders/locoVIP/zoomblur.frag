@@ -17,7 +17,7 @@ void main() {
 
     for (int i=0; i< int(focusDetail); i++) {
         float power = 1.0 - focusPower * (1.0/openfl_TextureSize.x) * float(i);
-        outColor += flixel_texture2D(bitmap, focus * power + pos);
+        outColor += flixel_texture2D(bitmap, clamp(focus * power + pos, vec2(0.001), vec2(0.999)));
     }
 
     outColor *= 1.0 / focusDetail;
