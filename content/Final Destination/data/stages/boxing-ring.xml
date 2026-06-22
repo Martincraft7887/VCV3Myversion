@@ -1,9 +1,0 @@
-<!DOCTYPE codename-engine-stage>
-<stage folder="stages/Mii Boxing Arena MIM" name="boxing-ring" zoom="0.8">
-	<sprite name="bg" sprite="bg" x="-360" y="-475" scroll="1" antialiasing="true"/>
-	<sprite name="ring" sprite="ring" x="-700" y="0" scroll="1" antialiasing="true"/>
-
-	<girlfriend x="775" y="575" scroll="1"/>
-	<dad x="250" y="700" spacingx="200" spacingy="50" scroll="1"/>
-	<boyfriend x="1025" y="400" camxoffset="0" camyoffset="-100" scroll="1"/>
-</stage>
