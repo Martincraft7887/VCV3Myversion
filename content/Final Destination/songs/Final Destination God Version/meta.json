@@ -1,0 +1,14 @@
+{
+	"opponentModeAllowed": false,
+	"icon": "",
+	"difficulties": [
+		"God"
+	],
+	"color": "#FFFFFF",
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"displayName": "Final Destination God Ver",
+	"needsVoices": true,
+	"beatsPerMeasure": 4,
+	"bpm": 152
+}

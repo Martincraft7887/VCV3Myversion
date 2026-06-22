@@ -225,6 +225,47 @@ public function updateNotePaths() {
 }
 
 //fixes for splashes
+function getSplashShaderFloat(shader:Dynamic, name:String, fallback:Float = 0):Float {
+	if (shader == null) return fallback;
+
+	try {
+		var value = Reflect.getProperty(shader, name);
+		if (value == null) value = Reflect.field(shader, name);
+		if (value == null) return fallback;
+
+		var parsed = Std.parseFloat(Std.string(value));
+		return Math.isNaN(parsed) ? fallback : parsed;
+	} catch(e:Dynamic) {
+		return fallback;
+	}
+}
+
+function getSplashVisualCenterX(strum:Dynamic):Float {
+	if (strum == null) return FlxG.width * 0.5;
+
+	var center = strum.x + (strum.width * 0.5);
+	var shader = Reflect.field(strum, "shader");
+	if (shader != null) {
+		var shaderCenter = getSplashShaderFloat(shader, "screenX", Math.NaN);
+		if (!Math.isNaN(shaderCenter))
+			center = shaderCenter;
+	}
+	return center;
+}
+
+function getSplashVisualCenterY(strum:Dynamic):Float {
+	if (strum == null) return FlxG.height * 0.5;
+
+	var center = strum.y + (strum.height * 0.5);
+	var shader = Reflect.field(strum, "shader");
+	if (shader != null) {
+		var shaderCenter = getSplashShaderFloat(shader, "screenY", Math.NaN);
+		if (!Math.isNaN(shaderCenter))
+			center = shaderCenter;
+	}
+	return center;
+}
+
 function onNoteHit(event)
 {
 	if (event.showSplash)
@@ -234,7 +275,11 @@ function onNoteHit(event)
 		//show splash func (but we need to keep the splash sprite for after)
 		splashHandler.__grp = splashHandler.getSplashGroup(event.note.splash);
 		var splash = splashHandler.__grp.showOnStrum(event.note.__strum);
+		if (splash == null) return;
 		splash.shader = event.note.__strum.shader;
+		splash.setPosition(
+			getSplashVisualCenterX(event.note.__strum) - (splash.width / 2),
+			getSplashVisualCenterY(event.note.__strum) - (splash.height / 2));
 		splashHandler.add(splash);
 		// max 8 rendered splashes
 		while(splashHandler.members.length > 8)

@@ -52,6 +52,8 @@ var timerBarHeight:Float = 16;
 var timerBarPadding:Float = 4;
 var timerTopY:Float = 2;
 var timerTextTopY:Float = 20;
+var timerSkinPrefix:String = "voiid/";
+var timerSkinChanges:Array<Dynamic> = [];
 
 
 
@@ -298,6 +300,46 @@ function revealTimerSongName(?name:String) {
     updateTimerText();
 }
 
+function cacheTimerSkinChanges() {
+    timerSkinChanges = [];
+    for (event in events) {
+        if (event.name == "Change UI Skin") {
+            timerSkinChanges.push({
+                time: event.time,
+                prefix: event.params[0]
+            });
+        }
+    }
+
+    if (timerSkinChanges.length > 0) {
+        timerSkinChanges.sort(function(a, b) {
+            if(a.time < b.time) return -1;
+            else if(a.time > b.time) return 1;
+            else return 0;
+        });
+
+        if (timerSkinChanges[0].time <= 0)
+            timerSkinPrefix = timerSkinChanges[0].prefix;
+    }
+}
+
+function updateTimerSkinBySongPosition() {
+    if (timerSkinChanges.length == 0) return;
+
+    var prefix = timerSkinPrefix;
+    for (change in timerSkinChanges) {
+        if (Conductor.songPosition >= change.time)
+            prefix = change.prefix;
+        else
+            break;
+    }
+    timerSkinPrefix = prefix;
+}
+
+function isPaperTimer():Bool {
+    return timerSkinPrefix == "paper/";
+}
+
 function saveBool(name:String, fallback:Bool):Bool {
     var value = Reflect.field(FlxG.save.data, name);
     if (value == null)
@@ -387,13 +429,41 @@ function updateTimerText() {
     if (inst != null)
         timeRemaining = Std.int(Math.max(0, inst.length - Conductor.songPosition) / 1000);
 
+    if (isPaperTimer()) {
+        timeTxt.text = formatTime(timeRemaining);
+        timeTxt.size = 24;
+        timeTxt.borderSize = 2.5;
+        timeTxt.fieldWidth = 220;
+        if (healthBarBG != null) {
+            timeTxt.x = healthBarBG.x + (healthBarBG.width * 0.5) - (timeTxt.fieldWidth * 0.5);
+            timeTxt.y = healthBarBG.y + 12;
+        } else {
+            timeTxt.screenCenter(FlxAxes.X);
+            timeTxt.y = downscroll ? FlxG.height - 118 : 18;
+        }
+        return;
+    }
+
     timeTxt.text = songName + " - " + difficulty + " (" + formatTime(timeRemaining) + ")" + getTimerTags();
+    timeTxt.size = 16;
+    timeTxt.borderSize = 2;
+    timeTxt.fieldWidth = 900;
+    timeTxt.y = timerTextTopY;
     timeTxt.screenCenter(FlxAxes.X);
 }
 
 function updateTimerBar() {
     if (timerBarFill == null || inst == null || inst.length <= 0)
         return;
+
+    if (isPaperTimer()) {
+        timerBarBG.visible = false;
+        timerBarFill.visible = false;
+        return;
+    }
+
+    timerBarBG.visible = true;
+    timerBarFill.visible = true;
 
     timerBarFill.color = getOpponentTimerColor();
     timerBarFill.scale.x = FlxMath.bound(Conductor.songPosition / inst.length, 0, 1);
@@ -409,6 +479,8 @@ function postCreate()
 {
     centerX = FlxG.width / 2;
     centerY = FlxG.height / 2;
+
+    cacheTimerSkinChanges();
 
     // ==========================
     // JSON
@@ -804,6 +876,7 @@ function showObject(
 function update(elapsed)
 {
     updateCenterFollowers(elapsed);
+    updateTimerSkinBySongPosition();
     
     if (!showedPopup)
     {

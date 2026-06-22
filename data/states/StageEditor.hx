@@ -1,19 +1,31 @@
 import funkin.editors.stage.StageEditor;
 import funkin.editors.stage.elements.StageCharacterButton;
 import funkin.editors.ui.UIButton;
+import funkin.editors.ui.UICheckbox;
 import funkin.editors.ui.UIDropDown;
+import funkin.editors.SaveWarning;
 import funkin.game.Character;
 import funkin.backend.system.Flags;
+import funkin.backend.utils.CoolUtil;
 import haxe.io.Path;
 import sys.FileSystem;
+import StringTools;
 
 var vcStageEditorOffsetID:String = "voiidLECharacterOffsetApplied";
 var vcPreviewPanel:Array<Dynamic> = [];
 var vcPreviewPanelVisible:Bool = true;
-var vcCharacterList:Array<String> = null;
+var vcCharacterPacks:Array<Dynamic> = null;
+var vcPreviewPages:Map<String, Int> = [];
+var vcPreviewDropdowns:Map<String, UIDropDown> = [];
+var vcSaveTargets:Array<Dynamic> = null;
+var vcSaveTargetIndex:Int = 0;
+var vcSaveDeleteOld:Bool = false;
+var vcOriginalSaveRoot:String = null;
+var vcLastSavePath:String = null;
 
 function postCreate() {
 	createVCPreviewPanel();
+	SaveWarning.saveFunc = saveVCStageToSelectedTarget;
 	applyVCStageEditorOffsets();
 }
 
@@ -61,16 +73,17 @@ function createVCPreviewPanel() {
 	if (editor == null || editor.uiCamera == null)
 		return;
 
-	var chars = getVCCharacterList();
+	var packs = getVCCharacterPacks();
 	var y = 34;
 	var toggle = new UIButton(8, y, "Voiid preview", function() {
 		toggleVCPreviewPanel();
 	}, 126, 28);
 	addVCPreviewControl(toggle);
 
-	makeVCPreviewDropdown("dad", "NO_DELETE_dad", 8, y + 34, chars);
-	makeVCPreviewDropdown("bf", "NO_DELETE_boyfriend", 8, y + 70, chars);
-	makeVCPreviewDropdown("gf", "NO_DELETE_girlfriend", 8, y + 106, chars);
+	makeVCPreviewDropdown("dad", "NO_DELETE_dad", 8, y + 34, packs);
+	makeVCPreviewDropdown("bf", "NO_DELETE_boyfriend", 8, y + 70, packs);
+	makeVCPreviewDropdown("gf", "NO_DELETE_girlfriend", 8, y + 106, packs);
+	createVCStageSavePanel(8, y + 144);
 }
 
 function addVCPreviewControl(control:Dynamic) {
@@ -81,16 +94,230 @@ function addVCPreviewControl(control:Dynamic) {
 	add(control);
 }
 
-function makeVCPreviewDropdown(label:String, charKey:String, x:Float, y:Float, chars:Array<String>) {
-	var options = [label + ": default"].concat(chars);
-	var dropdown = new UIDropDown(x, y, 230, 28, options, 0);
+function makeVCPreviewDropdown(label:String, charKey:String, x:Float, y:Float, packs:Array<Dynamic>) {
+	vcPreviewPages.set(charKey, 0);
+	var dropdown = new UIDropDown(x, y, 188, 28, getVCPreviewPageOptions(label, charKey, packs), 0);
 	dropdown.onChange = function(i) {
 		if (i <= 0)
 			resetVCPreviewCharacter(charKey);
 		else
 			changeVCPreviewCharacter(charKey, dropdown.options[i]);
 	};
+	vcPreviewDropdowns.set(charKey, dropdown);
 	addVCPreviewControl(dropdown);
+
+	var prev = new UIButton(x + 194, y, "<", function() {
+		changeVCPreviewPage(label, charKey, packs, -1);
+	}, 28, 28);
+	addVCPreviewControl(prev);
+
+	var next = new UIButton(x + 226, y, ">", function() {
+		changeVCPreviewPage(label, charKey, packs, 1);
+	}, 28, 28);
+	addVCPreviewControl(next);
+}
+
+function getVCPreviewPageOptions(label:String, charKey:String, packs:Array<Dynamic>):Array<String> {
+	var page = vcPreviewPages.exists(charKey) ? vcPreviewPages.get(charKey) : 0;
+	var pageCount = getVCPreviewPageCount(packs);
+	if (page < 0)
+		page = pageCount - 1;
+	if (page >= pageCount)
+		page = 0;
+	vcPreviewPages.set(charKey, page);
+
+	var pack = packs[page];
+	var packName:String = cast Reflect.field(pack, "name");
+	var chars:Array<String> = cast Reflect.field(pack, "chars");
+	var options = [label + ": " + packName + " " + (page + 1) + "/" + pageCount];
+	for (char in chars)
+		options.push(char);
+	return options;
+}
+
+function getVCPreviewPageCount(packs:Array<Dynamic>):Int {
+	if (packs == null || packs.length <= 0)
+		return 1;
+	return packs.length;
+}
+
+function changeVCPreviewPage(label:String, charKey:String, packs:Array<Dynamic>, dir:Int) {
+	var dropdown = vcPreviewDropdowns.get(charKey);
+	if (dropdown == null)
+		return;
+
+	var page = vcPreviewPages.exists(charKey) ? vcPreviewPages.get(charKey) : 0;
+	vcPreviewPages.set(charKey, page + dir);
+	var options = getVCPreviewPageOptions(label, charKey, packs);
+	dropdown.items = UIDropDown.getItems(options);
+	dropdown.options = options;
+	dropdown.index = 0;
+	dropdown.label.text = options[0];
+}
+
+function createVCStageSavePanel(x:Float, y:Float) {
+	var targets = getVCStageSaveTargets();
+	var options = [for (target in targets) Std.string(Reflect.field(target, "label"))];
+	var dropdown = new UIDropDown(x, y, 254, 28, options, vcSaveTargetIndex);
+	dropdown.onChange = function(i) {
+		vcSaveTargetIndex = i;
+	};
+	addVCPreviewControl(dropdown);
+
+	var deleteOld = new UICheckbox(x, y + 34, "delete old", vcSaveDeleteOld, 118, true);
+	deleteOld.onChecked = function(checked) {
+		vcSaveDeleteOld = checked;
+	};
+	addVCPreviewControl(deleteOld);
+
+	var saveHere = new UIButton(x + 126, y + 34, "save here", function() {
+		saveVCStageToSelectedTarget();
+	}, 84, 24);
+	addVCPreviewControl(saveHere);
+
+	var saveCurrent = new UIButton(x + 214, y + 34, "current", function() {
+		saveVCStageToCurrentTarget();
+	}, 62, 24);
+	addVCPreviewControl(saveCurrent);
+}
+
+function saveVCStageToSelectedTarget() {
+	var targets = getVCStageSaveTargets();
+	if (targets == null || targets.length <= 0)
+		return;
+
+	if (vcSaveTargetIndex < 0)
+		vcSaveTargetIndex = 0;
+	if (vcSaveTargetIndex >= targets.length)
+		vcSaveTargetIndex = targets.length - 1;
+
+	saveVCStageToRoot(cast Reflect.field(targets[vcSaveTargetIndex], "root"), vcSaveDeleteOld);
+}
+
+function saveVCStageToCurrentTarget() {
+	saveVCStageToRoot(getVCCurrentSaveRoot(), false);
+}
+
+function saveVCStageToRoot(root:String, deleteOld:Bool) {
+	var editor = StageEditor.instance;
+	if (editor == null || root == null || root.length <= 0)
+		return;
+
+	var stageName = getVCStageFileName();
+	var targetPath = normalizeVCPath(root) + "/data/stages/" + stageName + ".xml";
+	var oldPath = vcLastSavePath != null ? vcLastSavePath : getVCCurrentStageSavePath();
+	var buildStage = Reflect.field(editor, "buildStage");
+	if (buildStage == null)
+		return;
+	var stageData:String = cast Reflect.callMethod(editor, buildStage, []);
+
+	FlxG.sound.play(Paths.sound("editors/save"));
+	CoolUtil.safeSaveFile(targetPath, stageData);
+	if (deleteOld && oldPath != null && normalizeVCPath(oldPath) != normalizeVCPath(targetPath) && FileSystem.exists(oldPath)) {
+		try {
+			FileSystem.deleteFile(oldPath);
+		} catch(e:Dynamic) {}
+	}
+
+	vcLastSavePath = targetPath;
+	try {
+		var undos = Reflect.field(editor, "undos");
+		if (undos != null) {
+			var save = Reflect.field(undos, "save");
+			if (save != null)
+				Reflect.callMethod(undos, save, []);
+		}
+	} catch(e:Dynamic) {}
+	SaveWarning.showWarning = false;
+}
+
+function getVCStageSaveTargets():Array<Dynamic> {
+	if (vcSaveTargets != null)
+		return vcSaveTargets;
+
+	var targets:Array<Dynamic> = [];
+	var found:Map<String, Bool> = [];
+	var currentRoot = getVCCurrentSaveRoot();
+	var modRoot = getVCModRoot();
+
+	addVCStageSaveTarget(targets, found, "No content", modRoot);
+	addVCStageSaveTarget(targets, found, "Engine current", currentRoot);
+	collectVCStageSaveTargets(modRoot + "/content", targets, found, "");
+
+	vcSaveTargets = targets;
+	for (i in 0...targets.length) {
+		if (normalizeVCPath(cast Reflect.field(targets[i], "root")) == normalizeVCPath(currentRoot))
+			vcSaveTargetIndex = i;
+	}
+	return vcSaveTargets;
+}
+
+function collectVCStageSaveTargets(contentPath:String, targets:Array<Dynamic>, found:Map<String, Bool>, parentName:String) {
+	if (contentPath == null || !FileSystem.exists(contentPath) || !FileSystem.isDirectory(contentPath))
+		return;
+
+	try {
+		for (folder in FileSystem.readDirectory(contentPath)) {
+			var packPath = contentPath + "/" + folder;
+			if (FileSystem.isDirectory(packPath)) {
+				var packName = parentName.length > 0 ? parentName + "/" + folder : folder;
+				addVCStageSaveTarget(targets, found, packName, packPath);
+				collectVCStageSaveTargets(packPath + "/content", targets, found, packName);
+			}
+		}
+	} catch(e:Dynamic) {}
+}
+
+function addVCStageSaveTarget(targets:Array<Dynamic>, found:Map<String, Bool>, label:String, root:String) {
+	if (root == null || root.length <= 0)
+		return;
+
+	var normalized = normalizeVCPath(root);
+	if (found.exists(normalized))
+		return;
+
+	found.set(normalized, true);
+	targets.push({label: label, root: normalized});
+}
+
+function getVCCurrentSaveRoot():String {
+	if (vcOriginalSaveRoot == null)
+		vcOriginalSaveRoot = normalizeVCPath(Paths.getAssetsRoot());
+	return vcOriginalSaveRoot;
+}
+
+function getVCModRoot():String {
+	var normalized = normalizeVCPath(Paths.getAssetsRoot());
+	var contentIndex = normalized.indexOf("/content/");
+	if (contentIndex >= 0)
+		return normalized.substr(0, contentIndex);
+	return normalized;
+}
+
+function getVCCurrentStageSavePath():String {
+	return getVCCurrentSaveRoot() + "/data/stages/" + getVCStageFileName() + ".xml";
+}
+
+function getVCStageFileName():String {
+	try {
+		var name = Reflect.field(StageEditor, "__stage");
+		if (name != null && Std.string(name).length > 0)
+			return Std.string(name);
+	} catch(e:Dynamic) {}
+
+	var editor = StageEditor.instance;
+	if (editor != null && editor.stage != null && editor.stage.stageName != null && editor.stage.stageName.length > 0)
+		return editor.stage.stageName;
+	return "stage";
+}
+
+function normalizeVCPath(path:String):String {
+	if (path == null)
+		return "";
+	var normalized = path.split("\\").join("/");
+	while (StringTools.endsWith(normalized, "/"))
+		normalized = normalized.substr(0, normalized.length - 1);
+	return normalized;
 }
 
 function toggleVCPreviewPanel() {
@@ -116,7 +343,7 @@ function changeVCPreviewCharacter(charKey:String, characterName:String) {
 		return;
 
 	var oldChar:Character = editor.charMap.get(charKey);
-	if (oldChar == null)
+	if (oldChar == null || oldChar.extra == null)
 		return;
 
 	var button:StageCharacterButton = cast oldChar.extra.get(StageEditor.exID("button"));
@@ -127,8 +354,8 @@ function changeVCPreviewCharacter(charKey:String, characterName:String) {
 	var pose = getVCPreviewPose(editor, characterName, slotName);
 	var memberIndex = editor.members.indexOf(oldChar);
 	var charIndex = editor.chars.indexOf(oldChar);
-	var wasSelected = editor.selection.contains(oldChar);
-	var isPlayer = pose != null ? pose.flipX : charKey == "NO_DELETE_boyfriend";
+	var wasSelected = editor.selection != null && editor.selection.contains(oldChar);
+	var isPlayer = getVCPreviewFlip(charKey, pose);
 	var newChar = new Character(oldChar.x, oldChar.y, characterName, isPlayer, true);
 	newChar.name = oldChar.name;
 	newChar.debugMode = true;
@@ -156,8 +383,10 @@ function changeVCPreviewCharacter(charKey:String, characterName:String) {
 		editor.chars.push(newChar);
 
 	editor.charMap.set(charKey, newChar);
-	editor.xmlMap.remove(oldChar);
-	editor.xmlMap.set(newChar, button.xml);
+	if (editor.xmlMap != null) {
+		editor.xmlMap.remove(oldChar);
+		editor.xmlMap.set(newChar, button.xml);
+	}
 
 	button.char = newChar;
 	newChar.extra.set(StageEditor.exID("button"), button);
@@ -192,12 +421,16 @@ function getVCPreviewPose(editor:StageEditor, characterName:String, slotName:Str
 	return null;
 }
 
-function applyVCPreviewStagePosition(char:Character, oldChar:Character, pose:Dynamic) {
+function getVCPreviewFlip(charKey:String, pose:Dynamic):Bool {
 	if (pose != null) {
-		pose.prepareCharacter(char, 0);
-		return;
+		try {
+			return pose.flipX;
+		} catch(e:Dynamic) {}
 	}
+	return charKey == "NO_DELETE_boyfriend";
+}
 
+function applyVCPreviewStagePosition(char:Character, oldChar:Character, pose:Dynamic) {
 	char.setPosition(oldChar.x, oldChar.y);
 	char.scale.set(oldChar.scale.x, oldChar.scale.y);
 	char.scrollFactor.set(oldChar.scrollFactor.x, oldChar.scrollFactor.y);
@@ -220,24 +453,82 @@ function playVCStageEditorPreviewAnim(char:Character) {
 	} catch(e:Dynamic) {}
 }
 
-function getVCCharacterList():Array<String> {
-	if (vcCharacterList != null)
-		return vcCharacterList;
+function getVCCharacterPacks():Array<Dynamic> {
+	if (vcCharacterPacks != null)
+		return vcCharacterPacks;
+
+	var packs:Array<Dynamic> = [];
+	var foundPackPaths:Map<String, Bool> = [];
+
+	for (assetsRoot in getVCAssetsRoots()) {
+		addVCCharacterPack(packs, foundPackPaths, "Main", assetsRoot + "/data/characters");
+		collectVCContentCharacterPacks(assetsRoot + "/content", packs, foundPackPaths, "");
+	}
+
+	if (packs.length <= 0)
+		packs.push({name: "Empty", chars: []});
+
+	vcCharacterPacks = packs;
+	return vcCharacterPacks;
+}
+
+function getVCAssetsRoots():Array<String> {
+	var roots:Array<String> = [];
+	var normalized = Paths.getAssetsRoot().split("\\").join("/");
+	var contentIndex = normalized.indexOf("/content/");
+	if (contentIndex >= 0)
+		addVCAssetsRoot(roots, normalized.substr(0, contentIndex));
+	else
+		addVCAssetsRoot(roots, normalized);
+
+	return roots;
+}
+
+function addVCAssetsRoot(roots:Array<String>, root:String) {
+	if (root == null || root.length <= 0)
+		return;
+
+	var normalized = root.split("\\").join("/");
+	while (StringTools.endsWith(normalized, "/"))
+		normalized = normalized.substr(0, normalized.length - 1);
+
+	if (roots.indexOf(normalized) < 0)
+		roots.push(normalized);
+}
+
+function collectVCContentCharacterPacks(contentPath:String, packs:Array<Dynamic>, foundPackPaths:Map<String, Bool>, parentName:String) {
+	if (contentPath == null || !FileSystem.exists(contentPath) || !FileSystem.isDirectory(contentPath))
+		return;
+
+	try {
+		for (folder in FileSystem.readDirectory(contentPath)) {
+			var packPath = contentPath + "/" + folder;
+			if (FileSystem.isDirectory(packPath)) {
+				var packName = parentName.length > 0 ? parentName + "/" + folder : folder;
+				addVCCharacterPack(packs, foundPackPaths, packName, packPath + "/data/characters");
+				collectVCContentCharacterPacks(packPath + "/content", packs, foundPackPaths, packName);
+			}
+		}
+	} catch(e:Dynamic) {}
+}
+
+function addVCCharacterPack(packs:Array<Dynamic>, foundPackPaths:Map<String, Bool>, packName:String, charsPath:String) {
+	if (charsPath == null || !FileSystem.exists(charsPath) || !FileSystem.isDirectory(charsPath))
+		return;
+
+	var normalized = charsPath.split("\\").join("/");
+	if (foundPackPaths.exists(normalized))
+		return;
 
 	var found:Map<String, Bool> = [];
-	var list:Array<String> = [];
-	var roots = [
-		Paths.getAssetsRoot() + "/data/characters",
-		Paths.getAssetsRoot() + "/images/characters",
-		Paths.getAssetsRoot() + "/content"
-	];
+	var chars:Array<String> = [];
+	collectVCCharacters(charsPath, found, chars);
+	if (chars.length <= 0)
+		return;
 
-	for (root in roots)
-		collectVCCharacters(root, found, list);
-
-	list.sort(function(a, b) return Reflect.compare(a.toLowerCase(), b.toLowerCase()));
-	vcCharacterList = list;
-	return vcCharacterList;
+	chars.sort(function(a, b) return Reflect.compare(a.toLowerCase(), b.toLowerCase()));
+	foundPackPaths.set(normalized, true);
+	packs.push({name: packName, chars: chars});
 }
 
 function collectVCCharacters(path:String, found:Map<String, Bool>, list:Array<String>) {
@@ -245,15 +536,12 @@ function collectVCCharacters(path:String, found:Map<String, Bool>, list:Array<St
 		return;
 
 	if (FileSystem.isDirectory(path)) {
-		for (file in FileSystem.readDirectory(path)) {
-			var fullPath = path + "/" + file;
-			if (FileSystem.isDirectory(fullPath)) {
-				var normalized = fullPath.split("\\").join("/");
-				if (normalized.indexOf("/data/characters") >= 0 || normalized.indexOf("/images/characters") >= 0 || normalized.indexOf("/content/") >= 0)
+		try {
+			for (file in FileSystem.readDirectory(path)) {
+				var fullPath = path + "/" + file;
+				if (FileSystem.isDirectory(fullPath)) {
 					collectVCCharacters(fullPath, found, list);
-			} else if (Path.extension(file).toLowerCase() == "xml") {
-				var normalizedFile = fullPath.split("\\").join("/");
-				if (normalizedFile.indexOf("/data/characters/") >= 0) {
+				} else if (Path.extension(file).toLowerCase() == "xml") {
 					var name = Path.withoutExtension(Path.withoutDirectory(file));
 					if (!found.exists(name)) {
 						found.set(name, true);
@@ -261,7 +549,7 @@ function collectVCCharacters(path:String, found:Map<String, Bool>, list:Array<St
 					}
 				}
 			}
-		}
+		} catch(e:Dynamic) {}
 	}
 }
 

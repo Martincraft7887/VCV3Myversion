@@ -6,17 +6,24 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import funkin.game.PlayState;
-
-var disabledSongs = [
-	"final destination vip",
-	"rejected vip"
-];
+import haxe.ds.StringMap;
 
 var hudVisible:Bool = true;
 var hudBase:FlxText;
 var hudRating:FlxText;
 var ratingCounterTxt:FlxText;
 var msTxt:FlxText;
+var scoreSkinPrefix:String = "";
+var scoreSkinChanges:Array<Dynamic> = [];
+var scoreGraphicCache:StringMap<Dynamic> = new StringMap();
+var resultsDirty:Bool = false;
+var resultsSyncTimer:Float = 0;
+var maxStoredHitDiffs:Int = 256;
+var lastPaperScoreLayout:Bool = false;
+var lastHudBaseText:String = "";
+var lastHudRatingText:String = "";
+var lastRatingCounterText:String = "";
+var lastHudRatingColor:Int = -1;
 
 var popupCombo:Int = 0;
 var popupScale:Float = 0.5;
@@ -39,6 +46,75 @@ var lastHandledNote:Dynamic = null;
 var lastHandledTime:Float = -999999;
 var lastHandledDirection:Int = -1;
 
+function create() {
+	for (event in events) {
+		if (event.name == "Change UI Skin") {
+			scoreSkinChanges.push({
+				time: event.time,
+				scoreSkinPrefix: normalizeScoreSkinPrefix(event.params[0])
+			});
+		}
+	}
+
+	if (scoreSkinChanges.length > 0) {
+		scoreSkinChanges.sort(function(a, b) {
+			if(a.time < b.time) return -1;
+			else if(a.time > b.time) return 1;
+			else return 0;
+		});
+
+		if (scoreSkinChanges[0].time <= 0)
+			scoreSkinPrefix = scoreSkinChanges[0].scoreSkinPrefix;
+	}
+}
+
+function normalizeScoreSkinPrefix(prefix:String):String {
+	if (prefix == null || prefix == "" || prefix == "codename/")
+		return "";
+	return prefix;
+}
+
+function scoreAssetPath(asset:String):String {
+	if (scoreSkinPrefix == "")
+		return "game/codename/score/" + asset;
+	if (scoreSkinPrefix == "voiid/")
+		return "game/score/" + asset;
+	return "game/" + scoreSkinPrefix + "score/" + asset;
+}
+
+function getSkinRatingAsset(rating:String):String {
+	if (scoreSkinPrefix == "paper/" && rating == "krazy")
+		return "marvelous";
+	return rating;
+}
+
+function getScoreGraphic(asset:String):Dynamic {
+	var path = scoreAssetPath(asset);
+	var graphic = scoreGraphicCache.get(path);
+	if (graphic == null) {
+		graphic = Paths.image(path);
+		scoreGraphicCache.set(path, graphic);
+	}
+	return graphic;
+}
+
+function cacheScoreSkin(prefix:String) {
+	var oldPrefix = scoreSkinPrefix;
+	scoreSkinPrefix = normalizeScoreSkinPrefix(prefix);
+	var assets = ["sick", "good", "bad", "shit", "combo", "num0", "num1", "num2", "num3", "num4", "num5", "num6", "num7", "num8", "num9"];
+	if (scoreSkinPrefix != "")
+		assets.push("krazy");
+	if (scoreSkinPrefix == "paper/")
+		assets.push("marvelous");
+	for (asset in assets) {
+		try {
+			var graphic = getScoreGraphic(asset);
+			graphicCache.cache(graphic);
+		} catch(e:Dynamic) {}
+	}
+	scoreSkinPrefix = oldPrefix;
+}
+
 function getSongName():String {
 	try {
 		if (PlayState.SONG != null && PlayState.SONG.meta != null && PlayState.SONG.meta.name != null)
@@ -52,7 +128,7 @@ function getSongName():String {
 }
 
 function isDisabledSong():Bool {
-	return disabledSongs.contains(getSongName());
+	return false;
 }
 
 function makeHudText(x:Float, y:Float, width:Float, size:Int):FlxText {
@@ -125,14 +201,12 @@ function cancelVanillaRating(e) {
 }
 
 function postCreate() {
-	if (isDisabledSong()) {
-		disableScript();
-		return;
-	}
-
 	var ps = PlayState.instance;
 	if (ps == null) return;
 
+	cacheScoreSkin("");
+	cacheScoreSkin("voiid/");
+	cacheScoreSkin("paper/");
 	hideVanillaScore(ps);
 
 	var scoreSize = saveBool("voiidBiggerScoreText", false) ? 22 : 18;
@@ -146,13 +220,11 @@ function postCreate() {
 
 	ratingCounterTxt = makeHudText(20, (FlxG.height / 2) - 70, 220, infoSize);
 	ratingCounterTxt.visible = saveBool("voiidSideRatings", false);
-	ratingCounterTxt.alpha = ratingCounterTxt.visible ? 0.8 : 0;
 	add(ratingCounterTxt);
 
 	msTxt = makeHudText(0, getMsY(), FlxG.width, infoSize);
 	msTxt.alignment = "center";
 	msTxt.visible = saveBool("voiidDisplayMs", false);
-	msTxt.alpha = 0;
 	add(msTxt);
 
 	hitDiffs = [];
@@ -169,28 +241,31 @@ function update(elapsed:Float) {
 	hideVanillaScore(ps);
 	updateScoreHud(ps);
 	updateRatingCounterFromMisses(ps);
+	syncDirtyResults(elapsed);
 
 	if (ratingCounterTxt != null && saveBool("voiidSideRatings", false)) {
 		ratingCounterTxt.visible = true;
-		ratingCounterTxt.alpha = 0.8;
 	} else if (fadeTimer > 0 && ratingCounterTxt != null) {
 		fadeTimer -= elapsed;
 		if (fadeTimer <= 0)
-			FlxTween.tween(ratingCounterTxt, {alpha: 0}, 0.4);
+			ratingCounterTxt.visible = false;
 	}
 }
 
 function updateScoreHud(ps:PlayState) {
 	if (hudBase == null || hudRating == null) return;
 
-	var scoreStr = "Score: " + ps.songScore;
-	var missesStr = "Combo Breaks: " + ps.misses;
+	var isPaper = scoreSkinPrefix == "paper/";
+	var scoreStr = scoreSkinPrefix == "paper/" ? "SCORE: " + ps.songScore : "Score: " + ps.songScore;
+	var missesStr = scoreSkinPrefix == "paper/" ? "MISSES: " + ps.misses : "Combo Breaks: " + ps.misses;
 	var baseText:String;
 	var ratingStr:String = "";
 
 	if (ps.accuracy >= 0) {
 		var accPercent = Math.round(ps.accuracy * 10000) / 100.0;
-		baseText = scoreStr + " | " + missesStr + " | Accuracy: " + accPercent + "% | ";
+		baseText = scoreSkinPrefix == "paper/" ?
+			scoreStr + " | " + missesStr + " | ACCURACY: " + accPercent + "% | RANK: " :
+			scoreStr + " | " + missesStr + " | Accuracy: " + accPercent + "% | ";
 		ratingStr = getRating(ps.accuracy);
 		hudRating.visible = hudVisible;
 	} else {
@@ -198,14 +273,52 @@ function updateScoreHud(ps:PlayState) {
 		hudRating.visible = false;
 	}
 
-	hudBase.text = baseText;
-	hudRating.text = ratingStr;
-	hudRating.color = getRatingColor(ratingStr);
+	if (hudBase.text != baseText)
+		hudBase.text = baseText;
+	if (hudRating.text != ratingStr)
+		hudRating.text = ratingStr;
+
+	var ratingColor = getRatingColor(ratingStr);
+	if (lastHudRatingColor != ratingColor) {
+		hudRating.color = ratingColor;
+		lastHudRatingColor = ratingColor;
+	}
 
 	var totalWidth = hudBase.width + hudRating.width;
 	var startX = (FlxG.width - totalWidth) / 2;
 	hudBase.x = startX;
 	hudRating.x = startX + hudBase.width;
+
+	if (isPaper) {
+		hudBase.y = downscroll ? 122 : FlxG.height - 25;
+		hudRating.y = hudBase.y;
+		if (!lastPaperScoreLayout) {
+			hudBase.size = 16;
+			hudRating.size = 16;
+		}
+		if (ratingCounterTxt != null && !lastPaperScoreLayout) {
+			ratingCounterTxt.size = 20;
+			ratingCounterTxt.borderSize = 2.5;
+			ratingCounterTxt.x = 16;
+			ratingCounterTxt.fieldWidth = 250;
+		}
+	} else {
+		var scoreSize = saveBool("voiidBiggerScoreText", false) ? 22 : 18;
+		hudBase.y = FlxG.height - 30;
+		hudRating.y = hudBase.y;
+		if (lastPaperScoreLayout) {
+			hudBase.size = scoreSize;
+			hudRating.size = scoreSize;
+		}
+		if (ratingCounterTxt != null && lastPaperScoreLayout) {
+			ratingCounterTxt.size = saveBool("voiidBiggerInfoText", false) ? 20 : 16;
+			ratingCounterTxt.borderSize = 2;
+			ratingCounterTxt.x = 20;
+			ratingCounterTxt.fieldWidth = 220;
+		}
+	}
+
+	lastPaperScoreLayout = isPaper;
 }
 
 function updateRatingCounterFromMisses(ps:PlayState) {
@@ -250,7 +363,16 @@ function getRating(acc:Float):String {
 }
 
 function onEvent(e) {
-	if (isDisabledSong() || e == null || e.event == null || e.event.name != "Toggle Custom HUD")
+	if (isDisabledSong() || e == null || e.event == null)
+		return;
+
+	if (e.event.name == "Change UI Skin") {
+		scoreSkinPrefix = normalizeScoreSkinPrefix(e.event.params[0]);
+		updateRatingCounter();
+		return;
+	}
+
+	if (e.event.name != "Toggle Custom HUD")
 		return;
 
 	var ps = PlayState.instance;
@@ -258,36 +380,12 @@ function onEvent(e) {
 
 	var params:Array = e.event.params;
 	hudVisible = params[0];
-	var duration:Float = (Conductor.stepCrochet / 1000) * params[1];
-	var targetAlpha:Float = hudVisible ? 1 : 0;
-
-	if (hudVisible) {
-		hudBase.visible = true;
-		hudRating.visible = true;
-		ps.healthBar.visible = true;
-		ps.healthBarBG.visible = true;
-		ps.iconP1.visible = true;
-		ps.iconP2.visible = true;
-	}
-
-	FlxTween.tween(hudBase, {alpha: targetAlpha}, duration, {ease: FlxEase.quadOut});
-	FlxTween.tween(hudRating, {alpha: targetAlpha}, duration, {ease: FlxEase.quadOut});
-	FlxTween.tween(ps.healthBar, {alpha: targetAlpha}, duration, {ease: FlxEase.quadOut});
-	FlxTween.tween(ps.healthBarBG, {alpha: targetAlpha}, duration, {ease: FlxEase.quadOut});
-	FlxTween.tween(ps.iconP1, {alpha: targetAlpha}, duration, {ease: FlxEase.quadOut});
-	FlxTween.tween(ps.iconP2, {alpha: targetAlpha}, duration, {
-		ease: FlxEase.quadOut,
-		onComplete: function(twn) {
-			if (!hudVisible) {
-				hudBase.visible = false;
-				hudRating.visible = false;
-				ps.healthBar.visible = false;
-				ps.healthBarBG.visible = false;
-				ps.iconP1.visible = false;
-				ps.iconP2.visible = false;
-			}
-		}
-	});
+	hudBase.visible = hudVisible;
+	hudRating.visible = hudVisible;
+	ps.healthBar.visible = hudVisible;
+	ps.healthBarBG.visible = hudVisible;
+	ps.iconP1.visible = hudVisible;
+	ps.iconP2.visible = hudVisible;
 }
 
 function onPlayerHit(e) {
@@ -339,12 +437,16 @@ function handleScoreHit(e) {
 
 	if (rating != "krazy" && rating != "sick" && rating != "good" && rating != "bad" && rating != "shit")
 		rating = "sick";
+	if (scoreSkinPrefix == "" && rating == "krazy")
+		rating = "sick";
 
 	popupCombo++;
 	lastHitDiffMs = hitDiffMs;
 	totalAbsHitDiffMs += Math.abs(hitDiffMs);
 	hitDiffCount++;
 	hitDiffs.push(hitDiffMs);
+	if (hitDiffs.length > maxStoredHitDiffs)
+		hitDiffs.shift();
 	showPopupRating(rating, popupCombo);
 	showMsText(hitDiffMs);
 
@@ -357,7 +459,7 @@ function handleScoreHit(e) {
 	}
 
 	updateRatingCounter();
-	syncResultStats();
+	resultsDirty = true;
 	showCounter();
 }
 
@@ -435,24 +537,21 @@ function showPopupRating(rating:String, combo:Int) {
 
 	if (showRating) {
 		var ratingSprite:FlxSprite = new FlxSprite();
-		ratingSprite.loadGraphic(Paths.image("game/score/" + rating));
+		ratingSprite.loadGraphic(getScoreGraphic(getSkinRatingAsset(rating)));
 		applyPopupCamera(ratingSprite);
 		ratingSprite.scale.set(popupScale * 1.2, popupScale * 1.2);
 		ratingSprite.updateHitbox();
 		ratingSprite.x = centerX - (ratingSprite.width * 0.5);
 		ratingSprite.y = centerY - (ratingSprite.height * 0.5);
-		ratingSprite.alpha = 0;
 		add(ratingSprite);
 
 		FlxTween.tween(ratingSprite, {
-			alpha: 1,
 			'scale.x': popupScale,
 			'scale.y': popupScale
 		}, 0.08, {ease: FlxEase.backOut});
 
 		FlxTween.tween(ratingSprite, {
-			y: ratingSprite.y - 20,
-			alpha: 0
+			y: ratingSprite.y - 20
 		}, 0.25, {
 			startDelay: 0.4,
 			ease: FlxEase.quadIn,
@@ -474,7 +573,7 @@ function showCombo(value:Int, startY:Float, centerX:Float) {
 
 	for (d in digits) {
 		var s = new FlxSprite();
-		s.loadGraphic(Paths.image("game/score/num" + d));
+		s.loadGraphic(getScoreGraphic("num" + d));
 		applyPopupCamera(s);
 		s.scale.set(popupScale, popupScale);
 		s.updateHitbox();
@@ -490,13 +589,10 @@ function showCombo(value:Int, startY:Float, centerX:Float) {
 	for (n in numbers) {
 		n.x = startX;
 		n.y = startY;
-		n.alpha = 0;
 		add(n);
 
-		FlxTween.tween(n, {alpha: 1}, 0.08);
 		FlxTween.tween(n, {
-			y: n.y + 20,
-			alpha: 0
+			y: n.y + 20
 		}, 0.25, {
 			startDelay: 0.4,
 			ease: FlxEase.quadIn,
@@ -518,26 +614,41 @@ function showMsText(diffMs:Float) {
 	msTxt.text = (rounded > 0 ? "+" : "") + rounded + "ms";
 	msTxt.color = Math.abs(diffMs) <= krazyWindowMs ? FlxColor.fromRGB(190, 70, 255) : FlxColor.WHITE;
 	msTxt.visible = true;
-	msTxt.alpha = 1;
 	applyPopupCamera(msTxt);
 	msTxt.y = getMsY();
 
-	FlxTween.tween(msTxt, {y: msTxt.y + 22, alpha: 0}, 0.45, {
+	FlxTween.tween(msTxt, {y: msTxt.y + 22}, 0.45, {
 		startDelay: 0.2,
-		ease: FlxEase.quadIn
+		ease: FlxEase.quadIn,
+		onComplete: function(twn) {
+			msTxt.visible = false;
+		}
 	});
 }
 
 function updateRatingCounter() {
 	if (ratingCounterTxt == null) return;
 
-	ratingCounterTxt.text =
-		"Krazy: " + countKrazy + "\n" +
-		"Sick:  " + countSick + "\n" +
-		"Good:  " + countGood + "\n" +
-		"Bad:   " + countBad + "\n" +
-		"Shit:  " + countShit + "\n" +
-		"Skill Issues:  " + (PlayState.instance != null ? PlayState.instance.misses : 0);
+	var nextText =
+		(scoreSkinPrefix == "paper/" ?
+			"SUPERB: " + countKrazy + "\n" +
+			"SICK:  " + countSick + "\n" +
+			"GOOD:  " + countGood + "\n" +
+			"BAD:   " + countBad + "\n" +
+			"SHOOT: " + countShit + "\n" +
+			"MISSES: " + (PlayState.instance != null ? PlayState.instance.misses : 0)
+		:
+			"Krazy: " + countKrazy + "\n" +
+			"Sick:  " + countSick + "\n" +
+			"Good:  " + countGood + "\n" +
+			"Bad:   " + countBad + "\n" +
+			"Shit:  " + countShit + "\n" +
+			"Skill Issues:  " + (PlayState.instance != null ? PlayState.instance.misses : 0));
+
+	if (lastRatingCounterText != nextText) {
+		ratingCounterTxt.text = nextText;
+		lastRatingCounterText = nextText;
+	}
 }
 
 function syncResultStats() {
@@ -552,6 +663,22 @@ function syncResultStats() {
 	Reflect.setField(FlxG.save.data, "voiidResultHitDiffs", hitDiffs);
 }
 
+function syncDirtyResults(elapsed:Float) {
+	if (!resultsDirty) return;
+
+	resultsSyncTimer += elapsed;
+	if (resultsSyncTimer < 0.5) return;
+
+	resultsSyncTimer = 0;
+	resultsDirty = false;
+	syncResultStats();
+}
+
+function destroy() {
+	if (resultsDirty)
+		syncResultStats();
+}
+
 function showCounter() {
 	if (ratingCounterTxt == null) return;
 
@@ -561,5 +688,4 @@ function showCounter() {
 	}
 
 	ratingCounterTxt.visible = true;
-	ratingCounterTxt.alpha = 0.8;
 }

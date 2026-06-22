@@ -224,6 +224,7 @@ function onNoteCreation(event) {
 	var kc = getKeyCountIndex(event.strumLineID);
 
 	var note = event.note;
+	note.splash = getSplashForTime(note.strumTime);
 	note.frames = Paths.getFrames(event.noteSprite);
 
 	var strumScale = strumLines.members[event.strumLineID].strumScale;
@@ -247,6 +248,7 @@ function onNoteCreation(event) {
 function create()
 {
 	loadMultikeyData();
+	cacheSplashSkinChanges();
     strumLineKeyCounts = [];
 	maniaChanges = [];
 	for (i in 0...strumLines.members.length)
@@ -501,6 +503,105 @@ function postCreate()
 
 var splashScaleMult = 1.428; // 1 / 0.7, to match with note scale
 var splashScales:Map<String, Float> = [];
+var splashSkinChanges:Array<Dynamic> = [];
+
+function normalizeSplashPrefix(prefix:String):String {
+	if (prefix == null || prefix == "" || prefix == "codename/")
+		return "";
+	return prefix;
+}
+
+function splashNameForPrefix(prefix:String):String {
+	prefix = normalizeSplashPrefix(prefix);
+	if (prefix == "")
+		return Assets.exists(Paths.xml("splashes/codename")) ? "codename" : "default";
+
+	var name = StringTools.endsWith(prefix, "/") ? prefix.substr(0, prefix.length - 1) : prefix;
+	if (Assets.exists(Paths.xml("splashes/" + name)))
+		return name;
+
+	return "default";
+}
+
+function cacheSplashSkinChanges() {
+	splashSkinChanges = [];
+	for (event in events) {
+		if (event.name == "Change UI Skin") {
+			splashSkinChanges.push({
+				time: event.time,
+				splash: splashNameForPrefix(event.params[1])
+			});
+		}
+	}
+
+	if (splashSkinChanges.length > 0) {
+		splashSkinChanges.sort(function(a, b) {
+			if(a.time < b.time) return -1;
+			else if(a.time > b.time) return 1;
+			else return 0;
+		});
+	}
+}
+
+function getSplashForTime(time:Float):String {
+	var splash = splashNameForPrefix("");
+	for (change in splashSkinChanges) {
+		if (time >= change.time)
+			splash = change.splash;
+		else
+			break;
+	}
+	return splash;
+}
+
+function getShaderFloat(shader:Dynamic, name:String, fallback:Float = 0):Float {
+	if (shader == null) return fallback;
+
+	try {
+		var value = Reflect.getProperty(shader, name);
+		if (value == null) value = Reflect.field(shader, name);
+		if (value == null) return fallback;
+
+		var parsed = Std.parseFloat(Std.string(value));
+		return Math.isNaN(parsed) ? fallback : parsed;
+	} catch(e:Dynamic) {
+		return fallback;
+	}
+}
+
+function getVisualStrumCenterX(strum:Dynamic):Float {
+	if (strum == null) return FlxG.width * 0.5;
+
+	var center = strum.x + (strum.width * 0.5);
+	var shader = Reflect.field(strum, "shader");
+	if (shader != null) {
+		var shaderCenter = getShaderFloat(shader, "screenX", Math.NaN);
+		if (!Math.isNaN(shaderCenter))
+			center = shaderCenter;
+
+		try {
+			var offset = scripts.call("getNoteModifierVisualOffsetX", [strum.strumLine.ID, strum.ID, center]);
+			if (offset != null)
+				center += offset;
+		} catch(e:Dynamic) {}
+	}
+
+	return center;
+}
+
+function getVisualStrumCenterY(strum:Dynamic):Float {
+	if (strum == null) return FlxG.height * 0.5;
+
+	var center = strum.y + (strum.height * 0.5);
+	var shader = Reflect.field(strum, "shader");
+	if (shader != null) {
+		var shaderCenter = getShaderFloat(shader, "screenY", Math.NaN);
+		if (!Math.isNaN(shaderCenter))
+			center = shaderCenter;
+	}
+
+	return center;
+}
 
 function onNoteHit(event)
 {
@@ -521,14 +622,19 @@ function onNoteHit(event)
     if (event.showSplash)
     {
         event.showSplash = false;
+		var splashName = event.note.splash == null ? getSplashForTime(event.note.strumTime) : event.note.splash;
 
 		//
         event.note.__strum.ID = multikeySplashIDs[getKeyCountIndex(event.note.strumLine.ID)][index]; //need to set id to play correct anim
         //splashHandler.showSplash(event.note.splash, event.note.__strum);
 
 		//show splash func (but we need to keep the splash sprite for after)
-		splashHandler.__grp = splashHandler.getSplashGroup(event.note.splash);
+		splashHandler.__grp = splashHandler.getSplashGroup(splashName);
 		var splash = splashHandler.__grp.showOnStrum(event.note.__strum);
+		if (splash == null) {
+			event.note.__strum.ID = event.note.strumID;
+			return;
+		}
 		splashHandler.add(splash);
 		// max 8 rendered splashes
 		while(splashHandler.members.length > 8)
@@ -537,11 +643,11 @@ function onNoteHit(event)
 		event.note.__strum.ID = event.note.strumID; //now set id back
 
 		
-		if (!splashScales.exists(event.note.splash))
+		if (!splashScales.exists(splashName))
 		{
-			splashScales.set(event.note.splash, splash.scale.x); //store scale in case it needs it
+			splashScales.set(splashName, splash.scale.x); //store scale in case it needs it
 		}
-		var scale:Float = splashScales.get(event.note.splash);
+		var scale:Float = splashScales.get(splashName);
 		
 		splash.shader = event.note.__strum.shader;
 
@@ -551,8 +657,8 @@ function onNoteHit(event)
 			strumLineNoteScales[event.note.strumLine.ID]*splashScaleMult*scale);
 		splash.updateHitbox();
 		splash.setPosition(
-			event.note.__strum.x + ((event.note.__strum.width - splash.width) / 2), 
-			event.note.__strum.y + ((event.note.__strum.height - splash.height) / 2));
+			getVisualStrumCenterX(event.note.__strum) - (splash.width / 2), 
+			getVisualStrumCenterY(event.note.__strum) - (splash.height / 2));
     }
 }
 function onPlayerMiss(event)

@@ -1,0 +1,770 @@
+{
+	"events": [
+		{
+			"params": [
+				"Top + Bottom",
+				0,
+				500,
+				-16777216,
+				true,
+				1,
+				"linear",
+				"In"
+			],
+			"time": 0,
+			"name": "Cinematic Bars"
+		},
+		{
+			"params": [
+				9,
+				false,
+				true,
+				1
+			],
+			"time": 0,
+			"name": "Set Key Count"
+		},
+		{
+			"params": [
+				"Set Color",
+				"",
+				-16225324,
+				false
+			],
+			"time": 1300,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Set Font",
+				"contb",
+				-1,
+				false
+			],
+			"time": 1300,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"MATT!!",
+				-16225836,
+				false
+			],
+			"time": 1400,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Set Color",
+				"",
+				-743862,
+				false
+			],
+			"time": 2200,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"W-",
+				-1,
+				false
+			],
+			"time": 2350,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"What?!",
+				-1,
+				false
+			],
+			"time": 2550,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Force remove all text",
+				"",
+				-1,
+				false
+			],
+			"time": 2750,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"What?! WHAT?!",
+				-1,
+				false
+			],
+			"time": 2800,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Set Color",
+				"",
+				-16225324,
+				false
+			],
+			"name": "Lyrics",
+			"time": 3100
+		},
+		{
+			"params": [
+				"Add Text",
+				"WHERE IS BOYFRIEND?!",
+				-16225836,
+				false
+			],
+			"name": "Lyrics",
+			"time": 3200
+		},
+		{
+			"params": [
+				"Add Text",
+				"BRING US BOYFRIEND!!",
+				-16225836,
+				false
+			],
+			"time": 4400,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Set Color",
+				"",
+				-743862,
+				false
+			],
+			"time": 5450,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"Why?!",
+				-1,
+				false
+			],
+			"time": 5600,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Set Color",
+				"",
+				-16159788,
+				false
+			],
+			"name": "Lyrics",
+			"time": 5950
+		},
+		{
+			"params": [
+				"Add Text",
+				"WE",
+				-16225836,
+				false
+			],
+			"name": "Lyrics",
+			"time": 6050
+		},
+		{
+			"params": [
+				"Add Text",
+				"WANT",
+				-16225836,
+				false
+			],
+			"name": "Lyrics",
+			"time": 6600
+		},
+		{
+			"params": [
+				"Add Text",
+				"BLOOD!!",
+				-16225836,
+				false
+			],
+			"name": "Lyrics",
+			"time": 7200
+		},
+		{
+			"params": [
+				"Set Color",
+				"",
+				-744119,
+				false
+			],
+			"time": 7550,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"Mane",
+				-1,
+				false
+			],
+			"time": 7800,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"Y'all just can't",
+				-1,
+				false
+			],
+			"time": 8000,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"ever have a good time.",
+				-1,
+				false
+			],
+			"time": 8600,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"Fine.",
+				-1,
+				false
+			],
+			"name": "Lyrics",
+			"time": 10000
+		},
+		{
+			"params": [
+				"Add Text",
+				"You have 5 minutes.",
+				-1,
+				false
+			],
+			"time": 10600,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Set Color",
+				"",
+				-10898224,
+				false
+			],
+			"time": 11200,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"Matt",
+				-1,
+				false
+			],
+			"time": 11600,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Add Text",
+				"get serous",
+				-1,
+				false
+			],
+			"name": "Lyrics",
+			"time": 12000
+		},
+		{
+			"params": [
+				"Add Text",
+				"GET ME OUT!!",
+				-1,
+				false
+			],
+			"time": 12600,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Force remove all text",
+				"",
+				-1,
+				false
+			],
+			"time": 13000,
+			"name": "Lyrics"
+		},
+		{
+			"params": [
+				"Top + Bottom",
+				0,
+				0,
+				-16777216,
+				true,
+				8,
+				"linear",
+				"In"
+			],
+			"time": 13000,
+			"name": "Cinematic Bars"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 16000,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 19200,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 22500,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 25800,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 29000,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 32200,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 156874.416182266,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 160313.246179138,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 163474.071111111,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 166737.571737817,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 169896.552354413,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 170670.4704209,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 171495.490548675,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 172266.276876755,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 173087.109557697,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 173888.40982154,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 174720.510204082,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 175478.984504993,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 176240.430839002,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 177088.099753512,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 177905.359934533,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 178669.81617559,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 179440.728912639,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 180206.0793042,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 181054.981691158,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 181538.49508615,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 181982.02966944,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 182654.006281184,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 183485.929345146,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 184295.952236144,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 185070.495064652,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 185918.830150559,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 186686.875283447,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 187438.305039332,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 188238.202925785,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 189063.238547563,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 189878.161804205,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 190639.659863946,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 191399.637188209,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 192238.478052735,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 193023.546485261,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 193740.006434651,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 194646.717255061,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 195479.410430839,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 197590.269052154,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 201822.271744265,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 204933.349206349,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 208237.084612293,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 209028.971974215,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 209829.477389696,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 210669.263485949,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 211454.136074712,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 212195.963718821,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 212957.918367347,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 214718.385200128,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 215444.207850198,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 216245.556312114,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 217021.691609977,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 217835.831835614,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 218653.191751604,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 219446.185651051,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 221020.44903596,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				0
+			],
+			"time": 223019.377064215,
+			"name": "Camera Movement"
+		},
+		{
+			"params": [
+				1
+			],
+			"time": 223396.918461885,
+			"name": "Camera Movement"
+		}
+	]
+}

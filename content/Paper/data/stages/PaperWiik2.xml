@@ -1,11 +1,11 @@
 <!DOCTYPE codename-engine-stage>
-<stage zoom="0.35" name="PaperWiik2" folder="stages/PaperW2" startCamPosX="0" startCamPosY="0">
-	<sprite name="1" x="-1739" y="-813" sprite="1" scroll="0" scale="1.5" />
-	<sprite name="2" x="-1700" y="-813" sprite="2" scroll="0.05" scale="1.5" />
-	<sprite name="3" x="-1360" y="-750" sprite="3" scroll="0.1" scale="1.5" />
-	<sprite name="4" x="-1640" y="-1000" sprite="4" scroll="0.15" scale="1.5" />
-	<sprite name="5" x="-1061" y="-599" sprite="5" scroll="1" scale="1.5" />
-	<girlfriend x="450" y="750" camxoffset="0" camyoffset="0" scroll="0.95" />
-	<dad x="-450" y="850" camxoffset="0" camyoffset="0" scroll="1" />
-	<boyfriend x="1150" y="850" camxoffset="-100" camyoffset="0" scroll="1" />
+<stage folder="stages/PaperW2/" name="PaperWiik2" zoom="0.3">
+	<sprite x="-1039" scroll="0" sprite="1" y="-813" scale="1.5" name="1"/>
+	<sprite x="-1000" scroll="0.05" sprite="2" y="-813" scale="1.5" name="2"/>
+	<sprite x="-660" scroll="0.1" sprite="3" y="-750" scale="1.5" name="3"/>
+	<sprite x="-840" scroll="0.15" sprite="4" y="-1000" scale="1.5" name="4"/>
+	<sprite x="-1061" sprite="5" y="-599" scale="1.5" name="5"/>
+	<girlfriend scale="0.8" x="450" y="600"/>
+	<dad camxoffset="275" scale="1" x="-450" camyoffset="-225" y="850"/>
+	<boyfriend scale="1" camxoffset="-350" camyoffset="-325" x="1150" y="850"/>
 </stage>
