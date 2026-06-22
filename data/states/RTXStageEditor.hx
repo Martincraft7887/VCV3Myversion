@@ -43,6 +43,19 @@ var charDragOffsetY:Float = 0;
 var cameraDragging:Bool = false;
 var cameraPanLastMouse:FlxPoint = null;
 var previewShader:Dynamic = null;
+var pointLightLineOuter:FlxSprite = null;
+var pointLightLineInner:FlxSprite = null;
+var pointLightMarkerOuter:FlxSprite = null;
+var pointLightMarkerInner:FlxSprite = null;
+var rtxWindowPanel:Dynamic = null;
+var rtxWindowX:Float = 330;
+var rtxWindowY:Float = 0;
+var rtxWindowWidth:Float = 650;
+var rtxWindowHeight:Float = 430;
+var rtxWindowHeaderHeight:Float = 44;
+var rtxWindowDragging:Bool = false;
+var rtxWindowDragOffsetX:Float = 0;
+var rtxWindowDragOffsetY:Float = 0;
 
 function create() {
 	if (Reflect.hasField(FlxG.save.data, "rtxStageEditorStage"))
@@ -182,8 +195,8 @@ function buildUI() {
 }
 
 function buildRTXPanel() {
-	var panel = new UISliceSprite(330, 0, 650, 430, "editors/ui/inputbox");
-	addRTXUI(panel);
+	rtxWindowPanel = new UISliceSprite(330, 0, Std.int(rtxWindowWidth), Std.int(rtxWindowHeight), "editors/ui/inputbox");
+	addRTXUI(rtxWindowPanel);
 
 	var header = new UIText(344, 10, 360, "RTX Debug: " + stageName, 18);
 	addRTXUI(header);
@@ -206,6 +219,7 @@ function buildRTXPanel() {
 		if (pointButton != null)
 			pointButton.field.text = "Point Light: " + (next ? "ON" : "OFF");
 		applyRTXPreview();
+		updatePointLightMarker();
 	}, 166, 28);
 	addRTXUI(pointButton);
 
@@ -270,19 +284,20 @@ function addRTXLabel(text:String, x:Float, y:Float) {
 	label.cameras = [uiCam];
 	label.scrollFactor.set();
 	add(label);
-	rtxPanelItems.push({spr: label, x: label.x});
+	rtxPanelItems.push({spr: label, x: label.x, y: label.y});
 }
 
 function addRTXUI(spr) {
 	addUI(spr);
-	rtxPanelItems.push({spr: spr, x: spr.x});
+	rtxPanelItems.push({spr: spr, x: spr.x, y: spr.y});
 }
 
-function setRTXPanelOffset(offset:Float) {
+function setRTXPanelOffset(offsetX:Float, offsetY:Float = 0) {
 	for (entry in rtxPanelItems) {
 		if (entry == null || entry.spr == null) continue;
 		try {
-			entry.spr.x = entry.x + offset;
+			entry.spr.x = entry.x + offsetX;
+			entry.spr.y = entry.y + offsetY;
 		} catch(e:Dynamic) {}
 	}
 }
@@ -317,7 +332,7 @@ function toggleLeftPanel() {
 	leftPanelToggle.field.text = leftPanelHidden ? ">" : "<";
 	leftPanelToggle.x = leftPanelHidden ? 656 : 6;
 	leftPanelToggle.y = 6;
-	setRTXPanelOffset(leftPanelHidden ? -330 : 0);
+	updateRTXWindowPosition();
 }
 
 function selectSlot(slot:String) {
@@ -340,6 +355,7 @@ function loadCharacter(charName:String) {
 	charPreview.debugMode = true;
 	charPreview.cameras = [previewCam];
 	add(charPreview);
+	ensurePointLightMarker();
 	previewShader = null;
 	refreshCharacterPlacement();
 }
@@ -379,12 +395,159 @@ function update(elapsed:Float) {
 	if (FlxG.keys.justPressed.S)
 		saveRTXJson();
 
+	updateRTXWindowDrag();
 	updatePreviewCharacterControls();
 	updateCameraControls();
 	applyRTXPreview();
+	updatePointLightMarker();
 
 	if (FlxG.mouse.wheel != 0 && isPreviewMouse())
 		previewCam.zoom = Math.max(0.25, Math.min(3, previewCam.zoom + FlxG.mouse.wheel * 0.05));
+}
+
+function updateRTXWindowDrag() {
+	var mouse = getRTXUIMouse();
+	var windowScreenX = getRTXWindowScreenX();
+	var windowScreenY = getRTXWindowScreenY();
+	var inHeader = isMouseInsideRTXWindowHeader(mouse);
+
+	if (isMouseOverRTXWindow(mouse)) {
+		charDragging = false;
+		cameraDragging = false;
+	}
+
+	if (FlxG.mouse.justPressed && inHeader) {
+		rtxWindowDragging = true;
+		rtxWindowDragOffsetX = mouse.x - windowScreenX;
+		rtxWindowDragOffsetY = mouse.y - windowScreenY;
+		charDragging = false;
+		cameraDragging = false;
+	}
+
+	if (FlxG.mouse.justReleased)
+		rtxWindowDragging = false;
+
+	if (rtxWindowDragging) {
+		rtxWindowX = mouse.x - getRTXPanelLeftOffset() - rtxWindowDragOffsetX;
+		rtxWindowY = mouse.y - rtxWindowDragOffsetY;
+		updateRTXWindowPosition();
+	}
+}
+
+function updateRTXWindowPosition() {
+	setRTXPanelOffset((rtxWindowX - 330) + getRTXPanelLeftOffset(), rtxWindowY);
+}
+
+function getRTXPanelLeftOffset():Float {
+	return leftPanelHidden ? -330 : 0;
+}
+
+function getRTXWindowScreenX():Float {
+	if (rtxWindowPanel != null) {
+		try {
+			return rtxWindowPanel.x;
+		} catch(e:Dynamic) {}
+	}
+	return rtxWindowX + getRTXPanelLeftOffset();
+}
+
+function getRTXWindowScreenY():Float {
+	if (rtxWindowPanel != null) {
+		try {
+			return rtxWindowPanel.y;
+		} catch(e:Dynamic) {}
+	}
+	return rtxWindowY;
+}
+
+function getRTXUIMouse():FlxPoint {
+	return FlxG.mouse.getWorldPosition(uiCam);
+}
+
+function ensurePointLightMarker() {
+	if (pointLightLineOuter == null) {
+		pointLightLineOuter = new FlxSprite();
+		pointLightLineOuter.makeGraphic(1, 1, 0xFF000000);
+		pointLightLineOuter.cameras = [previewCam];
+		pointLightLineOuter.scrollFactor.set(1, 1);
+		pointLightLineOuter.active = false;
+		pointLightLineOuter.alpha = 0.85;
+		pointLightLineOuter.origin.set(0, 0.5);
+	}
+
+	if (pointLightLineInner == null) {
+		pointLightLineInner = new FlxSprite();
+		pointLightLineInner.makeGraphic(1, 1, 0xFFFFF24A);
+		pointLightLineInner.cameras = [previewCam];
+		pointLightLineInner.scrollFactor.set(1, 1);
+		pointLightLineInner.active = false;
+		pointLightLineInner.alpha = 0.9;
+		pointLightLineInner.origin.set(0, 0.5);
+	}
+
+	if (pointLightMarkerOuter == null) {
+		pointLightMarkerOuter = new FlxSprite();
+		pointLightMarkerOuter.makeGraphic(18, 18, 0xFF000000);
+		pointLightMarkerOuter.cameras = [previewCam];
+		pointLightMarkerOuter.scrollFactor.set(1, 1);
+		pointLightMarkerOuter.active = false;
+		pointLightMarkerOuter.alpha = 0.85;
+	}
+
+	if (pointLightMarkerInner == null) {
+		pointLightMarkerInner = new FlxSprite();
+		pointLightMarkerInner.makeGraphic(10, 10, 0xFFFFF24A);
+		pointLightMarkerInner.cameras = [previewCam];
+		pointLightMarkerInner.scrollFactor.set(1, 1);
+		pointLightMarkerInner.active = false;
+	}
+
+	remove(pointLightLineOuter);
+	remove(pointLightLineInner);
+	remove(pointLightMarkerOuter);
+	remove(pointLightMarkerInner);
+	add(pointLightLineOuter);
+	add(pointLightLineInner);
+	add(pointLightMarkerOuter);
+	add(pointLightMarkerInner);
+	updatePointLightMarker();
+}
+
+function updatePointLightMarker() {
+	if (pointLightMarkerOuter == null || pointLightMarkerInner == null || pointLightLineOuter == null || pointLightLineInner == null)
+		return;
+
+	var visible = getRTXBool("pointLight", false) && charPreview != null;
+	var lightX = getRTXFloat("lightX", 0);
+	var lightY = getRTXFloat("lightY", 0);
+
+	pointLightMarkerOuter.visible = visible;
+	pointLightMarkerInner.visible = visible;
+	pointLightLineOuter.visible = visible;
+	pointLightLineInner.visible = visible;
+	pointLightMarkerOuter.x = lightX - (pointLightMarkerOuter.width / 2);
+	pointLightMarkerOuter.y = lightY - (pointLightMarkerOuter.height / 2);
+	pointLightMarkerInner.x = lightX - (pointLightMarkerInner.width / 2);
+	pointLightMarkerInner.y = lightY - (pointLightMarkerInner.height / 2);
+
+	if (visible) {
+		var midpoint = charPreview.getGraphicMidpoint();
+		positionPointLightLine(pointLightLineOuter, lightX, lightY, midpoint.x, midpoint.y, 5);
+		positionPointLightLine(pointLightLineInner, lightX, lightY, midpoint.x, midpoint.y, 2);
+	}
+}
+
+function positionPointLightLine(line:FlxSprite, startX:Float, startY:Float, endX:Float, endY:Float, thickness:Float) {
+	if (line == null)
+		return;
+
+	var dx = endX - startX;
+	var dy = endY - startY;
+	var distance = Math.sqrt((dx * dx) + (dy * dy));
+	line.x = startX;
+	line.y = startY;
+	line.scale.set(distance, thickness);
+	line.angle = Math.atan2(dy, dx) * 180 / Math.PI;
 }
 
 function updatePreviewCharacterControls() {
@@ -444,12 +607,24 @@ function updateCameraControls() {
 }
 
 function isPreviewMouse():Bool {
-	var mouse = FlxG.mouse.getScreenPosition();
-	if (!leftPanelHidden && mouse.x < 330)
+	var uiMouse = getRTXUIMouse();
+	if (isMouseOverRTXWindow(uiMouse))
 		return false;
-	if (mouse.y < 430 && mouse.x < (leftPanelHidden ? 650 : 980))
+	if (!leftPanelHidden && uiMouse.x < 330)
 		return false;
 	return true;
+}
+
+function isMouseOverRTXWindow(mouse:FlxPoint):Bool {
+	return isMouseInsideRect(mouse, getRTXWindowScreenX(), getRTXWindowScreenY(), rtxWindowWidth, rtxWindowHeight);
+}
+
+function isMouseInsideRTXWindowHeader(mouse:FlxPoint):Bool {
+	return isMouseInsideRect(mouse, getRTXWindowScreenX(), getRTXWindowScreenY(), rtxWindowWidth, rtxWindowHeaderHeight);
+}
+
+function isMouseInsideRect(mouse:FlxPoint, x:Float, y:Float, width:Float, height:Float):Bool {
+	return mouse.x >= x && mouse.x <= x + width && mouse.y >= y && mouse.y <= y + height;
 }
 
 function saveRTXJson() {
