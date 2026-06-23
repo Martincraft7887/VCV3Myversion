@@ -1,22 +1,58 @@
 {
     "rtxData": {
+        "innerAlpha": 0.58,
         "overlay": "0x7EEBFF",
-        "overlayAlpha": 0.09,
-
+        "layernumbers": 5,
+        "lightX": -121.621621621622,
+        "lightY": 445.945945945946,
+        "innerDistance": 13,
         "satin": "0x9D2E9A",
         "satinAlpha": 0.38,
-
-        "inner": "0xFFB6E8",
-        "innerAlpha": 0.58,
-
-        "innerDistance": 13,
+        "pointLights": [
+            {
+                "innerAlpha": 0.58,
+                "overlay": "0x7EEBFF",
+                "x": 650,
+                "layernumbers": 15,
+                "y": 420,
+                "innerDistance": 10,
+                "satinAlpha": 0.471428571428571,
+                "satin": "0xDBCD2C",
+                "overlayAlpha": 0.09,
+                "inner": "0xD0B653",
+                "layerseparation": 1.5
+            },
+            {
+                "innerAlpha": 0.58,
+                "overlay": "0xB21212",
+                "x": 1378.37837837838,
+                "layernumbers": 15,
+                "y": 243.243243243243,
+                "innerDistance": 10,
+                "satinAlpha": 0.428571428571429,
+                "satin": "0xD52E35",
+                "overlayAlpha": 0.09,
+                "inner": "0xC12703",
+                "layerseparation": 2
+            },
+            {
+                "innerAlpha": 0.58,
+                "overlay": "0x2C21DE",
+                "x": -121.621621621622,
+                "layernumbers": 15,
+                "y": 445.945945945946,
+                "innerDistance": 10,
+                "satinAlpha": 0.485714285714286,
+                "satin": "0x2132BB",
+                "overlayAlpha": 0.09,
+                "inner": "0x2A4AC7",
+                "layerseparation": 2
+            }
+        ],
         "innerAngle": 270,
-
-        "layernumbers": 5,
-        "layerseparation": 1.65,
-
         "pointLight": true,
-        "lightX": 650,
-        "lightY": 420
+        "overlayAlpha": 0.09,
+        "inner": "0xFFB6E8",
+        "layerseparation": 1.65
     }
 }

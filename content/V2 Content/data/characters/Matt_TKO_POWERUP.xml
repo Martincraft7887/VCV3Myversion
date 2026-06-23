@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-character>
+<character x="10" y="-125" sprite="Matt_TKO_POWERUP" scale="1.4" icon="Wiik3VoiidMatt-icons" color="#5A5A5A" imagePath="Matt_TKO_POWERUP.png">
+	<anim name="idle" anim="idle" x="0" y="0" fps="24" loop="true"/>
+	<anim name="singUP" anim="up" x="-15" y="10" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="down" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="right" x="10" y="0" fps="24" loop="false"/>
+	<anim name="trans" anim="trans" x="75" y="110" fps="24" loop="false"/>
+	<anim name="destrans" anim="destrans" x="-8" y="-5" fps="24" loop="false"/>
+</character>

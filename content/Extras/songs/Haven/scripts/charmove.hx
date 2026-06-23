@@ -11,7 +11,7 @@ function postCreate()
     if (playerLine.characters.length > 1)
     {
         extraChar = playerLine.characters[1];
-        originalX = extraChar.x;
+        originalX = extraChar.x - 300;
 
         // Invisible durante toda la canción por defecto
         extraChar.alpha = 0;

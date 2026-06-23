@@ -57,6 +57,30 @@ uniform float innerShadowAngle0;
 uniform float innerShadowAngle1;
 uniform float innerShadowAngle2;
 uniform float innerShadowAngle3;
+uniform vec4 overlayColor0;
+uniform vec4 overlayColor1;
+uniform vec4 overlayColor2;
+uniform vec4 overlayColor3;
+uniform vec4 satinColor0;
+uniform vec4 satinColor1;
+uniform vec4 satinColor2;
+uniform vec4 satinColor3;
+uniform vec4 innerShadowColor0;
+uniform vec4 innerShadowColor1;
+uniform vec4 innerShadowColor2;
+uniform vec4 innerShadowColor3;
+uniform float innerShadowDistance0;
+uniform float innerShadowDistance1;
+uniform float innerShadowDistance2;
+uniform float innerShadowDistance3;
+uniform float layernumbers0;
+uniform float layernumbers1;
+uniform float layernumbers2;
+uniform float layernumbers3;
+uniform float layerseparation0;
+uniform float layerseparation1;
+uniform float layerseparation2;
+uniform float layerseparation3;
 uniform float pointLightCount;
 uniform float innerShadowDistance;
 uniform float layernumbers;
@@ -87,22 +111,78 @@ vec3 shiftHue(vec3 color) {
 	return hsv2rgb(hsv);
 }
 
+vec4 getOverlayColor(int light) {
+	if (light == 0) return overlayColor0;
+	if (light == 1) return overlayColor1;
+	if (light == 2) return overlayColor2;
+	if (light == 3) return overlayColor3;
+	return overlayColor;
+}
+
+vec4 getSatinColor(int light) {
+	if (light == 0) return satinColor0;
+	if (light == 1) return satinColor1;
+	if (light == 2) return satinColor2;
+	if (light == 3) return satinColor3;
+	return satinColor;
+}
+
+vec4 getInnerColor(int light) {
+	if (light == 0) return innerShadowColor0;
+	if (light == 1) return innerShadowColor1;
+	if (light == 2) return innerShadowColor2;
+	if (light == 3) return innerShadowColor3;
+	return innerShadowColor;
+}
+
+float getInnerDistance(int light) {
+	if (light == 0) return innerShadowDistance0;
+	if (light == 1) return innerShadowDistance1;
+	if (light == 2) return innerShadowDistance2;
+	if (light == 3) return innerShadowDistance3;
+	return innerShadowDistance;
+}
+
+float getLayerNumbers(int light) {
+	if (light == 0) return layernumbers0;
+	if (light == 1) return layernumbers1;
+	if (light == 2) return layernumbers2;
+	if (light == 3) return layernumbers3;
+	return layernumbers;
+}
+
+float getLayerSeparation(int light) {
+	if (light == 0) return layerseparation0;
+	if (light == 1) return layerseparation1;
+	if (light == 2) return layerseparation2;
+	if (light == 3) return layerseparation3;
+	return layerseparation;
+}
+
 void main() {
 	vec2 uv = openfl_TextureCoordv.xy;
 	vec4 spritecolor = flixel_texture2D(bitmap, uv);
-	float sampleDist = clamp(layernumbers, 1.0, float(MAX_LAYERS));
-	vec2 resFactor = layerseparation / openfl_TextureSize.xy;
 	vec4 shiftedOverlay = vec4(shiftHue(overlayColor.rgb), overlayColor.a);
 	vec4 shiftedSatin = vec4(shiftHue(satinColor.rgb), satinColor.a);
-	vec4 shiftedInner = vec4(shiftHue(innerShadowColor.rgb), innerShadowColor.a);
-
-	spritecolor.rgb = blendMultiply(spritecolor.rgb, shiftedSatin.rgb, shiftedSatin.a);
-
-	vec2 distMult = (innerShadowDistance * resFactor) / sampleDist;
 	float activeLights = max(pointLightCount, 1.0);
+
+	if (pointLightCount <= 0.0)
+		spritecolor.rgb = blendMultiply(spritecolor.rgb, shiftedSatin.rgb, shiftedSatin.a);
 
 	for (int light = 0; light < MAX_POINT_LIGHTS; light++) {
 		if (float(light) >= activeLights) break;
+
+		vec4 lightSatin = pointLightCount > 0.0 ? getSatinColor(light) : satinColor;
+		vec4 lightInner = pointLightCount > 0.0 ? getInnerColor(light) : innerShadowColor;
+		lightSatin = vec4(shiftHue(lightSatin.rgb), lightSatin.a);
+		lightInner = vec4(shiftHue(lightInner.rgb), lightInner.a);
+
+		if (pointLightCount > 0.0)
+			spritecolor.rgb = blendMultiply(spritecolor.rgb, lightSatin.rgb, lightSatin.a / activeLights);
+
+		float sampleDist = clamp(pointLightCount > 0.0 ? getLayerNumbers(light) : layernumbers, 1.0, float(MAX_LAYERS));
+		vec2 resFactor = (pointLightCount > 0.0 ? getLayerSeparation(light) : layerseparation) / openfl_TextureSize.xy;
+		vec2 distMult = ((pointLightCount > 0.0 ? getInnerDistance(light) : innerShadowDistance) * resFactor) / sampleDist;
 
 		float angle = innerShadowAngle;
 		if (pointLightCount > 0.0) {
@@ -120,10 +200,18 @@ void main() {
 
 			vec2 sampleUV = uv + vec2(offsetX * (distMult.x * float(i)), offsetY * (distMult.y * float(i)));
 			vec4 col = texture2D(bitmap, sampleUV);
-			spritecolor.rgb = blendColorDodge(spritecolor.rgb, shiftedInner.rgb, (shiftedInner.a / activeLights) * inv(col.a));
+			spritecolor.rgb = blendColorDodge(spritecolor.rgb, lightInner.rgb, (lightInner.a / activeLights) * inv(col.a));
 		}
 	}
 
-	spritecolor.rgb = blendLighten(spritecolor.rgb, shiftedOverlay.rgb, shiftedOverlay.a);
+	if (pointLightCount > 0.0) {
+		for (int light = 0; light < MAX_POINT_LIGHTS; light++) {
+			if (float(light) >= activeLights) break;
+			vec4 lightOverlay = vec4(shiftHue(getOverlayColor(light).rgb), getOverlayColor(light).a);
+			spritecolor.rgb = blendLighten(spritecolor.rgb, lightOverlay.rgb, lightOverlay.a / activeLights);
+		}
+	} else {
+		spritecolor.rgb = blendLighten(spritecolor.rgb, shiftedOverlay.rgb, shiftedOverlay.a);
+	}
 	gl_FragColor = spritecolor * spritecolor.a;
 }

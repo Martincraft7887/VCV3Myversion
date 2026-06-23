@@ -445,32 +445,46 @@ function applyPaperHUDLayout() {
 	if (healthBarPrefix != "paper/" || healthBarBG == null || healthBar == null) return;
 
 	healthBarBG.screenCenter(FlxAxes.X);
-	healthBarBG.y = downscroll ? 16 : FlxG.height - healthBarBG.height + 4;
+	var targetBGY = downscroll ? 16 : FlxG.height - healthBarBG.height + 4;
+	if (healthBarBG.y != targetBGY)
+		healthBarBG.y = targetBGY;
 
-	healthBar.x = healthBarBG.x + 65;
-	healthBar.y = healthBarBG.y + 54;
+	var targetHealthX = healthBarBG.x + 65;
+	var targetHealthY = healthBarBG.y + 54;
+	if (healthBar.x != targetHealthX) healthBar.x = targetHealthX;
+	if (healthBar.y != targetHealthY) healthBar.y = targetHealthY;
 
 	if (iconP1 != null) {
-		iconP1.scale.set(paperIconScale, paperIconScale);
-		iconP1.updateHitbox();
-		iconP1.x = healthBar.x + healthBar.width - (iconP1.width / 2);
-		iconP1.y = healthBarBG.y + 67 - (iconP1.height / 2);
+		if (iconP1.scale.x != paperIconScale || iconP1.scale.y != paperIconScale) {
+			iconP1.scale.set(paperIconScale, paperIconScale);
+			iconP1.updateHitbox();
+		}
+		var targetIconP1X = healthBar.x + healthBar.width - (iconP1.width / 2);
+		var targetIconP1Y = healthBarBG.y + 67 - (iconP1.height / 2);
+		if (iconP1.x != targetIconP1X) iconP1.x = targetIconP1X;
+		if (iconP1.y != targetIconP1Y) iconP1.y = targetIconP1Y;
 	}
 	if (iconP2 != null) {
-		iconP2.scale.set(paperIconScale, paperIconScale);
-		iconP2.updateHitbox();
-		iconP2.x = healthBar.x - (iconP2.width / 2);
-		iconP2.y = healthBarBG.y + 67 - (iconP2.height / 2);
+		if (iconP2.scale.x != paperIconScale || iconP2.scale.y != paperIconScale) {
+			iconP2.scale.set(paperIconScale, paperIconScale);
+			iconP2.updateHitbox();
+		}
+		var targetIconP2X = healthBar.x - (iconP2.width / 2);
+		var targetIconP2Y = healthBarBG.y + 67 - (iconP2.height / 2);
+		if (iconP2.x != targetIconP2X) iconP2.x = targetIconP2X;
+		if (iconP2.y != targetIconP2Y) iconP2.y = targetIconP2Y;
 	}
 
 	var textY = healthBarBG.y + (downscroll ? 105 : 107);
 	for (text in [scoreTxt, missesTxt, accuracyTxt]) {
 		if (text == null) continue;
-		text.y = textY;
-		text.x = healthBarBG.x + 210;
-		text.fieldWidth = Std.int(healthBarBG.width - 420);
-		text.size = 16;
-		text.borderSize = 1.5;
+		var textX = healthBarBG.x + 210;
+		var textWidth = Std.int(healthBarBG.width - 420);
+		if (text.y != textY) text.y = textY;
+		if (text.x != textX) text.x = textX;
+		if (text.fieldWidth != textWidth) text.fieldWidth = textWidth;
+		if (text.size != 16) text.size = 16;
+		if (text.borderSize != 1.5) text.borderSize = 1.5;
 	}
 }
 function postUpdate(elapsed:Float) {

@@ -206,6 +206,7 @@ function getWhiteGloveSongMultiplier(songName:String):Float {
 	switch(songKey) {
 		case "finaldestinationgod": return 2.5;
 		case "krakatoa": return 1.5;
+		case "rejected": return 2;
 		case "rejectedvip": return 2.5;
 		case "finaldestinationvip": return 2.5;
 		case "finaldestinationvipold": return 2.5;

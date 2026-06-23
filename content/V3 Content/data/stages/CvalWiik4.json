@@ -1,15 +1,32 @@
-﻿{
-    "rtxData":  {
-                    "overlay":  "0x7C20B5",
-                    "overlayAlpha":  0.0309278350515464,
-                    "inner":  "0xC59BCD",
-                    "innerAlpha":  0.45360824742268,
-                    "innerAngle":  241.237113402062,
-                    "lightX":  465.5,
-                    "lightY":  38.600000000001,
-                    "satinAlpha":  0.742268041237113,
-                    "innerDistance":  16.0824742268041,
-                    "pointLight":  false,
-                    "satin":  "0x812AA0"
-                }
+{
+    "rtxData": {
+        "innerAlpha": 0.45360824742268,
+        "overlay": "0x7C20B5",
+        "layernumbers": 5,
+        "lightX": 1256.75675675676,
+        "satin": "0x812AA0",
+        "innerDistance": 16.0824742268041,
+        "satinAlpha": 0.742268041237113,
+        "lightY": 38.600000000001,
+        "pointLights": [
+            {
+                "innerAlpha": 0.45360824742268,
+                "overlay": "0x7C20B5",
+                "x": 1256.75675675676,
+                "layernumbers": 5,
+                "y": 38.600000000001,
+                "innerDistance": 16.0824742268041,
+                "satinAlpha": 0.742268041237113,
+                "satin": "0x812AA0",
+                "overlayAlpha": 0.0309278350515464,
+                "inner": "0xC59BCD",
+                "layerseparation": 1
+            }
+        ],
+        "innerAngle": 241.237113402062,
+        "pointLight": true,
+        "inner": "0xC59BCD",
+        "overlayAlpha": 0.0309278350515464,
+        "layerseparation": 1
+    }
 }

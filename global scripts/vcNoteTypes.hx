@@ -1,3 +1,5 @@
+import haxe.ds.ObjectMap;
+import haxe.ds.StringMap;
 
 var opponentAnimLocked:Bool = false;
 var fistThrowTimer:FlxTimer = null;
@@ -6,6 +8,9 @@ var dadMoveTween:FlxTween = null;
 var parryStrumsPrepared:Bool = false;
 var parries:Array<Dynamic> = [];
 var deadParries:Array<Dynamic> = [];
+var parriesDirty:Bool = false;
+var storedParryTimes:StringMap<Bool> = new StringMap();
+var noteTypeCache:ObjectMap<Dynamic, Dynamic> = new ObjectMap();
 var activeParry:Dynamic = null;
 var parryAttack:FunkinSprite = null;
 var flamePunch:FunkinSprite = null;
@@ -149,7 +154,60 @@ function getArrayValue(values:Dynamic, index:Int):Dynamic {
 	return values[index];
 }
 
+function getCachedNoteData(note:Dynamic, fallbackNoteType:Dynamic = null):Dynamic {
+	if (note != null && noteTypeCache.exists(note))
+		return noteTypeCache.get(note).data;
+
+	var noteType = fallbackNoteType;
+	if (noteType == null && note != null)
+		noteType = note.noteType;
+	noteType = getNoteTypeWithoutCharacter(noteType);
+	return noteTypeData.exists(noteType) ? noteTypeData.get(noteType) : null;
+}
+
+function cacheNoteTypeForNote(note:Dynamic, noteType:Dynamic) {
+	if (note == null) return;
+
+	var cleanType = getNoteTypeWithoutCharacter(noteType);
+	if (!noteTypeData.exists(cleanType)) return;
+
+	var data = noteTypeData.get(cleanType);
+	var dir = getNoteSingDirection(note);
+	var offsetX = getArrayValue(getNoteTypeOffsetArray(data, "offsetsX"), dir);
+	var offsetY = getArrayValue(getNoteTypeOffsetArray(data, "offsetsY"), dir);
+	var offsetYDS = getArrayValue(getNoteTypeOffsetArray(data, "offsetsYDS"), dir);
+
+	noteTypeCache.set(note, {
+		data: data,
+		dir: dir,
+		offsetX: offsetX,
+		offsetY: offsetY,
+		offsetYDS: offsetYDS,
+		rotate: shouldRotateNoteType(data)
+	});
+
+	if (isParryNoteData(data))
+		storeParry(note.strumTime);
+}
+
+function applyCachedNoteTypeVisual(note:Dynamic) {
+	if (note == null || note.isSustainNote || !noteTypeCache.exists(note)) return;
+
+	var cached = noteTypeCache.get(note);
+	if (cached.offsetX != null)
+		note.x += cached.offsetX * 1.4285 * note.scale.x;
+
+	var offsetY = downscroll ? cached.offsetYDS : cached.offsetY;
+	if (offsetY != null)
+		note.y += offsetY * 1.4285 * note.scale.y;
+
+	if (cached.rotate == true)
+		note.angle = getNoteRotationAngle(note);
+}
+
 function hasStoredParry(time:Float) {
+	if (storedParryTimes.exists(getParryKey(time)))
+		return true;
 	for (parry in parries)
 		if (Math.abs(parry.time - time) < 1)
 			return true;
@@ -159,8 +217,13 @@ function hasStoredParry(time:Float) {
 	return false;
 }
 
+function getParryKey(time:Float):String {
+	return Std.string(Math.round(time));
+}
+
 function storeParry(time:Float) {
 	if (hasStoredParry(time)) return;
+	storedParryTimes.set(getParryKey(time), true);
 
 	parries.push({
 		time: time,
@@ -169,6 +232,12 @@ function storeParry(time:Float) {
 		closed: false,
 		baseStrums: []
 	});
+	parriesDirty = true;
+}
+
+function sortParriesIfNeeded() {
+	if (!parriesDirty) return;
+	parriesDirty = false;
 	parries.sort(function(a, b) {
 		if (a.time < b.time) return -1;
 		else if (a.time > b.time) return 1;
@@ -277,6 +346,7 @@ function finishParry(parry:Dynamic) {
 function updateParryNotes() {
 	if (noMechanicsEnabled()) return;
 	if (parries.length < 1) return;
+	sortParriesIfNeeded();
 	setupParrySprites();
 	if (parryAttack == null) return;
 
@@ -313,6 +383,7 @@ function onNoteCreation(event) {
 	var noteType = getNoteTypeWithoutCharacter(event.noteType);
 	if (noteTypeData.exists(noteType)) {
 		var data = noteTypeData.get(noteType);
+		cacheNoteTypeForNote(event.note, noteType);
 
 		event.noteSprite = "game/voiid/notes/"+getNoteTypeSkin(data);
 
@@ -332,8 +403,15 @@ function onPostNoteCreation(event) {
 	if (noMechanicsEnabled()) return;
 
 	var noteType = getNoteTypeWithoutCharacter(event.noteType);
-	if (noteTypeData.exists(noteType))
+	if (noteTypeData.exists(noteType)) {
+		cacheNoteTypeForNote(event.note, noteType);
 		applyNoteTypeRotation(event.note, noteTypeData.get(noteType));
+	}
+}
+
+function onDeleteNote(event) {
+	if (event != null && event.note != null && noteTypeCache.exists(event.note))
+		noteTypeCache.remove(event.note);
 }
 
 function triggerFistThrow() {
@@ -395,10 +473,8 @@ function onNoteHit(event)
 {
 	if (noMechanicsEnabled()) return;
 
-	var noteType = getNoteTypeWithoutCharacter(event.noteType);
-	if (!noteTypeData.exists(noteType)) return;
-
-	var data = noteTypeData.get(noteType);
+	var data = getCachedNoteData(event.note, event.noteType);
+	if (data == null) return;
 
 	if (isBulletNoteData(data))
 		handleBulletNoteHit(event);
@@ -417,9 +493,8 @@ function onPlayerMiss(event)
 {
 	if (noMechanicsEnabled()) return;
 
-	var noteType = getNoteTypeWithoutCharacter(event.noteType);
-	if (noteTypeData.exists(noteType)) {
-		var data = noteTypeData.get(noteType);
+	var data = getCachedNoteData(event.note, event.noteType);
+	if (data != null) {
 		if (isBulletNoteData(data))
 			handleBulletPlayerMiss(event, data);
 
@@ -708,40 +783,15 @@ function updateEffects(elapsed) {
 function postUpdate(elapsed) {
 	if (noMechanicsEnabled()) {
 		updateEffects(elapsed);
-		try {
-			for (p in strumLines) {
-				p.notes.forEach(function(note) {
-					if (note != null) note.avoid = false;
-				});
-			}
-		} catch(e:Dynamic) {}
 		return;
 	}
 
 	updateEffects(elapsed);
-	refreshParriesFromNotes();
 	updateParryNotes();
 
 	for (p in strumLines) {
 		p.notes.forEach(function(note) {
-			var noteType = getNoteTypeWithoutCharacter(note.noteType);
-			if (noteTypeData.exists(noteType)) {
-				var data = noteTypeData.get(noteType);
-
-				var dir = getNoteSingDirection(note);
-
-				if (!note.isSustainNote) {
-					var offsetX = getArrayValue(getNoteTypeOffsetArray(data, "offsetsX"), dir);
-					if (offsetX != null)
-						note.x += offsetX*1.4285*note.scale.x;
-
-					var offsetY = getArrayValue(getNoteTypeOffsetArray(data, downscroll ? "offsetsYDS" : "offsetsY"), dir);
-					if (offsetY != null)
-						note.y += offsetY*1.4285*note.scale.y;
-
-					applyNoteTypeRotation(note, data);
-				}
-			}
+			applyCachedNoteTypeVisual(note);
 		});
 	}
 }

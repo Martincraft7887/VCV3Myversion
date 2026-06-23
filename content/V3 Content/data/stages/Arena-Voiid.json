@@ -11,11 +11,29 @@
         "pointLights": [
             {
                 "x": -125,
-                "y": -250
+                "y": -250,
+                "overlay": "0x000000",
+                "overlayAlpha": 0,
+                "satin": "0x000000",
+                "satinAlpha": 0.4,
+                "inner": "0xFFFFFF",
+                "innerAlpha": 0.342857142857143,
+                "innerDistance": 7,
+                "layernumbers": 4,
+                "layerseparation": 2
             },
             {
                 "x": 1625,
-                "y": -245
+                "y": -245,
+                "overlay": "0x000000",
+                "overlayAlpha": 0,
+                "satin": "0x000000",
+                "satinAlpha": 0.4,
+                "inner": "0xFFFFFF",
+                "innerAlpha": 0.342857142857143,
+                "innerDistance": 7,
+                "layernumbers": 4,
+                "layerseparation": 2
             }
         ],
         "innerAngle": 270,

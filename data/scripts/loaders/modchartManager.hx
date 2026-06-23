@@ -1,6 +1,8 @@
 //
 
 import haxe.Timer;
+import haxe.ds.ObjectMap;
+import haxe.ds.StringMap;
 
 
 ///////////3D Matrix stuff//////////////////////////////
@@ -70,6 +72,7 @@ var modShaderVertTable:Array<Dynamic> = [];
 var modShaderFragTable:Array<Dynamic> = [];
 
 var shaderPool:Array<Dynamic> = [];
+var shaderModValueCache:ObjectMap<Dynamic, StringMap<Float>> = new ObjectMap();
 
 function isPerspectiveShader(shader) {
 	return shader != null && shader.data != null && Reflect.field(shader.data, "noteCurPos") != null;
@@ -192,6 +195,8 @@ function postUpdate(elapsed)
 			strumLines.members[p].notes.limit = 1750 / scrollSpeed;
 			strumLines.members[p].notes.forEach(function(n)
 			{
+				if (n == null) return;
+
 				if (!isPerspectiveShader(n.shader)) {
 					n.shader = getPerspectiveShader(p, n.strumID);
 					debugShaderAppliedCount++;
@@ -225,25 +230,77 @@ function postUpdate(elapsed)
 	
 	
 				//calculate screen position for rotation and scaling inside shader
+				var noteStrum = getSafeNoteStrum(n, p);
+				if (noteStrum == null) return;
+
 				var point = FlxPoint.weak();
 				n.getScreenPosition(point, camHUD);
-				n.shader.screenX = (n.origin.x + point.x - n.offset.x) + n.__strum.x;
+				var strumX = getDynamicFloat(noteStrum, "x", 0);
+				var strumY = getDynamicFloat(noteStrum, "y", 0);
+				var origin = Reflect.field(n, "origin");
+				var offset = Reflect.field(n, "offset");
+				var originX = getDynamicFloat(origin, "x", 0);
+				var originY = getDynamicFloat(origin, "y", 0);
+				var offsetX = getDynamicFloat(offset, "x", 0);
+				var offsetY = getDynamicFloat(offset, "y", 0);
+				n.shader.screenX = (originX + point.x - offsetX) + strumX;
 				if (downscroll)
-					n.shader.screenY = (n.origin.y + point.y - n.offset.y) - n.__strum.y;
+					n.shader.screenY = (originY + point.y - offsetY) - strumY;
 				else
-					n.shader.screenY = (n.origin.y + point.y - n.offset.y) + n.__strum.y;
+					n.shader.screenY = (originY + point.y - offsetY) + strumY;
 				point.put();
 	
 				
 				n.shader.strumID = n.strumID;
 				n.shader.strumLineID = p;
 				n.shader.data.noteCurPos.value = [curPos, curPos, nextCurPos, nextCurPos];
-				n.shader.scrollSpeed = strumLines.members[p].members[n.strumID].getScrollSpeed(n);
+				n.shader.scrollSpeed = getSafeNoteScrollSpeed(n, p, noteStrum);
 				applyModifierValuesToShader(n.shader, p, n.strumID);
 			});
 		}
 	}
 }
+
+function getSafeNoteStrum(note, strumLineID) {
+	var noteStrum = Reflect.field(note, "__strum");
+	if (isValidStrumObject(noteStrum))
+		return noteStrum;
+
+	try {
+		var line = strumLines.members[strumLineID];
+		if (line != null && line.members != null && note.strumID >= 0 && note.strumID < line.members.length) {
+			noteStrum = line.members[note.strumID];
+			if (isValidStrumObject(noteStrum))
+				return noteStrum;
+		}
+	} catch(e:Dynamic) {}
+
+	return null;
+}
+
+function isValidStrumObject(strum):Bool {
+	if (strum == null) return false;
+	return Reflect.field(strum, "x") != null && Reflect.field(strum, "y") != null;
+}
+
+function getSafeNoteScrollSpeed(note, strumLineID, noteStrum):Float {
+	try {
+		if (noteStrum != null)
+			return noteStrum.getScrollSpeed(note);
+	} catch(e:Dynamic) {}
+	try {
+		return strumLines.members[strumLineID].members[note.strumID].getScrollSpeed(note);
+	} catch(e2:Dynamic) {}
+	return scrollSpeed;
+}
+
+function getDynamicFloat(obj, field:String, fallback:Float):Float {
+	var value = obj == null ? null : Reflect.field(obj, field);
+	if (value == null) return fallback;
+	var parsed = Std.parseFloat(Std.string(value));
+	return Math.isNaN(parsed) ? fallback : parsed;
+}
+
 function updateStrum(strum, p) {
 	if (!isPerspectiveShader(strum.shader)) {
 		strum.shader = getPerspectiveShader(p, strum.ID);
@@ -282,9 +339,20 @@ function updateStrum(strum, p) {
 function applyModifierValuesToShader(shader, p, strumID) {
 	if (shader == null || modTable[p] == null || modTable[p][strumID] == null) return;
 
+	var cache = shaderModValueCache.get(shader);
+	if (cache == null) {
+		cache = new StringMap();
+		shaderModValueCache.set(shader, cache);
+	}
+
 	for (mod in modTable[p][strumID])
 	{
-		shader.hset(mod[MOD_NAME] + "_value", mod[MOD_VALUE]);
+		var key = mod[MOD_NAME] + "_value";
+		var value:Float = mod[MOD_VALUE];
+		if (!cache.exists(key) || cache.get(key) != value) {
+			shader.hset(key, value);
+			cache.set(key, value);
+		}
 		//var shit = Reflect.getProperty(strum.shader.data, mod[MOD_NAME] + "_value");
 		//Reflect.setProperty(shit, "value", [mod[MOD_VALUE]]);
 	}

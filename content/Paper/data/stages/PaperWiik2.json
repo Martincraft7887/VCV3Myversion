@@ -12,6 +12,21 @@
         "overlayAlpha": 0.142857142857143,
         "inner": "0xFC817E7E",
         "pointLight": true,
-        "layerseparation": 5
+        "layerseparation": 5,
+        "pointLights": [
+            {
+                "x": 325,
+                "y": -2000,
+                "overlay": "0x262627",
+                "overlayAlpha": 0.142857142857143,
+                "satin": "0x003FCD",
+                "satinAlpha": 0.714285714285714,
+                "inner": "0xFC817E7E",
+                "innerAlpha": 0.857142857142857,
+                "innerDistance": 4,
+                "layernumbers": 7,
+                "layerseparation": 5
+            }
+        ]
     }
 }

@@ -71,9 +71,15 @@ function ensureSpeakersLayer() {
 		return;
 	}
 
-	if (speakerIndex >= 0) FlxG.state.remove(speakers, true);
+	if (speakerIndex == gfIndex - 1)
+		return;
+
+	if (speakerIndex >= 0)
+		FlxG.state.remove(speakers, true);
+
 	gfIndex = FlxG.state.members.indexOf(this);
-	FlxG.state.insert(gfIndex, speakers);
+	if (gfIndex >= 0)
+		FlxG.state.insert(gfIndex, speakers);
 }
 
 function syncSpeakersAnim(force:Bool) {

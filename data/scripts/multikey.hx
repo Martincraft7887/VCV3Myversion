@@ -29,6 +29,7 @@ public var strumLineNoteScales:Float = [0.7,0.7,0.7];
 
 var changingMania = false;
 var playFadeIn = true;
+var strumLineHasSustains:Array<Bool> = [];
 
 var maxKeyCount = 0;
 
@@ -226,6 +227,8 @@ function onNoteCreation(event) {
 	var note = event.note;
 	note.splash = getSplashForTime(note.strumTime);
 	note.frames = Paths.getFrames(event.noteSprite);
+	if (note.isSustainNote && event.strumLineID >= 0 && event.strumLineID < strumLineHasSustains.length)
+		strumLineHasSustains[event.strumLineID] = true;
 
 	var strumScale = strumLines.members[event.strumLineID].strumScale;
 
@@ -251,10 +254,12 @@ function create()
 	cacheSplashSkinChanges();
     strumLineKeyCounts = [];
 	maniaChanges = [];
+	strumLineHasSustains = [];
 	for (i in 0...strumLines.members.length)
 	{
 		strumLineKeyCounts.push(4);
 		maniaChanges.push([]);
+		strumLineHasSustains.push(false);
 	}
     
 	var chartPath = Paths.chart(PlayState.SONG.meta.name, PlayState.difficulty);
@@ -749,7 +754,11 @@ function onEvent(event)
 
 function postUpdate(elapsed)
 {
-    for(p in strumLines)
+    for(lineID in 0...strumLines.members.length)
+	{
+		var p = strumLines.members[lineID];
+		if (p == null || lineID >= strumLineHasSustains.length || !strumLineHasSustains[lineID])
+			continue;
         p.notes.forEach(function(n) {
             if (n.isSustainNote)
             {
@@ -757,6 +766,7 @@ function postUpdate(elapsed)
                 n.y += strumLineSwagWidths[n.strumLine.ID]*0.5*strumLines.members[n.strumLine.ID].strumScale;
             }
         });
+	}
 }
 
 function loadMobileHitboxes(targetKc)

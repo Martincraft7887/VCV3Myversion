@@ -6,6 +6,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import funkin.game.PlayState;
+import haxe.ds.ObjectMap;
 import haxe.ds.StringMap;
 
 var hudVisible:Bool = true;
@@ -16,6 +17,9 @@ var msTxt:FlxText;
 var scoreSkinPrefix:String = "voiid/";
 var scoreSkinChanges:Array<Dynamic> = [];
 var scoreGraphicCache:StringMap<Dynamic> = new StringMap();
+var ratingSpritePool:Array<FlxSprite> = [];
+var numberSpritePool:Array<FlxSprite> = [];
+var scoreSpriteAssets:ObjectMap<FlxSprite, String> = new ObjectMap();
 var resultsDirty:Bool = false;
 var resultsSyncTimer:Float = 0;
 var maxStoredHitDiffs:Int = 256;
@@ -45,6 +49,12 @@ var lastEngineMisses:Int = -1;
 var lastHandledNote:Dynamic = null;
 var lastHandledTime:Float = -999999;
 var lastHandledDirection:Int = -1;
+var cachedSideRatings:Bool = false;
+var cachedRatingPopup:Bool = true;
+var cachedComboPopup:Bool = true;
+var cachedDisplayMs:Bool = false;
+var cachedBiggerScoreText:Bool = false;
+var cachedBiggerInfoText:Bool = false;
 
 function create() {
 	for (event in events) {
@@ -175,6 +185,46 @@ function applyPopupCamera(sprite:Dynamic) {
 	sprite.scrollFactor.set();
 }
 
+function acquireScoreSprite(pool:Array<FlxSprite>, asset:String):FlxSprite {
+	for (sprite in pool) {
+		if (sprite != null && !sprite.visible) {
+			prepareScoreSprite(sprite, asset);
+			return sprite;
+		}
+	}
+
+	var sprite = new FlxSprite();
+	pool.push(sprite);
+	add(sprite);
+	prepareScoreSprite(sprite, asset);
+	return sprite;
+}
+
+function prepareScoreSprite(sprite:FlxSprite, asset:String) {
+	FlxTween.cancelTweensOf(sprite);
+	FlxTween.cancelTweensOf(sprite.scale);
+
+	var path = scoreAssetPath(asset);
+	if (!scoreSpriteAssets.exists(sprite) || scoreSpriteAssets.get(sprite) != path) {
+		sprite.loadGraphic(getScoreGraphic(asset));
+		scoreSpriteAssets.set(sprite, path);
+	}
+
+	sprite.alpha = 1;
+	sprite.visible = true;
+	sprite.active = true;
+	applyPopupCamera(sprite);
+}
+
+function releaseScoreSprite(sprite:FlxSprite) {
+	if (sprite == null) return;
+	FlxTween.cancelTweensOf(sprite);
+	FlxTween.cancelTweensOf(sprite.scale);
+	sprite.visible = false;
+	sprite.active = false;
+	sprite.alpha = 1;
+}
+
 function punchCenterScreen():Bool {
 	return saveBool("voiidPunchCenterScreen", false);
 }
@@ -209,8 +259,15 @@ function postCreate() {
 	cacheScoreSkin("paper/");
 	hideVanillaScore(ps);
 
-	var scoreSize = saveBool("voiidBiggerScoreText", false) ? 22 : 18;
-	var infoSize = saveBool("voiidBiggerInfoText", false) ? 20 : 16;
+	cachedSideRatings = saveBool("voiidSideRatings", false);
+	cachedRatingPopup = saveBool("voiidRatingPopup", true);
+	cachedComboPopup = saveBool("voiidComboPopup", true);
+	cachedDisplayMs = saveBool("voiidDisplayMs", false);
+	cachedBiggerScoreText = saveBool("voiidBiggerScoreText", false);
+	cachedBiggerInfoText = saveBool("voiidBiggerInfoText", false);
+
+	var scoreSize = cachedBiggerScoreText ? 22 : 18;
+	var infoSize = cachedBiggerInfoText ? 20 : 16;
 
 	hudBase = makeHudText(0, FlxG.height - 30, 0, scoreSize);
 	add(hudBase);
@@ -219,12 +276,12 @@ function postCreate() {
 	add(hudRating);
 
 	ratingCounterTxt = makeHudText(20, (FlxG.height / 2) - 70, 220, infoSize);
-	ratingCounterTxt.visible = saveBool("voiidSideRatings", false);
+	ratingCounterTxt.visible = cachedSideRatings;
 	add(ratingCounterTxt);
 
 	msTxt = makeHudText(0, getMsY(), FlxG.width, infoSize);
 	msTxt.alignment = "center";
-	msTxt.visible = saveBool("voiidDisplayMs", false);
+	msTxt.visible = cachedDisplayMs;
 	add(msTxt);
 
 	hitDiffs = [];
@@ -243,7 +300,7 @@ function update(elapsed:Float) {
 	updateRatingCounterFromMisses(ps);
 	syncDirtyResults(elapsed);
 
-	if (ratingCounterTxt != null && saveBool("voiidSideRatings", false)) {
+	if (ratingCounterTxt != null && cachedSideRatings) {
 		ratingCounterTxt.visible = true;
 	} else if (fadeTimer > 0 && ratingCounterTxt != null) {
 		fadeTimer -= elapsed;
@@ -303,7 +360,7 @@ function updateScoreHud(ps:PlayState) {
 			ratingCounterTxt.fieldWidth = 250;
 		}
 	} else {
-		var scoreSize = saveBool("voiidBiggerScoreText", false) ? 22 : 18;
+		var scoreSize = cachedBiggerScoreText ? 22 : 18;
 		hudBase.y = FlxG.height - 30;
 		hudRating.y = hudBase.y;
 		if (lastPaperScoreLayout) {
@@ -311,7 +368,7 @@ function updateScoreHud(ps:PlayState) {
 			hudRating.size = scoreSize;
 		}
 		if (ratingCounterTxt != null && lastPaperScoreLayout) {
-			ratingCounterTxt.size = saveBool("voiidBiggerInfoText", false) ? 20 : 16;
+			ratingCounterTxt.size = cachedBiggerInfoText ? 20 : 16;
 			ratingCounterTxt.borderSize = 2;
 			ratingCounterTxt.x = 20;
 			ratingCounterTxt.fieldWidth = 220;
@@ -525,22 +582,19 @@ function getPlayerStrumlineCenterX():Float {
 function showPopupRating(rating:String, combo:Int) {
 	if (isDisabledSong()) return;
 
-	var showRating = saveBool("voiidRatingPopup", true);
-	var showComboPopup = saveBool("voiidComboPopup", true);
+	var showRating = cachedRatingPopup;
+	var showComboPopup = cachedComboPopup;
 	if (!showRating && !showComboPopup)
 		return;
 
 	var centerX = FlxG.width * 0.5;
 
 	if (showRating) {
-		var ratingSprite:FlxSprite = new FlxSprite();
-		ratingSprite.loadGraphic(getScoreGraphic(getSkinRatingAsset(rating)));
-		applyPopupCamera(ratingSprite);
+		var ratingSprite:FlxSprite = acquireScoreSprite(ratingSpritePool, getSkinRatingAsset(rating));
 		ratingSprite.scale.set(popupScale * 1.2, popupScale * 1.2);
 		ratingSprite.updateHitbox();
 		ratingSprite.x = centerX - (ratingSprite.width * 0.5);
 		ratingSprite.y = centerY - (ratingSprite.height * 0.5);
-		add(ratingSprite);
 
 		FlxTween.tween(ratingSprite, {
 			'scale.x': popupScale,
@@ -553,7 +607,7 @@ function showPopupRating(rating:String, combo:Int) {
 			startDelay: 0.4,
 			ease: FlxEase.quadIn,
 			onComplete: function(twn) {
-				ratingSprite.destroy();
+				releaseScoreSprite(ratingSprite);
 			}
 		});
 	}
@@ -569,9 +623,7 @@ function showCombo(value:Int, startY:Float, centerX:Float) {
 	var numbers:Array<FlxSprite> = [];
 
 	for (d in digits) {
-		var s = new FlxSprite();
-		s.loadGraphic(getScoreGraphic("num" + d));
-		applyPopupCamera(s);
+		var s = acquireScoreSprite(numberSpritePool, "num" + d);
 		s.scale.set(popupScale, popupScale);
 		s.updateHitbox();
 		numbers.push(s);
@@ -586,7 +638,6 @@ function showCombo(value:Int, startY:Float, centerX:Float) {
 	for (n in numbers) {
 		n.x = startX;
 		n.y = startY;
-		add(n);
 
 		FlxTween.tween(n, {
 			y: n.y + 20
@@ -594,7 +645,7 @@ function showCombo(value:Int, startY:Float, centerX:Float) {
 			startDelay: 0.4,
 			ease: FlxEase.quadIn,
 			onComplete: function(twn) {
-				n.destroy();
+				releaseScoreSprite(n);
 			}
 		});
 
@@ -603,7 +654,7 @@ function showCombo(value:Int, startY:Float, centerX:Float) {
 }
 
 function showMsText(diffMs:Float) {
-	if (msTxt == null || !saveBool("voiidDisplayMs", false))
+	if (msTxt == null || !cachedDisplayMs)
 		return;
 
 	FlxTween.cancelTweensOf(msTxt);
@@ -674,12 +725,17 @@ function syncDirtyResults(elapsed:Float) {
 function destroy() {
 	if (resultsDirty)
 		syncResultStats();
+
+	for (sprite in ratingSpritePool)
+		releaseScoreSprite(sprite);
+	for (sprite in numberSpritePool)
+		releaseScoreSprite(sprite);
 }
 
 function showCounter() {
 	if (ratingCounterTxt == null) return;
 
-	if (!saveBool("voiidSideRatings", false)) {
+	if (!cachedSideRatings) {
 		ratingCounterTxt.visible = false;
 		return;
 	}
