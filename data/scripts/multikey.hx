@@ -504,6 +504,7 @@ function postCreate()
 var splashScaleMult = 1.428; // 1 / 0.7, to match with note scale
 var splashScales:Map<String, Float> = [];
 var splashSkinChanges:Array<Dynamic> = [];
+var defaultSplashSkinPrefix:String = "voiid/";
 
 function normalizeSplashPrefix(prefix:String):String {
 	if (prefix == null || prefix == "" || prefix == "codename/")
@@ -515,6 +516,8 @@ function splashNameForPrefix(prefix:String):String {
 	prefix = normalizeSplashPrefix(prefix);
 	if (prefix == "")
 		return Assets.exists(Paths.xml("splashes/codename")) ? "codename" : "default";
+	if (prefix == "voiid/")
+		return Assets.exists(Paths.xml("splashes/voiid")) ? "voiid" : "default";
 
 	var name = StringTools.endsWith(prefix, "/") ? prefix.substr(0, prefix.length - 1) : prefix;
 	if (Assets.exists(Paths.xml("splashes/" + name)))
@@ -544,7 +547,7 @@ function cacheSplashSkinChanges() {
 }
 
 function getSplashForTime(time:Float):String {
-	var splash = splashNameForPrefix("");
+	var splash = splashNameForPrefix(defaultSplashSkinPrefix);
 	for (change in splashSkinChanges) {
 		if (time >= change.time)
 			splash = change.splash;
@@ -603,6 +606,26 @@ function getVisualStrumCenterY(strum:Dynamic):Float {
 	return center;
 }
 
+function getNoteTypeForSplash(note:Dynamic):Dynamic {
+	if (note == null) return "";
+	try {
+		var noteType = Reflect.field(note, "noteType");
+		if (noteType != null) return noteType;
+	} catch(e:Dynamic) {}
+	return "";
+}
+
+function getSplashShader(splashName:String, strumID:Int, strumLineID:Int, noteType:Dynamic, fallback:Dynamic):Dynamic {
+	if (splashName == "paper") {
+		try {
+			var shader = scripts.call("getPaperSplashShader", [strumID, strumLineID, noteType]);
+			if (shader != null)
+				return shader;
+		} catch(e:Dynamic) {}
+	}
+	return fallback;
+}
+
 function onNoteHit(event)
 {
     var index = event.note.strumID;
@@ -649,7 +672,7 @@ function onNoteHit(event)
 		}
 		var scale:Float = splashScales.get(splashName);
 		
-		splash.shader = event.note.__strum.shader;
+		splash.shader = getSplashShader(splashName, index, event.note.strumLine.ID, getNoteTypeForSplash(event.note), event.note.__strum.shader);
 
 		//set splash scale and position properly
 		splash.scale.set(

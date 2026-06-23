@@ -1,17 +1,17 @@
 {
     "rtxData": {
-        "innerAlpha": 0.828571428571429,
         "overlay": "0x262627",
-        "layernumbers": 3,
-        "lightX": 0,
-        "lightY": 0,
-        "satinAlpha": 0.5,
+        "innerAlpha": 0.857142857142857,
+        "layernumbers": 7,
+        "lightX": 325,
+        "innerDistance": 4,
         "satin": "0x003FCD",
-        "innerDistance": 20,
-        "innerAngle": -90,
-        "pointLight": false,
+        "satinAlpha": 0.714285714285714,
+        "lightY": -2000,
+        "innerAngle": 270,
+        "overlayAlpha": 0.142857142857143,
         "inner": "0xFC817E7E",
-        "overlayAlpha": 0.2,
-        "layerseparation": 2
+        "pointLight": true,
+        "layerseparation": 5
     }
 }

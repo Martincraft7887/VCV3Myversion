@@ -141,6 +141,7 @@ function setupRTXShader(shader:Dynamic, sprite:Dynamic) {
 	var inner = colorToVec4(getRTXString("inner", "0x000000"), getRTXFloat("innerAlpha", 0));
 	var distance = getRTXFloat("innerDistance", 10);
 	var angle = getRTXAngle(sprite);
+	var angles = getRTXAngles(sprite);
 	var layers = getRTXFloat("layernumbers", getRTXFloat("layers", 5));
 	var separation = getRTXFloat("layerseparation", getRTXFloat("separation", 1));
 
@@ -149,11 +150,12 @@ function setupRTXShader(shader:Dynamic, sprite:Dynamic) {
 	setRTXUniform(shader, "innerShadowColor", inner);
 	setRTXUniform(shader, "innerShadowDistance", distance);
 	setRTXUniform(shader, "innerShadowAngle", angle);
+	applyRTXAngleUniforms(shader, angles);
 	setRTXUniform(shader, "layernumbers", layers);
 	setRTXUniform(shader, "layerseparation", separation);
 	setRTXUniform(shader, "hue", rtxHue);
 
-	rtxTrace("uniforms for " + getSpriteDebugName(sprite) + " -> overlay=" + overlay + ", satin=" + satin + ", inner=" + inner + ", distance=" + distance + ", angleDeg=" + (angle * 180 / Math.PI) + ", angleRad=" + angle + ", layers=" + layers + ", separation=" + separation + ", hue=" + rtxHue);
+	rtxTrace("uniforms for " + getSpriteDebugName(sprite) + " -> overlay=" + overlay + ", satin=" + satin + ", inner=" + inner + ", distance=" + distance + ", angleDeg=" + (angle * 180 / Math.PI) + ", angleRad=" + angle + ", pointLights=" + angles.length + ", layers=" + layers + ", separation=" + separation + ", hue=" + rtxHue);
 }
 
 function setRTXHue(value:Float) {
@@ -204,6 +206,7 @@ function refreshRTXAngles() {
 		var shader = rtxShaders[i];
 		if (sprite == null || shader == null) continue;
 		setRTXUniform(shader, "innerShadowAngle", getRTXAngle(sprite));
+		applyRTXAngleUniforms(shader, getRTXAngles(sprite));
 	}
 }
 
@@ -274,17 +277,40 @@ function update(elapsed:Float) {
 		if (sprite.shader != shader) continue;
 
 		setRTXUniform(shader, "innerShadowAngle", getRTXAngle(sprite));
+		applyRTXAngleUniforms(shader, getRTXAngles(sprite));
 	}
+}
+
+function applyRTXAngleUniforms(shader:Dynamic, angles:Array<Float>) {
+	if (angles == null)
+		angles = [];
+
+	setRTXUniform(shader, "pointLightCount", angles.length);
+	for (i in 0...4) {
+		var angle = i < angles.length ? angles[i] : 0;
+		setRTXUniform(shader, "innerShadowAngle" + i, angle);
+	}
+}
+
+function getRTXAngles(sprite:Dynamic):Array<Float> {
+	var angles:Array<Float> = [];
+	if (!getRTXBool("pointLight", false) || sprite == null)
+		return angles;
+
+	var lights = getRTXPointLights();
+	for (light in lights) {
+		if (angles.length >= 4)
+			break;
+		angles.push(getRTXPointLightAngle(sprite, getDynamicFloat(light, "x", 0), getDynamicFloat(light, "y", 0)));
+	}
+	return angles;
 }
 
 function getRTXAngle(sprite:Dynamic):Float {
 	if (getRTXBool("pointLight", false) && sprite != null) {
-		var midpoint = sprite.getGraphicMidpoint();
-		var dx = getRTXFloat("lightX", 0) - midpoint.x;
-		var dy = getRTXFloat("lightY", 0) - midpoint.y;
-		if (sprite.flipX) dx = -dx;
-		if (sprite.flipY) dy = -dy;
-		return Math.atan2(dy, dx);
+		var lights = getRTXPointLights();
+		if (lights.length > 0)
+			return getRTXPointLightAngle(sprite, getDynamicFloat(lights[0], "x", getRTXFloat("lightX", 0)), getDynamicFloat(lights[0], "y", getRTXFloat("lightY", 0)));
 	}
 
 	var radians = getRTXFloat("innerAngle", 270) * Math.PI / 180;
@@ -292,6 +318,40 @@ function getRTXAngle(sprite:Dynamic):Float {
 		radians = Math.atan2(Math.sin(radians), -Math.cos(radians));
 	}
 	return radians;
+}
+
+function getRTXPointLightAngle(sprite:Dynamic, lightX:Float, lightY:Float):Float {
+	var midpoint = sprite.getGraphicMidpoint();
+	var dx = lightX - midpoint.x;
+	var dy = lightY - midpoint.y;
+	if (sprite.flipX) dx = -dx;
+	if (sprite.flipY) dy = -dy;
+	return Math.atan2(dy, dx);
+}
+
+function getRTXPointLights():Array<Dynamic> {
+	var lights:Array<Dynamic> = [];
+	var raw = Reflect.field(rtxData, "pointLights");
+	if (raw != null) {
+		try {
+			for (light in cast(raw, Array<Dynamic>)) {
+				if (light != null)
+					lights.push(light);
+			}
+		} catch(e:Dynamic) {}
+	}
+
+	if (lights.length <= 0)
+		lights.push({x: getRTXFloat("lightX", 0), y: getRTXFloat("lightY", 0)});
+	return lights;
+}
+
+function getDynamicFloat(obj:Dynamic, field:String, fallback:Float):Float {
+	var value = obj == null ? null : Reflect.field(obj, field);
+	if (value == null)
+		return fallback;
+	var parsed = Std.parseFloat(Std.string(value));
+	return Math.isNaN(parsed) ? fallback : parsed;
 }
 
 function getRTXString(field:String, fallback:String):String {

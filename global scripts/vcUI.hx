@@ -214,6 +214,17 @@ function applyPaperNoteShader(sprite:Dynamic, id:Int, noteType:Dynamic, strumLin
 	}
 }
 
+function getPaperSplashShader(id:Int, strumLineID:Int, noteType:Dynamic):CustomShader {
+	var nt = getNoteTypeWithoutCharacter(noteType);
+	if (nt == "Wiik3Punch")
+		return getPaperPunchShader();
+	if (nt == "BoxingMatchPunch")
+		return getPaperBoxingPunchShader();
+	if (nt == "" || nt == "Default Note")
+		return getPaperRGBShader(id, getPaperKeyCount(strumLineID));
+	return null;
+}
+
 function applyPaperRGBShader(sprite:Dynamic, id:Int, isStrum:Bool, strumLineID:Int) {
 	if (sprite == null) return;
 

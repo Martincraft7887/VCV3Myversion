@@ -53,12 +53,18 @@ uniform vec4 overlayColor;
 uniform vec4 satinColor;
 uniform vec4 innerShadowColor;
 uniform float innerShadowAngle;
+uniform float innerShadowAngle0;
+uniform float innerShadowAngle1;
+uniform float innerShadowAngle2;
+uniform float innerShadowAngle3;
+uniform float pointLightCount;
 uniform float innerShadowDistance;
 uniform float layernumbers;
 uniform float layerseparation;
 uniform float hue;
 
 const int MAX_LAYERS = 32;
+const int MAX_POINT_LIGHTS = 4;
 
 vec3 rgb2hsv(vec3 c) {
 	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -92,16 +98,30 @@ void main() {
 
 	spritecolor.rgb = blendMultiply(spritecolor.rgb, shiftedSatin.rgb, shiftedSatin.a);
 
-	float offsetX = cos(innerShadowAngle);
-	float offsetY = sin(innerShadowAngle);
 	vec2 distMult = (innerShadowDistance * resFactor) / sampleDist;
+	float activeLights = max(pointLightCount, 1.0);
 
-	for (int i = 0; i < MAX_LAYERS; i++) {
-		if (float(i) >= sampleDist) break;
+	for (int light = 0; light < MAX_POINT_LIGHTS; light++) {
+		if (float(light) >= activeLights) break;
 
-		vec2 sampleUV = uv + vec2(offsetX * (distMult.x * float(i)), offsetY * (distMult.y * float(i)));
-		vec4 col = texture2D(bitmap, sampleUV);
-		spritecolor.rgb = blendColorDodge(spritecolor.rgb, shiftedInner.rgb, shiftedInner.a * inv(col.a));
+		float angle = innerShadowAngle;
+		if (pointLightCount > 0.0) {
+			if (light == 0) angle = innerShadowAngle0;
+			else if (light == 1) angle = innerShadowAngle1;
+			else if (light == 2) angle = innerShadowAngle2;
+			else if (light == 3) angle = innerShadowAngle3;
+		}
+
+		float offsetX = cos(angle);
+		float offsetY = sin(angle);
+
+		for (int i = 0; i < MAX_LAYERS; i++) {
+			if (float(i) >= sampleDist) break;
+
+			vec2 sampleUV = uv + vec2(offsetX * (distMult.x * float(i)), offsetY * (distMult.y * float(i)));
+			vec4 col = texture2D(bitmap, sampleUV);
+			spritecolor.rgb = blendColorDodge(spritecolor.rgb, shiftedInner.rgb, (shiftedInner.a / activeLights) * inv(col.a));
+		}
 	}
 
 	spritecolor.rgb = blendLighten(spritecolor.rgb, shiftedOverlay.rgb, shiftedOverlay.a);

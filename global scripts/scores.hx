@@ -13,7 +13,7 @@ var hudBase:FlxText;
 var hudRating:FlxText;
 var ratingCounterTxt:FlxText;
 var msTxt:FlxText;
-var scoreSkinPrefix:String = "";
+var scoreSkinPrefix:String = "voiid/";
 var scoreSkinChanges:Array<Dynamic> = [];
 var scoreGraphicCache:StringMap<Dynamic> = new StringMap();
 var resultsDirty:Bool = false;
@@ -83,7 +83,7 @@ function scoreAssetPath(asset:String):String {
 }
 
 function getSkinRatingAsset(rating:String):String {
-	if (scoreSkinPrefix == "paper/" && rating == "krazy")
+	if ((scoreSkinPrefix == "" || scoreSkinPrefix == "paper/") && rating == "krazy")
 		return "marvelous";
 	return rating;
 }
@@ -104,7 +104,7 @@ function cacheScoreSkin(prefix:String) {
 	var assets = ["sick", "good", "bad", "shit", "combo", "num0", "num1", "num2", "num3", "num4", "num5", "num6", "num7", "num8", "num9"];
 	if (scoreSkinPrefix != "")
 		assets.push("krazy");
-	if (scoreSkinPrefix == "paper/")
+	if (scoreSkinPrefix == "" || scoreSkinPrefix == "paper/")
 		assets.push("marvelous");
 	for (asset in assets) {
 		try {
@@ -437,9 +437,6 @@ function handleScoreHit(e) {
 
 	if (rating != "krazy" && rating != "sick" && rating != "good" && rating != "bad" && rating != "shit")
 		rating = "sick";
-	if (scoreSkinPrefix == "" && rating == "krazy")
-		rating = "sick";
-
 	popupCombo++;
 	lastHitDiffMs = hitDiffMs;
 	totalAbsHitDiffMs += Math.abs(hitDiffMs);

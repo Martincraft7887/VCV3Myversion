@@ -12,6 +12,7 @@ import flixel.util.FlxColor;
 import haxe.Json;
 import haxe.io.Path;
 import openfl.utils.Assets;
+import sys.FileSystem;
 import Xml;
 
 var stageName:String = "stage";
@@ -28,6 +29,9 @@ var charNodes:Array<Dynamic> = [];
 var rtxInputs:Array<Dynamic> = [];
 var rtxPanelItems:Array<Dynamic> = [];
 var rtxSwatches:Array<Dynamic> = [];
+var rtxSelectedLightIndex:Int = 0;
+var rtxLightLabel:UIText = null;
+var rtxPointButton:UIButton = null;
 var title:UIText;
 var status:UIText;
 var slotDropdown:UIDropDown;
@@ -101,8 +105,8 @@ function loadRTXJson() {
 	rtxData = {};
 
 	var path = getRTXAssetPath();
-	if (Assets.exists(path)) {
-		var text = Assets.getText(path);
+	var text = getRTXJsonText(path);
+	if (text != null) {
 		if (text != null && text.length > 0 && StringTools.fastCodeAt(text, 0) == 65279)
 			text = text.substr(1);
 		try {
@@ -120,6 +124,19 @@ function loadRTXJson() {
 	Reflect.setField(rtxRoot, "rtxData", rtxData);
 }
 
+function getRTXJsonText(assetPath:String):String {
+	var savePath = getRTXSavePath();
+	if (savePath != null && FileSystem.exists(savePath)) {
+		try {
+			return sys.io.File.getContent(savePath);
+		} catch(e:Dynamic) {}
+	}
+
+	if (Assets.exists(assetPath))
+		return Assets.getText(assetPath);
+	return null;
+}
+
 function ensureRTXDefaults() {
 	setRTXDefault("overlay", "0x000000");
 	setRTXDefault("overlayAlpha", 0);
@@ -134,6 +151,7 @@ function ensureRTXDefaults() {
 	setRTXDefault("pointLight", false);
 	setRTXDefault("layernumbers", 5);
 	setRTXDefault("layerseparation", 1);
+	ensureRTXPointLights();
 }
 
 function setRTXDefault(field:String, value:Dynamic) {
@@ -212,17 +230,34 @@ function buildRTXPanel() {
 	addRTXSlider("Layers", "layernumbers", 364, 408, 244, 0, 100);
 	addRTXSlider("Separation", "layerseparation", 632, 408, 244, 0, 100);
 
-	var pointButton:UIButton = null;
-	pointButton = new UIButton(800, 12, "Point Light: " + (getRTXBool("pointLight", false) ? "ON" : "OFF"), function() {
+	rtxPointButton = new UIButton(800, 12, "Point Light: " + (getRTXBool("pointLight", false) ? "ON" : "OFF"), function() {
 		var next = !getRTXBool("pointLight", false);
 		Reflect.setField(rtxData, "pointLight", next);
-		if (pointButton != null)
-			pointButton.field.text = "Point Light: " + (next ? "ON" : "OFF");
+		refreshRTXLightControls();
 		applyRTXPreview();
 		updatePointLightMarker();
 	}, 166, 28);
-	addRTXUI(pointButton);
+	addRTXUI(rtxPointButton);
 
+	var prevLight = new UIButton(632, 282, "< Light", function() {
+		selectRTXLight(rtxSelectedLightIndex - 1);
+	}, 72, 26);
+	addRTXUI(prevLight);
+
+	rtxLightLabel = new UIText(710, 286, 84, "", 12);
+	addRTXUI(rtxLightLabel);
+
+	var nextLight = new UIButton(800, 282, "Light >", function() {
+		selectRTXLight(rtxSelectedLightIndex + 1);
+	}, 72, 26);
+	addRTXUI(nextLight);
+
+	var addLight = new UIButton(876, 282, "+", function() {
+		addRTXPointLight();
+	}, 32, 26);
+	addRTXUI(addLight);
+
+	refreshRTXLightControls();
 	refreshRTXSwatches();
 }
 
@@ -258,7 +293,7 @@ function addRTXSlider(label:String, field:String, x:Float, y:Float, width:Int, m
 	var rowLabel = new UIText(x, y - 18, width, label, 12);
 	addRTXUI(rowLabel);
 	var input = makeUISlider(x + 96, y, width - 96, getRTXFloat(field, 0), min, max, function(value:Float) {
-		Reflect.setField(rtxData, field, value);
+		setRTXEditorFloat(field, value);
 		applyRTXPreview();
 		refreshRTXSwatches();
 	});
@@ -277,6 +312,126 @@ function makeUISlider(x:Float, y:Float, width:Int, value:Float, min:Float, max:F
 	slider.value = value;
 	slider.onChange = onChange;
 	return slider;
+}
+
+function ensureRTXPointLights() {
+	var lights = getRTXPointLights();
+	if (lights.length <= 0) {
+		lights.push({x: getRTXFloatRaw("lightX", 0), y: getRTXFloatRaw("lightY", 0)});
+		Reflect.setField(rtxData, "pointLights", lights);
+	}
+	clampRTXSelectedLight();
+	syncLegacyRTXLightFields();
+}
+
+function getRTXPointLights():Array<Dynamic> {
+	var raw = Reflect.field(rtxData, "pointLights");
+	if (raw == null) {
+		var created:Array<Dynamic> = [{x: getRTXFloatRaw("lightX", 0), y: getRTXFloatRaw("lightY", 0)}];
+		Reflect.setField(rtxData, "pointLights", created);
+		return created;
+	}
+
+	try {
+		return cast raw;
+	} catch(e:Dynamic) {
+		var fallback:Array<Dynamic> = [{x: getRTXFloatRaw("lightX", 0), y: getRTXFloatRaw("lightY", 0)}];
+		Reflect.setField(rtxData, "pointLights", fallback);
+		return fallback;
+	}
+}
+
+function getRTXSelectedLight():Dynamic {
+	var lights = getRTXPointLights();
+	clampRTXSelectedLight();
+	return lights[rtxSelectedLightIndex];
+}
+
+function clampRTXSelectedLight() {
+	var lights = getRTXPointLights();
+	if (lights.length <= 0) {
+		lights.push({x: getRTXFloatRaw("lightX", 0), y: getRTXFloatRaw("lightY", 0)});
+		Reflect.setField(rtxData, "pointLights", lights);
+	}
+	if (rtxSelectedLightIndex < 0)
+		rtxSelectedLightIndex = lights.length - 1;
+	if (rtxSelectedLightIndex >= lights.length)
+		rtxSelectedLightIndex = 0;
+}
+
+function selectRTXLight(index:Int) {
+	rtxSelectedLightIndex = index;
+	clampRTXSelectedLight();
+	syncLegacyRTXLightFields();
+	refreshRTXLightControls();
+	applyRTXPreview();
+	updatePointLightMarker();
+}
+
+function addRTXPointLight() {
+	var lights = getRTXPointLights();
+	if (lights.length >= 4) {
+		if (status != null)
+			status.text = "RTX point light limit: 4";
+		return;
+	}
+
+	var base = getRTXSelectedLight();
+	lights.push({
+		x: getDynamicFloat(base, "x", getRTXFloatRaw("lightX", 0)) + 100,
+		y: getDynamicFloat(base, "y", getRTXFloatRaw("lightY", 0))
+	});
+	Reflect.setField(rtxData, "pointLights", lights);
+	selectRTXLight(lights.length - 1);
+}
+
+function refreshRTXLightControls() {
+	var lights = getRTXPointLights();
+	clampRTXSelectedLight();
+	if (rtxPointButton != null)
+		rtxPointButton.field.text = "Point Light: " + (getRTXBool("pointLight", false) ? "ON" : "OFF");
+	if (rtxLightLabel != null)
+		rtxLightLabel.text = "Light " + (rtxSelectedLightIndex + 1) + "/" + lights.length;
+	refreshRTXLightSliders();
+}
+
+function refreshRTXLightSliders() {
+	var light = getRTXSelectedLight();
+	setRTXSliderValue("lightX", getDynamicFloat(light, "x", 0));
+	setRTXSliderValue("lightY", getDynamicFloat(light, "y", 0));
+}
+
+function setRTXSliderValue(field:String, value:Float) {
+	for (entry in rtxInputs) {
+		if (entry == null || entry.field != field || entry.input == null)
+			continue;
+		try {
+			entry.input.value = value;
+		} catch(e:Dynamic) {}
+		try {
+			entry.input.valueStepper.value = value;
+		} catch(e2:Dynamic) {}
+		try {
+			entry.input.valueStepper.label.text = Std.string(Math.round(value * 100) / 100);
+		} catch(e3:Dynamic) {}
+	}
+}
+
+function setRTXEditorFloat(field:String, value:Float) {
+	if (field == "lightX" || field == "lightY") {
+		var light = getRTXSelectedLight();
+		Reflect.setField(light, field == "lightX" ? "x" : "y", value);
+		syncLegacyRTXLightFields();
+		updatePointLightMarker();
+		return;
+	}
+	Reflect.setField(rtxData, field, value);
+}
+
+function syncLegacyRTXLightFields() {
+	var light = getRTXSelectedLight();
+	Reflect.setField(rtxData, "lightX", getDynamicFloat(light, "x", 0));
+	Reflect.setField(rtxData, "lightY", getDynamicFloat(light, "y", 0));
 }
 
 function addRTXLabel(text:String, x:Float, y:Float) {
@@ -628,6 +783,7 @@ function isMouseInsideRect(mouse:FlxPoint, x:Float, y:Float, width:Float, height
 }
 
 function saveRTXJson() {
+	syncLegacyRTXLightFields();
 	Reflect.setField(rtxRoot, "rtxData", rtxData);
 	var path = getRTXSavePath();
 	CoolUtil.safeSaveFile(path, Json.stringify(rtxRoot, null, "    "));
@@ -653,6 +809,7 @@ function applyRTXPreview() {
 	setRTXUniform(previewShader, "innerShadowColor", colorToVec4(getRTXString("inner", "0x000000"), getRTXFloat("innerAlpha", 0)));
 	setRTXUniform(previewShader, "innerShadowDistance", getRTXFloat("innerDistance", 10));
 	setRTXUniform(previewShader, "innerShadowAngle", getRTXAngle(charPreview));
+	applyRTXAngleUniforms(previewShader, getRTXAngles(charPreview));
 	setRTXUniform(previewShader, "layernumbers", getRTXFloat("layernumbers", getRTXFloat("layers", 5)));
 	setRTXUniform(previewShader, "layerseparation", getRTXFloat("layerseparation", getRTXFloat("separation", 1)));
 	setRTXUniform(previewShader, "hue", getRTXFloat("hue", 0));
@@ -690,20 +847,50 @@ function setRTXUniform(shader:Dynamic, property:String, value:Dynamic) {
 	}
 }
 
+function applyRTXAngleUniforms(shader:Dynamic, angles:Array<Float>) {
+	if (angles == null)
+		angles = [];
+
+	setRTXUniform(shader, "pointLightCount", angles.length);
+	for (i in 0...4) {
+		var angle = i < angles.length ? angles[i] : 0;
+		setRTXUniform(shader, "innerShadowAngle" + i, angle);
+	}
+}
+
+function getRTXAngles(sprite:Dynamic):Array<Float> {
+	var angles:Array<Float> = [];
+	if (!getRTXBool("pointLight", false) || sprite == null)
+		return angles;
+
+	var lights = getRTXPointLights();
+	for (light in lights) {
+		if (angles.length >= 4)
+			break;
+		angles.push(getRTXPointLightAngle(sprite, getDynamicFloat(light, "x", 0), getDynamicFloat(light, "y", 0)));
+	}
+	return angles;
+}
+
 function getRTXAngle(sprite:Dynamic):Float {
 	if (getRTXBool("pointLight", false) && sprite != null) {
-		var midpoint = sprite.getGraphicMidpoint();
-		var dx = getRTXFloat("lightX", 0) - midpoint.x;
-		var dy = getRTXFloat("lightY", 0) - midpoint.y;
-		if (sprite.flipX) dx = -dx;
-		if (sprite.flipY) dy = -dy;
-		return Math.atan2(dy, dx);
+		var light = getRTXSelectedLight();
+		return getRTXPointLightAngle(sprite, getDynamicFloat(light, "x", getRTXFloatRaw("lightX", 0)), getDynamicFloat(light, "y", getRTXFloatRaw("lightY", 0)));
 	}
 
 	var radians = getRTXFloat("innerAngle", 270) * Math.PI / 180;
 	if (sprite != null && sprite.flipX)
 		radians = Math.atan2(Math.sin(radians), -Math.cos(radians));
 	return radians;
+}
+
+function getRTXPointLightAngle(sprite:Dynamic, lightX:Float, lightY:Float):Float {
+	var midpoint = sprite.getGraphicMidpoint();
+	var dx = lightX - midpoint.x;
+	var dy = lightY - midpoint.y;
+	if (sprite.flipX) dx = -dx;
+	if (sprite.flipY) dy = -dy;
+	return Math.atan2(dy, dx);
 }
 
 function colorToVec4(value:String, alpha:Float):Array<Float> {
@@ -761,15 +948,32 @@ function getRTXAssetPath():String {
 }
 
 function getRTXSavePath():String {
-	var assetPath = getRTXAssetPath();
+	var stageXMLPath = getStageXMLRealPath();
+	if (stageXMLPath != null) {
+		var normalized = stageXMLPath.split("\\").join("/");
+		if (StringTools.endsWith(normalized.toLowerCase(), ".xml"))
+			return normalized.substr(0, normalized.length - 4) + ".json";
+	}
+
 	var path = null;
 	try {
-		path = Paths.assetsTree.getSpecificPath(assetPath);
+		path = Paths.assetsTree.getSpecificPath(getRTXAssetPath());
 	} catch(e:Dynamic) {}
 	if (path == null)
 		path = Paths.getAssetsRoot() + "/data/stages/" + stageName + ".json";
 	if (path.indexOf(":assets/") >= 0)
 		path = Paths.getAssetsRoot() + "/data/stages/" + stageName + ".json";
+	return path;
+}
+
+function getStageXMLRealPath():String {
+	var xmlAssetPath = Paths.xml("stages/" + stageName);
+	var path = null;
+	try {
+		path = Paths.assetsTree.getSpecificPath(xmlAssetPath);
+	} catch(e:Dynamic) {}
+	if (path == null || path.indexOf(":assets/") >= 0)
+		return null;
 	return path;
 }
 
@@ -832,8 +1036,25 @@ function readFloat(node:Xml, att:String, def:Float):Float {
 }
 
 function getRTXFloat(field:String, fallback:Float):Float {
+	if (field == "lightX" || field == "lightY") {
+		var light = getRTXSelectedLight();
+		return getDynamicFloat(light, field == "lightX" ? "x" : "y", fallback);
+	}
+
+	return getRTXFloatRaw(field, fallback);
+}
+
+function getRTXFloatRaw(field:String, fallback:Float):Float {
 	var value = Reflect.field(rtxData, field);
 	if (value == null) return fallback;
+	var parsed = Std.parseFloat(Std.string(value));
+	return Math.isNaN(parsed) ? fallback : parsed;
+}
+
+function getDynamicFloat(obj:Dynamic, field:String, fallback:Float):Float {
+	var value = obj == null ? null : Reflect.field(obj, field);
+	if (value == null)
+		return fallback;
 	var parsed = Std.parseFloat(Std.string(value));
 	return Math.isNaN(parsed) ? fallback : parsed;
 }
