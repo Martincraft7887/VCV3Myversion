@@ -2,6 +2,7 @@ import funkin.backend.scripting.ModState;
 import funkin.backend.utils.CoolUtil;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
+import flixel.input.keyboard.FlxKey;
 import funkin.options.Options;
 import funkin.options.OptionsMenu;
 import funkin.backend.chart.Chart;
@@ -359,6 +360,8 @@ var lockStaticStrength:Float = 0;
 var unlockCache:Array<Dynamic> = [];
 var priceCache:Array<Dynamic> = [];
 var nextOfCache:Array<Dynamic> = [];
+var hesoyamProgress:Int = 0;
+var runtimeUnlockAll:Bool = false;
 var gloveSaveField = "voiidGloveSave";
 var whiteGloveField = "voiidWhiteGloves";
 var purpleGloveField = "voiidPurpleGloves";
@@ -603,6 +606,8 @@ function hasPendingNextOf(index:Int):Bool {
 }
 
 function isSongUnlockedByIndex(index:Int):Bool {
+	if (runtimeUnlockAll) return true;
+
 	var globalIndex = getGlobalSongIndex(index);
 	if (globalIndex >= 0 && globalIndex < unlockCache.length && unlockCache[globalIndex] != null)
 		return unlockCache[globalIndex] == true;
@@ -621,6 +626,60 @@ function isSongUnlockedByIndex(index:Int):Bool {
 	var unlocked = Reflect.field(save, unlockField(songList[globalIndex].name)) == true || Reflect.field(save, unlockField(songList[globalIndex].displayName)) == true;
 	unlockCache[globalIndex] = unlocked;
 	return unlocked;
+}
+
+function getHesoyamLetter(key:FlxKey):String {
+	if (key == FlxKey.H) return "h";
+	if (key == FlxKey.E) return "e";
+	if (key == FlxKey.S) return "s";
+	if (key == FlxKey.O) return "o";
+	if (key == FlxKey.Y) return "y";
+	if (key == FlxKey.A) return "a";
+	if (key == FlxKey.M) return "m";
+	return "";
+}
+
+function checkHesoyamUnlock() {
+	if (runtimeUnlockAll) return;
+
+	var key = FlxG.keys.firstJustPressed();
+	if (key <= 0) return;
+
+	var typed = getHesoyamLetter(key);
+	if (typed == "") return;
+
+	var code = "hesoyam";
+	if (typed == code.charAt(hesoyamProgress)) {
+		hesoyamProgress++;
+		trace("HESOYAM progress: " + hesoyamProgress + "/" + code.length);
+		if (hesoyamProgress >= code.length) {
+			hesoyamProgress = 0;
+			enableRuntimeUnlockAll();
+		}
+		return;
+	}
+
+	hesoyamProgress = typed == "h" ? 1 : 0;
+	if (hesoyamProgress > 0)
+		trace("HESOYAM progress: " + hesoyamProgress + "/" + code.length);
+}
+
+function enableRuntimeUnlockAll() {
+	runtimeUnlockAll = true;
+	unlockCache = [];
+
+	if (songItems != null) {
+		for (item in songItems) {
+			if (item == null) continue;
+			item.locked = false;
+			item.unlockFade = 0;
+			if (item.lock != null) item.lock.visible = false;
+		}
+	}
+
+	updateSongGroup(curSelected);
+	CoolUtil.playMenuSFX(1, 0.7);
+	trace("HESOYAM unlock all enabled for this Freeplay session");
 }
 
 function isStoryLockedByIndex(index:Int):Bool {
@@ -1503,6 +1562,7 @@ function updateLockAndPriceVisuals(elapsed:Float) {
 
 	var locked = !selectingCategory && songs != null && songs.length > 0 && curSelected >= 0 && curSelected < songs.length && !isSongUnlockedByIndex(curSelected);
 	var priceData = getPriceData(curSelected);
+	var showPrice = locked && priceData.price > 0;
 	var nextOf = getNextOf(curSelected);
 	var storyLocked = locked && hasPendingNextOf(curSelected);
 
@@ -1522,7 +1582,7 @@ function updateLockAndPriceVisuals(elapsed:Float) {
 	}
 
 	if (priceIcon != null && priceText != null) {
-		priceIcon.visible = locked && priceData.price > 0;
+		priceIcon.visible = showPrice;
 		priceText.visible = priceIcon.visible;
 		if (priceIcon.visible) {
 			if (priceIconCurrency != priceData.currency) {
@@ -1534,19 +1594,11 @@ function updateLockAndPriceVisuals(elapsed:Float) {
 			priceIcon.color = 0xFFFFFFFF;
 			priceText.text = Std.string(priceData.price);
 			priceText.updateHitbox();
-			var item:SongItem = songGroup != null && songGroup.members[curSelected] != null ? songGroup.members[curSelected] : null;
-			if (storyLocked && lockedReasonText != null && lockedReasonText.visible) {
-				var totalWidth = priceIcon.width + 8 + priceText.width;
-				priceIcon.x = FlxG.width - totalWidth - 26;
-				priceIcon.y = lockedReasonText.y + lockedReasonText.height + 8;
-				priceText.x = priceIcon.x + priceIcon.width + 8;
-				priceText.y = priceIcon.y + 5;
-			} else if (item != null && item.lock != null) {
-				priceIcon.x = Math.min(item.lock.x + item.lock.width + 10, FlxG.width - 170);
-				priceIcon.y = item.lock.y + item.lock.height * 0.5 - priceIcon.height * 0.5;
-				priceText.x = priceIcon.x + priceIcon.width + 8;
-				priceText.y = priceIcon.y + 5;
-			}
+			var totalWidth = priceIcon.width + 8 + priceText.width;
+			priceIcon.x = FlxG.width - totalWidth - 26;
+			priceIcon.y = lockedReasonText != null && lockedReasonText.visible ? lockedReasonText.y + lockedReasonText.height + 8 : 590;
+			priceText.x = priceIcon.x + priceIcon.width + 8;
+			priceText.y = priceIcon.y + 5;
 		}
 	}
 
@@ -1591,6 +1643,7 @@ function update(elapsed) {
 		return;
 	}
 
+	checkHesoyamUnlock();
 	hoveringThisFrame = false;
 	if (inputLock > 0) inputLock -= elapsed;
 
