@@ -146,7 +146,7 @@ function postCreate()
 	logoBaseScaleX = logo.scale.x;
 	logoBaseScaleY = logo.scale.y;
 
-	logo.cameras = [camHUD];
+	logo.cameras = [camOther];
 	logo.scrollFactor.set(1, 1);
 	logo.visible = false;
 
@@ -173,7 +173,7 @@ function makeCoolText(text:String, size:Float, spacing:Float, dataString:String)
 
 	var t = createSongText(text, size, spacing, data);
 
-	t.cameras = [camHUD];
+	t.cameras = [camOther];
 	t.scrollFactor.set(1, 1);
 	t.visible = false;
 
