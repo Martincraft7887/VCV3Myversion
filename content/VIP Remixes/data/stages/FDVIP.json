@@ -1,32 +1,33 @@
 {
     "rtxData": {
-        "overlay": "0x8259A9",
-        "innerAlpha": 0.557142857142857,
-        "layernumbers": 4,
-        "lightX": 3000,
-        "satinAlpha": 0.557142857142857,
-        "satin": "0xE15694",
-        "innerDistance": 10,
+        "innerAlpha": 0.391752577319588,
+        "overlay": "0x7C20B5",
+        "layernumbers": 5,
+        "update": "off",
+        "lightX": 0,
+        "satin": "0x814FC0",
+        "innerDistance": 21.8556701030928,
+        "satinAlpha": 0.845360824742268,
         "lightY": 0,
-        "innerAngle": 270,
-        "inner": "0xC79435",
-        "overlayAlpha": 0.1,
-        "pointLight": true,
-        "layerseparation": 2.02702702702703,
         "pointLights": [
             {
-                "x": 3000,
+                "innerAlpha": 0.391752577319588,
+                "overlay": "0x7C20B5",
+                "x": 0,
+                "layernumbers": 5,
                 "y": 0,
-                "overlay": "0x8259A9",
-                "overlayAlpha": 0.1,
-                "satin": "0xE15694",
-                "satinAlpha": 0.557142857142857,
-                "inner": "0xC79435",
-                "innerAlpha": 0.557142857142857,
-                "innerDistance": 10,
-                "layernumbers": 4,
-                "layerseparation": 2.02702702702703
+                "innerDistance": 21.8556701030928,
+                "satinAlpha": 0.845360824742268,
+                "satin": "0x814FC0",
+                "overlayAlpha": 0.103092783505155,
+                "inner": "0xC5A3DF",
+                "layerseparation": 1
             }
-        ]
+        ],
+        "innerAngle": 241.237113402062,
+        "pointLight": false,
+        "inner": "0xC5A3DF",
+        "overlayAlpha": 0.103092783505155,
+        "layerseparation": 1
     }
 }

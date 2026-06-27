@@ -274,6 +274,7 @@ function getRTXOverride(field:String):Dynamic {
 
 function update(elapsed:Float) {
 	if (rtxData == null) return;
+	if (!getRTXBool("update", true)) return;
 
 	for (i in 0...rtxTargets.length) {
 		var sprite = rtxTargets[i];
@@ -431,7 +432,10 @@ function getRTXFloat(field:String, fallback:Float):Float {
 function getRTXBool(field:String, fallback:Bool):Bool {
 	var value = Reflect.field(rtxData, field);
 	if (value == null) return fallback;
-	return Std.string(value).toLowerCase() == "true";
+	var normalized = Std.string(value).toLowerCase();
+	if (normalized == "true" || normalized == "on" || normalized == "1") return true;
+	if (normalized == "false" || normalized == "off" || normalized == "0") return false;
+	return fallback;
 }
 
 function getSpriteDebugName(sprite:Dynamic):String {

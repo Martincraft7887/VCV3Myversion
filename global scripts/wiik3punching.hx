@@ -1,7 +1,6 @@
 import flixel.FlxSprite;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
-import flixel.util.FlxTimer;
 import funkin.backend.assets.Paths;
 import StringTools;
 
@@ -18,6 +17,7 @@ var allowedSongs:Array<String> = [
 	"revenge",
 	"tko vip",
 	"flaming glove",
+	"flaming glove iii",	
 	"king hit vip",
 	"immortal vip"
 ];
@@ -61,7 +61,6 @@ var mattPunches:Array<FlxSprite> = [];
 var bfShield:FlxSprite;
 var mattShield:FlxSprite;
 var aura:FlxSprite;
-var echoShader:CustomShader;
 
 var doingPowerup:Bool = false;
 var floatTime:Float = 0;
@@ -77,7 +76,6 @@ function postCreate() {
 		minPush = -300;
 	}
 
-	echoShader = new CustomShader("EchoEffect");
 	createPunchPool();
 	createShieldSprites();
 	createAura();
@@ -365,28 +363,38 @@ function onMattHit(direction:Int, doPush:Bool) {
 	if (doPush && state.mattSplashes) makeSplash(dad, direction, true);
 	if (!state.bfBlock || StringTools.endsWith(boyfriend.getAnimName(), "-dodge")) return;
 
-	if (boyfriend.hasAnimation(singAnim(direction, "-block")))
+	var blockAnim = singAnim(direction, "-block");
+	if (boyfriend.hasAnimation(blockAnim)) {
+		scripts.call("onDoubleNoteGhostScriptedAnim", [boyfriend, blockAnim]);
 		boyfriend.playSingAnim(direction, "-block");
+	}
 
-	if (state.mattEchoTrail || state.pushTrails) makeTrail(dad);
 	if (doPush) pushCharacters(pushPower);
 	showRangedPunch(dad, boyfriend, false, direction);
 	putAbove(dad, boyfriend);
+	if (state.mattEchoTrail)
+		scripts.call("onDoubleNoteGhostEchoTrail", [dad, boyfriend]);
 }
 
 function onBFHit(direction:Int, doPush:Bool) {
 	if (doPush && state.bfSplashes) makeSplash(boyfriend, direction, false);
 	if (!state.mattBlock) return;
 
-	if (state.mattParry && dad.hasAnimation(singAnim(direction, "-parry")))
+	var parryAnim = singAnim(direction, "-parry");
+	var blockAnim = singAnim(direction, "-block");
+	if (state.mattParry && dad.hasAnimation(parryAnim)) {
+		scripts.call("onDoubleNoteGhostScriptedAnim", [dad, parryAnim]);
 		dad.playSingAnim(direction, "-parry");
-	else if (dad.hasAnimation(singAnim(direction, "-block")))
+	} else if (dad.hasAnimation(blockAnim)) {
+		scripts.call("onDoubleNoteGhostScriptedAnim", [dad, blockAnim]);
 		dad.playSingAnim(direction, "-block");
+	}
 
-	if (state.bfEchoTrail || state.pushTrails) makeTrail(boyfriend);
 	if (doPush) pushCharacters(-pushPower);
 	showRangedPunch(boyfriend, dad, true, direction);
 	putAbove(boyfriend, dad);
+	if (state.bfEchoTrail)
+		scripts.call("onDoubleNoteGhostEchoTrail", [boyfriend, dad]);
 }
 
 function singAnim(direction:Int, suffix:String):String {
@@ -406,29 +414,6 @@ function pushCharacters(amount:Float) {
 function putAbove(front, back) {
 	remove(front, true);
 	insert(members.indexOf(back) + 1, front);
-}
-
-function makeTrail(char) {
-	new FlxTimer().start(0.001, function(_) spawnTrail(char));
-}
-
-function spawnTrail(char) {
-	if (char == null || char.getAnimName() == null) return;
-
-	var ghost = FunkinSprite.copyFrom(char);
-	ghost.x = char.x;
-	ghost.y = char.y;
-	ghost.color = char.color;
-	ghost.shader = echoShader;
-	insert(members.indexOf(char) + 1, ghost);
-
-	FlxTween.tween(ghost, {alpha: 0}, Conductor.crochet * 0.001 * 16, {
-		ease: FlxEase.cubeOut,
-		onComplete: function(_) {
-			remove(ghost);
-			ghost.destroy();
-		}
-	});
 }
 
 function makeSplash(char, direction:Int, flip:Bool) {
@@ -609,8 +594,39 @@ function resetPush() {
 	positionShields();
 }
 
+function getEventName(event):String {
+	if (event == null || event.event == null || event.event.name == null)
+		return "";
+	return StringTools.trim(Std.string(event.event.name)).toLowerCase();
+}
+
+function getEventParam(event, index:Int):Dynamic {
+	if (event == null || event.event == null || event.event.params == null || event.event.params.length <= index)
+		return null;
+	return event.event.params[index];
+}
+
 function onEvent(event) {
-	if (event.event.name != "Punching Control") return;
+	var eventName = getEventName(event);
+
+	if (eventName == "toggle matt echo trail") {
+		state.mattEchoTrail = !state.mattEchoTrail;
+		return;
+	}
+
+	if (eventName == "toggle bf echo trail") {
+		state.bfEchoTrail = !state.bfEchoTrail;
+		return;
+	}
+
+	if (eventName == "change block state") {
+		var nextMode = getEventParam(event, 0);
+		if (nextMode != null && Std.string(nextMode) != "" && Std.string(nextMode) != mode)
+			applyMode(Std.string(nextMode));
+		return;
+	}
+
+	if (eventName != "punching control") return;
 	var p = event.event.params;
 
 	state.pushing = p[0];

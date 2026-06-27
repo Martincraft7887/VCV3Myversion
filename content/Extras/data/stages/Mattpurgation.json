@@ -1,4 +1,4 @@
-{
+﻿{
     "rtxData":  {
                     "overlay":  "0xB02061",
                     "overlayAlpha":  0.0618556701030928,
@@ -10,6 +10,7 @@
                     "satinAlpha":  0.793814432989691,
                     "innerDistance":  20.7216494845361,
                     "pointLight":  false,
-                    "satin":  "0xBB352D"
+                    "satin":  "0xBB352D",
+                    "update":  "off"
                 }
 }

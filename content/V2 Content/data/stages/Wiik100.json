@@ -10,6 +10,7 @@
                     "satinAlpha":  0.381443298969072,
                     "innerDistance":  21.9587628865979,
                     "pointLight":  true,
-                    "satin":  "0x000061"
+                    "satin":  "0x000061",
+                    "update":  "off"
                 }
 }

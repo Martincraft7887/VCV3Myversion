@@ -36,6 +36,7 @@ var activeAwardPopups:Int = 0;
 var awardsCheckedThisSong:Bool = false;
 var allowRealSongEnd:Bool = false;
 var resultsOpen:Bool = false;
+var resultsFinished:Bool = false;
 var glovesCheckedThisSong:Bool = false;
 
 var WHITE_GLOVE_FIELD:String = "voiidWhiteGloves";
@@ -461,33 +462,16 @@ function onSongEnd(event) {
 }
 
 function finishVoiidResults() {
-	if (allowRealSongEnd)
+	if (resultsFinished)
 		return;
 
+	resultsFinished = true;
 	allowRealSongEnd = true;
 	resultsOpen = false;
 
 	if (PlayState.instance != null) {
 		PlayState.instance.paused = false;
 		PlayState.instance.persistentUpdate = true;
-
-		if (PlayState.isStoryMode && PlayState.storyPlaylist != null && PlayState.storyPlaylist.length > 1) {
-			var ps = PlayState.instance;
-			PlayState.campaignScore += ps.songScore;
-			PlayState.campaignMisses += ps.misses;
-			PlayState.campaignAccuracyTotal += ps.accuracy;
-			PlayState.campaignAccuracyCount++;
-			PlayState.storyPlaylist.shift();
-			if (PlayState.storyVariations != null && PlayState.storyVariations.length > 0)
-				PlayState.storyVariations.shift();
-
-			var nextVariation = (PlayState.storyVariations != null && PlayState.storyVariations.length > 0) ? PlayState.storyVariations[0] : null;
-			MusicBeatState.skipTransIn = false;
-			MusicBeatState.skipTransOut = false;
-			PlayState.__loadSong(PlayState.storyPlaylist[0], PlayState.difficulty, nextVariation);
-			FlxG.switchState(new PlayState());
-		} else {
-			PlayState.instance.endSong();
-		}
+		PlayState.instance.endSong();
 	}
 }

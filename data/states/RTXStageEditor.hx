@@ -32,6 +32,8 @@ var rtxSwatches:Array<Dynamic> = [];
 var rtxSelectedLightIndex:Int = 0;
 var rtxLightLabel:UIText = null;
 var rtxPointButton:UIButton = null;
+var rtxUpdateButton:UIButton = null;
+var rtxBgButton:UIButton = null;
 var title:UIText;
 var status:UIText;
 var slotDropdown:UIDropDown;
@@ -52,11 +54,12 @@ var pointLightLineInner:FlxSprite = null;
 var pointLightMarkerOuter:FlxSprite = null;
 var pointLightMarkerInner:FlxSprite = null;
 var rtxWindowPanel:Dynamic = null;
+var rtxPanelTransparent:Bool = false;
 var rtxWindowX:Float = 330;
 var rtxWindowY:Float = 0;
-var rtxWindowWidth:Float = 650;
-var rtxWindowHeight:Float = 430;
-var rtxWindowHeaderHeight:Float = 44;
+var rtxWindowWidth:Float = 640;
+var rtxWindowHeight:Float = 390;
+var rtxWindowHeaderHeight:Float = 38;
 var rtxWindowDragging:Bool = false;
 var rtxWindowDragOffsetX:Float = 0;
 var rtxWindowDragOffsetY:Float = 0;
@@ -149,6 +152,7 @@ function ensureRTXDefaults() {
 	setRTXDefault("lightX", 0);
 	setRTXDefault("lightY", 0);
 	setRTXDefault("pointLight", false);
+	setRTXDefault("update", "off");
 	setRTXDefault("layernumbers", 5);
 	setRTXDefault("layerseparation", 1);
 	ensureRTXPointLights();
@@ -174,26 +178,26 @@ function buildUI() {
 	add(panel);
 	leftPanelItems.push(panel);
 
-	title = new UIText(12, 10, 310, "RTX Stage Editor: " + stageName, 18);
+	title = new UIText(12, 54, 310, "RTX Stage Editor: " + stageName, 18);
 	title.cameras = [uiCam];
 	title.scrollFactor.set();
 	add(title);
 	leftPanelItems.push(title);
 
-	addLabel("Slot", 18, 54);
-	slotDropdown = new UIDropDown(18, 74, 290, 32, ["dad", "boyfriend", "girlfriend"], 0);
+	addLabel("Slot", 18, 100);
+	slotDropdown = new UIDropDown(18, 120, 290, 32, ["dad", "boyfriend", "girlfriend"], 0);
 	slotDropdown.onChange = function(i) selectSlot(slotDropdown.options[i]);
 	addLeftUI(slotDropdown);
 
-	addLabel("Character", 18, 112);
-	charDropdown = new UIDropDown(18, 132, 290, 32, getCharacterList(), 0);
+	addLabel("Character", 18, 158);
+	charDropdown = new UIDropDown(18, 178, 290, 32, getCharacterList(), 0);
 	charDropdown.onChange = function(i) loadCharacter(charDropdown.options[i]);
 	addLeftUI(charDropdown);
 
-	var saveButton = new UIButton(18, 190, "Save JSON", saveRTXJson, 140, 32);
+	var saveButton = new UIButton(18, 236, "Save JSON", saveRTXJson, 140, 32);
 	addLeftUI(saveButton);
 
-	var backButton = new UIButton(170, 190, "Back", function() {
+	var backButton = new UIButton(170, 236, "Back", function() {
 		var state = new EditorTreeMenu();
 		state.scriptName = "RTXStageEditorSelection";
 		FlxG.switchState(state);
@@ -216,63 +220,82 @@ function buildRTXPanel() {
 	rtxWindowPanel = new UISliceSprite(330, 0, Std.int(rtxWindowWidth), Std.int(rtxWindowHeight), "editors/ui/inputbox");
 	addRTXUI(rtxWindowPanel);
 
-	var header = new UIText(344, 10, 360, "RTX Debug: " + stageName, 18);
+	var header = new UIText(344, 8, 300, "RTX Debug: " + stageName, 17);
 	addRTXUI(header);
 
-	addLeatherColorColumn("Overlay", "overlay", "overlayAlpha", 344, 58);
-	addLeatherColorColumn("Satin", "satin", "satinAlpha", 552, 58);
-	addLeatherColorColumn("Inner", "inner", "innerAlpha", 760, 58);
+	addLeatherColorColumn("Overlay", "overlay", "overlayAlpha", 344, 68);
+	addLeatherColorColumn("Satin", "satin", "satinAlpha", 538, 68);
+	addLeatherColorColumn("Inner", "inner", "innerAlpha", 732, 68);
 
-	addRTXSlider("Angle", "innerAngle", 364, 322, 244, 0, 360);
-	addRTXSlider("Distance", "innerDistance", 364, 366, 244, 0, 120);
-	addRTXSlider("Light X", "lightX", 632, 322, 244, -3000, 3000);
-	addRTXSlider("Light Y", "lightY", 632, 366, 244, -3000, 3000);
-	addRTXSlider("Layers", "layernumbers", 364, 408, 244, 0, 100);
-	addRTXSlider("Separation", "layerseparation", 632, 408, 244, 0, 100);
+	addRTXSlider("Angle", "innerAngle", 360, 282, 230, 0, 360);
+	addRTXSlider("Distance", "innerDistance", 360, 318, 230, 0, 120);
+	addRTXSlider("Light X", "lightX", 626, 282, 230, -3000, 3000);
+	addRTXSlider("Light Y", "lightY", 626, 318, 230, -3000, 3000);
+	addRTXSlider("Layers", "layernumbers", 360, 352, 230, 0, 100);
+	addRTXSlider("Separation", "layerseparation", 626, 352, 230, 0, 100);
 
-	rtxPointButton = new UIButton(800, 12, "Point Light: " + (getRTXBool("pointLight", false) ? "ON" : "OFF"), function() {
+	rtxUpdateButton = new UIButton(650, 10, "Update: " + (getRTXBool("update", false) ? "ON" : "OFF"), function() {
+		var next = !getRTXBool("update", false);
+		Reflect.setField(rtxData, "update", next ? "on" : "off");
+		refreshRTXLightControls();
+	}, 104, 26);
+	addRTXUI(rtxUpdateButton);
+
+	rtxPointButton = new UIButton(760, 10, "Point: " + (getRTXBool("pointLight", false) ? "ON" : "OFF"), function() {
 		var next = !getRTXBool("pointLight", false);
 		Reflect.setField(rtxData, "pointLight", next);
 		refreshRTXLightControls();
 		applyRTXPreview();
 		updatePointLightMarker();
-	}, 166, 28);
+	}, 98, 26);
 	addRTXUI(rtxPointButton);
 
-	var prevLight = new UIButton(632, 282, "< Light", function() {
+	rtxBgButton = new UIButton(864, 10, "BG: ON", function() {
+		rtxPanelTransparent = !rtxPanelTransparent;
+		refreshRTXPanelBackground();
+	}, 92, 26);
+	addRTXUI(rtxBgButton);
+
+	var prevLight = new UIButton(866, 282, "<", function() {
 		selectRTXLight(rtxSelectedLightIndex - 1);
-	}, 72, 26);
+	}, 28, 24);
 	addRTXUI(prevLight);
 
-	rtxLightLabel = new UIText(710, 286, 84, "", 12);
+	rtxLightLabel = new UIText(900, 286, 28, "", 12);
 	addRTXUI(rtxLightLabel);
 
-	var nextLight = new UIButton(800, 282, "Light >", function() {
+	var nextLight = new UIButton(930, 282, ">", function() {
 		selectRTXLight(rtxSelectedLightIndex + 1);
-	}, 72, 26);
+	}, 28, 24);
 	addRTXUI(nextLight);
 
-	var addLight = new UIButton(876, 282, "+", function() {
+	var removeLight = new UIButton(882, 318, "-", function() {
+		removeRTXPointLight();
+	}, 28, 24);
+	addRTXUI(removeLight);
+
+	var addLight = new UIButton(914, 318, "+", function() {
 		addRTXPointLight();
-	}, 32, 26);
+	}, 28, 24);
 	addRTXUI(addLight);
 
 	refreshRTXLightControls();
 	refreshRTXSwatches();
+	refreshRTXPanelBackground();
 }
 
 function addLeatherColorColumn(label:String, colorField:String, alphaField:String, x:Float, y:Float) {
-	var title = new UIText(x, y - 24, 166, label, 14);
+	var title = new UIText(x, y - 22, 150, label, 13);
 	addRTXUI(title);
 	addColorChannelSlider("R", colorField, 0, x, y);
-	addColorChannelSlider("G", colorField, 1, x, y + 40);
-	addColorChannelSlider("B", colorField, 2, x, y + 80);
-	addRTXSlider("A", alphaField, x, y + 120, 166, 0, 1);
+	addColorChannelSlider("G", colorField, 1, x, y + 32);
+	addColorChannelSlider("B", colorField, 2, x, y + 64);
+	addRTXSlider("A", alphaField, x, y + 96, 150, 0, 1);
 
-	var swatch = new FlxSprite(x + 20, y + 166);
-	swatch.makeGraphic(128, 48, 0xFFFFFFFF);
+	var swatch = new FlxSprite(x + 16, y + 134);
+	swatch.makeGraphic(118, 38, 0xFFFFFFFF);
 	addRTXUI(swatch);
-	var text = new UIText(x + 20, y + 218, 172, "", 13);
+	var text = new UIText(x + 16, y + 176, 170, "", 12);
 	addRTXUI(text);
 	rtxSwatches.push({field: colorField, alpha: alphaField, spr: swatch, text: text});
 }
@@ -280,7 +303,7 @@ function addLeatherColorColumn(label:String, colorField:String, alphaField:Strin
 function addColorChannelSlider(label:String, colorField:String, channel:Int, x:Float, y:Float) {
 	var rowLabel = new UIText(x, y - 2, 20, label, 12);
 	addRTXUI(rowLabel);
-	var input = makeUISlider(x + 96, y, 86, getColorChannel(colorField, channel), 0, 1, function(value:Float) {
+	var input = makeUISlider(x + 76, y, 76, getColorChannel(colorField, channel), 0, 1, function(value:Float) {
 		setColorChannel(colorField, channel, value);
 		applyRTXPreview();
 		refreshRTXSwatches();
@@ -292,7 +315,7 @@ function addColorChannelSlider(label:String, colorField:String, channel:Int, x:F
 function addRTXSlider(label:String, field:String, x:Float, y:Float, width:Int, min:Float, max:Float) {
 	var rowLabel = new UIText(x, y - 18, width, label, 12);
 	addRTXUI(rowLabel);
-	var input = makeUISlider(x + 96, y, width - 96, getRTXFloat(field, 0), min, max, function(value:Float) {
+	var input = makeUISlider(x + 86, y, width - 86, getRTXFloat(field, 0), min, max, function(value:Float) {
 		setRTXEditorFloat(field, value);
 		applyRTXPreview();
 		refreshRTXSwatches();
@@ -399,14 +422,41 @@ function addRTXPointLight() {
 	selectRTXLight(lights.length - 1);
 }
 
+function removeRTXPointLight() {
+	var lights = getRTXPointLights();
+	if (lights.length <= 1) {
+		if (status != null)
+			status.text = "RTX needs at least 1 point light";
+		return;
+	}
+
+	lights.splice(rtxSelectedLightIndex, 1);
+	Reflect.setField(rtxData, "pointLights", lights);
+	if (rtxSelectedLightIndex >= lights.length)
+		rtxSelectedLightIndex = lights.length - 1;
+	selectRTXLight(rtxSelectedLightIndex);
+}
+
 function refreshRTXLightControls() {
 	var lights = getRTXPointLights();
 	clampRTXSelectedLight();
+	if (rtxUpdateButton != null)
+		rtxUpdateButton.field.text = "Update: " + (getRTXBool("update", false) ? "ON" : "OFF");
 	if (rtxPointButton != null)
-		rtxPointButton.field.text = "Point Light: " + (getRTXBool("pointLight", false) ? "ON" : "OFF");
+		rtxPointButton.field.text = "Point: " + (getRTXBool("pointLight", false) ? "ON" : "OFF");
 	if (rtxLightLabel != null)
-		rtxLightLabel.text = "Light " + (rtxSelectedLightIndex + 1) + "/" + lights.length;
+		rtxLightLabel.text = (rtxSelectedLightIndex + 1) + "/" + lights.length;
 	refreshRTXLightSliders();
+}
+
+function refreshRTXPanelBackground() {
+	if (rtxWindowPanel != null) {
+		try {
+			rtxWindowPanel.visible = !rtxPanelTransparent;
+		} catch(e:Dynamic) {}
+	}
+	if (rtxBgButton != null)
+		rtxBgButton.field.text = "BG: " + (rtxPanelTransparent ? "OFF" : "ON");
 }
 
 function refreshRTXLightSliders() {
@@ -635,8 +685,9 @@ function updateRTXWindowDrag() {
 		cameraDragging = false;
 	}
 
-	if (FlxG.mouse.justReleased)
+	if (FlxG.mouse.justReleased) {
 		rtxWindowDragging = false;
+	}
 
 	if (rtxWindowDragging) {
 		rtxWindowX = mouse.x - getRTXPanelLeftOffset() - rtxWindowDragOffsetX;
@@ -1145,7 +1196,10 @@ function getDynamicString(obj:Dynamic, field:String, fallback:String):String {
 function getRTXBool(field:String, fallback:Bool):Bool {
 	var value = Reflect.field(rtxData, field);
 	if (value == null) return fallback;
-	return Std.string(value).toLowerCase() == "true";
+	var normalized = Std.string(value).toLowerCase();
+	if (normalized == "true" || normalized == "on" || normalized == "1") return true;
+	if (normalized == "false" || normalized == "off" || normalized == "0") return false;
+	return fallback;
 }
 
 function getRTXString(field:String, fallback:String):String {

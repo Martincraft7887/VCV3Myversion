@@ -1,8 +1,10 @@
 <!DOCTYPE codename-engine-stage>
-<stage folder="stages/FDVIP/" name="FDVIP" zoom="0.54">
-	<sprite x="-800" updateHitbox="true" scroll="0.3" sprite="BG" y="-570" scale="1.67" name="BG"/>
-	<girlfriend scale="0.9" x="1100" y="900"/>
-	<dad x="850" spacingx="25" spacingy="-50" y="1007"/>
-	<boyfriend camxoffset="-400" camyoffset="-200" x="1730" spacingx="300" y="1007"/>
-	<sprite name="unknown5" x="-800" y="-300" sprite="ruido" scroll="0" scale="5" updateHitbox="true"/>
+<stage zoom="0.45" name="VCWiik2VIP" folder="stages/VCWiik2VIP" startCamPosX="0" startCamPosY="0">
+	<sprite name="5bg" x="-935" y="-315" sprite="5bg" scroll="0.3" scale="1" />
+	<sprite name="4treesbehind" x="0" y="0" sprite="4treesbehind" scroll="1" scale="1" />
+	<sprite name="3stage" x="0" y="0" sprite="3stage" scroll="1" scale="1" />
+	<sprite name="1foreground" x="250" y="65" sprite="1foreground" scroll="1.1" scale="1" />
+	<girlfriend x="1841" y="1300" camxoffset="0" camyoffset="0" scroll="1" />
+	<dad x="1150" y="1450" spacingx="25" spacingy="-50" camxoffset="130" camyoffset="-170" scroll="1" />
+	<boyfriend x="2471" y="1400" spacingx="300" camxoffset="-200" camyoffset="-125" scroll="1" />
 </stage>
