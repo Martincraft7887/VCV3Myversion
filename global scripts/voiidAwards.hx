@@ -216,7 +216,7 @@ function getWhiteGloveSongMultiplier(songName:String):Float {
 		case "sweetdreamsii": return 2.5;
 	}
 	if (songKey == "finaldestination" && diffKey == "god")
-		return 2.5;
+		return 3;
 	return 1;
 }
 
