@@ -13,24 +13,29 @@
 		updateHitbox="true"
 	/>
 
-	<dad
-		x="89"
-		y="1353"
-		camxoffset="250"
-		camyoffset="0"
-		spacingy="-50" 
-	/>
-
+	
 	<girlfriend
 		x="803"
-		y="1258"
+		y="1400"
+		scale="0.9"
 	/>
+
+
+	<dad
+		x="30"
+		y="1325"
+		camxoffset="150"
+		camyoffset="140"
+		spacingy="-100" 
+		spacingx="250" 
+	/>
+
 
 	<boyfriend
 		x="1057"
 		y="1387"
-		camxoffset="-250"
-		camyoffset="-50"
+		camxoffset="-200"
+		camyoffset="-150"
 		spacingx="300"
 	/>
 

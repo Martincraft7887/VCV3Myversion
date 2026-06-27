@@ -1,17 +1,22 @@
+var targetX:Float = 0;
+var targetY:Float = 0;
+var lastAppliedX:Float = 0;
+var lastAppliedY:Float = 0;
+var hasStagePosition:Bool = false;
+var count:Float = 60;
 
+function update(elapsed:Float) {
+	if (!hasStagePosition || x != lastAppliedX || y != lastAppliedY) {
+		targetX = x;
+		targetY = y;
+		hasStagePosition = true;
+	}
 
-var targetX = 89;
-var targetY = 1353;
-
-var count = 60;
-
-function update(elapsed)
-{
-    
-    count = count + (50*elapsed);
+	count += 50 * elapsed;
 	var what = count / 6;
-    //x += 100*elapsed;
 
-    x = targetX + Math.cos(what / 7) * 20;
-    y = targetY + Math.cos(what / 5) * 40;
+	x = targetX + Math.cos(what / 7) * 20;
+	y = targetY + Math.cos(what / 5) * 40;
+	lastAppliedX = x;
+	lastAppliedY = y;
 }

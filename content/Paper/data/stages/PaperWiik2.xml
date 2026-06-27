@@ -6,6 +6,6 @@
 	<sprite x="-840" scroll="0.15" sprite="4" y="-1000" scale="1.5" name="4"/>
 	<sprite x="-1061" sprite="5" y="-599" scale="1.5" name="5"/>
 	<girlfriend scale="0.8" x="450" y="600"/>
-	<dad camxoffset="275" scale="1" x="-450" camyoffset="-225" y="850"/>
-	<boyfriend scale="1" camxoffset="-350" camyoffset="-325" x="1150" y="850"/>
+	<dad camxoffset="275" scale="1" x="-450" camyoffset="-25" y="850"/>
+	<boyfriend scale="1" camxoffset="-350" camyoffset="-125" x="1150" y="850"/>
 </stage>

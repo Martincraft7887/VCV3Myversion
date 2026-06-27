@@ -5,6 +5,10 @@ var gfLeatherOffsetY:Float = -275;
 var speakerLeatherOffsetX:Float = 25;
 var speakerLeatherOffsetY:Float = 60;
 var speakerTweakY:Float = 55;
+var gfBaseScaleX:Float = 1.4;
+var gfBaseScaleY:Float = 1.4;
+var speakerBaseScale:Float = 1.4;
+var speakerStageHeightFix:Float = 420;
 
 function postCreate() {
 	createSpeakers();
@@ -18,7 +22,7 @@ function createSpeakers() {
 	speakers.frames = Paths.getSparrowAtlas("characters/speakers");
 	speakers.animation.addByIndices("danceLeft", "speakers", [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 	speakers.animation.addByIndices("danceRight", "speakers", [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-	speakers.scale.set(1.4, 1.4);
+	speakers.scale.set(speakerBaseScale, speakerBaseScale);
 	speakers.updateHitbox();
 	speakers.antialiasing = antialiasing;
 	speakers.animation.play("danceLeft", true);
@@ -49,15 +53,46 @@ function positionSpeakers() {
 	var visualY = y - offset.y;
 	var leatherDiffX = speakerLeatherOffsetX - gfLeatherOffsetX;
 	var leatherDiffY = speakerLeatherOffsetY - gfLeatherOffsetY;
+	var stageScaleX = getStageScaleX();
+	var stageScaleY = getStageScaleY();
 
-	speakers.x = visualX + ((width - speakers.width) * 0.5) + leatherDiffX;
-	speakers.y = visualY + (height - speakers.height) + leatherDiffY + speakerTweakY;
+	refreshSpeakersScale(stageScaleX, stageScaleY);
+
+	speakers.x = visualX + ((width - speakers.width) * 0.5) + (leatherDiffX * stageScaleX);
+	speakers.y = visualY + (height - speakers.height) + ((leatherDiffY + speakerTweakY) * stageScaleY) - getSpeakerStageHeightFix(stageScaleY);
 	speakers.scrollFactor.set(scrollFactor.x, scrollFactor.y);
 	speakers.cameras = cameras;
 	speakers.alpha = alpha;
 	speakers.visible = visible;
 	speakers.active = active;
 	speakers.antialiasing = antialiasing;
+}
+
+function getStageScaleX():Float {
+	return normalizeStageScale(scale.x / gfBaseScaleX);
+}
+
+function getStageScaleY():Float {
+	return normalizeStageScale(scale.y / gfBaseScaleY);
+}
+
+function normalizeStageScale(value:Float):Float {
+	if (value != value || value <= 0) return 1;
+	return value;
+}
+
+function refreshSpeakersScale(stageScaleX:Float, stageScaleY:Float) {
+	var targetScaleX = speakerBaseScale * stageScaleX;
+	var targetScaleY = speakerBaseScale * stageScaleY;
+	if (speakers.scale.x == targetScaleX && speakers.scale.y == targetScaleY) return;
+
+	speakers.scale.set(targetScaleX, targetScaleY);
+	speakers.updateHitbox();
+}
+
+function getSpeakerStageHeightFix(stageScaleY:Float):Float {
+	if (stageScaleY >= 1) return 0;
+	return speakerStageHeightFix * (1 - stageScaleY);
 }
 
 function ensureSpeakersLayer() {

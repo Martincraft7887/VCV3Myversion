@@ -6,13 +6,8 @@
             "defaultValue": true
         },
         {
-            "name": "Hue",
-            "type": "Float(0, 10, 0.01, 2)",
-            "defaultValue": 0
-        },
-        {
-            "name": "Target",
-            "type": "DropDown([\"all\",\"opponent1\",\"opponent2\",\"player\"])",
+            "name": "Strumline",
+            "type": "DropDown([\"all\",\"opponent\",\"player\",\"strumline0\",\"strumline1\",\"strumline2\",\"strumline3\"])",
             "defaultValue": "all"
         }
     ]

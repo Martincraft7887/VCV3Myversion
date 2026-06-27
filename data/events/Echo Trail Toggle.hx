@@ -1,139 +1,71 @@
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
+import StringTools;
 
-public var disableGhosts:Bool = false;
+var echoAllStrumLines:Bool = false;
+var echoStrumLines:Map<Int, Bool> = [];
 
-// ===== CONFIG =====
-var MAX_PER_CHAR:Int = 8;
+function onEvent(event) {
+	if (event == null || event.event == null || event.event.name != "Echo Trail Toggle")
+		return;
 
-var ghostPools:Map<String, Array<Character>> = [];
-var activeGhosts:Map<String, Array<Character>> = [];
+	var enabled:Bool = event.event.params[0];
+	var target:String = event.event.params.length > 1 && event.event.params[1] != null
+		? Std.string(event.event.params[1]).toLowerCase()
+		: "all";
 
-var echoShader:CustomShader;
-
-// =======================================================
-// INIT
-// =======================================================
-
-function postCreate() {
-	echoShader = new CustomShader("EchoEffect");
+	setEchoTarget(target, enabled);
 }
 
-// =======================================================
-// CHECK SING
-// =======================================================
+function setEchoTarget(target:String, enabled:Bool) {
+	if (target == "all") {
+		echoAllStrumLines = enabled;
+		echoStrumLines = [];
+		return;
+	}
+
+	var id = getTargetStrumLineID(target);
+	if (id < 0)
+		return;
+
+	echoStrumLines.set(id, enabled);
+}
+
+function getTargetStrumLineID(target:String):Int {
+	switch (target) {
+		case "opponent" | "opponent1" | "dad" | "strumline0" | "0":
+			return 0;
+		case "player" | "boyfriend" | "bf" | "strumline1" | "1":
+			return 1;
+		default:
+			var rawID = StringTools.startsWith(target, "strumline")
+				? target.substr("strumline".length)
+				: target;
+			var parsed = Std.parseInt(rawID);
+			return parsed == null ? -1 : parsed;
+	}
+}
+
+function isEchoEnabledForLine(id:Int):Bool {
+	return echoStrumLines.exists(id) ? echoStrumLines.get(id) : echoAllStrumLines;
+}
 
 function isActuallySinging(char:Character):Bool {
 	return char != null
+		&& char.visible
 		&& char.animation != null
 		&& char.animation.curAnim != null
 		&& char.animation.curAnim.name.indexOf("sing") != -1
 		&& !char.animation.curAnim.finished;
 }
 
-// =======================================================
-// NOTE HIT
-// =======================================================
+function onNoteHit(event) {
+	if (event == null || event.note == null || event.note.strumLine == null)
+		return;
+	if (!isEchoEnabledForLine(event.note.strumLine.ID))
+		return;
+	if (event.note.strumLine.characters == null)
+		return;
 
-function onNoteHit(event:NoteHitEvent) {
-
-	if (disableGhosts) return;
-
-	for (character in event.note.strumLine.characters) {
-
-		if (character.visible && isActuallySinging(character)) {
-			spawnGhost(character, event.note.noteData);
-			break;
-		}
-	}
-}
-
-// =======================================================
-// POOLS
-// =======================================================
-
-function getPool(id:String):Array<Character> {
-	if (!ghostPools.exists(id))
-		ghostPools.set(id, []);
-	return ghostPools.get(id);
-}
-
-function getActive(id:String):Array<Character> {
-	if (!activeGhosts.exists(id))
-		activeGhosts.set(id, []);
-	return activeGhosts.get(id);
-}
-
-// =======================================================
-// GET GHOST
-// =======================================================
-
-function getGhost(char:Character):Character {
-
-	var id = char.curCharacter;
-	var pool = getPool(id);
-	var active = getActive(id);
-
-	if (pool.length > 0)
-		return pool.shift();
-
-	if (active.length >= MAX_PER_CHAR)
-		return active.shift();
-
-	return new Character(0, 0, char.curCharacter, char.isPlayer);
-}
-
-// =======================================================
-// SPAWN
-// =======================================================
-
-function spawnGhost(char:Character, dir:Int) {
-
-	var id = char.curCharacter;
-	var ghost = getGhost(char);
-
-	ghost.setPosition(char.x, char.y);
-	ghost.curCharacter = char.curCharacter;
-	ghost.isPlayer = char.isPlayer;
-
-	ghost.color = char.iconColor;
-	ghost.alpha = char.alpha * 0.85;
-	ghost.scale.set(char.scale.x, char.scale.y);
-	ghost.flipX = char.flipX;
-	ghost.visible = true;
-
-	ghost.playAnim(char.getAnimName(), false, 'LOCK');
-	ghost.holdTime = 9999999;
-	ghost.shader = echoShader;
-
-	// ⭐ INSERT EXACTO COMO TU SCRIPT ORIGINAL
-	insert(members.indexOf(char), ghost);
-
-	getActive(id).push(ghost);
-
-	FlxTween.tween(ghost, {alpha: 0}, 0.55).onComplete = function(_) {
-		recycleGhost(ghost, id);
-	};
-
-	moveGhost(ghost, char, dir);
-}
-
-// =======================================================
-// MOVE
-// =======================================================
-
-
-// =======================================================
-// RECYCLE
-// =======================================================
-
-function recycleGhost(g:Character, id:String) {
-
-	g.visible = false;
-	g.alpha = 0;
-
-	remove(g, true);
-
-	getActive(id).remove(g);
-	getPool(id).push(g);
+	for (char in event.note.strumLine.characters)
+		if (isActuallySinging(char))
+			scripts.call("onDoubleNoteGhostEchoTrail", [char]);
 }

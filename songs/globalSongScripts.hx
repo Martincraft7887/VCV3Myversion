@@ -19,6 +19,7 @@ var preferredGlobalScriptOrder:Array<String> = [
 	"extraCharFade",
 	"punchMechanic",
 	"wiik3punching",
+	"doubleNoteGhosts",
 	"Punching",
 	"timer"
 ];
