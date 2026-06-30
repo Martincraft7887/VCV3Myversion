@@ -347,12 +347,12 @@ function updateScoreHud(ps:PlayState) {
 	hudRating.x = startX + hudBase.width;
 
 	if (isPaper) {
-		hudBase.y = downscroll ? 122 : FlxG.height - 25;
-		hudRating.y = hudBase.y;
 		if (!lastPaperScoreLayout) {
 			hudBase.size = 16;
 			hudRating.size = 16;
 		}
+		hudBase.y = downscroll ? FlxG.height - 122 - hudBase.height : FlxG.height - 25;
+		hudRating.y = hudBase.y;
 		if (ratingCounterTxt != null && !lastPaperScoreLayout) {
 			ratingCounterTxt.size = 20;
 			ratingCounterTxt.borderSize = 2.5;

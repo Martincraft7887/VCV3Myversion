@@ -267,32 +267,67 @@ function getPauseSongTextData():Dynamic
         return songData;
 
     return Json.parse('
-    {
-        "songFont": "dumbnerd.ttf",
-        "songFontSize": 64,
-        "outerBorderTop": "#000000",
-        "outerBorderBot": "#000000",
-        "midBorderTop": "#1ffbfe",
-        "midBorderBot": "#ffa8f2",
-        "innerBorderTop": "#1595f1",
-        "innerBorderBot": "#5a3cb1",
-        "diagonalSplit": true,
-        "splitAngle": 45,
-        "splitSoftness": 0.25,
-        "splitOffset": 0.15,
-        "vipFont": "Onslaughter.otf",
-        "outerBorderTopVIP": "#000000",
-        "outerBorderBotVIP": "#000000",
-        "midBorderTopVIP": "#474747",
-        "midBorderBotVIP": "#474747",
-        "innerBorderTopVIP": "#FFFFFF",
-        "innerBorderBotVIP": "#FFFFFF",
-        "outerBorderSize": 5,
-        "midBorderSize": 2,
-        "innerBorderSize": 2,
-        "sobelStrength": 0.6,
-        "sobelIntensity": 1.0
-    }');
+{
+	"composer": "TheOnlyVolume,Wolfinu,ImSilv4,Aron_Aurora",
+	"charter": "Sharik,Sanek,Parko",
+	"originalComposer": "Srperez",
+
+	"startTime": 156800,
+
+	"songFont": "dumbnerd.ttf",
+	"songFontSize": 64,
+	"infoFontSize": 12,
+
+	"diagonalSplit": true,
+	"splitAngle": 45,
+	"splitSoftness": 0.25,
+	"splitOffset": 0.15,
+
+	"outerBorderTop": "#000000",
+	"outerBorderBot": "#000000",
+
+	"midBorderTop": "#1ffbfe",
+	"midBorderBot": "#ffa8f2",
+
+	"innerBorderTop": "#1595f1",
+	"innerBorderBot": "#5a3cb1",
+
+	"leftOuterBorderTop": "#000000",
+	"leftOuterBorderBot": "#000000",
+	"leftMidBorderTop": "#1ffbfe",
+	"leftMidBorderBot": "#1595f1",
+	"leftInnerBorderTop": "#2a8cb5",
+	"leftInnerBorderBot": "#0d3f88",
+
+	"rightOuterBorderTop": "#000000",
+	"rightOuterBorderBot": "#000000",
+	"rightMidBorderTop": "#ff4bd8",
+	"rightMidBorderBot": "#ff7a1f",
+	"rightInnerBorderTop": "#b64f9f",
+	"rightInnerBorderBot": "#8f1f00",
+
+	"textOffsetY": 120,
+
+	"logo": "FDVIP",
+	"logoOffsetY": 0,
+	"logoScale": 1,
+
+	"sobelStrength": 0.6,
+	"sobelIntensity": 1.0,
+
+	"vipFont": "Onslaughter.otf",
+
+	"outerBorderTopVIP": "#000000",
+	"outerBorderBotVIP": "#000000",
+	"midBorderTopVIP": "#474747",
+	"midBorderBotVIP": "#474747",
+	"innerBorderTopVIP": "#FFFFFF",
+	"innerBorderBotVIP": "#FFFFFF",
+
+	"outerBorderSize": 5,
+	"midBorderSize": 2,
+	"innerBorderSize": 2
+}');
 }
 
 function getJsonFloat(field:String, fallback:Float):Float

@@ -206,6 +206,7 @@ function getWhiteGloveSongMultiplier(songName:String):Float {
 	} catch(e:Dynamic) {}
 	switch(songKey) {
 		case "finaldestinationgod": return 2.5;
+		case "ruckus": return 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
 		case "krakatoa": return 1.5;
 		case "rejected": return 2;
 		case "rejectedvip": return 2.5;
@@ -218,6 +219,17 @@ function getWhiteGloveSongMultiplier(songName:String):Float {
 	if (songKey == "finaldestination" && diffKey == "god")
 		return 2.5;
 	return 1;
+}
+
+function isVipSong(songName:String):Bool {
+	return normalSongKey(songName).indexOf("vip") >= 0;
+}
+
+function getAdjustedWhiteGloveSongMultiplier(songName:String):Float {
+	var songMult = getWhiteGloveSongMultiplier(songName);
+	if (isVipSong(songName) && songMult != 1)
+		songMult -= 1;
+	return Math.max(0, songMult);
 }
 
 function earnSongGlovesNow() {
@@ -248,9 +260,12 @@ function earnSongGlovesNow() {
 		acc = 1;
 
 	w *= Math.max(0, getSongMultiplier());
+	w *= 2;
+	if (isVipSong(getSongName()))
+		w *= 2;
 	w *= acc;
 	w *= 0.1;
-	w *= getWhiteGloveSongMultiplier(getSongName());
+	w *= getAdjustedWhiteGloveSongMultiplier(getSongName());
 
 	var whiteGain = Math.floor(w);
 	if (whiteGain <= 0)

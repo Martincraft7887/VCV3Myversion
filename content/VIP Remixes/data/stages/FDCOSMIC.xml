@@ -26,7 +26,7 @@
 		y="1325"
 		camxoffset="150"
 		camyoffset="140"
-		spacingy="-100" 
+		spacingy="0" 
 		spacingx="250" 
 	/>
 

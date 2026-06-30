@@ -421,11 +421,11 @@ function onChangeHealthBar(prefix) {
 		healthBarBG.loadGraphic(Paths.image('game/paper/healthBarOverlay'));
 		healthBarBG.updateHitbox();
 		healthBarBG.screenCenter(FlxAxes.X);
-		healthBarBG.y = downscroll ? 16 : FlxG.height - healthBarBG.height + 4;
+		healthBarBG.y = getPaperHudY(getPaperHudVisualBGY(), healthBarBG.height);
 		healthBarBG.offset.set(0, 0);
 		remove(healthBar);
 
-		healthBar = new FlxBar(healthBarBG.x + 65, healthBarBG.y + 54,
+		healthBar = new FlxBar(healthBarBG.x + 65, getPaperHudY(getPaperHudVisualBGY() + 54, 36),
 			FlxBarFillDirection.RIGHT_TO_LEFT, 829, 36,
 			PlayState.instance, 'health', 0, maxHealth);
 
@@ -441,16 +441,25 @@ function onChangeHealthBar(prefix) {
 	}
 }
 
+function getPaperHudY(visualY:Float, objectHeight:Float):Float {
+	return downscroll ? FlxG.height - visualY - objectHeight : visualY;
+}
+
+function getPaperHudVisualBGY():Float {
+	return downscroll ? 16 : FlxG.height - healthBarBG.height + 4;
+}
+
 function applyPaperHUDLayout() {
 	if (healthBarPrefix != "paper/" || healthBarBG == null || healthBar == null) return;
 
 	healthBarBG.screenCenter(FlxAxes.X);
-	var targetBGY = downscroll ? 16 : FlxG.height - healthBarBG.height + 4;
+	var visualBGY = getPaperHudVisualBGY();
+	var targetBGY = getPaperHudY(visualBGY, healthBarBG.height);
 	if (healthBarBG.y != targetBGY)
 		healthBarBG.y = targetBGY;
 
 	var targetHealthX = healthBarBG.x + 65;
-	var targetHealthY = healthBarBG.y + 54;
+	var targetHealthY = getPaperHudY(visualBGY + 54, healthBar.height);
 	if (healthBar.x != targetHealthX) healthBar.x = targetHealthX;
 	if (healthBar.y != targetHealthY) healthBar.y = targetHealthY;
 
@@ -460,7 +469,7 @@ function applyPaperHUDLayout() {
 			iconP1.updateHitbox();
 		}
 		var targetIconP1X = healthBar.x + healthBar.width - (iconP1.width / 2);
-		var targetIconP1Y = healthBarBG.y + 67 - (iconP1.height / 2);
+		var targetIconP1Y = getPaperHudY(visualBGY + 67 - (iconP1.height / 2), iconP1.height);
 		if (iconP1.x != targetIconP1X) iconP1.x = targetIconP1X;
 		if (iconP1.y != targetIconP1Y) iconP1.y = targetIconP1Y;
 	}
@@ -470,21 +479,22 @@ function applyPaperHUDLayout() {
 			iconP2.updateHitbox();
 		}
 		var targetIconP2X = healthBar.x - (iconP2.width / 2);
-		var targetIconP2Y = healthBarBG.y + 67 - (iconP2.height / 2);
+		var targetIconP2Y = getPaperHudY(visualBGY + 67 - (iconP2.height / 2), iconP2.height);
 		if (iconP2.x != targetIconP2X) iconP2.x = targetIconP2X;
 		if (iconP2.y != targetIconP2Y) iconP2.y = targetIconP2Y;
 	}
 
-	var textY = healthBarBG.y + (downscroll ? 105 : 107);
+	var visualTextY = visualBGY + 107;
 	for (text in [scoreTxt, missesTxt, accuracyTxt]) {
 		if (text == null) continue;
 		var textX = healthBarBG.x + 210;
 		var textWidth = Std.int(healthBarBG.width - 420);
-		if (text.y != textY) text.y = textY;
 		if (text.x != textX) text.x = textX;
 		if (text.fieldWidth != textWidth) text.fieldWidth = textWidth;
 		if (text.size != 16) text.size = 16;
 		if (text.borderSize != 1.5) text.borderSize = 1.5;
+		var textY = getPaperHudY(visualTextY, text.height);
+		if (text.y != textY) text.y = textY;
 	}
 }
 function postUpdate(elapsed:Float) {
