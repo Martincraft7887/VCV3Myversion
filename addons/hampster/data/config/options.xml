@@ -1,0 +1,13 @@
+<menu name="deidad options" desc="Opciones globales de bromas">
+    <checkbox id="deidadHampster" name="Hampster" desc="Muestra el hampster global. Manten ALT y arrastra para moverlo."/>
+    <checkbox id="deidadHampsterRTX" name="Hampster RTX" desc="Aplica al hampster la iluminacion RTX del stage si existe."/>
+    <number id="deidadHampsterSize" name="Hampster Size" min="50" max="300" change="10" desc="Cambia el tamano del hampster."/>
+    <number id="deidadHampsterGameScroll" name="Game Scroll" min="0" max="2" change="0.05" desc="ScrollFactor del hampster en camara Game. ALT + rueda tambien lo cambia."/>
+    <checkbox id="deidadHampsterIgnoreBorders" name="Ignore Borders" desc="Permite mover el hampster fuera de los bordes de su camara."/>
+    <choice id="deidadHampsterCamera" name="Hampster Camera" desc="Elige en que camara se dibuja el hampster.">
+        <value name="HUD" value="hud"/>
+        <value name="Game" value="game"/>
+        <value name="Other" value="other"/>
+        <value name="camHAMP" value="hamp"/>
+    </choice>
+</menu>
