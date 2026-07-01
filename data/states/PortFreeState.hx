@@ -367,12 +367,19 @@ var whiteGloveField = "voiidWhiteGloves";
 var purpleGloveField = "voiidPurpleGloves";
 
 function create() {
+	songList = [];
+	songCatData = [];
+	songItems = [];
+	catList = [];
 	categories.clear();
+	unlockCache = [];
+	priceCache = [];
+	nextOfCache = [];
 	//var freeplaySongs = Json.parse(Assets.getText(Paths.getPath("data/freeplaySongs.json")));
 
 	for (lib in Paths.assetsTree.libraries) {
 		if (lib.exists(Paths.getPath("data/freeplaySongs.json"), "TEXT")) {
-			var freeplaySongs = Json.parse(lib.getText(Paths.getPath("data/freeplaySongs.json")));
+			var freeplaySongs = parseJsonWithFallback(lib.getText(Paths.getPath("data/freeplaySongs.json")), '{"categories":[]}', "data/freeplaySongs.json");
 			loadFreeplaySongsJson(freeplaySongs);
 		}
 	}	
@@ -381,19 +388,45 @@ function create() {
 }
 
 function loadFreeplaySongsJson(freeplaySongs) {
+	if (freeplaySongs == null || freeplaySongs.categories == null) return;
 	for (cat in freeplaySongs.categories) {
+		if (cat == null || cat.songs == null) continue;
+		var catName = Std.string(cat.name);
+		if (catName.toLowerCase() == "story mode") catName = "Story Mode";
 		for (song in cat.songs) {
-			songList.push(Chart.loadChartMeta(song.name, "normal", true));
+			if (song == null || song.name == null) continue;
+			var meta = Chart.loadChartMeta(song.name, "normal", true);
+			if (meta == null) {
+				trace("PortFreeState: missing chart meta for freeplay song: " + song.name);
+				continue;
+			}
+			songList.push(meta);
 			songCatData.push(song);
 
-			if (!categories.exists(cat.name)) {
-				categories.set(cat.name, []);
-				catList.push(cat.name);
+			if (!categories.exists(catName)) {
+				categories.set(catName, []);
+				catList.push(catName);
 			}
 
-			categories.get(cat.name).push(songList.length-1);
+			categories.get(catName).push(songList.length-1);
 		}
 	}
+}
+
+function cleanJsonText(text:String):String {
+	if (text == null) return "";
+	if (text.length > 0 && text.charCodeAt(0) == 65279)
+		text = text.substr(1);
+	return text;
+}
+
+function parseJsonWithFallback(text:String, fallbackText:String, label:String):Dynamic {
+	try {
+		return Json.parse(cleanJsonText(text));
+	} catch(e:Dynamic) {
+		trace("PortFreeState: failed to parse " + label + " -> " + Std.string(e));
+	}
+	return Json.parse(cleanJsonText(fallbackText));
 }
 
 var defaultSong = '
@@ -964,9 +997,9 @@ function buildPortFreeState() {
 	function createSongItem(index, songName, songIcon, metaData, port, loadingScreen, alt) {
 		var data = null;
 		if (Assets.exists("songs/"+songName+"/credits"+alt+".json")) {
-			data = Json.parse(Assets.getText("songs/"+songName+"/credits"+alt+".json"));
+			data = parseJsonWithFallback(Assets.getText("songs/"+songName+"/credits"+alt+".json"), defaultSong, "songs/"+songName+"/credits"+alt+".json");
 		} else {
-			data = Json.parse(defaultSong);
+			data = parseJsonWithFallback(defaultSong, defaultSong, "defaultSong");
 		}
 
 		var songText = createSongText(songName, data.songFontSize, 16, data);
@@ -1118,9 +1151,9 @@ function buildPortFreeState() {
 	for (i => cat in catList) {
 		var data = null;
 		if (Assets.exists("data/freeplayCategories/"+cat+".json")) {
-			data = Json.parse(Assets.getText("data/freeplayCategories/"+cat+".json"));
+			data = parseJsonWithFallback(Assets.getText("data/freeplayCategories/"+cat+".json"), defaultSong, "data/freeplayCategories/"+cat+".json");
 		} else {
-			data = Json.parse(defaultSong);
+			data = parseJsonWithFallback(defaultSong, defaultSong, "defaultSong");
 		}
 
 		var songText = createSongText(cat, data.songFontSize, 16, data);
@@ -1154,7 +1187,16 @@ function buildPortFreeState() {
 		categoryGroup.add(songItem);
 	}
 
+	if (catList.length <= 0) {
+		trace("PortFreeState: no freeplay categories were loaded");
+		return;
+	}
+	currentCategory = FlxMath.wrap(currentCategory, 0, catList.length-1);
 	loadCategory(catList[currentCategory]);
+	if (songs.length <= 0) {
+		snapMenuPositions();
+		return;
+	}
 
 	for(k=>s in songs) {
 		if (s.name == Options.freeplayLastSong) {
@@ -1184,8 +1226,9 @@ function buildPortFreeState() {
 }
 
 function loadCategory(name:String) {
-	for (song in songGroup.members) {
-		songGroup.remove(song);
+	if (songGroup == null) return;
+	for (oldSong in songGroup.members.copy()) {
+		if (oldSong != null) songGroup.remove(oldSong);
 	}
 	songGroup.clear();
 	songs = [];
@@ -1195,11 +1238,28 @@ function loadCategory(name:String) {
 	if (categories.exists(name)) {
 		var list = categories.get(name);
 		for (id in list) {
-			songs.push(songList[id]);
-			songGroup.add(songItems[id]);
-			//songItems[id].x = 1280;
-			songItems[id].selected = false;
+			if (id == null || id < 0 || id >= songList.length || id >= songItems.length) {
+				trace("PortFreeState: skipped invalid freeplay id " + id + " in category " + name);
+				continue;
+			}
+			var meta = songList[id];
+			var item = songItems[id];
+			if (meta == null || item == null) {
+				trace("PortFreeState: skipped missing freeplay item " + id + " in category " + name);
+				continue;
+			}
+			songs.push(meta);
+			songGroup.add(item);
+			//item.x = 1280;
+			item.selected = false;
 		}
+	}
+	if (songs.length <= 0) {
+		curSelected = 0;
+		curScroll = 0;
+		changeDiff(0, true);
+		updateSongGroup(curSelected);
+		return;
 	}
 	curSelected = FlxMath.wrap(curSelected, 0, songs.length-1);
 	curScroll = curSelected;
