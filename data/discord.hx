@@ -177,7 +177,7 @@ function onDiscordPresenceUpdate(e) {
 	if(data.button1Label == null)
 		data.button1Label = "Download";
 	if(data.button1Url == null)
-		data.button1Url = "https://www.mediafire.com/file/cnt6fw5xlrd6sp6/Voiid_Chronicles_Restored.rar/file";
+		data.button1Url = "https://github.com/Martincraft7887/VCV3Myversion";
 
 	if (dynamicWindowRpcEnabled() && PlayState.instance != null && PlayState.SONG != null) {
 		data.largeImageKey = getLeatherPortraitKey();
