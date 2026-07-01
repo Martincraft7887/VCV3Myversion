@@ -17,7 +17,7 @@ import haxe.xml.Printer;
 import flixel.ui.FlxButton;
 #end
 import Xml;
-import Int; //this is needed for Std.isOfType
+import Int; 
 import String;
 import Array;
 
@@ -33,12 +33,12 @@ var strumLineHasSustains:Array<Bool> = [];
 
 var maxKeyCount = 0;
 
-//for each keycount
+
 public var multikeyScales:Array<Float> = [];
 public var multikeyWidths:Array<Float> = [];
 public var multikeyOffsets:Array<Float> = [];
 
-//for each key of each keycount
+
 public var multikeySingDirs:Array<Array<Int>> = [];
 public var multikeySplashIDs:Array<Array<Int>> = [];
 public var multikeyStrumAnims:Array<Array<String>> = [];
@@ -74,7 +74,7 @@ function loadMultikeyData()
 			multikeySplashIDs.push([]);
 			multikeyStrumAnims.push([]);
 			multikeyNoteAnims.push([]);
-			for (key in keyGroup.elementsNamed("key")) //get key data
+			for (key in keyGroup.elementsNamed("key")) 
 			{
 				multikeySingDirs[kc].push(Std.parseInt(key.get("singDir")));
 				multikeySplashIDs[kc].push(Std.parseInt(key.get("splashID")));
@@ -93,7 +93,7 @@ public function getKeyCountIndex(strumlineID:Int)
 public function getCappedKeyCount(strumlineID:Int)
 {
 	var kc = strumLineKeyCounts[strumlineID];
-	if (kc > multikeyScales.length) //prevent errors and allow for an almost inf amount of keys
+	if (kc > multikeyScales.length) 
 		kc = multikeyScales.length;
 	return kc;
 }
@@ -106,7 +106,7 @@ var controlsGamepadListP2:Array<Array<Int>> = [];
 
 function onPreGenerateStrums(event)
 {
-    //event.amount = keyCount;
+    
 	event.cancel();
 	for(p in 0...strumLines.members.length)
 		strumLines.members[p].generateStrums(strumLineKeyCounts[p]);
@@ -131,7 +131,7 @@ function onStrumCreation(event)
     strum.animation.addByPrefix('pressed', multikeyStrumAnims[kc][strum.ID][2], 24, false);
     strum.animation.addByPrefix('confirm', multikeyStrumAnims[kc][strum.ID][1], 24, false);
 
-		//reposition strum
+		
 	var sl = PlayState.SONG.strumLines[event.player];
 	var strOffset:Float = sl.strumLinePos == null ? (sl.type == 1 ? 0.75 : 0.25) : sl.strumLinePos;
 
@@ -143,10 +143,10 @@ function onStrumCreation(event)
     strum.x += multikeyOffsets[kc];
     strum.updateHitbox();
 
-	//strum.y += 112*0.5; //move down to center for 4k
-	//strum.y -= 160*strumLineNoteScales[event.player] * strumLines.members[event.player].strumScale*0.5;
+	
+	
 
-    //controls
+    
 	var curControls = controlsList[kc];
 	var curControlsP2 = controlsListP2[kc];
 	var curControlsGamepad = controlsGamepadList[kc];
@@ -171,7 +171,7 @@ function onStrumCreation(event)
 	}  
 	else 
 	{
-		//input for keyboard, gamepad and mobile
+		
 		strum.getPressed = function(strumline:StrumLine)
 		{
 			var gamepadPress = false;
@@ -217,7 +217,7 @@ function onNoteCreation(event) {
 		{
 			if (event.note.strumTime > mc[0])
 			{
-				strumLineKeyCounts[event.strumLineID] = mc[1]; //set while creating note
+				strumLineKeyCounts[event.strumLineID] = mc[1]; 
 			}
 		}
 	}
@@ -245,7 +245,7 @@ function onNoteCreation(event) {
 	note.updateHitbox();
 
     if (maniaChanges[event.strumLineID] != null && maniaChanges[event.strumLineID].length > 0)
-        strumLineKeyCounts[event.strumLineID] = maniaChanges[event.strumLineID][0][1]; //reset to default
+        strumLineKeyCounts[event.strumLineID] = maniaChanges[event.strumLineID][0][1]; 
 }
 
 function create()
@@ -277,24 +277,24 @@ function create()
 	var doParse = true;
 	if (data.codenameChart != null && data.codenameChart)
 	{
-		doParse = false; //its a codename chart so ignore
+		doParse = false; 
 	}
 
 	if (PlayState.SONG.meta.customValues != null)
 	{
-		//back compat with old system because im too lazy
+		
 		if (Reflect.getProperty(PlayState.SONG.meta.customValues, PlayState.difficulty + "_keyCount") != null)
 		{
-			var kc = Std.parseInt(Reflect.getProperty(PlayState.SONG.meta.customValues, PlayState.difficulty + "_keyCount")); //set keycount from metadata
+			var kc = Std.parseInt(Reflect.getProperty(PlayState.SONG.meta.customValues, PlayState.difficulty + "_keyCount")); 
 
 			for (i in 0...strumLines.members.length)
 			{
-				maniaChanges[i].push([-10000, kc]); //effect all strumlines
+				maniaChanges[i].push([-10000, kc]); 
 			}
 		}
 	}
 
-	//setup keycount and mania changes
+	
 	for (event in events)
 	{
 		if (event.name == "Set Key Count" || event.name == "Change Key Count") 
@@ -303,7 +303,7 @@ function create()
 			{
 				for (i in 0...strumLines.members.length)
 				{
-					maniaChanges[i].push([event.time, event.params[0]]); //effect all strumlines
+					maniaChanges[i].push([event.time, event.params[0]]); 
 				}
 			}
 			else
@@ -319,23 +319,23 @@ function create()
 		{
 			if (maniaChanges[i].length > 0)
 			{
-				//make sure the changes are sorted
+				
 				maniaChanges[i].sort(function(a, b) {
 					if(a[0] < b[0]) return -1;
 					else if(a[0] > b[0]) return 1;
 					else return 0;
 				});
-				strumLineKeyCounts[i] = maniaChanges[i][0][1]; //set to the first change in list
+				strumLineKeyCounts[i] = maniaChanges[i][0][1]; 
 				maniaChanges[i][0][0] = -10000;
 			}
 		}
 	}
 
 
-	if (doParse) //need to reparse chart to allow for noteData over 4
+	if (doParse) 
 	{
-		//trace('Parsing Multikey chart: ' + keyCount);
-		for (str in PlayState.SONG.strumLines) //clear existing notes
+		
+		for (str in PlayState.SONG.strumLines) 
 		{
 			while(str.notes.length > 0)
 				str.notes.remove(str.notes[0]);
@@ -350,13 +350,13 @@ function create()
 				{
 					for(note in section.sectionNotes)
 					{
-						//if (note[1] < 0) continue;
+						
 
 						var daStrumTime:Float = note[0];
 
 						var keyCount = 4;
 						var playerKeyCount = 4;
-						if (maniaChanges[0].length > 0) //just parse using the first keycount in the changes
+						if (maniaChanges[0].length > 0) 
 						{
 							for (mc in maniaChanges[0])
 							{
@@ -366,7 +366,7 @@ function create()
 								}
 							}
 						}
-						if (maniaChanges[1].length > 0) //just parse using the first keycount in the changes
+						if (maniaChanges[1].length > 0) 
 						{
 							for (mc in maniaChanges[1])
 							{
@@ -431,7 +431,7 @@ function create()
 	{
 		if (maniaChanges[i].length > 0)
 		{
-			strumLineKeyCounts[i] = maniaChanges[i][0][1]; //set to first keycount
+			strumLineKeyCounts[i] = maniaChanges[i][0][1]; 
 		}
 	}
 		
@@ -439,7 +439,7 @@ function create()
 	controlsListP2 = [];
 	controlsGamepadList = []; 
 	controlsGamepadListP2 = [];
-	//load controls
+	
 	importScript("data/scripts/controlsCheck.hx");
 	for (kc in 0...maxKeyCount)
 	{
@@ -450,7 +450,7 @@ function create()
         
         for (i in 0...(kc+1))
         {
-			if (kc == 3) //use regular controls for 4k keyboard
+			if (kc == 3) 
 			{
 				switch(i)
 				{
@@ -488,7 +488,7 @@ function create()
         }
 	}
 	
-	//store widths and scales for later
+	
     strumLineSwagWidths = [];
 	strumLineNoteScales = [];
 	for (i in 0...strumLineKeyCounts.length)
@@ -506,7 +506,7 @@ function postCreate()
 	#end
 }
 
-var splashScaleMult = 1.428; // 1 / 0.7, to match with note scale
+var splashScaleMult = 1.428; 
 var splashScales:Map<String, Float> = [];
 var splashSkinChanges:Array<Dynamic> = [];
 var defaultSplashSkinPrefix:String = "voiid/";
@@ -634,9 +634,9 @@ function getSplashShader(splashName:String, strumID:Int, strumLineID:Int, noteTy
 function onNoteHit(event)
 {
     var index = event.note.strumID;
-    event.direction = multikeySingDirs[getKeyCountIndex(event.note.strumLine.ID)][index]; //fix sing anims
+    event.direction = multikeySingDirs[getKeyCountIndex(event.note.strumLine.ID)][index]; 
 
-    if (event.direction == 4) //space note
+    if (event.direction == 4) 
     {
         var char = event.characters[0];
 		event.direction = 2;
@@ -646,17 +646,17 @@ function onNoteHit(event)
         }        
     }
 
-    //splashes
+    
     if (event.showSplash)
     {
         event.showSplash = false;
 		var splashName = event.note.splash == null ? getSplashForTime(event.note.strumTime) : event.note.splash;
 
-		//
-        event.note.__strum.ID = multikeySplashIDs[getKeyCountIndex(event.note.strumLine.ID)][index]; //need to set id to play correct anim
-        //splashHandler.showSplash(event.note.splash, event.note.__strum);
+		
+        event.note.__strum.ID = multikeySplashIDs[getKeyCountIndex(event.note.strumLine.ID)][index]; 
+        
 
-		//show splash func (but we need to keep the splash sprite for after)
+		
 		splashHandler.__grp = splashHandler.getSplashGroup(splashName);
 		var splash = splashHandler.__grp.showOnStrum(event.note.__strum);
 		if (splash == null) {
@@ -664,22 +664,22 @@ function onNoteHit(event)
 			return;
 		}
 		splashHandler.add(splash);
-		// max 8 rendered splashes
+		
 		while(splashHandler.members.length > 8)
 			splashHandler.remove(splashHandler.members[0], true);
 
-		event.note.__strum.ID = event.note.strumID; //now set id back
+		event.note.__strum.ID = event.note.strumID; 
 
 		
 		if (!splashScales.exists(splashName))
 		{
-			splashScales.set(splashName, splash.scale.x); //store scale in case it needs it
+			splashScales.set(splashName, splash.scale.x); 
 		}
 		var scale:Float = splashScales.get(splashName);
 		
 		splash.shader = getSplashShader(splashName, index, event.note.strumLine.ID, getNoteTypeForSplash(event.note), event.note.__strum.shader);
 
-		//set splash scale and position properly
+		
 		splash.scale.set(
 			strumLineNoteScales[event.note.strumLine.ID]*splashScaleMult*scale, 
 			strumLineNoteScales[event.note.strumLine.ID]*splashScaleMult*scale);
@@ -721,7 +721,7 @@ function changeKeyCount(kc, doAnim, strumlineID)
 	strumLineSwagWidths[strumlineID] = multikeyWidths[getKeyCountIndex(strumlineID)] * 0.7;
 	strumLineNoteScales[strumlineID] = multikeyScales[getKeyCountIndex(strumlineID)];
 
-	if (!strumLines.members[strumlineID].cpu) //player strumline? might break if multiple with different key counts
+	if (!strumLines.members[strumlineID].cpu) 
 	{
 		#if mobile
 		loadMobileHitboxes(strumLineKeyCounts[1]);
@@ -738,7 +738,7 @@ function onEvent(event)
 {
     if (event.event.name == "Set Key Count" || event.event.name == "Change Key Count")
     {
-		if (event.event.name == "Change Key Count" || event.event.params[2]) //change all strumlines and back compact with old event
+		if (event.event.name == "Change Key Count" || event.event.params[2]) 
 		{
 			for (i in 0...strumLines.members.length)
 			{
@@ -783,7 +783,7 @@ function loadMobileHitboxes(targetKc)
 		{
 			if (kc == targetKc)
 			{
-				for (key in keyGroup.elementsNamed("key")) //get key data
+				for (key in keyGroup.elementsNamed("key")) 
 				{
 					var x = FlxG.width * Std.parseFloat(key.get("xPercent"));
 					var y = FlxG.height * Std.parseFloat(key.get("yPercent"));

@@ -1,6 +1,6 @@
 function create() {
-    //setProperty('', 'playCount) {wn', false)
-	//introLength = 1;
+    
+	
 }
 function onCountdown(e) {
 	if (Conductor.songPosition < 6000) e.cancel();

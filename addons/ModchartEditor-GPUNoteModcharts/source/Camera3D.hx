@@ -1,8 +1,8 @@
-//
+
 import Vec4;
 
 class Camera3D {
-    public var fov = 70.5; //matches closest to 2D
+    public var fov = 70.5; 
     public var position:Vec4;
     public var lookAt:Vec4;
     public var up:Vec4;

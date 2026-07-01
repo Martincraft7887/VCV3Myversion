@@ -3,9 +3,9 @@ import flixel.util.FlxTimer;
 import flixel.text.FlxTextBorderStyle;
 import flixel.math.FlxMath;
 
-// ==========================
-// VARIABLES
-// ==========================
+
+
+
 var t1;
 var logo;
 var showedPopup = false;
@@ -74,14 +74,14 @@ var defaultSong = '
 
 var songData = null;
 
-// ==========================
-// TABLA DE LOGOS
-// ==========================
+
+
+
 var logoTable = [
 
-    // DEFAULT
+    
     {
-        songs: [    // Story mode
+        songs: [    
     "light it up",
     "ruckus",
     "target practice",
@@ -110,7 +110,7 @@ var logoTable = [
     "krakatoa",
     "showdown",
 
-    // Collabs
+    
     "alter ego",
     "interregnum",
     "insano",
@@ -118,7 +118,7 @@ var logoTable = [
     "sweet dreams",
     "sweet dreams ii",
 
-    // Extras
+    
     "flaming glove iii",
     "knocked",
     "edgelord",
@@ -142,7 +142,7 @@ var logoTable = [
     "wii remote",
     "damnale",
 
-    // VIP remixes
+    
     "boxing match vip",
     "immortal vip",
     "king hit vip",
@@ -156,7 +156,7 @@ var logoTable = [
         logo: "Logo"
     },
 
-    // SXM
+    
     {
         songs: [
             "power link",
@@ -184,9 +184,9 @@ var logoTable = [
     }
 ];
 
-// ==========================
-// OBTENER LOGO
-// ==========================
+
+
+
 function logoExists(logoName:String):Bool
 {
     return Assets.exists(Paths.image("logos/" + logoName));
@@ -435,20 +435,20 @@ if (isPaperTimer()) {
     timeTxt.borderSize = 2.5;
     timeTxt.fieldWidth = 220;
 
-    // Importante para que timeTxt.height sea correcto después de cambiar size/texto
+    
     timeTxt.updateHitbox();
 
     if (healthBarBG != null) {
         timeTxt.x = healthBarBG.x + (healthBarBG.width * 0.5) - (timeTxt.fieldWidth * 0.5);
 
-        // Posición visual dentro del HUD Paper
+        
         var paperTimerOffset:Float = 12;
 
         if (!downscroll) {
-            // Upscroll: desde arriba del healthBarBG
+            
             timeTxt.y = healthBarBG.y + paperTimerOffset;
         } else {
-            // Downscroll: se espejea desde abajo del healthBarBG
+            
             timeTxt.y = healthBarBG.y + healthBarBG.height - paperTimerOffset - timeTxt.height;
         }
     } else {
@@ -488,9 +488,9 @@ function updateTimerBar() {
     timerBarFill.y = timerBarBG.y + timerBarPadding;
 }
 
-// ==========================
-// INIT
-// ==========================
+
+
+
 function postCreate()
 {
     centerX = FlxG.width / 2;
@@ -498,9 +498,9 @@ function postCreate()
 
     cacheTimerSkinChanges();
 
-    // ==========================
-    // JSON
-    // ==========================
+    
+    
+    
     if (Assets.exists("songs/" + PlayState.SONG.meta.name + "/credits.json"))
     {
         songData = Json.parse(
@@ -514,9 +514,9 @@ function postCreate()
     logoScale = getJsonFloat("logoScale", 0.8);
     customTextOffsetY = getJsonFloat("textOffsetY", 200);
 
-    // ==========================
-    // TEXTO
-    // ==========================
+    
+    
+    
     useSplitText = getJsonBool("splitText", false);
     splitTextAt = getJsonInt("splitTextAt", -1);
     splitTextGap = getJsonFloat("splitTextGap", 0);
@@ -561,21 +561,21 @@ function postCreate()
             Json.stringify(songData)
         );
     }
-    // ==========================
-    // LOGO ANIMADO
-    // ==========================
+    
+    
+    
     var logoName = getLogoName();
 
     logo = new FlxSprite();
 
     logo.frames = Paths.getFrames("logos/" + logoName);
 
-    // prefijo de animación
+    
     logo.animation.addByPrefix(
         "idle",
         "idle",
         24,
-        false // <- sin loop
+        false 
     );
 
     logoHasIdleAnim = logo.animation.exists("idle");
@@ -596,9 +596,9 @@ function postCreate()
     createTimerUI();
 }
 
-// ==========================
-// CREAR TEXTO
-// ==========================
+
+
+
 function makeCoolText(text:String, size:Float, spacing:Float, dataString:String)
 {
     var data = Json.parse(dataString);
@@ -707,9 +707,9 @@ function showSplitText(
         }
     });
 }
-// ==========================
-// ENTRADA
-// ==========================
+
+
+
 function setupEnter(obj:FlxSprite, enterDir:String, targetX:Float, targetY:Float)
 {
     switch(enterDir)
@@ -732,9 +732,9 @@ function setupEnter(obj:FlxSprite, enterDir:String, targetX:Float, targetY:Float
     }
 }
 
-// ==========================
-// SALIDA
-// ==========================
+
+
+
 function getExitPos(obj:FlxSprite, exitDir:String, targetX:Float, targetY:Float)
 {
     var pos = {
@@ -814,12 +814,12 @@ function updateCenterFollowers(elapsed:Float)
         }
     }
 }
-// ==========================
-// MOSTRAR OBJETO
-// ==========================
-// ==========================
-// MOSTRAR OBJETO
-// ==========================
+
+
+
+
+
+
 function showObject(
     obj:FlxSprite,
     enterDir:String,
@@ -886,9 +886,9 @@ function showObject(
     });
 }
 
-// ==========================
-// UPDATE
-// ==========================
+
+
+
 function update(elapsed)
 {
     updateCenterFollowers(elapsed);

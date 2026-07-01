@@ -1,4 +1,4 @@
---Setup stuff-- dont mess with
+
 
 local noteXPos = {}
 local targetnoteXPos = {}
@@ -15,10 +15,10 @@ local curOpponent = 'opponent'
 local downscrollDiff = 1
 local rad = math.pi/180;
 
---based on code from andromeda engine, but with lua
+
 local velChanges = {
 
-	--step, speed mult
+	
 	{0, 1.0},
 }
 local velMarkers = {
@@ -26,7 +26,7 @@ local velMarkers = {
 }
 function mapVelChanges()
 
-	for i = 1, #velChanges do  --convert from step to millseconds
+	for i = 1, #velChanges do  
 		velChanges[i][1] = getStrumTimeFromStep(velChanges[i][1])
 	end
 
@@ -36,7 +36,7 @@ function mapVelChanges()
 	velMarkers[1] = (velChanges[1][1]*velChanges[1][2])
 
 	for i = 2, #velChanges do 
-		pos = pos + ((velChanges[i][1]-velChanges[i-1][1])*velChanges[i-1][2]) --precalc scaled time
+		pos = pos + ((velChanges[i][1]-velChanges[i-1][1])*velChanges[i-1][2]) 
 		velMarkers[i] = pos
 	end
 end
@@ -70,7 +70,7 @@ function createPost()
 	mapVelChanges()
 	startSpeed = getProperty('', 'speed')
 	for i = 0, (keyCount+playerKeyCount)-1 do 
-		table.insert(noteXPos, 0) --setup default pos and whatever
+		table.insert(noteXPos, 0) 
 		table.insert(noteYPos, 0)
 		table.insert(noteZPos, 0)
 		table.insert(noteZScale, 1)
@@ -78,7 +78,7 @@ function createPost()
 		table.insert(targetnoteXPos, 0)
 		table.insert(targetnoteYPos, 0)
 		table.insert(targetnoteZPos, 0)
-		table.insert(targetnoteAngle, 0) --start angle at weird number for start
+		table.insert(targetnoteAngle, 0) 
 		noteXPos[i+1] = getActorX(i)
 		targetnoteXPos[i+1] = getActorX(i)
 		targetnoteYPos[i+1] = _G['defaultStrum'..i..'Y']
@@ -133,7 +133,7 @@ function createPost()
 	makeSprite('songPosOffset', '', 0, 0)
 
 	defaultZoom = getProperty('', 'defaultCamZoom')
-	--trace(defaultZoom)
+	
 
 	if not downscrollBool then 
 		downscrollDiff = -1
@@ -145,7 +145,7 @@ function createPost()
 		curOpponent = 'player'
 	end
 end
-							--x,y,z,w
+							
 local screenRotQuaternion = {0,0,0,1}
 
 local notePerlinSpeed = 0.0002
@@ -153,8 +153,8 @@ local notePerlinRange = {20,20,20,0}
 local noteRangeBoost = 1
 
 local perlinSpeed = 0.2
-					--p2          p1
-					--x,y,z,angle,x,y,z,angle
+					
+					
 local perlinTime = {0,0,0,0,0,0,0,0}
 local perlinRange = {0,0,0,5}
 
@@ -178,9 +178,9 @@ function updatePerlin(elapsed)
 		noteRangeBoost = 1
 	end
 
-	--setActorX(getActorX('screenRot')+100*elapsed, 'screenRot')
-	--setActorY(getActorY('screenRot')+60*elapsed, 'screenRot')
-	--setActorAngle(getActorAngle('screenRot')+75*elapsed, 'screenRot')
+	
+	
+	
 
 	setShaderProperty('mirror2', 'x', ((-0.5 + perlin(perlinTime[1], 0, 0))*perlinCamRange[1]))
 	setShaderProperty('mirror2', 'y', ((-0.5 + perlin(0, perlinTime[2], 0))*perlinCamRange[2]))
@@ -189,7 +189,7 @@ function updatePerlin(elapsed)
 
 	screenRotQuaternion = updateQuaternion('screenRot', screenRotQuaternion)
 end
---https://github.com/topameng/CsToLua/blob/master/tolua/Assets/Lua/Quaternion.lua
+
 function updateQuaternion(vec3, q)
 	local x = getActorX(vec3)*rad*0.5
 	local y = getActorY(vec3)*rad*0.5
@@ -223,7 +223,7 @@ function applyQuaternion(xyz, q)
 	local num11 = q[4] * num2
 	local num12 = q[4] * num3
 
-	local point = {xyz[1], xyz[2], xyz[3]} --copy
+	local point = {xyz[1], xyz[2], xyz[3]} 
 	
 	xyz[1] = (((1 - (num5 + num6)) * point[1]) + ((num7 - num12) * point[2])) + ((num8 + num11) * point[3])
 	xyz[2] = (((num7 + num12) * point[1]) + ((1 - (num4 + num6)) * point[2])) + ((num9 - num10) * point[3])
@@ -235,13 +235,13 @@ function rotateVector(xyz, q)
 
 	xyz[1] = xyz[1] - (1280*0.5) + (112*0.5)
 	xyz[2] = xyz[2] - (720*0.5) + (112*0.5)
-	--xyz[3] = xyz[3] - (1000)
+	
 
 	xyz = applyQuaternion(xyz, screenRotQuaternion)
 
 	xyz[1] = xyz[1] + (1280*0.5) - (112*0.5)
 	xyz[2] = xyz[2] + (720*0.5) - (112*0.5)
-	--xyz[3] = xyz[3] + (1000)
+	
 
 	return xyz
 end
@@ -262,7 +262,7 @@ end
 
 local noteScale = 1
 function lerp(a, b, ratio)
-	return a + ratio * (b - a); --the funny lerp
+	return a + ratio * (b - a); 
 end
 local defaultNoteScale = -1
 
@@ -389,7 +389,7 @@ function clamp(val, min, max)
 	end
 	return val
 end
---https://stackoverflow.com/questions/5294955/how-to-scale-down-a-range-of-numbers-with-a-known-min-and-max-value
+
 function scale(valueIn, baseMin, baseMax, limitMin, limitMax)
 	return ((limitMax - limitMin) * (valueIn - baseMin) / (baseMax - baseMin)) + limitMin
 end
@@ -404,7 +404,7 @@ function tipsy(lane, curPos, speed)
 end
 function boost(value, height, curPos, speed)
 	local yOffset = 0
-	local fYOffset = -curPos / speed --idk why its minus it just is
+	local fYOffset = -curPos / speed 
 	local fEffectHeight = height
 	local fNewYOffset = fYOffset * 1.5 / ((fYOffset+fEffectHeight/1.2)/fEffectHeight); 
 	local fAccelYAdjust = value * (fNewYOffset - fYOffset);
@@ -415,7 +415,7 @@ function boost(value, height, curPos, speed)
 	return curPos
 end
 function brake(value, height, curPos, speed)
-	--trace(curPos)
+	
 	local yOffset = 0
 	local fYOffset = -curPos / speed
 	local fEffectHeight = height
@@ -454,7 +454,7 @@ function updatePost(elapsed)
 
 	updatePerlin(elapsed*songMultiplier)
 
-	--drunk = lerp(drunk, drunkLerp, elapsed*5)
+	
 
 	local currentBeat = (songPos / 1000)*(bpm/60)
 
@@ -470,25 +470,25 @@ function updatePost(elapsed)
 
 		local rotatedPos = rotateVector({thisnotePosX, thisnotePosY, thisnotePosZ}, screenRotQuaternion)
 
-		--local thisnotePosX = noteXPos[i+1]
-		--local thisnotePosY = noteYPos[i+1]
-		--local thisnotePosZ = (noteZPos[i+1]/1000)-1
+		
+		
+		
 
-		--noteAngle[i+1] = lerp(noteAngle[i+1], targetnoteAngle[i+1], elapsed*lerpSpeedAngle)
+		
 		setActorModAngle(getNoteAngle(i), i)
         setActorAlpha(getNoteAlpha(i), i)
 
 		local totalNotePos = calculatePerspective(rotatedPos[1], rotatedPos[2], (rotatedPos[3]*0.001)-1)
 		
-		--setActorX(noteXPos[i+1], i)
-		--setActorY(noteYPos[i+1], i)
+		
+		
 		setActorX(totalNotePos[1], i)
 		setActorY(totalNotePos[2], i)
 		
 		noteZScale[i+1] = totalNotePos[3]
 		setActorScaleXY(noteScale * (1/-noteZScale[i+1]), noteScale * (1/-noteZScale[i+1]), i)
 		if getPlayingActorAnimation(i) == 'confirm' then 
-			setActorScaleXY(noteScale*1.45 * (1/-noteZScale[i+1]), noteScale*1.45 * (1/-noteZScale[i+1]), i) --confirm is weird ig
+			setActorScaleXY(noteScale*1.45 * (1/-noteZScale[i+1]), noteScale*1.45 * (1/-noteZScale[i+1]), i) 
 		end
 		
 	end
@@ -498,7 +498,7 @@ function updatePost(elapsed)
 		for i = 0, noteCount-1 do 
 			local data = getRenderedNoteType(i)
 			if getRenderedNoteHit(i) then 
-				data = data + keyCount --player notes
+				data = data + keyCount 
 			end
 			if defaultWidth == -1 then 
 				defaultWidth = getRenderedNoteWidth(i)
@@ -509,7 +509,7 @@ function updatePost(elapsed)
 			local offsetX = getRenderedNoteOffsetX(i)
 			local strumTime = getRenderedNoteStrumtime(i)
 			local dist = getNoteDist(data)
-			if dist > 0 then --downscroll
+			if dist > 0 then 
 				if isRenderedNoteSustainEnd(i) then 
 					strumTime = getRenderedNotePrevNoteStrumtime(i)
 				end
@@ -524,12 +524,12 @@ function updatePost(elapsed)
 			local incomingAngleRotation = getCartesianCoords3D(getIAX(data), getIAY(data), (dist*curPos))
 
 			thisnoteYPos = thisnoteYPos + incomingAngleRotation[2] - (getRenderedNoteOffsetY(i)) + getYOffset(data, curPos)
-			if dist > 0 then --downscroll
+			if dist > 0 then 
 				if isRenderedNoteSustainEnd(i) then 
 					thisnoteYPos = thisnoteYPos - (getRenderedNoteHeight(i))+2
 				end
-			--else 
-				--thisnoteYPos = thisnoteYPos - (0.45*curPos) - (getRenderedNoteOffsetY(i))
+			
+				
 			end
             
 			local thisnoteXPos = noteXPos[data+1]+offsetX+incomingAngleRotation[1]
@@ -544,18 +544,18 @@ function updatePost(elapsed)
             local alpha = getNoteAlpha(data)
 
 			if not isSustain(i) then 
-				--setRenderedNoteScale(getRenderedNoteWidth(i)*,getRenderedNoteHeight(i)*noteScale * (1/-totalNotePos[3]), i)
+				
 				setRenderedNoteScaleX(defaultNoteScale*noteScale * zScale, i)
 				setRenderedNoteScaleY(defaultNoteScale*noteScale * zScale, i)
 				setRenderedNoteAlpha(alpha,i)
 				setRenderedNoteAngle(getNoteAngle(data),i)
 			else
-				--offsetX = 37 * (1/-totalNotePos[3]) * (defaultWidth/112)
+				
 				setRenderedNoteAlpha(alpha*0.6,i)
 				if defaultSusWidth == -1 then 
 					defaultSusWidth = getRenderedNoteWidth(i)
 				end
-				if isRenderedNoteSustainEnd(i) then --sustain ends
+				if isRenderedNoteSustainEnd(i) then 
 					setRenderedNoteScale(defaultSusWidth*noteScale * zScale,1, i)
 					setRenderedNoteScaleY(getRenderedNoteSustainScaleY(i)* zScale, i)
 				else 
@@ -564,7 +564,7 @@ function updatePost(elapsed)
 				end
 
 				setRenderedNoteAngle(0,i)
-				--susOffset = 37*noteScale
+				
 			end
 			
 			setRenderedNotePos(totalNotePos[1],totalNotePos[2], i)
@@ -589,7 +589,7 @@ function getXOffset(data, curPos)
 
 	local strumRot = getStrumRot(data)
 	if strumRot[1] ~= 0 or strumRot[2] ~= 0 then 
-		off = off + (distFromCenter[(data%4)+1]*112) -- move to center
+		off = off + (distFromCenter[(data%4)+1]*112) 
 
 		off = off + getCartesianCoords3D(strumRot[1], strumRot[2], (distFromCenter[(data%4)+1]*112))[1]
 
@@ -633,17 +633,17 @@ function getZOffset(data, curPos)
 	return off
 end
 
---the funny perspective math
+
 
 local zNear = 0
 local zFar = 1000
 local zRange = zNear - zFar 
-local tanHalfFOV = math.tan(math.pi/4) -- math.pi/2 = 90 deg, then half again
+local tanHalfFOV = math.tan(math.pi/4) 
 
 function calculatePerspective(x,y,z)
 
 	if (z >= 1) then
-		z = 1 --stop weird shit
+		z = 1 
 	end
 
 	x = x - (1280/2) + (defaultWidth/2)
@@ -661,7 +661,7 @@ function calculatePerspective(x,y,z)
 
 	return {xPerspective,yPerspective,zPerspectiveOffset}
 end
---the funny spherical to cartesian for 3d angles
+
 function getCartesianCoords3D(theta, phi, radius)
 
 	local x = 0
@@ -698,13 +698,13 @@ function setupShaders()
 	end
 	setShaderProperty('mirror2', 'zoom', 1.0)
 
-    --setShaderProperty('color', 'green', 0.3)
+    
 
-    --initShader('caBlue', 'ChromAbBlueSwapEffect')
-    --setCameraShader('game', 'caBlue')
-    --setCameraShader('hud', 'caBlue')
-    --setShaderProperty('caBlue', 'strength', -0.001)
-    --setShaderProperty('caBlue', 'strength', 0.0)
+    
+    
+    
+    
+    
 
     initShader('grey', 'GreyscaleEffect')
     setCameraShader('game', 'grey')
@@ -726,10 +726,10 @@ function setupShaders()
 
 end
 function songStart()
-    --tweenShaderProperty('color', 'red', 0.9, crochet*0.001*16*8, 'circIn')
-    --tweenShaderProperty('color', 'green', 1.1, crochet*0.001*16*8, 'cubeIn')
-    --tweenShaderProperty('color', 'blue', 0.9, crochet*0.001*16*8, 'cubeIn')
-    --tweenShaderProperty('mirror', 'zoom', 1, crochet*0.001*16*16, 'cubeInOut')
+    
+    
+    
+    
 
 	
 end
@@ -746,10 +746,10 @@ function stepHit()
 		tweenShaderProperty('mirror', 'zoom', 2, crochet*0.001*8, 'cubeIn')
 		tweenShaderProperty('mirror', 'barrel', 20, crochet*0.001*8, 'cubeIn')
 	elseif curStep == 128 then 
-		--if not opponentPlay then 
+		
 		setShaderProperty('mirror', 'zoom', 0.2)
 		setActorAlpha(0.7, 'black')
-		--end
+		
 		setShaderProperty('mirror', 'barrel', -10)
 		
 		tweenShaderProperty('mirror', 'zoom', 1, crochet*0.001*8, 'cubeOut')
@@ -759,16 +759,16 @@ function stepHit()
 	
 	if (section >= 72 and section < 96) then 
 		if secStep == 0 then 
-			--green
+			
 			setStageColorSwap('hue', 0.6)
 		elseif secStep == 4 then 
-			--pink
+			
 			setStageColorSwap('hue', 0.2)
 		elseif secStep == 8 then 
-			--yellow/orange
+			
 			setStageColorSwap('hue', 0.4)
 		elseif secStep == 12 then 
-			--purple
+			
 			setStageColorSwap('hue', 0)
 		end	
 		if curStep % 4 == 0 then 
@@ -817,7 +817,7 @@ function stepHit()
 
 
 	if (section >= 16 and section < 96) then 
-		if secStep == 8 or (section % 8 == 7 and (secStep == 12 or secStep == 14)) then --clap
+		if secStep == 8 or (section % 8 == 7 and (secStep == 12 or secStep == 14)) then 
 			triggerEvent('add camera zoom', 0.07, 0.07)
 
 			setActorProperty('drunk', 'angle', 2.0)
@@ -834,12 +834,12 @@ function stepHit()
 		end
 	end	
 	if (section >= 96 and section < 101) then 
-		--if curStep % 32 == 0 or secStep == 12 or (section % 8 == 3 and (secStep == 14 or secStep == 13)) then 
-		--	triggerEvent('add camera zoom', 0.07, 0.07)
-		--end
-		--if (section % 2 == 1 and (secStep == 4 or secStep == 6)) or (section % 4 == 1 and (secStep == 5)) then 
-		--	triggerEvent('add camera zoom', 0.07, 0.07)
-		--end
+		
+		
+		
+		
+		
+		
 	end	
 
 	
@@ -919,7 +919,7 @@ function stepHit()
 			tweenActorProperty('note0', 'x', -100, crochet*0.001*8, 'cubeIn')
 			tweenActorProperty('note1', 'x', -50, crochet*0.001*8, 'cubeIn')
 			tweenActorProperty('note2', 'x', -30, crochet*0.001*8, 'cubeIn')
-			--tweenActorProperty('note3', 'x', 100, crochet*0.001*8, 'cubeIn')
+			
 			tweenActorProperty('note4', 'x', 30, crochet*0.001*8, 'cubeIn')
 			tweenActorProperty('note5', 'x', 50, crochet*0.001*8, 'cubeIn')
 			tweenActorProperty('note6', 'x', 100, crochet*0.001*8, 'cubeIn')
@@ -927,7 +927,7 @@ function stepHit()
 			tweenActorProperty('note7', 'x', -100, crochet*0.001*8, 'cubeIn')
 			tweenActorProperty('note8', 'x', -50, crochet*0.001*8, 'cubeIn')
 			tweenActorProperty('note9', 'x', -30, crochet*0.001*8, 'cubeIn')
-			--tweenActorProperty('note10', 'x', 100, crochet*0.001*8, 'cubeIn')
+			
 			tweenActorProperty('note11', 'x', 30, crochet*0.001*8, 'cubeIn')
 			tweenActorProperty('note12', 'x', 50, crochet*0.001*8, 'cubeIn')
 			tweenActorProperty('note13', 'x', 100, crochet*0.001*8, 'cubeIn')
@@ -951,7 +951,7 @@ function stepHit()
 		if not middlescroll then 
 			tweenActorProperty('player', 'x', 0, crochet*0.001*32, 'cubeIn')
 			tweenActorProperty('opponent', 'x', 0, crochet*0.001*32, 'cubeIn')
-			--tweenActorProperty(curOpponent, 'alpha', 1, crochet*0.001*32, 'cubeIn')
+			
 		end
 		for i = 0,(keyCount+playerKeyCount)-1 do 
 			tweenActorProperty('note'..i, 'x', 0, crochet*0.001*32, 'cubeIn')
@@ -972,7 +972,7 @@ function sectionHit(section)
 		tweenShaderProperty('mirror', 'barrel', 0.0, crochet*0.001*8, 'cubeOut')
 		tweenActorProperty('black', 'alpha', 0.0, crochet*0.001*8, 'cubeOut')
 		tweenActorProperty(curOpponent, 'alpha', 1, crochet*0.001*8, 'cubeOut')
-        --tweenShaderProperty('grey', 'strength', 0, crochet*0.001*16*8, 'cubeIn')
+        
 		perlinSpeed = 0.2
 		perlinCamRange = {0.05,0.05,2,0}
     end

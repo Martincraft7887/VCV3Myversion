@@ -81,8 +81,8 @@ function onStrumCreation(event) {
 		applyPaperRGBShader(event.strum, event.strumID, true, event.player);
 }
 function onNoteHit(event) {
-	// scores.hx handles Paper ratings. Keeping Codename's vanilla prefix active here
-	// makes the engine prepare an extra Paper popup on every player hit.
+	
+	
 }
 function onNoteCreation(event) {
 	if (skinChanges.length == 0) {

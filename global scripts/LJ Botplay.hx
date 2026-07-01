@@ -1,9 +1,9 @@
-//original code by LJ, edited by Malloy
 
-// Configurable variables (edit these as needed)
-public static var botplay:Bool = false; // default OFF
-public static var toggleKey:String = "SEVEN"; // keybind: number 7
-public static var blockInputs:Bool = true; // cancel inputs while botplay
+
+
+public static var botplay:Bool = false; 
+public static var toggleKey:String = "SEVEN"; 
+public static var blockInputs:Bool = true; 
 public static var perfectBotHits:Bool = true;
 public static var botHitLeadMs:Float = 8;
 

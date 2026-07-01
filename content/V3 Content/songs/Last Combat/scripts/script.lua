@@ -25,13 +25,13 @@ function createPost()
         setCameraShader('hud', 'mirrorP')
     end
     setShaderProperty('mirrorP', 'zoom', 1.0)
-	--setShaderProperty('mirror', 'zoom', 2.0)
-    --setShaderProperty('mirror', 'warp', -0.2)
+	
+    
 
 
-    --setShaderProperty('mirror', 'x', -0.5)
-    --setShaderProperty('mirror', 'warp', -0.1)
-    --setShaderProperty('mirror', 'angle', 180)
+    
+    
+    
 
     initShader('grey', 'GreyscaleEffect')
     setCameraShader('game', 'grey')
@@ -55,7 +55,7 @@ function createPost()
 
     initShader('vignette1', 'VignetteEffect')
     setCameraShader('hud', 'vignette1')
-    --setCameraShader('game', 'vignette')
+    
     setShaderProperty('vignette1', 'strength', 0)
     setShaderProperty('vignette1', 'size', 1)
 
@@ -75,8 +75,8 @@ function update(elapsed)
     perlinX = perlinX + elapsed*math.random()*perlinSpeed
 	perlinY = perlinY + elapsed*math.random()*perlinSpeed
 	perlinZ = perlinZ + elapsed*math.random()*perlinSpeed
-    --local noiseX = perlin.noise(perlinX, 0, 0)
-	--trace(perlin(perlinX, 0, 0)*0.1)
+    
+	
     setShaderProperty('mirrorP', 'x', ((-0.5 + perlin(perlinX, 0, 0))*perlinXRange))
 	setShaderProperty('mirrorP', 'y', ((-0.5 + perlin(0, perlinY, 0))*perlinYRange))
 	setShaderProperty('mirrorP', 'angle', ((-0.5 + perlin(0, 0, perlinZ))*perlinZRange))
@@ -105,27 +105,27 @@ function stepHit()
         end
 
         if secStep == 0 or secStep == 2 or secStep == 4 or secStep == 6 then 
-            --tweenShaderProperty('mirror', 'zoom', 0.9, crochet*0.001, 'cubeOut')
+            
             triggerEvent('add camera zoom', 0.02, 0.02)
         elseif secStep == 1 or secStep == 3 or secStep == 5 or secStep == 7 then 
-            --tweenShaderProperty('mirror', 'zoom', 1.0, crochet*0.001, 'cubeIn')
+            
         elseif secStep == 12 then 
-            --tweenShaderProperty('mirror', 'zoom', 1.1, crochet*0.001*4, 'cubeIn')
+            
         end
     elseif (section >= 32 and section < 48) or (section >= 112 and section < 128) then 
 
         if secStep == 0 or secStep == 4 or secStep == 8 then 
-            --tweenShaderProperty('mirror', 'zoom', 0.9, crochet*0.001, 'cubeOut')
+            
             triggerEvent('add camera zoom', 0.1, 0.05)
         end
 
     elseif (section >= 96 and section < 112) then 
 
-        --[[if secStep == 4 or secStep == 12 or secStep == 14 then 
-            tweenShaderProperty('mirror', 'zoom', 1.2, crochet*0.001*1, 'cubeOut')
-        elseif secStep == 5 or secStep == 13 or secStep == 15 then 
-            tweenShaderProperty('mirror', 'zoom', 1.0, crochet*0.001*1, 'cubeIn')
-        end]]--
+        
+
+
+
+
         if curStep % 2 == 0 then  
             tweenShaderProperty('mirror', 'zoom', 1.08, crochet*0.001, 'cubeOut')
         elseif curStep % 2 == 1 then 
@@ -133,11 +133,11 @@ function stepHit()
         end
     elseif (section >= 80 and section < 96) then 
 
-        --[[if secStep32 == 0 or secStep32 == 8 or secStep32 == 12 or secStep32 == 18 or secStep32 == 24 or secStep32 == 28 then 
-            tweenShaderProperty('mirror', 'zoom', 1.2, crochet*0.001*2, 'cubeOut')
-        elseif secStep32 == 2 or secStep32 == 10 or secStep32 == 14 or secStep32 == 20 or secStep32 == 26 or secStep32 == 30 then 
-            tweenShaderProperty('mirror', 'zoom', 1.0, crochet*0.001*2, 'cubeIn')
-        end]]--
+        
+
+
+
+
 
         if curStep % 4 == 0 then  
             tweenShaderProperty('mirror', 'zoom', 1.08, crochet*0.001*2, 'cubeOut')

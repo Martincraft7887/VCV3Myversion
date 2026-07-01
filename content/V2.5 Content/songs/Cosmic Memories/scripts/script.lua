@@ -71,7 +71,7 @@ function songStart()
     tweenShaderProperty('blur2', 'strengthY', 0, crochet*0.001*16*7, 'cubeOut')
     tweenShaderProperty('mirror', 'zoom', 1.05, crochet*0.001*16*7, 'cubeOut')
 end
---change whenever stage is updated
+
 local purpHue = 0.2
 local orangHue = 0.5
 local greenHue = 0.75

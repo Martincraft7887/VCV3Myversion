@@ -1,4 +1,4 @@
-//
+
 import funkin.editors.ui.UINumericStepper;
 import funkin.editors.ui.UIText;
 

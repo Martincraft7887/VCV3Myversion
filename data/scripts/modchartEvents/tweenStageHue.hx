@@ -1,4 +1,4 @@
-//
+
 import funkin.editors.ui.UIText;
 
 var STAGE_HUE_EASE = "linear";

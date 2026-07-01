@@ -1,4 +1,4 @@
---the funny
+
 function createPost()
 
     initShader('smoke', 'PerlinSmokeEffect')
@@ -22,14 +22,14 @@ function createPost()
 
     setCameraShader('game', 'sobel')
     if modcharts then 
-        --setCameraShader('hud', 'sobelHUD')
+        
 	end
     setShaderProperty('sobel', 'strength', 0)
     setShaderProperty('sobel', 'intensity', 2)
-    --setShaderProperty('sobelHUD', 'strength', 0.2)
-   -- setShaderProperty('sobelHUD', 'intensity', 0.5)
-    --setShaderProperty('sobel', 'strength', 0.7)
-    --setShaderProperty('sobel', 'intensity', 2)
+    
+   
+    
+    
 
 
 
@@ -51,12 +51,12 @@ function createPost()
     if modcharts then 
         setCameraShader('hud', 'color')
 	end
-    --setShaderProperty('color', 'green', 0.3)
+    
 
     initShader('caBlue', 'ChromAbBlueSwapEffect')
     setCameraShader('game', 'caBlue')
     setCameraShader('hud', 'caBlue')
-    --setShaderProperty('caBlue', 'strength', -0.001)
+    
     setShaderProperty('caBlue', 'strength', 0.0)
 
     initShader('grey', 'GreyscaleEffect')
@@ -77,17 +77,17 @@ function createPost()
     setShaderProperty('scanline', 'strength', 1)
     setShaderProperty('scanline', 'pixelsBetweenEachLine', 5)
 
-    --[[initShader('vignette', 'VignetteEffect')
-    setCameraShader('hud', 'vignette')
-    setCameraShader('game', 'vignette')
-    setShaderProperty('vignette', 'strength', 10)
-    setShaderProperty('vignette', 'size', 0.5)]]--
+    
+
+
+
+
 
 
 end
 
 function songStart()
-    --intro
+    
     setShaderProperty('color', 'red', 1.0)
     setShaderProperty('color', 'green', 1.0)
     setShaderProperty('color', 'blue', 1.0)
@@ -120,7 +120,7 @@ function stepHit()
         tweenShaderProperty('color', 'blue', 0.9, crochet*0.001*16*7, 'cubeInOut')
     end
 
-    --cam zooms
+    
     if curStep >= 128 and curStep < 256 then 
         if curStep % 4 == 0 then 
             triggerEvent('add camera zoom', 0.15, 0.08)
@@ -152,7 +152,7 @@ function stepHit()
     end
     if (curStep >= 704 and curStep < 768) then 
         if curStep % 32 == 0 or curStep % 32 == 24 then 
-            --triggerEvent('add camera zoom', 0.15, 0.08)
+            
         end
         if curStep % 16 == 8 or curStep % 64 == 46 or curStep % 64 == 62 then 
             triggerEvent('add camera zoom', 0.08, 0.15)
@@ -366,11 +366,11 @@ function stepHit()
         tweenShaderProperty('barrel', 'angle', 45, crochet*0.001*15, 'cubeIn')
         tweenShaderProperty('color', 'green', 0.05, crochet*0.001*15, 'cubeIn')
     elseif curStep == 968+4 then 
-        --tweenShaderProperty('barrel', 'angle', -20, crochet*0.001*4, 'cubeIn')
+        
     elseif curStep == 968+8 then 
-        --tweenShaderProperty('barrel', 'angle', -30, crochet*0.001*4, 'cubeIn')
+        
     elseif curStep == 968+12 then 
-        --tweenShaderProperty('barrel', 'angle', -40, crochet*0.001*4, 'cubeIn')
+        
     elseif curStep == 968+16 then 
         setShaderProperty('barrel', 'angle', -30)
         tweenShaderProperty('barrel', 'angle', 0, crochet*0.001*3, 'cubeOut')
@@ -382,11 +382,11 @@ function stepHit()
         tweenShaderProperty('color', 'green', 0, crochet*0.001*16, 'cubeIn')
         tweenShaderProperty('pixel', 'strength', 40, crochet*0.001*16, 'cubeIn')
     elseif curStep == 1000+4 then 
-        --tweenShaderProperty('barrel', 'angle', 20, crochet*0.001*4, 'cubeIn')
+        
     elseif curStep == 1000+8 then 
-        --tweenShaderProperty('barrel', 'angle', 30, crochet*0.001*4, 'cubeIn')
+        
     elseif curStep == 1000+12 then 
-        --tweenShaderProperty('barrel', 'angle', 40, crochet*0.001*4, 'cubeIn')
+        
     elseif curStep == 1000+16 then 
 
     end

@@ -26,13 +26,13 @@ function createPost()
         setCameraShader('hud', 'mirror2')
     end
     setShaderProperty('mirror2', 'zoom', 1.0)
-	--setShaderProperty('mirror', 'zoom', 2.0)
-    --setShaderProperty('mirror', 'warp', -0.2)
+	
+    
 
 
-    --setShaderProperty('mirror', 'x', -0.5)
-    --setShaderProperty('mirror', 'warp', -0.1)
-    --setShaderProperty('mirror', 'angle', 180)
+    
+    
+    
 
     
 
@@ -66,7 +66,7 @@ function createPost()
 
     initShader('vignette', 'VignetteEffect')
     setCameraShader('hud', 'vignette')
-    --setCameraShader('game', 'vignette')
+    
     setShaderProperty('vignette', 'strength', 0)
     setShaderProperty('vignette', 'size', 1)
 
@@ -236,12 +236,12 @@ function stepHit()
 
 
         if secStep == 0 then 
-           -- tweenNumIn('uno', 600, 8, 'expoOut')     
+           
         elseif secStep == 4 then 
             tweenShaderProperty('mirror', 'zoom', 1.5, crochet*0.001*4, 'cubeIn')   
         elseif secStep == 8 then 
-           -- tweenNumIn('dos', -600, 8, 'expoOut')
-           -- tweenActorProperty('uno', 'y', getActorX('uno')+600, crochet*0.001*8, 'expoOut')
+           
+           
            tweenShaderProperty('mirror', 'zoom', 2.0, crochet*0.001*4, 'cubeOut')
         elseif secStep == 12 then 
             tweenShaderProperty('mirror', 'zoom', 1.5, crochet*0.001*4, 'cubeIn')
@@ -254,10 +254,10 @@ function stepHit()
             tweenShaderProperty('mirror', 'x', 2.0, crochet*0.001*8, 'cubeOut')
             tweenShaderProperty('mirror', 'angle', 15.0, crochet*0.001*8, 'cubeOut')
 
-            --tweenNumIn('tres', 600, 8, 'expoOut')
-            --tweenActorProperty('dos', 'y', getActorX('dos')-600, crochet*0.001*8, 'expoOut')
+            
+            
         elseif secStep == 8 then 
-           -- tweenActorProperty('tres', 'y', getActorX('tres')+600, crochet*0.001*8, 'expoOut')
+           
 
             tweenShaderProperty('mirror', 'zoom', 1.0, crochet*0.001*8, 'cubeIn')
             tweenShaderProperty('mirror', 'angle', 0.0, crochet*0.001*8, 'cubeIn')

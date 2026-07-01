@@ -5,10 +5,10 @@ function createPost()
 	setWindowPos(0, -getScreenHeight() - 1)
 	local w = resWidth
 	local h = resHeight
-	--if w > 2560 then 
-	--	w = 2560
-	--	h = 1440
-	--end
+	
+	
+	
+	
 	resizeWindow(w, h)
 	setWindowPos(0, -1)
 
@@ -19,20 +19,20 @@ function createPost()
 	
     setCameraShader('game', 'raymarch')
     setCameraShader('hud', 'raymarch')
-	--setCameraShader('other', 'raymarch')
+	
 
 	setShaderProperty('raymarch', 'x', 0)
 	setShaderProperty('raymarch', 'y', 0)
 	setShaderProperty('raymarch', 'z', 3)
 
 	setShaderProperty('raymarch', 'sphereZ', -50)
-	--setShaderProperty('raymarch', 'sphereAngleZ', 0.25)
+	
 
 	setShaderProperty('raymarch', 'boxZ0', -50)
 	setShaderProperty('raymarch', 'boxZ1', 100)
 
 	setShaderProperty('raymarch', 'boxAngleY0', 0)
-	--setShaderProperty('raymarch', 'boxZ0', 100)
+	
 
 	setShaderProperty('raymarch', 'floorY', 100)
 
@@ -43,7 +43,7 @@ function createPost()
     setCameraShader('hud', 'glitch')
     setShaderProperty('glitch', 'strength', 0.02)
 
-	--setGameFilters('raymarch,glitch')
+	
 
 	initShader('mirrorBack', 'MirrorRepeatWarpEffect')
 	setCameraShader('back', 'mirrorBack')
@@ -92,7 +92,7 @@ function createPost()
 end
 
 function lerp(a, b, ratio)
-	return a + ratio * (b - a); --the funny lerp
+	return a + ratio * (b - a); 
 end
 local section = 0
 
@@ -145,8 +145,8 @@ function update(elapsed)
 		
 		
 
-		--setShaderProperty('raymarch', 'boxZ0', -50)
-		--setShaderProperty('raymarch', 'boxZ1', -50)
+		
+		
 
 		local x = math.sin(time*2)*5
 		local z = math.cos(time*2)*5
@@ -164,9 +164,9 @@ function update(elapsed)
 
 		if section >= 178 then 
 
-			--tilt = math.sin(time)*0.2
-			--sphereX = math.cos(songPos*0.0015)*10
-			--sphereZ = math.sin(songPos*0.001)*15
+			
+			
+			
 
 			setShaderProperty('raymarch', 'floorX', -math.cos(time*0.75)*10)
 			setShaderProperty('raymarch', 'floorZ', -math.sin(time*0.75)*10)
@@ -201,7 +201,7 @@ function songStart()
 
 	tweenShaderProperty('raymarch', 'boxZ0', 0.0, crochet*0.001*64, 'cubeOut')
 	
-	--resizeWindow(1280,720)
+	
 	stepHit()
 end
 local swap = 1
@@ -330,7 +330,7 @@ function stepHit()
 			tweenShaderProperty('raymarch', 'y', val, crochet*0.001*4, 'sineInOut')
 			tweenShaderProperty('raymarch', 'boxAngleZ0', val, crochet*0.001*4, 'sineInOut')
 		elseif secStep == 4 then 
-			--setAndEaseBackShader('raymarch', 'x', -val, crochet*0.001*4, 'sineInOut')
+			
 			tweenShaderProperty('raymarch', 'y', -val, crochet*0.001*4, 'sineInOut')
 			tweenShaderProperty('raymarch', 'boxAngleZ0', -val, crochet*0.001*4, 'sineInOut')
 		elseif secStep == 8 then 
@@ -338,7 +338,7 @@ function stepHit()
 			tweenShaderProperty('raymarch', 'y', val, crochet*0.001*4, 'sineInOut')
 			tweenShaderProperty('raymarch', 'boxAngleZ0', val, crochet*0.001*4, 'sineInOut')
 		elseif secStep == 12 then 
-			--setAndEaseBackShader('raymarch', 'x', -val, crochet*0.001*4, 'sineInOut')
+			
 			tweenShaderProperty('raymarch', 'y', -val, crochet*0.001*4, 'sineInOut')
 			tweenShaderProperty('raymarch', 'boxAngleZ0', -val, crochet*0.001*4, 'sineInOut')
 		end
@@ -527,7 +527,7 @@ function stepHit()
 	
 	
 			if curStep % 4 == 0 then 
-				--setAndEaseBackToShader('raymarch', 'z', 3, crochet*0.001*4, 'cubeOut', 4)
+				
 				setAndEaseBackToShader('glitch', 'strength', 0.8, crochet*0.001*4, 'cubeOut', 0.02)
 			end
 		end
@@ -565,11 +565,11 @@ function stepHit()
 			if secStep == 0 then 
 				tweenShaderProperty('raymarch', 'boxZ0', -3, crochet*0.001*24, 'cubeOut')
 				if section >= 102 then 
-					--setAndEaseBackShader('raymarch', 'boxAngleY0', 360, crochet*0.001*32, 'cubeOut')
-					--setAndEaseBackShader('raymarch', 'boxAngleY1', -360, crochet*0.001*32, 'cubeOut')
+					
+					
 				else 
-					--setAndEaseBackShader('raymarch', 'boxAngleY0', -360, crochet*0.001*32, 'cubeOut')
-					--setAndEaseBackShader('raymarch', 'boxAngleY1', 360, crochet*0.001*32, 'cubeOut')
+					
+					
 				end
 				
 			end
@@ -608,7 +608,7 @@ function stepHit()
 	end
 
 	if section == 122 and secStep == 0 then 
-		--tweenShaderProperty('raymarch', 'tilt', 0, crochet*0.001*8, 'cubeOut')
+		
 		tweenShaderProperty('raymarch', 'x', 0, crochet*0.001*8, 'cubeOut')
 		tweenShaderProperty('raymarch', 'y', 0, crochet*0.001*8, 'cubeOut')
 		tweenShaderProperty('raymarch', 'boxZ0', 0.0, crochet*0.001*4, 'cubeOut')
@@ -673,7 +673,7 @@ function stepHit()
 	
 	
 			if curStep % 4 == 0 then 
-				--setAndEaseBackToShader('raymarch', 'z', 3, crochet*0.001*4, 'cubeOut', 4)
+				
 				setAndEaseBackToShader('glitch', 'strength', 0.8, crochet*0.001*4, 'cubeOut', 0.02)
 			end
 		end
@@ -716,7 +716,7 @@ function stepHit()
 
 		tweenShaderProperty('raymarch', 'sphereZ', 0, crochet*0.001*8, 'cubeOut')
 		tweenShaderProperty('raymarch', 'z', 4, crochet*0.001*8, 'cubeOut')
-		--tweenShaderProperty('raymarch', 'x', 4, crochet*0.001*8, 'cubeIn')
+		
 		tweenShaderProperty('raymarch', 'y', 0.5, crochet*0.001*8, 'cubeIn')
 	end
 
@@ -756,7 +756,7 @@ function stepHit()
 
 
 
-	--arrow stuffs
+	
 
 	if section >= 4 and section < 8 then 
 
@@ -993,7 +993,7 @@ function sectionHit(section)
 
 	if section == 1 then 
 		
-		--tweenActorProperty('playerIA', 'y', -720, crochet*0.001*16*4, 'linear')
+		
 	end
 
 end
@@ -1027,10 +1027,10 @@ function onEvent(name, position, value1, value2)
 			setAndEaseArrowOffset(2, 'angle', math.random(-400, 400), crochet*0.001*t, 'cubeOut', 0)
 			setAndEaseArrowOffset(3, 'angle', math.random(-400, 400), crochet*0.001*t, 'cubeOut', 0)
 
-			--setAndEaseArrowOffset(0, 'z', math.random(-1000, 1000), crochet*0.001*t, 'cubeOut', 0)
-			--setAndEaseArrowOffset(1, 'z', math.random(-1000, 1000), crochet*0.001*t, 'cubeOut', 0)
-			--setAndEaseArrowOffset(2, 'z', math.random(-1000, 1000), crochet*0.001*t, 'cubeOut', 0)
-			--setAndEaseArrowOffset(3, 'z', math.random(-1000, 1000), crochet*0.001*t, 'cubeOut', 0)
+			
+			
+			
+			
         end
 	end
 end

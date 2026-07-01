@@ -1,4 +1,4 @@
-//
+
 import haxe.io.Path;
 import Xml;
 
@@ -243,14 +243,14 @@ function postUpdate(elapsed) {
 	}
 	lastModchartSongPosition = Conductor.songPosition;
 
-	/*for (data in iTimeShaderData) {
-		if (data.hasSpeed) {
-			data.iTime += (FlxG.elapsed * data.shader.speed);
-			data.shader.iTime = data.iTime;
-		} else {
-			data.shader.iTime = Conductor.songPosition*0.001;
-		}
-	}*/
+	
+
+
+
+
+
+
+
 	for (item in modchartItems) {
     if (item.property == "iTime") {
         item.object.hset("iTime", Conductor.songPosition * 0.001);

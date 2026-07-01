@@ -204,15 +204,15 @@ function updateVoiidDiscordState(force:Bool = false) {
 }
 
 function preStateSwitch() {
-	// Mantiene la redirección del Freeplay normal al PortFreeState
+	
 	if (Std.isOfType(FlxG.game._requestedState, FreeplayState)) {
 		trace("Global redirect: FreeplayState -> PortFreeState");
 		FlxG.game._requestedState = new ModState("PortFreeState");
 		return;
 	}
 
-	// Ya NO redirige el MainMenuState.
-	// El menú principal ahora cargará normal.
+	
+	
 	if (Std.isOfType(FlxG.game._requestedState, MainMenuState)) {
 		Reflect.setField(FlxG.save.data, "voiidReturnToPortFreeplayFromModSwitch", false);
 		redirectedInitialMenuToPortFreeplay = true;
@@ -260,7 +260,7 @@ function postStateSwitch()
 	}
 }
 
-//make sure that saving charts/characters go to the correct content folder
+
 function normalizeAssetPath(path:String):String {
 	return path == null ? "" : StringTools.replace(path, "\\", "/");
 }

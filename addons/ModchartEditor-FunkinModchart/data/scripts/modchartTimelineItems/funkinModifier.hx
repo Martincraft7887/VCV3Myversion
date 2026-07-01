@@ -1,4 +1,4 @@
-//
+
 import funkin.editors.ui.UISubstateWindow;
 import funkin.editors.ui.UIButton;
 import funkin.editors.ui.UIText;
@@ -68,10 +68,10 @@ function setupItemsFromXMLEditor(xml) {
         	Adapter.instance.camHUD = camHUD;
         	Adapter.instance.scrollSpeed = PlayState.SONG.scrollSpeed;
 
-			funkin_modchart_instance.playfieldCount = 0; //need to recreate the playfield, stops it from crashing for now
+			funkin_modchart_instance.playfieldCount = 0; 
 			funkin_modchart_instance.addPlayfield();
            
-            //Config.RENDER_ARROW_PATHS = true; //TODO: add option for this
+            
             add(funkin_modchart_instance);
             setup = true;
         }
@@ -132,7 +132,7 @@ function onFlipScroll(isDownscroll) {
     Adapter.instance.downscroll = downscroll;
 }
 
-//edit menu stuff
+
 function isEditable() { return true; }
 function getXMLNodeName() {return "FunkinModifier";}
 function getEditButtonText() { return "Add FunkinModchart Modifier"; }

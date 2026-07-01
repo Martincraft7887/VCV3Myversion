@@ -18,9 +18,9 @@ import lime.utils.Assets;
 import VCSongText;
 using StringTools;
 
-// =====================
-// CATEGORY HUB
-// =====================
+
+
+
 
 var inCategoryMenu:Bool = true;
 var categoryIndex:Int = 0;
@@ -39,9 +39,9 @@ var categoryInputLock:Float = 0;
 var pendingSelectorOpen:Bool = false;
 var pendingSelectorTarget:String = null;
 
-// =====================
-// FREEPLAY CUSTOM
-// =====================
+
+
+
 
 function clefInterp(delta, value, target, timescale = 1) {
     if (value > target) return delta * (Math.abs(value - target) * timescale);

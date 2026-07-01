@@ -1,4 +1,4 @@
-//
+
 
 import Camera3D;
 import ModifierTable;
@@ -17,12 +17,12 @@ function postUpdate(elapsed)
 	if (!modchartInitialized)
 		return;
 
-	//modchartCamera.position.x = Math.sin(Conductor.songPosition * 0.001);
-	//modchartCamera.position.z = Math.cos(Conductor.songPosition * 0.001);
+	
+	
 
-	//updateModifers();
+	
 	modchartCamera.updateViewMatrix();
-	//shader updates
+	
 	for(p in 0...strumLines.length)
 	{
 		if (PlayState.instance != null) {
@@ -44,32 +44,32 @@ function postUpdate(elapsed)
 					n.shader = modTable.getShader(p, n.strumID);
 				}
 				n.forceIsOnScreen = true;
-				//n.shader.viewMatrix = modchartCamera.viewMatrix;
-				//n.shader.songPosition = Conductor.songPosition;
-				//n.shader.curBeat = Conductor.curBeatFloat;
-				//n.shader.downscroll = downscroll;
+				
+				
+				
+				
 				n.shader.isSustainNote = n.isSustainNote;
-				//if (n.isSustainNote)
+				
 	
 				updateShaderFrameUV(n, n.shader);
 	
 				var curPos = Conductor.songPosition - n.strumTime;
 				var nextCurPos = curPos;
 	
-				//curpos for next sustain to match
+				
 				if (n.isSustainNote && n.nextNote != null && n.nextNote.isSustainNote) 
 					nextCurPos = Conductor.songPosition - n.nextNote.strumTime;
 	
-				//sustain ends
+				
 				if (n.isSustainNote && n.nextSustain == null) 
 					nextCurPos = Conductor.songPosition - (n.strumTime + (Conductor.stepCrochet*0.5));
 	
-				//clip to strum
+				
 				if (n.isSustainNote && n.wasGoodHit && curPos >= 0) 
 					curPos = 0;
 	
 	
-				//calculate screen position for rotation and scaling inside shader
+				
 				var point = FlxPoint.weak();
 				n.getScreenPosition(point, camHUD);
 				n.shader.screenX = (n.origin.x + point.x - n.offset.x) + n.__strum.x;
@@ -106,7 +106,7 @@ function updateStrum(strum, p) {
 	updateShaderFrameUV(strum, strum.shader);
 
 
-	//calculate screen position for rotation and scaling inside shader
+	
 	var point = FlxPoint.weak();
 	strum.getScreenPosition(point, camHUD);
 	strum.shader.screenX = strum.origin.x + point.x - strum.offset.x;
@@ -219,9 +219,9 @@ public function updateNotePaths() {
 				n.getScreenPosition(point, camHUD);
 				n.shader.screenX = (n.origin.x + point.x - n.offset.x);
 				if (downscroll)
-					n.shader.screenY = (n.origin.y + point.y - n.offset.y);// - strum.y;
+					n.shader.screenY = (n.origin.y + point.y - n.offset.y); 
 				else
-					n.shader.screenY = (n.origin.y + point.y - n.offset.y);// + strum.y;
+					n.shader.screenY = (n.origin.y + point.y - n.offset.y); 
 				point.put();
 
 				var time = -curTime;
@@ -244,7 +244,7 @@ public function updateNotePaths() {
 	}
 }
 
-//fixes for splashes
+
 function getSplashShaderFloat(shader:Dynamic, name:String, fallback:Float = 0):Float {
 	if (shader == null) return fallback;
 
@@ -292,7 +292,7 @@ function onNoteHit(event)
 	{
 		event.showSplash = false;
 		
-		//show splash func (but we need to keep the splash sprite for after)
+		
 		splashHandler.__grp = splashHandler.getSplashGroup(event.note.splash);
 		var splash = splashHandler.__grp.showOnStrum(event.note.__strum);
 		if (splash == null) return;
@@ -301,7 +301,7 @@ function onNoteHit(event)
 			getSplashVisualCenterX(event.note.__strum) - (splash.width / 2),
 			getSplashVisualCenterY(event.note.__strum) - (splash.height / 2));
 		splashHandler.add(splash);
-		// max 8 rendered splashes
+		
 		while(splashHandler.members.length > 8)
 			splashHandler.remove(splashHandler.members[0], true);
 	}

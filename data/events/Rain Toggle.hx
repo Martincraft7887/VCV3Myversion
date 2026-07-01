@@ -24,7 +24,7 @@ function addRainFilter(cam) {
     var filters = cam.filters;
     if (filters == null) filters = [];
 
-    // Evita duplicarlo
+    
     if (!filters.contains(rainFilter)) {
         filters.push(rainFilter);
         cam.setFilters(filters);

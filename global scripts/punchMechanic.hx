@@ -1,7 +1,7 @@
 public var songHasPunches = false;
 
 var punches = [];
-var punchEarlyHitTiming = 160; //anim time = 666ms
+var punchEarlyHitTiming = 160; 
 var punchLateHitTiming = 160;
 var dodging = false;
 var dodgeCooldown = 0;

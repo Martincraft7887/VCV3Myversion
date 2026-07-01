@@ -12,9 +12,9 @@ function createPost()
     setCameraShader('game', 'mirrorGame')
 	setShaderProperty('mirrorGame', 'zoom', 1.0)
 
-    --initShader('bars', 'BarsEffect')
-    --setCameraShader('game', 'bars')
-    --setShaderProperty('bars', 'effect', 0.0)
+    
+    
+    
 
     initShader('mirror2', 'MirrorRepeatWarpEffect')
     setCameraShader('game', 'mirror2')
@@ -22,13 +22,13 @@ function createPost()
         setCameraShader('hud', 'mirror2')
     end
     setShaderProperty('mirror2', 'zoom', 4.0)
-	--setShaderProperty('mirror', 'zoom', 2.0)
-    --setShaderProperty('mirror', 'warp', -0.2)
+	
+    
 
 
-    --setShaderProperty('mirror', 'x', -0.5)
-    --setShaderProperty('mirror', 'warp', -0.1)
-    --setShaderProperty('mirror', 'angle', 180)
+    
+    
+    
 
     
 
@@ -62,7 +62,7 @@ function createPost()
 
     initShader('vignette', 'VignetteEffect')
     setCameraShader('other', 'vignette')
-    --setCameraShader('game', 'vignette')
+    
     setShaderProperty('vignette', 'strength', 0)
     setShaderProperty('vignette', 'size', 1)
 
@@ -167,12 +167,12 @@ function stepHit()
             setShaderProperty('greyscale', 'strength', 1)
         end
         if secStep == 8 or secStep == 12 then 
-            --setProperty('camGame', 'alpha', 0)
-           -- setProperty('camHUD', 'alpha', 0)
+            
+           
         end
         if secStep == 10 or secStep == 14 then 
-            --setProperty('camGame', 'alpha', 1)
-            --setProperty('camHUD', 'alpha', 1)
+            
+            
         end
     elseif section == 40 or section == 58 or section == 64 then 
         if secStep == 0 then 
@@ -272,7 +272,7 @@ function stepHit()
         end
     end
 
-    --bumps
+    
 
     if (section >= 8 and section < 24) or (section >= 40 and section < 56 )then 
         if secStep == 8 or secStep128 == 62 then 

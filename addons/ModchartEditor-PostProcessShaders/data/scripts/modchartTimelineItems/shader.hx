@@ -1,4 +1,4 @@
-//
+
 import funkin.editors.ui.UISubstateWindow;
 import funkin.editors.ui.UIButton;
 import funkin.editors.ui.UIText;
@@ -90,7 +90,7 @@ function copyXMLItems(xml, output, packaged) {
         if (packaged) {
             var path = "shaders/modcharts/" + event.get("shader");
             if (Assets.exists(path+".frag")) {
-                event.set("fragCode", Bytes.ofString(Assets.getText(path+".frag")).toHex()); //ensures that shader code wont break xml parsing
+                event.set("fragCode", Bytes.ofString(Assets.getText(path+".frag")).toHex()); 
             } else {
                 event.set("fragCode", "");
             }
@@ -129,7 +129,7 @@ function reloadItems() {
 }
 
 
-//edit menu stuff
+
 function isEditable() { return true; }
 function getXMLNodeName() {return "Shader";}
 function getEditButtonText() { return "Add Post Process Shader"; }
@@ -244,7 +244,7 @@ iniData = IniUtil.parseAsset("shaders/modcharts/" + data.file + ".ini").get("Glo
             inputBox.value = prop.value;
         }
     }
-    data.properties = []; //temp remove to clear out any properties that shouldnt be there
+    data.properties = []; 
     for (i => names in itemButton.extraValuesList) {
         data.properties.push({
             name: names,

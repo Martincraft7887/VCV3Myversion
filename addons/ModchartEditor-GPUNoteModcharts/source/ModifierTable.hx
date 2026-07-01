@@ -1,4 +1,4 @@
-//
+
 import Modifier;
 
 class ModifierTable {
@@ -65,7 +65,7 @@ class ModifierTable {
 
     public function applyValuesToShader(shader:CustomShader, strumLineID:Int, strumID:Int) {
         for (mod in modTable[strumLineID][strumID]) {
-            //only update value if needed
+            
             if (mod.lastValues[strumLineID][strumID] != mod.value) {
                 mod.lastValues[strumLineID][strumID] = mod.value;
                 shader.hset(mod.shaderName, mod.value);

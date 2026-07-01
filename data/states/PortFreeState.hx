@@ -306,12 +306,12 @@ class SongItem extends FlxSprite {
 	}
 }
 
-//list of all metadata
+
 var songList = [];
 var songCatData = [];
-//list of text objects
+
 var songItems = [];
-//group of currently shown text objects
+
 var songGroup:MusicBeatGroup;
 var iconGroup:MusicBeatGroup;
 
@@ -375,7 +375,7 @@ function create() {
 	unlockCache = [];
 	priceCache = [];
 	nextOfCache = [];
-	//var freeplaySongs = Json.parse(Assets.getText(Paths.getPath("data/freeplaySongs.json")));
+	
 
 	for (lib in Paths.assetsTree.libraries) {
 		if (lib.exists(Paths.getPath("data/freeplaySongs.json"), "TEXT")) {
@@ -876,7 +876,7 @@ function buildPortFreeState() {
 		add(spr);
 	}
 
-	////////////////////////////////////////
+	
 
 	bgFade = new FlxSprite(0, 156);
 	bgFade.loadGraphic(Paths.image('menus/freeplay/bgfade')); add(bgFade);
@@ -887,7 +887,7 @@ function buildPortFreeState() {
 	bgFadeShader.lockStaticStrength = 0;
 
 	bgSprite = new FlxSprite();
-	//bgSprite.loadGraphic(Paths.image("menus/freeplay/bgs/Wiik1"));
+	
 	bgSprite.alpha = 0.001;
 	add(bgSprite);
 
@@ -899,7 +899,7 @@ function buildPortFreeState() {
 	bgFadeShader.bg = emptyBGSprite.graphic.bitmap;
 	bgFadeShader.prevBG = emptyBGSprite.graphic.bitmap;
 
-	/////////////////////////////////////
+	
 
 	dotsTop = new FlxSprite();
 	dotsTop.loadGraphic(Paths.image('menus/freeplay/dot_up')); add(dotsTop);
@@ -909,7 +909,7 @@ function buildPortFreeState() {
 	dotsBottom.loadGraphic(Paths.image('menus/freeplay/dot_down')); add(dotsBottom);
 	dotsBottom.setGraphicSize(1280); dotsBottom.updateHitbox();
 
-	///////////////////////////////////////////
+	
 
 	freeplayText = new VCSongText(0, -5, 0, "FREEPLAY");
 	freeplayText.size = 64;
@@ -980,7 +980,7 @@ function buildPortFreeState() {
 	add(highscoreInfoText);
 	highscoreInfoText.x = 1280 - highscoreInfoText.width;
 
-	////////////////////////////////////////////
+	
 
 	songGroup = new MusicBeatGroup();
 	insert(999,songGroup);
@@ -1057,7 +1057,7 @@ function buildPortFreeState() {
 		songItems.push(songItem);
 	}
 
-	//////////////////////////
+	
 
 	difficultySprite = new FlxSprite(0, 720);
 	difficultySprite.loadGraphic(Paths.image("menus/freeplay/difficulties/voiid"));
@@ -1097,7 +1097,7 @@ function buildPortFreeState() {
 	diffArrowR.y = difficultySprite.y + (difficultySprite.height/2) - (diffArrowR.height/2);
 	insert(999, diffArrowR);
 
-	////////////////////////////////////
+	
 
 	speedNameText = new VCSongText(50+200, difficultyText.y, 0, "SONG SPEED");
 	speedNameText.color = 0xFF6d4e80;
@@ -1145,7 +1145,7 @@ function buildPortFreeState() {
 
 
 
-	///////////////////////////////////
+	
 
 	
 	for (i => cat in catList) {
@@ -1220,7 +1220,7 @@ function buildPortFreeState() {
 		prepareSongIntroPositions();
 		firstFrame = false;
 	} else {
-		// Only snap on a fresh state creation. Normal category/song navigation keeps its slide animation.
+		
 		snapMenuPositions();
 	}
 }
@@ -1250,7 +1250,7 @@ function loadCategory(name:String) {
 			}
 			songs.push(meta);
 			songGroup.add(item);
-			//item.x = 1280;
+			
 			item.selected = false;
 		}
 	}
@@ -1560,11 +1560,11 @@ function postUpdate(elapsed) {
 				highscoreTotalText.text = str;
 				highscoreTotalText.x = 1280 - highscoreTotalText.width;
 			}
-			//var str = highscoreTotalText.text;
+			
 
-			//str[scoreIndex] = targetScore[scoreIndex];
+			
 
-			//highscoreTotalText.text = str;
+			
 
 			scoreIndex++;
 		}
@@ -1577,7 +1577,7 @@ function postUpdate(elapsed) {
 		if (FlxG.sound.music != null && FlxG.sound.music.playing && songs != null && songs.length > 0 && songs[curSelected] != null) {
 			audioAnalyzer = new AudioAnalyzer(FlxG.sound.music);
 			lastPlayedInst = curPlayingInst;
-			var meta = songs[curSelected]; //update the bpm
+			var meta = songs[curSelected]; 
 			lastPlayedSongInst = meta.displayName;
 			Conductor.changeBPM(meta.bpm, meta.beatsPerMeasure, meta.stepsPerBeat);
 		}
@@ -1604,10 +1604,10 @@ function postUpdate(elapsed) {
 			l = n;
 		}
 	}
-		//var shit = Math.log(1 + (audioAnalyzer.analyze(Conductor.songPosition, Conductor.songPosition+1))) / Math.log(10);
-		//var targetZoom = 1.0 + (shit);
-		//FlxG.camera.zoom = CoolUtil.fpsLerp(FlxG.camera.zoom, targetZoom, 0.2);
-		//trace(Conductor.songPosition + " : " + audioAnalyzer.analyze(Conductor.songPosition, Conductor.songPosition+1));
+		
+		
+		
+		
 
 	if (reloadCategory) {
 		loadCategory(catList[currentCategory]);
@@ -1984,7 +1984,7 @@ function updateScores(diffValue) {
 	if (__coopMode) changes.push(HighscoreChange.CCoopMode);
 	if (__opponentMode) changes.push(HighscoreChange.COpponentMode);
 	currentHighscoreData = FunkinSave.getSongHighscore(songs[curSelected].name, diffs[diffValue], null, changes);
-	//trace(saveData);
+	
 
 	var str = Std.string(currentHighscoreData.score);
 	if (currentHighscoreData.score <= 0) str = "0";
@@ -2074,9 +2074,9 @@ function beatHit() {
 			}
 		}
 	}
-	//if (curBeat % 4 == 0) {
+	
 
-	//}
+	
 
 }
 

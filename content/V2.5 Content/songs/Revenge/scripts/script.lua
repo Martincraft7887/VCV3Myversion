@@ -100,13 +100,13 @@ function stepHit()
         bloomBurst(2.5, 2.5, 4, 'cubeOut')
     end
 
-    --[[if section >= 10 and curStep <= 280 then 
-        if secStep == 0 or secStep == 6 or secStep == 10 then 
-            bumpStart(2)
-        elseif secStep == 2 or secStep == 8 or secStep == 12 then 
-            bumpEnd(2)
-        end
-    end]]--
+    
+
+
+
+
+
+
 
 
     if section == 14 and secStep == 12 then 
@@ -377,7 +377,7 @@ function stepHit()
         end
     end
 
-    --repeat--
+    
 
     local offset = 49
 
@@ -471,7 +471,7 @@ function stepHit()
         end
     end
 
-    -------------
+    
 
 
     if section == 82 then 

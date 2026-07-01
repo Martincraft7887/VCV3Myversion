@@ -68,8 +68,8 @@ function stepHit()
     if(curStep == 2424) showNum(dos, "right");
     if(curStep == 3568) showNum(uno, "down");
     if(curStep == 3576) showNum(dos, "up");
-    //if(curStep == 712) showNum(tres, "up");
-    //if(curStep == 716) showNum(cuatro, "right");
+    
+    
 }
 
 function showNum(spr:FlxSprite, dir:String)

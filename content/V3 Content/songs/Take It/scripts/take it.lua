@@ -29,25 +29,25 @@ function createPost()
 
     initShader('mirror', 'MirrorRepeatEffect')
 	setCameraShader('game', 'mirror')
-	--setCameraShader('hud', 'mirrorWarp')
-	--setShaderProperty('mirrorWarp', 'zoom', 1.3)
-    --setShaderProperty('mirrorWarp', 'warp', -0.3)
+	
+	
+    
     setShaderProperty('mirror', 'zoom', 1.0)
 
     
     initShader('mirrorWarp', 'MirrorRepeatWarpEffect')
 	setCameraShader('game', 'mirrorWarp')
 	setCameraShader('hud', 'mirrorWarp')
-	--setShaderProperty('mirrorWarp', 'zoom', 1.3)
-    --setShaderProperty('mirrorWarp', 'warp', -0.3)
+	
+    
     setShaderProperty('mirrorWarp', 'zoom', 1.0)
     setShaderProperty('mirrorWarp', 'warp', -0.05)
 
     initShader('mirror2', 'MirrorRepeatEffect')
 	setCameraShader('game', 'mirror2')
 	setCameraShader('hud', 'mirror2')
-	--setShaderProperty('mirrorWarp', 'zoom', 1.3)
-    --setShaderProperty('mirrorWarp', 'warp', -0.3)
+	
+    
     setShaderProperty('mirror2', 'zoom', 1.0)
 
 
@@ -65,12 +65,12 @@ function createPost()
 end
 
 function songStart()
-    --intro
-    --setShaderProperty('color', 'red', 1.0)
-    --setShaderProperty('color', 'green', 1.0)
-    --setShaderProperty('color', 'blue', 1.0)
-   -- tweenShaderProperty('barrel', 'zoom', 1, crochet*0.001*32, 'cubeInOut')
-    --tweenShaderProperty('pixel', 'strength', 0, crochet*0.001*32, 'cubeInOut')
+    
+    
+    
+    
+   
+    
 
     tweenShaderProperty('grey', 'strength', 0, crochet*0.001*16*4, 'cubeIn')
 end
@@ -330,7 +330,7 @@ function stepHit()
         end
     end
     if section == 112 then 
-        --bloomBurst()
+        
         doHueShifts = false
         setStageColorSwap('hue', 0.1)
         perlinSpeed = 1
@@ -352,8 +352,8 @@ function update(elapsed)
     perlinX = perlinX + elapsed*math.random()*perlinSpeed
 	perlinY = perlinY + elapsed*math.random()*perlinSpeed
 	perlinZ = perlinZ + elapsed*math.random()*perlinSpeed
-    --local noiseX = perlin.noise(perlinX, 0, 0)
-	--trace(perlin(perlinX, 0, 0)*0.1)
+    
+	
     setShaderProperty('mirrorWarp', 'x', ((-0.5 + perlin(perlinX, 0, 0))*perlinXRange))
 	setShaderProperty('mirrorWarp', 'y', ((-0.5 + perlin(0, perlinY, 0))*perlinYRange))
 	setShaderProperty('mirrorWarp', 'angle', ((-0.5 + perlin(0, 0, perlinZ))*perlinZRange))

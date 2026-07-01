@@ -1,4 +1,4 @@
-//
+
 import haxe.io.Bytes;
 import Xml;
 
@@ -10,7 +10,7 @@ function getItemTypeName() {
 }
 
 function getEventNameFromItem(item) {
-	// Stage hue tweens always use linear easing (see tweenStageHue.hx).
+	
 	return "tweenStageHue";
 }
 

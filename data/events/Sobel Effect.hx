@@ -19,7 +19,7 @@ var intensity:Float = 1;
 
 function postCreate() {
 
-    // ===== SOBEL (bordes) =====
+    
     stageSobel = new CustomShader("SobelEffect");
     stageSobel.hset("strength", 0);
     stageSobel.hset("intensity", 1);
@@ -40,16 +40,16 @@ function postCreate() {
     dadSobel.hset("intensity", 1);
     gfSobel.hset("intensity", 1);
 
-    // ===== COLOR FILL (negro sólido) =====
+    
     bfFill = new CustomShader("ColorFillEffect");
     dadFill = new CustomShader("ColorFillEffect");
     gfFill = new CustomShader("ColorFillEffect");
 
-    // negro puro
+    
     bfFill.hset("red", 0);
     bfFill.hset("green", 0);
     bfFill.hset("blue", 0);
-    bfFill.hset("fade", 0); // IMPORTANTE: 0 = negro completo
+    bfFill.hset("fade", 0); 
 
     dadFill.hset("red", 0);
     dadFill.hset("green", 0);
@@ -61,10 +61,10 @@ function postCreate() {
     gfFill.hset("blue", 0);
     gfFill.hset("fade", 0);
 
-    // aplicar shaders
+    
     if (boyfriend != null) {
         boyfriend.shader = bfFill;
-        boyfriend.shader = bfSobel; // Sobel encima
+        boyfriend.shader = bfSobel; 
     }
 
     if (dad != null) {
@@ -91,7 +91,7 @@ function onEvent(e) {
 
     targetStrength = enabled ? 1 : 0;
 
-    // grosor
+    
     stageSobel.hset("intensity", intensity);
     bfSobel.hset("intensity", intensity);
     dadSobel.hset("intensity", intensity);

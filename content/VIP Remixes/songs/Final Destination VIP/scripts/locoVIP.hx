@@ -37,7 +37,7 @@ function getTextApproxWidth(txt:FlxText):Float {
 
 	var w = txt.width;
 
-	// Por si FlxText todavía no actualizó bien el width.
+	
 	if (w <= 0)
 		w = txt.text.length * txt.size * 0.6;
 
@@ -49,12 +49,12 @@ function getSideLyricX(tag:String, leftSide:Bool, visible:Bool):Float {
 	var w = getTextApproxWidth(txt);
 
 	if (leftSide) {
-		// Visible: un poco salido del borde izquierdo.
-		// Oculto: completamente fuera.
+		
+		
 		return visible ? -w * sideLyricEdgeAmount : -w - sideLyricOffscreenPad;
 	} else {
-		// Visible: pegado/saliendo del borde derecho.
-		// Oculto: completamente fuera.
+		
+		
 		return visible ? FlxG.width - (w * (1 - sideLyricEdgeAmount)) : FlxG.width + sideLyricOffscreenPad;
 	}
 }
@@ -101,8 +101,8 @@ function createLocoIntro() {
 		spr.x += 620;
 		spr.y -= 320;
 
-		// scene1 es la imagen que baja al inicio.
-		// scene5 sigue empezando invisible como en el original.
+		
+		
 		if (name == "scene1") {
 			spr.alpha = 0;
 			spr.y -= 150;
@@ -153,7 +153,7 @@ function startSong() {
 	playScene1Drop();
 }
 
-// Por si tu build de CNE usa este callback.
+
 function onSongStart() {
 	playScene1Drop();
 }
@@ -167,8 +167,8 @@ function playScene1Drop() {
 
 	FlxTween.cancelTweensOf(spr);
 
-	// Original 300 BPM: crochet * 0.008
-	// Ahora 150 BPM: mitad para mantener la misma duración real.
+	
+	
 	var dur = Conductor.crochet * 0.004;
 
 	FlxTween.tween(
@@ -199,15 +199,15 @@ function update(elapsed:Float) {
 }
 
 function stepHit() {
-	// Seguridad por si startSong/onSongStart no se ejecuta en esta versión.
+	
 	if (curStep == 1)
 		playScene1Drop();
 
 	switch (curStep) {
-		// Original 300 BPM:
-		// 54, 120, 184, 208, 256
-		// Convertido a 150 BPM:
-		// 27, 60, 92, 104, 128
+		
+		
+		
+		
 
 		case 27:
 			moveLocoImages(-1300, 0, crochetTime(0.002));
@@ -449,7 +449,7 @@ function prepareSideLyrics(leftSide:Bool, angleBase:Float, custom:Array<String>)
 		txt.angle = angleBase;
 		txt.alpha = 0;
 
-		// Ahora empieza realmente fuera del borde correspondiente.
+		
 		txt.x = getSideLyricX(tag, leftSide, false);
 	}
 }

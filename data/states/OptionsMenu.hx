@@ -87,8 +87,8 @@ var keyOptionsData = [];
 function generateMenu()
 {
 
-    //
-    //custom menu shits
+    
+    
 
 	var xmlPath = Paths.xml('multikeyData');
 	if (!Assets.exists(xmlPath))
@@ -102,7 +102,7 @@ function generateMenu()
 
 
 	var kc = 0;
-	//get menu data
+	
 	for (keyData in mainXML.elementsNamed("defaultBinds"))
 	{
 		for (keyGroup in keyData.elementsNamed("keyGroup"))
@@ -110,7 +110,7 @@ function generateMenu()
 			var knum = 0;
 			keyCountMenuNames.push(keyGroup.get("name"));
 			keyOptionsData.push([]);
-			for (key in keyGroup.elementsNamed("key")) //get key data
+			for (key in keyGroup.elementsNamed("key")) 
 			{
 				keyOptionsData[kc].push([key.get("name"), (kc+1)+"k"+knum]);
 				knum++;
@@ -119,13 +119,13 @@ function generateMenu()
 		}
 	}
 	kc = 0; 
-	//now need to get the note anim
+	
 	for (keyData in mainXML.elementsNamed("keyData"))
 	{
 		for (keyGroup in keyData.elementsNamed("keyGroup"))
 		{
 			var knum = 0;
-			for (key in keyGroup.elementsNamed("key")) //get key data
+			for (key in keyGroup.elementsNamed("key")) 
 			{
 				keyOptionsData[kc][knum].push(key.get("note"));
 				knum++;
@@ -187,12 +187,12 @@ function generateMenu()
 			for (menuData in keyOptionsData)
 			{
 				var menuName = keyCountMenuNames[i];
-				if (i != 3) //ignore 4k
+				if (i != 3) 
 				{
-					//submenu for each key count
+					
 					var option = new TextOption(menuName, "", " >", function()
 					{
-						//create options
+						
 						var subOptions = [];
 						for (optionData in menuData)
 							subOptions.push(setupOption(optionData[0], optionData[1], optionData[2]));
@@ -214,7 +214,7 @@ function generateMenu()
 		});
 		mkMenu.add(keyboardOption);
 
-		///////////////////
+		
 		var gamepadOption = new TextOption("Gamepad", "", " >", function() {
 			
 			var keyCountMenus = [];
@@ -222,12 +222,12 @@ function generateMenu()
 			for (menuData in keyOptionsData)
 			{
 				var menuName = keyCountMenuNames[i];
-				if (i != 3) //ignore 4k
+				if (i != 3) 
 				{
-					//submenu for each key count
+					
 					var option = new TextOption(menuName, "", " >", function()
 					{
-						//create options
+						
 						var subOptions = [];
 						for (optionData in menuData)
 							subOptions.push(setupOptionGamepad(optionData[0], optionData[1]+"gamepad", optionData[2]));
@@ -354,7 +354,7 @@ function setupOption(name:String, savePath:String, arrow:String)
     option.__text.y -= 30;
 	option.__text.x += 75;
 
-    //arrow icon
+    
     var icon = new FlxSprite();
     icon.frames = Paths.getFrames("game/notes/default");
     icon.antialiasing = true;
@@ -382,7 +382,7 @@ function setupOptionGamepad(name:String, savePath:String, arrow:String)
     option.__text.y -= 30;
 	option.__text.x += 75;
 
-	//arrow icon
+	
 	var icon = new FlxSprite();
 	icon.frames = Paths.getFrames("game/notes/default");
 	icon.antialiasing = true;

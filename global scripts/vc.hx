@@ -19,7 +19,7 @@ function create() {
 		songSpeed = 1.0;
 	}
 	
-	allowGitaroo = false; //kys
+	allowGitaroo = false; 
 	importScript("data/scripts/multikey.hx");
 	if (songSpeed != 1.0) scrollSpeed /= songSpeed;
 }
@@ -87,10 +87,10 @@ function loadLEEvents() {
 					var beats = Std.parseFloat(e[3]);
 					var time = e[1];
 					scripts.call("onPunchLoaded", [time, count, beats, e[0].toLowerCase()]);
-				case "change block state" | "toggle matt echo trail" | "flip echo direction": //ignored
+				case "change block state" | "toggle matt echo trail" | "flip echo direction": 
 
 				default:
-					trace(e[0]); //needs to be implemented
+					trace(e[0]); 
 			}
 
 			events.push(cneEvent);
@@ -157,7 +157,7 @@ function onEvent(e) {
 			}
 		case "Set Camera Zoom":
 			defaultCamZoom = event.params[0];
-			//defaultHudZoom = event.params[1];
+			
 		case "uno" | "dos" | "tres" | "cuatro":
 			flashImage(event.name + (event.params[0] == '1' ? '-god' : ''), Conductor.stepCrochet/250);
 		case "colorfill":
@@ -242,7 +242,7 @@ function postCreate() {
 	add(botBar);
 
 	for (s in strumLines) {
-		for (char in s.characters) { //match le offsets
+		for (char in s.characters) { 
 			char.globalOffset.x -= (char.frameWidth*char.scale.x)/2;
 			char.globalOffset.y -= (char.frameHeight*char.scale.y);
 			char.dance();

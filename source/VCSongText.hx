@@ -29,10 +29,10 @@ class VCSongText extends flixel.text.FlxText {
 		var newWidth:Int = Math.ceil(textField.width+((border1Size+border2Size)*5));
 		var textfieldHeight = _autoHeight ? textField.textHeight : textField.height;
 		var vertGutter = _autoHeight ? FlxText.VERTICAL_GUTTER : 0;
-		// Account for gutter
+		
 		var newHeight:Int = Math.ceil(textfieldHeight+((border1Size+border2Size)*5)) + vertGutter;
 
-		// prevent text height from shrinking on flash if text == ""
+		
 		if (textField.textHeight == 0)
 		{
 			newHeight = oldHeight;
@@ -40,7 +40,7 @@ class VCSongText extends flixel.text.FlxText {
 
 		if (oldWidth != newWidth || oldHeight != newHeight)
 		{
-			// Need to generate a new buffer to store the text graphic
+			
 			height = newHeight;
 			var key:String = FlxG.bitmap.getUniqueKey("text");
 			makeGraphic(newWidth, newHeight, FlxColor.TRANSPARENT, false, key);
@@ -56,7 +56,7 @@ class VCSongText extends flixel.text.FlxText {
 			_flashRect.width = newWidth;
 			_flashRect.height = newHeight;
 		}
-		else // Else just clear the old buffer before redrawing the text
+		else 
 		{
 			graphic.bitmap.fillRect(_flashRect, FlxColor.TRANSPARENT);
 			if (_hasBorderAlpha)
@@ -70,7 +70,7 @@ class VCSongText extends flixel.text.FlxText {
 
 		if (textField != null && textField.text != null && textField.text.length > 0)
 		{
-			// Now that we've cleared a buffer, we need to actually render the text to it
+			
 			copyTextFormat(_defaultFormat, _formatAdjusted);
 
 			_matrix.identity();
@@ -94,9 +94,9 @@ class VCSongText extends flixel.text.FlxText {
 	}
 
 	override function drawTextFieldTo(graphic:BitmapData):Void {
-		_matrix.translate((border1Size+border2Size)*2, (border1Size+border2Size)*2); // left and up
+		_matrix.translate((border1Size+border2Size)*2, (border1Size+border2Size)*2); 
 		graphic.draw(textField, _matrix);
-		_matrix.translate(-(border1Size+border2Size)*2, -(border1Size+border2Size)*2); // return to center
+		_matrix.translate(-(border1Size+border2Size)*2, -(border1Size+border2Size)*2); 
 	}
 
 	override function applyBorderStyle():Void
@@ -108,15 +108,15 @@ class VCSongText extends flixel.text.FlxText {
 		}
 		var delta:Float = borderSize / iterations;
 
-		// Render an outline around the text
-		// (do 8 offset draw calls)
+		
+		
 		applyFormats(_formatAdjusted, true);
 
 		var curDelta:Float = delta;
 		var graphic:BitmapData = _hasBorderAlpha ? _borderPixels : graphic.bitmap;
 
 		iterations = borderIterations;
-		//smooth ass border
+		
 		for (i in 0...iterations) {
 			var ang = (360/iterations)*i*(Math.PI/180);
 			var x = Math.cos(ang)*borderSize;
@@ -137,7 +137,7 @@ class VCSongText extends flixel.text.FlxText {
 			childText.x = x + (width*0.5) - (childText.width*0.45);
 			var yOffset = (height*0.5) - (childText.height*0.2);
 			if (PlayState.instance != null && PlayState.instance.downscroll) {
-				yOffset = 0; //((height*0.5) - (childText.height*0.2)) + childText.height;
+				yOffset = 0; 
 			}
 			childText.y = y + yOffset;
 			childText.draw();

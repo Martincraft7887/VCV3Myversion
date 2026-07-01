@@ -6,31 +6,31 @@ import funkin.menus.FreeplayState.FreeplaySonglist;
 import funkin.editors.EditorTreeMenu;
 import funkin.editors.EditorTreeMenu.EditorTreeMenuScreen;
 
-/*
-class ModchartEditorSelectionScreen extends EditorTreeMenuScreen {
 
-	
-	public function makeChartOption(d:String, name:String) {
-		return new TextOption(d, getID('acceptDifficulty'), function() {
-			PlayState.loadSong(s.name, d);
-			var s = new UIState();
-			s.scriptName = "ModchartEditor";
-			FlxG.switchState(s);
-		});
-	}
 
-	public function makeSongOption(s) {
-		
-		return opt;
-	}
 
-	public function new() {		
-		super('editor.modchart-editor.name', 'modchartEditorSelection.desc', 'modchartEditorSelection.');
-		
-	}
-	
-}
-	*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var freeplayList:FreeplaySonglist;
 var songList:Array<String> = [];

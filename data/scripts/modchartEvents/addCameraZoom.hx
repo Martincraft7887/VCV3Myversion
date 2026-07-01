@@ -1,4 +1,4 @@
-//
+
 import funkin.editors.ui.UIButton;
 import funkin.editors.ui.UIText;
 import funkin.editors.ui.UINumericStepper;
@@ -40,7 +40,7 @@ function updateEventEditor(currentStep, e, item) {
         e.triggered = true; 
     }
     if (Math.floor(currentStep) != Math.floor(e.step)) {
-        e.triggered = false; //reset once the step has changed
+        e.triggered = false; 
     }
 }
 

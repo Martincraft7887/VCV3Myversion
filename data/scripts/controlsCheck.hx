@@ -6,28 +6,28 @@ import flixel.input.gamepad.FlxGamepadInputID;
 import haxe.xml.Printer;
 import Xml;
 
-/*var defaultKeyBinds:Array<Dynamic> = [
-    ["SPACE"],
-    ["D", "K"],
-    ["D", "SPACE", "K"],
-    ["D", "F", "J", "K"], //ignored
-    ["D", "F", "SPACE", "J", "K"],
-    ["S", "D", "F", "J", "K", "L"],
-    ["S", "D", "F", "SPACE", "J", "K", "L"],
-    ["A", "S", "D", "F", "H", "J", "K", "L"],
-    ["A", "S", "D", "F", "SPACE", "H", "J", "K", "L"]
-];
-var defaultAltKeyBinds:Array<Dynamic> = [
-    [""],
-    ["LEFT", "RIGHT"],
-    ["LEFT", "", "RIGHT"],
-    ["LEFT", "DOWN", "UP", "RIGHT"], //ignored
-    ["LEFT", "DOWN", "", "UP", "RIGHT"],
-    ["", "", "", "LEFT", "DOWN", "RIGHT"],
-    ["", "", "", "", "LEFT", "DOWN", "RIGHT"],
-    ["", "", "", "", "LEFT", "DOWN", "UP", "RIGHT"],
-    ["", "", "", "", "", "LEFT", "DOWN", "UP", "RIGHT"]
-];*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function create()
 {	
@@ -36,8 +36,8 @@ function create()
 
 public function loadBinds()
 {
-	//trace('checking controls');
-	//load multikey binds
+	
+	
 	var xmlPath = Paths.xml('multikeyData');
 	if (!Assets.exists(xmlPath))
 	{
@@ -53,9 +53,9 @@ public function loadBinds()
 		for (keyGroup in keyData.elementsNamed("keyGroup"))
 		{
 			var knum = 0;
-			for (key in keyGroup.elementsNamed("key")) //get key data
+			for (key in keyGroup.elementsNamed("key")) 
 			{
-				if (Reflect.getProperty(FlxG.save.data, (kc+1)+"k"+knum) == null) //check if it doesnt exist already
+				if (Reflect.getProperty(FlxG.save.data, (kc+1)+"k"+knum) == null) 
 				{
 					if (key.get("bind") != "")
 						Reflect.setProperty(FlxG.save.data, (kc+1)+"k"+knum, FlxKey.fromString(key.get("bind")));	

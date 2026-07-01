@@ -1,4 +1,4 @@
-//
+
 import funkin.editors.ui.UISubstateWindow;
 import funkin.editors.ui.UIButton;
 import funkin.editors.ui.UIText;
@@ -110,7 +110,7 @@ function postCreate() {
 	eventEditWindowData.curY = windowSpr.y + 41;
 	eventEditWindowData.state = this;
 	eventEditWindowData.windowSpr = windowSpr;
-	eventEditWindowData.addStepper = addStepper; //uhh maybe could have this better but just transferring funcs through the struct for easy access
+	eventEditWindowData.addStepper = addStepper; 
 	eventEditWindowData.addCheckbox = addCheckbox;
 	eventEditWindowData.createEaseBoxes = createEaseBoxes;
 	eventEditWindowData.changeEaseFunc = changeEaseFunc;

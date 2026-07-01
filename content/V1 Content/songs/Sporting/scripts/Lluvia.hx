@@ -19,7 +19,7 @@ function postCreate() {
 function update(elapsed:Float) {
     if (!rainEnabled && !rainApplied) return;
 
-    // solo cambia filtros cuando cambia el estado
+    
     if (rainEnabled && !rainApplied) {
 
         camGame.setFilters([rainFilter]);

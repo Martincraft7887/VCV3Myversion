@@ -20,7 +20,7 @@ var nextNoteIndex:Int = 0;
 var lastShownSecond:Int = -999;
 var lastRingProgressBucket:Int = -1;
 
-var minSpawnGapMs:Float = 3000; // < 4s entre spawns: oculto | >= 4s: visible
+var minSpawnGapMs:Float = 3000; 
 var fontSize:Int = 30;
 var ringSize:Int = 100;
 var ringLineThickness:Int = 15;
@@ -58,7 +58,7 @@ function layoutCountdownHud()
     countdownTxt.screenCenter(FlxAxes.X);
 }
 
-/** Precalcula tiempos del chart (1 vez). */
+
 function buildPlayerNoteTimes()
 {
     playerNoteTimes = [];
@@ -104,7 +104,7 @@ function refreshNextNoteTime()
         if (nextNoteIndex > 0)
             currentGapMs = playerNoteTimes[nextNoteIndex] - playerNoteTimes[nextNoteIndex - 1];
         else
-            currentGapMs = playerNoteTimes[nextNoteIndex]; // primera nota: desde inicio
+            currentGapMs = playerNoteTimes[nextNoteIndex]; 
     }
     else
     {
@@ -193,7 +193,7 @@ function update(elapsed:Float)
         return;
     }
 
-    // Texto dinámico con el segundo actual
+    
     var whole:Int = Math.ceil(timeLeftSec);
 
     if (whole != lastShownSecond)
@@ -203,8 +203,8 @@ function update(elapsed:Float)
         countdownTxt.screenCenter(FlxAxes.X);
     }
 
-    // Nueva lógica para el círculo:
-    // El progreso se calcula dinámicamente según el tamaño total de la sección de descanso (gap)
+    
+    
     var totalGapSec:Float = currentGapMs / 1000;
     var ringProgress:Float = 1.0;
 
@@ -213,7 +213,7 @@ function update(elapsed:Float)
         ringProgress = timeLeftSec / totalGapSec;
     }
 
-    // Aseguramos que el valor esté estrictamente entre 0.0 y 1.0
+    
     if (ringProgress > 1) ringProgress = 1;
     if (ringProgress < 0) ringProgress = 0;
 

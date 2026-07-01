@@ -2,46 +2,46 @@ var doNoteTrail = false;
 var black = null;
 function postCreate() {
 
-	/*
-    initShader('greyscale', 'GreyscaleEffect');
-    setCameraShader('game', 'greyscale');
-    setCameraShader('hud', 'greyscale');
-    setShaderProperty('greyscale', 'strength', 1);
-
-    initShader('bloom2', 'BloomEffect');
-    setCameraShader('game', 'bloom2');
-    setCameraShader('hud', 'bloom2');
-
-	setShaderProperty('bloom2', 'contrast', 1);
-    setShaderProperty('bloom2', 'effect', 0);
-    setShaderProperty('bloom2', 'strength', 0);
-
-    initShader('pixel', 'MosaicEffect');
-    setCameraShader('game', 'pixel');
-    
-    setShaderProperty('pixel', 'strength', 0);
-
-    initShader('mirror', 'MirrorRepeatEffect');
-    initShader('mirror2', 'MirrorRepeatEffect');
-	setCameraShader('game', 'mirror');
-    setCameraShader('game', 'mirror2');
-    if ( modcharts ) { 
-        setCameraShader('hud', 'pixel');
-
-        setCameraShader('hud', 'mirror');
-        setCameraShader('hud', 'mirror2');
-    }
 	
-    setShaderProperty('mirror', 'zoom', 0.5);
-    setShaderProperty('mirror2', 'zoom', 1);
-    setShaderProperty('mirror', 'angle', -45);
 
-    initShader('vignette', 'VignetteEffect');
-    setCameraShader('hud', 'vignette');
-    setCameraShader('game', 'vignette');
-    setShaderProperty('vignette', 'strength', 10);
-    setShaderProperty('vignette', 'size', 0.5);
-	*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 	black = new FlxSprite();
 	black.cameras = [camHUD];
@@ -52,44 +52,44 @@ function postCreate() {
 	add(black);
 
 
-	/*importScript("data/scripts/modchartManager.hx");
+	
 
-	createModifier("x", 0, "
-		x += x_value;
-	");
 
-	createModifier("angleX", 0, "
-		angleX += angleX_value;
-	");
-	createModifier("angleY", 0, "
-		angleY += angleY_value;
-	");
-	createModifier("angleZ", 0, "
-		angleZ += angleZ_value;
-	");
 
-	for ( i in 0...arrowSpins.length ) {
 
-		var mod = "angleZ";
-		if (arrowSpins[i][2] == "y") {
-			mod = "angleY";
-		}
-		if (arrowSpins[i][2] == "x") {
-			mod = "angleX";
-		}
-		set((arrowSpins[i][0]/4)-0.001, "0,"+mod);
-		ease(arrowSpins[i][0]/4, 4, 'expoOut', arrowSpins[i][1] + ","+mod);
-	}
 
-	for ( i in 0...shakes.length ) {
-		ease((shakes[i])/4, 0.5, 'expoOut', "30,x");
-		ease((shakes[i]+2)/4, 0.5, 'expoOut', "-30,x");
-		ease((shakes[i]+4)/4, 0.5, 'expoOut', "30,x");
-		ease((shakes[i]+6)/4, 0.5, 'expoOut', "-30,x");
-		ease((shakes[i]+8)/4, 0.5, 'expoOut', "0,x");
-	}*/
 
-	//initModchart();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 }
 var bursts = [
@@ -168,68 +168,68 @@ function stepHit() {
 
 
     var section = Math.floor(curStep/16);
-	/*
-    if ( section > 0 && section < 92 ) { 
-        if ( curStep % 32 == 0 ) { 
-            tweenShaderProperty('mirror', 'zoom', 1, crochet*0.001*4, 'cubeOut');
-        } else if ( curStep % 32 == 28 ) { 
-            tweenShaderProperty('mirror', 'zoom', 0.95, crochet*0.001*4, 'cubeIn');
-        }
+	
 
-        if ( curStep % 32 == 20 ) { 
-            tweenShaderProperty('mirror', 'zoom', 1, crochet*0.001*4, 'cubeOut');
-        } else if ( curStep % 32 == 16 ) { 
-            tweenShaderProperty('mirror', 'zoom', 0.95, crochet*0.001*4, 'cubeIn');
-        }
-    }
 
-    if ( curStep == 240 || curStep == 1008 ) { 
-        tweenShaderProperty('mirror2', 'zoom', 0.9, crochet*0.001*16, 'cubeIn');
-    } else if ( curStep == 240+16 || curStep == 1008+16 ) { 
-        tweenShaderProperty('mirror2', 'zoom', 1, crochet*0.001*4, 'cubeOut');
-    }
-    if ( curStep == 496 || curStep == 1264 ) { 
-        tweenShaderProperty('mirror2', 'zoom', 0.9, crochet*0.001*16, 'cubeIn');
-        tweenShaderProperty('mirror2', 'angle', 45, crochet*0.001*16, 'cubeIn');
-        tweenShaderProperty('pixel', 'strength', 45, crochet*0.001*16, 'cubeIn');
-    } else if ( curStep == 496+16 || curStep == 1264+16 ) { 
-        tweenShaderProperty('mirror2', 'zoom', 1, crochet*0.001*4, 'cubeOut');
-        tweenShaderProperty('mirror2', 'angle', 0, crochet*0.001*4, 'cubeOut');
-        tweenShaderProperty('pixel', 'strength', 0, crochet*0.001*4, 'cubeOut');
-    }
 
-    if ( curStep == 624 || curStep == 1392 ) { 
-        tweenShaderProperty('greyscale', 'strength', 1, crochet*0.001*16, 'cubeOut');
-    } else if ( curStep == 624+16 || curStep == 1392+16 ) {
-        tweenShaderProperty('greyscale', 'strength', 0, crochet*0.001*2, 'cubeOut');
-    }
 
-    if ( curStep == 752 ) { 
-        tweenShaderProperty('mirror2', 'angle', 60, crochet*0.001*16, 'cubeIn');
-        tweenShaderProperty('greyscale', 'strength', 1, crochet*0.001*16, 'cubeOut');
-    } else if ( curStep == 752+16 ) { 
-        tweenShaderProperty('mirror2', 'angle', 0, crochet*0.001*4, 'cubeOut');
-        tweenShaderProperty('greyscale', 'strength', 0, crochet*0.001*64, 'cubeIn');
-    }
 
-    for ( i in 0...bursts.length ) {
-        if ( curStep == bursts[i] ) { 
-            bloomBurst();
-        }
-    }
-    for ( i in 0...tilts.length ) {
-        if ( curStep == tilts[i][1]-2 ) { 
-            tweenShaderProperty('mirror', 'angle', tilts[i][2], crochet*0.001*2, 'cubeIn');
-        } else if ( curStep == tilts[i][1] ) { 
-            tweenShaderProperty('mirror', 'angle', 0, crochet*0.001*3, 'cubeOut');
-        }
-    }
 
-    if ( curStep == 1504 ) { 
-        tweenShaderProperty('greyscale', 'strength', 1, crochet*0.001*16, 'cubeIn');
-    } else if ( curStep == 1648 ) {
-        tweenShaderProperty('greyscale', 'strength', 0, crochet*0.001*16, 'cubeOut');
-    }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     if ( modcharts ) { 
 		if (curStep == 768 || curStep == 1664) {
@@ -262,62 +262,62 @@ function stepHit() {
 			}
 		}
 
-		/*
-        if ( curStep == 768 || curStep == 1664 ) { 
-            for ( i = 0, (keyCount+playerKeyCount)-1 ) {
-                setActorVelocityX(((math.random()*2)-1)*200, i); //explodey
-                setActorVelocityY((math.random()*-300)-200, i);
-                setActorAccelerationY(800, i);
-            }
-            setProperty('noteBG', 'visible', false);
-        } else if ( curStep == 864 ) {
-            for ( i = 0, (keyCount+playerKeyCount)-1 ) {
-                setActorVelocityX(0, i);
-                setActorVelocityY(0, i);
-                setActorAccelerationY(0, i);
-                tweenActorProperty(i, 'x', _G["defaultStrum"..i..'X'], crochet*0.001*32, 'expoOut');
-                tweenActorProperty(i, 'y', _G["defaultStrum"..i..'Y'], crochet*0.001*32, 'expoOut');
-            }
-            setProperty('noteBG', 'visible', true);
-        }
+		
 
-        for ( i in 0...arrowSpins.length ) {
-            if ( curStep == arrowSpins[i][1] ) { 
-                for ( j = 0, (keyCount+playerKeyCount)-1) {
-                    tweenActorProperty(j, 'modAngle', arrowSpins[i][2], crochet*0.001*16, 'expoOut');
-                }
-            
-            } else if ( curStep == arrowSpins[i][1]+17 ) {
-                for ( j = 0, (keyCount+playerKeyCount)-1 ) {
-                    setActorModAngle(0, j); //reset
-                }
-            }
-        }
 
-        for ( i in 0...shakes.length ) {
-            if ( curStep == shakes[i] ) { 
-                for ( j = 0, (keyCount+playerKeyCount)-1) {
-                    tweenActorProperty(j, 'x', _G["defaultStrum"..j..'X']+30, crochet*0.001*2, 'expoOut');
-                }
-            } else if ( curStep == shakes[i]+2 ) {
-                for ( j = 0, (keyCount+playerKeyCount)-1) {
-                    tweenActorProperty(j, 'x', _G["defaultStrum"..j..'X']-30, crochet*0.001*2, 'expoOut');
-                }
-            } else if ( curStep == shakes[i]+4 ) {
-                for ( j = 0, (keyCount+playerKeyCount)-1) {
-                    tweenActorProperty(j, 'x', _G["defaultStrum"..j..'X']+30, crochet*0.001*2, 'expoOut');
-                }
-            } else if ( curStep == shakes[i]+6 ) {
-                for ( j = 0, (keyCount+playerKeyCount)-1) {
-                    tweenActorProperty(j, 'x', _G["defaultStrum"..j..'X']-30, crochet*0.001*2, 'expoOut');
-                }
-            } else if ( curStep == shakes[i]+8 ) {
-                for ( j = 0, (keyCount+playerKeyCount)-1) {
-                    tweenActorProperty(j, 'x', _G["defaultStrum"..j..'X'], crochet*0.001*2, 'expoOut');
-                }
-            }
-        }
-		*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
@@ -327,10 +327,10 @@ function stepHit() {
 
 function onSongStart() {
     black.alpha = 0;
-    //tweenShaderProperty('mirror', 'angle', 0, crochet*0.001*16, 'cubeOut');
-    //tweenShaderProperty('mirror', 'zoom', 1, crochet*0.001*12, 'cubeOut');
+    
+    
 
-    //tweenShaderProperty('greyscale', 'strength', 0, crochet*0.001*16*6, 'cubeIn');
+    
 }
 
 var noteTrailCount = 0;
@@ -367,40 +367,39 @@ function onNoteHit(e) {
 	}
 }
 
-/*
-var noteTrailCount = 0;
-var noteTrailCap = 50;
-function playerOneSingExtra(data, id, noteType, isSus) {
-    if ( not isSus && doNoteTrail ) { 
-        makeNoteTrail(data, id, noteType);
-    }
-}
-function playerTwoSingExtra(data, id, noteType, isSus) {
-    if ( not isSus && doNoteTrail ) { 
-        makeNoteTrail(data, id, noteType);
-    }
-}
 
-function makeNoteTrail(data, id, noteType) {
 
-    var trail = 'noteTrail'..noteTrailCount
 
-    var yVal = 150
-    if (!downscroll) { 
-        yVal = yVal * -1;
-    }
 
-    destroySprite(trail);
-    makeNoteCopy(trail, id);
-    setActorAlpha(0.6, trail);
-    tweenActorProperty(trail, 'y', getActorY(trail)+yVal, crochet*0.001*16, 'linear');
-    tweenActorProperty(trail, 'alpha', 0, crochet*0.001*16, 'expoInOut');
 
-    setObjectCamera(trail, 'hud');
 
-    noteTrailCount = noteTrailCount + 1;
-    if ( noteTrailCount > noteTrailCap ) { 
-        noteTrailCount = 0;
-    }
-}
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

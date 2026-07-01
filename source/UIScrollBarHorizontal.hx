@@ -42,14 +42,14 @@ class UIScrollBarHorizontal extends UISprite {
 		var lastHoveredThumb = thumb.hovered;
 		super.update(elapsed);
 		
-		//thumb.follow(this, 0, FlxMath.remapToRange(start, -(size/2), length + size, 0, height));
+		
 		thumb.y = y;
 		thumb.x = x + FlxMath.remapToRange(start, -(size/2), length + size, 0, width);
 		thumb.cameras = cameras;
 		thumb.bWidth = Std.int(FlxMath.remapToRange(size, -(size/2), length + size, 0, width));
 
-		//trace("s");
-		//thumbIcon.follow(thumb, 0, Std.int((thumb.bHeight - thumbIcon.height) / 2));
+		
+		
 		thumbIcon.y = thumb.y;
 		thumbIcon.x = thumb.x + Std.int((thumb.bWidth - thumbIcon.width) / 2);
 		thumbIcon.cameras = cameras;

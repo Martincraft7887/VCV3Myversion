@@ -1,4 +1,4 @@
-//
+
 import SubModifier;
 import funkin.backend.utils.IniUtil;
 
@@ -24,12 +24,12 @@ class Modifier {
         subMods = submods;
         shaderFile = shaderfile;
 
-        /*
-        var iniData = ["" => ""];
-        if (Assets.exists("modifiers/"+shaderFile+".ini")) {
-            iniData = IniUtil.parseAsset("modifiers/"+shaderFile+".ini");
-        }
-        */
+        
+
+
+
+
+
 
         for (sub in subMods) {
             sub.shaderName = n + "_" + sub.name;
@@ -143,16 +143,16 @@ class Modifier {
             shaderData.vertFunctions += vertCode + "\n";
         }
 
-        /*
-        if (Assets.exists("modifiers/"+shaderFile+".frag")) {
-            var fragCode = Assets.getText("modifiers/"+shaderFile+".frag");
-            fragCode = StringTools.replace(fragCode, "_value_", shaderName);
-            for (submod in subMods) {
-                fragCode = StringTools.replace(fragCode, "_" + submod.name + "_", submod.shaderName);
-            }
+        
 
-            shaderData.fragFunctions += fragCode + "\n";
-        }
-        */
+
+
+
+
+
+
+
+
+
     }
 }

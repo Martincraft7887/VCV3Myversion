@@ -1,4 +1,4 @@
---Setup stuff-- dont mess with
+
 
 local noteXPos = {}
 local targetnoteXPos = {}
@@ -15,10 +15,10 @@ local curOpponent = 'opponent'
 local downscrollDiff = 1
 local rad = math.pi/180;
 
---based on code from andromeda engine, but with lua
+
 local velChanges = {
 
-	--step, speed mult
+	
 	{0, 1.0},
 	{504, 2.0},
 	{512, 1.0},
@@ -38,14 +38,14 @@ local velChanges = {
 	{1574, 1.15},
 	{1580, 1.0},
 
-	--{1984, 0.8},
-	--{1988, 1.0},
-	--{2000, 0.8},
-	--{2004, 1.0},
-	--{2006, 0.8},
-	--{2010, 1.0},
-	--{2016, 0.8},
-	--{2020, 1.0},
+	
+	
+	
+	
+	
+	
+	
+	
 
 	{2204, 0.5},
 	{2208, 0.9},
@@ -99,7 +99,7 @@ local velMarkers = {
 }
 function mapVelChanges()
 
-	for i = 1, #velChanges do  --convert from step to millseconds
+	for i = 1, #velChanges do  
 		velChanges[i][1] = getStrumTimeFromStep(velChanges[i][1])
 	end
 
@@ -109,7 +109,7 @@ function mapVelChanges()
 	velMarkers[1] = (velChanges[1][1]*velChanges[1][2])
 
 	for i = 2, #velChanges do 
-		pos = pos + ((velChanges[i][1]-velChanges[i-1][1])*velChanges[i-1][2]) --precalc scaled time
+		pos = pos + ((velChanges[i][1]-velChanges[i-1][1])*velChanges[i-1][2]) 
 		velMarkers[i] = pos
 	end
 end
@@ -143,7 +143,7 @@ function createPost()
 	mapVelChanges()
 	startSpeed = getProperty('', 'speed')
 	for i = 0, (keyCount+playerKeyCount)-1 do 
-		table.insert(noteXPos, 0) --setup default pos and whatever
+		table.insert(noteXPos, 0) 
 		table.insert(noteYPos, 0)
 		table.insert(noteZPos, 0)
 		table.insert(noteZScale, 1)
@@ -151,7 +151,7 @@ function createPost()
 		table.insert(targetnoteXPos, 0)
 		table.insert(targetnoteYPos, 0)
 		table.insert(targetnoteZPos, 0)
-		table.insert(targetnoteAngle, 0) --start angle at weird number for start
+		table.insert(targetnoteAngle, 0) 
 		noteXPos[i+1] = getActorX(i)
 		targetnoteXPos[i+1] = getActorX(i)
 		targetnoteYPos[i+1] = _G['defaultStrum'..i..'Y']
@@ -206,7 +206,7 @@ function createPost()
 	makeSprite('songPosOffset', '', 0, 0)
 
 	defaultZoom = getProperty('', 'defaultCamZoom')
-	--trace(defaultZoom)
+	
 
 	if not downscrollBool then 
 		downscrollDiff = -1
@@ -218,13 +218,13 @@ function createPost()
 		curOpponent = 'player'
 	end
 end
-							--x,y,z,w
+							
 local screenRotQuaternion = {0,0,0,1}
 
 
 local perlinSpeed = 0.2
-					--p2          p1
-					--x,y,z,angle,x,y,z,angle
+					
+					
 local perlinTime = {0,0,0,0,0,0,0,0}
 local perlinRange = {50,50,50,10}
 
@@ -235,14 +235,14 @@ function updatePerlin(elapsed)
 		perlinTime[i] = perlinTime[i] + elapsed*math.random()*perlinSpeed
 	end
 
-	--setActorX(getActorX('screenRot')+100*elapsed, 'screenRot')
-	--setActorY(getActorY('screenRot')+60*elapsed, 'screenRot')
-	--setActorAngle(getActorAngle('screenRot')+75*elapsed, 'screenRot')
+	
+	
+	
 
 
 	screenRotQuaternion = updateQuaternion('screenRot', screenRotQuaternion)
 end
---https://github.com/topameng/CsToLua/blob/master/tolua/Assets/Lua/Quaternion.lua
+
 function updateQuaternion(vec3, q)
 	local x = getActorX(vec3)*rad*0.5
 	local y = getActorY(vec3)*rad*0.5
@@ -276,7 +276,7 @@ function applyQuaternion(xyz, q)
 	local num11 = q[4] * num2
 	local num12 = q[4] * num3
 
-	local point = {xyz[1], xyz[2], xyz[3]} --copy
+	local point = {xyz[1], xyz[2], xyz[3]} 
 	
 	xyz[1] = (((1 - (num5 + num6)) * point[1]) + ((num7 - num12) * point[2])) + ((num8 + num11) * point[3])
 	xyz[2] = (((num7 + num12) * point[1]) + ((1 - (num4 + num6)) * point[2])) + ((num9 - num10) * point[3])
@@ -288,13 +288,13 @@ function rotateVector(xyz, q)
 
 	xyz[1] = xyz[1] - (1280*0.5) + (112*0.5)
 	xyz[2] = xyz[2] - (720*0.5) + (112*0.5)
-	--xyz[3] = xyz[3] - (1000)
+	
 
 	xyz = applyQuaternion(xyz, screenRotQuaternion)
 
 	xyz[1] = xyz[1] + (1280*0.5) - (112*0.5)
 	xyz[2] = xyz[2] + (720*0.5) - (112*0.5)
-	--xyz[3] = xyz[3] + (1000)
+	
 
 	return xyz
 end
@@ -315,7 +315,7 @@ end
 
 local noteScale = 1
 function lerp(a, b, ratio)
-	return a + ratio * (b - a); --the funny lerp
+	return a + ratio * (b - a); 
 end
 local defaultNoteScale = -1
 
@@ -443,7 +443,7 @@ function tipsy(lane, curPos, speed)
 	(lane%4)*(2.0) + speed*(0.2) ) * 112*0.4 );
 end
 function boost(value, height, curPos, speed)
-	local fYOffset = -curPos / speed --idk why its minus it just is
+	local fYOffset = -curPos / speed 
 	local fEffectHeight = height
 	local fNewYOffset = fYOffset * 1.5 / ((fYOffset+fEffectHeight/1.2)/fEffectHeight); 
 	local fAccelYAdjust = value * (fNewYOffset - fYOffset);
@@ -485,7 +485,7 @@ function updatePost(elapsed)
 
 	updatePerlin(elapsed)
 
-	--drunk = lerp(drunk, drunkLerp, elapsed*5)
+	
 
 	local currentBeat = (songPos / 1000)*(bpm/60)
 
@@ -501,25 +501,25 @@ function updatePost(elapsed)
 
 		local rotatedPos = rotateVector({thisnotePosX, thisnotePosY, thisnotePosZ}, screenRotQuaternion)
 
-		--local thisnotePosX = noteXPos[i+1]
-		--local thisnotePosY = noteYPos[i+1]
-		--local thisnotePosZ = (noteZPos[i+1]/1000)-1
+		
+		
+		
 
-		--noteAngle[i+1] = lerp(noteAngle[i+1], targetnoteAngle[i+1], elapsed*lerpSpeedAngle)
+		
 		setActorModAngle(getNoteAngle(i), i)
         setActorAlpha(getNoteAlpha(i), i)
 
 		local totalNotePos = calculatePerspective(rotatedPos[1], rotatedPos[2], (rotatedPos[3]*0.001)-1)
 		
-		--setActorX(noteXPos[i+1], i)
-		--setActorY(noteYPos[i+1], i)
+		
+		
 		setActorX(totalNotePos[1], i)
 		setActorY(totalNotePos[2], i)
 		
 		noteZScale[i+1] = totalNotePos[3]
 		setActorScaleXY(noteScale * (1/-noteZScale[i+1]), noteScale * (1/-noteZScale[i+1]), i)
 		if getPlayingActorAnimation(i) == 'confirm' then 
-			setActorScaleXY(noteScale*1.45 * (1/-noteZScale[i+1]), noteScale*1.45 * (1/-noteZScale[i+1]), i) --confirm is weird ig
+			setActorScaleXY(noteScale*1.45 * (1/-noteZScale[i+1]), noteScale*1.45 * (1/-noteZScale[i+1]), i) 
 		end
 		
 	end
@@ -529,7 +529,7 @@ function updatePost(elapsed)
 		for i = 0, noteCount-1 do 
 			local data = getRenderedNoteType(i)
 			if getRenderedNoteHit(i) then 
-				data = data + keyCount --player notes
+				data = data + keyCount 
 			end
 			if defaultWidth == -1 then 
 				defaultWidth = getRenderedNoteWidth(i)
@@ -540,7 +540,7 @@ function updatePost(elapsed)
 			local offsetX = getRenderedNoteOffsetX(i)
 			local strumTime = getRenderedNoteStrumtime(i)
 			local dist = getNoteDist(data)
-			if dist > 0 then --downscroll
+			if dist > 0 then 
 				if isRenderedNoteSustainEnd(i) then 
 					strumTime = getRenderedNotePrevNoteStrumtime(i)
 				end
@@ -554,12 +554,12 @@ function updatePost(elapsed)
 			local incomingAngleRotation = getCartesianCoords3D(getIAX(data), getIAY(data), (dist*curPos))
 
 			thisnoteYPos = thisnoteYPos + incomingAngleRotation[2] - (getRenderedNoteOffsetY(i)) + getYOffset(data, curPos)
-			if dist > 0 then --downscroll
+			if dist > 0 then 
 				if isRenderedNoteSustainEnd(i) then 
 					thisnoteYPos = thisnoteYPos - (getRenderedNoteHeight(i))+2
 				end
-			--else 
-				--thisnoteYPos = thisnoteYPos - (0.45*curPos) - (getRenderedNoteOffsetY(i))
+			
+				
 			end
             
 			local thisnoteXPos = noteXPos[data+1]+offsetX+incomingAngleRotation[1]
@@ -574,18 +574,18 @@ function updatePost(elapsed)
             local alpha = getNoteAlpha(data)
 
 			if not isSustain(i) then 
-				--setRenderedNoteScale(getRenderedNoteWidth(i)*,getRenderedNoteHeight(i)*noteScale * (1/-totalNotePos[3]), i)
+				
 				setRenderedNoteScaleX(defaultNoteScale*noteScale * zScale, i)
 				setRenderedNoteScaleY(defaultNoteScale*noteScale * zScale, i)
 				setRenderedNoteAlpha(alpha,i)
 				setRenderedNoteAngle(getNoteAngle(data),i)
 			else
-				--offsetX = 37 * (1/-totalNotePos[3]) * (defaultWidth/112)
+				
 				setRenderedNoteAlpha(alpha*0.6,i)
 				if defaultSusWidth == -1 then 
 					defaultSusWidth = getRenderedNoteWidth(i)
 				end
-				if isRenderedNoteSustainEnd(i) then --sustain ends
+				if isRenderedNoteSustainEnd(i) then 
 					setRenderedNoteScale(defaultSusWidth*noteScale * zScale,1, i)
 					setRenderedNoteScaleY(getRenderedNoteSustainScaleY(i)* zScale, i)
 				else 
@@ -594,7 +594,7 @@ function updatePost(elapsed)
 				end
 
 				setRenderedNoteAngle(0,i)
-				--susOffset = 37*noteScale
+				
 			end
 			
 			setRenderedNotePos(totalNotePos[1],totalNotePos[2], i)
@@ -619,7 +619,7 @@ function getXOffset(data, curPos)
 
 	local strumRot = getStrumRot(data)
 	if strumRot[1] ~= 0 or strumRot[2] ~= 0 then 
-		off = off + (distFromCenter[(data%4)+1]*112) -- move to center
+		off = off + (distFromCenter[(data%4)+1]*112) 
 
 		off = off + getCartesianCoords3D(strumRot[1], strumRot[2], (distFromCenter[(data%4)+1]*112))[1]
 
@@ -663,17 +663,17 @@ function getZOffset(data, curPos)
 	return off
 end
 
---the funny perspective math
+
 
 local zNear = 0
 local zFar = 1000
 local zRange = zNear - zFar 
-local tanHalfFOV = math.tan(math.pi/4) -- math.pi/2 = 90 deg, then half again
+local tanHalfFOV = math.tan(math.pi/4) 
 
 function calculatePerspective(x,y,z)
 
 	if (z >= 1) then
-		z = 1 --stop weird shit
+		z = 1 
 	end
 
 	x = x - (1280/2) + (defaultWidth/2)
@@ -691,7 +691,7 @@ function calculatePerspective(x,y,z)
 
 	return {xPerspective,yPerspective,zPerspectiveOffset}
 end
---the funny spherical to cartesian for 3d angles
+
 function getCartesianCoords3D(theta, phi, radius)
 
 	local x = 0
@@ -708,7 +708,7 @@ function getCartesianCoords3D(theta, phi, radius)
 	return {x,y,z}
 end
 
---https://stackoverflow.com/questions/5294955/how-to-scale-down-a-range-of-numbers-with-a-known-min-and-max-value
+
 function scale(valueIn, baseMin, baseMax, limitMin, limitMax)
 	return ((limitMax - limitMin) * (valueIn - baseMin) / (baseMax - baseMin)) + limitMin
 end
@@ -728,13 +728,13 @@ function setupShaders()
     if modcharts then 
         setCameraShader('hud', 'color')
 	end
-    --setShaderProperty('color', 'green', 0.3)
+    
 
-    --initShader('caBlue', 'ChromAbBlueSwapEffect')
-    --setCameraShader('game', 'caBlue')
-    --setCameraShader('hud', 'caBlue')
-    --setShaderProperty('caBlue', 'strength', -0.001)
-    --setShaderProperty('caBlue', 'strength', 0.0)
+    
+    
+    
+    
+    
 
     initShader('grey', 'GreyscaleEffect')
     setCameraShader('game', 'grey')
@@ -767,7 +767,7 @@ function songStart()
     tweenShaderProperty('mirror', 'zoom', 1, crochet*0.001*16*16, 'cubeInOut')
 end
 
---local noteThing = {0,6,2,7,1,5,3,4}
+
 
 local noteZoomThing = {-40,-70,-160,-300, -300, -160, -70, -40}
 local swap = 1
@@ -784,7 +784,7 @@ function stepHit()
     if (section >= 8 and section < 30) or (section >= 184 and section < 199) then 
         local n = curStep%8
         if section % 2 == 0 then 
-            --n = noteThing[n+1]
+            
             if curStep % 16 < 8 then 
                 tweenActorProperty('note'..n, 'angle', -50, crochet*0.001, 'cubeOut')
                 tweenActorProperty('angle'..n, 'angle', -180, crochet*0.001, 'cubeOut')
@@ -794,7 +794,7 @@ function stepHit()
             end
         else 
             n = (0-n)+7
-            --n = noteThing[n+1]
+            
             if curStep % 16 < 8 then 
                 tweenActorProperty('note'..n, 'angle', 0, crochet*0.001, 'cubeOut')
                 tweenActorProperty('angle'..n, 'angle', -180, crochet*0.001, 'cubeOut')
@@ -1166,9 +1166,9 @@ function stepHit()
 		tweenActorProperty('noteSine', 'angle', 100, crochet*0.001*16, 'circInOut')
 	elseif curStep == 768 then 
 		tweenActorProperty('noteSine', 'angle', 0, crochet*0.001*4, 'circOut')
-		--tweenActorProperty('drunk', 'x', 1, crochet*0.001*4, 'circOut')
+		
 	elseif curStep == 896 then 
-		--tweenActorProperty('drunk', 'x', 0, crochet*0.001*4, 'circOut')
+		
 	elseif curStep == 1008 then 
 		tweenActorProperty('noteSine', 'x', 50, crochet*0.001*12, 'circInOut')
 		tweenActorProperty('drunk', 'angle', 5, crochet*0.001*12, 'circInOut')
@@ -1177,13 +1177,13 @@ function stepHit()
 		tweenActorProperty('drunk', 'angle', 0, crochet*0.001*4, 'circOut')
 	end
 	if curStep == 2168 then 
-		--tweenActorProperty('noteSine', 'angle', 90, crochet*0.001*8, 'cubeIn')
+		
 		tweenActorProperty('tipsy', 'x', 0.4, crochet*0.001*8, 'cubeIn')
 		tweenActorProperty('tipsy', 'y', 0.3, crochet*0.001*8, 'cubeIn')
 		tweenActorProperty('global', 'angle', -250, crochet*0.001*8, 'cubeIn')
 	elseif curStep == 2300 then 
 		setActorX(3, 'drunkSpeed')
-		--tweenActorProperty('noteSine', 'angle', 150, crochet*0.001*4, 'cubeIn')
+		
 		tweenActorProperty('tipsy', 'x', 1, crochet*0.001*4, 'cubeIn')
 		tweenActorProperty('drunk', 'x', 0.2, crochet*0.001*4, 'cubeIn')
 		tweenActorProperty('tipsy', 'y', 0, crochet*0.001*4, 'cubeIn')
@@ -1314,13 +1314,13 @@ function stepHit()
 	end
 
 	if curStep == 2560 or curStep == 2688 or curStep == 2816 or curStep == 2880 then 
-		--tweenActorProperty('global', 'x', 320, crochet*0.001*8, 'expoOut')
+		
 		tweenActorProperty('opponent', 'angle', 0, crochet*0.001*8, 'expoOut')
 		tweenActorProperty('player', 'angle', -350, crochet*0.001*8, 'expoOut')
 		tweenActorProperty('player', 'x', 0, crochet*0.001*8, 'expoOut')
 		tweenActorProperty('opponent', 'x', 0, crochet*0.001*8, 'expoOut')
 	elseif curStep == 2624 or curStep == 2848 or curStep == 2912 then 
-		--tweenActorProperty('global', 'x', -320, crochet*0.001*8, 'expoOut')
+		
 		tweenActorProperty('player', 'angle', 0, crochet*0.001*8, 'expoOut')
 		tweenActorProperty('opponent', 'angle', -350, crochet*0.001*8, 'expoOut')
 	elseif curStep == 2752 then 
@@ -1411,36 +1411,36 @@ function stepHit()
 		setActorX(90, 'playerIA')
 	end
 
-	--didnt like it
-	--[[if curStep == 1568 then 
-		setActorY(0, 'screenRot')
-		tweenActorProperty('screenRot', 'y', 45, crochet*0.001*6, 'expoOut')
-	elseif curStep == 1574 then 
-		tweenActorProperty('screenRot', 'x', -45, crochet*0.001*6, 'expoOut')
-	elseif curStep == 1580 then 
-		tweenActorProperty('screenRot', 'x', 0, crochet*0.001*6, 'expoOut')
-		tweenActorProperty('screenRot', 'y', 0, crochet*0.001*6, 'expoOut')
-	end
+	
+	
 
-	if curStep == 1664 then 
-		--tweenActorProperty('player', 'x', -100, crochet*0.001*8, 'expoOut')
-		--tweenActorProperty('opponent', 'x', 100, crochet*0.001*8, 'expoOut')
-	elseif curStep == 1676 or curStep == 1714 or curStep == 1740 or curStep == 1778 then 
-		tweenActorProperty('screenRot', 'x', -10, crochet*0.001*6, 'expoOut')
-	elseif curStep == 1682 or curStep == 1708 or curStep == 1746 or curStep == 1772 then 
-		tweenActorProperty('screenRot', 'x', 10, crochet*0.001*6, 'expoOut')
-	elseif curStep == 1688 or curStep == 1752 then 
-		tweenActorProperty('screenRot', 'angle', 15, crochet*0.001*8, 'expoOut')
-	elseif curStep == 1720 then 
-		tweenActorProperty('screenRot', 'angle', -15, crochet*0.001*8, 'expoOut')
-	elseif curStep == 1696 or curStep == 1728 or curStep == 1760 then 
-		tweenActorProperty('screenRot', 'x', 0, crochet*0.001*8, 'expoOut')
-	elseif curStep == 1784 then 
-		tweenActorProperty('screenRot', 'angle', 0, crochet*0.001*8, 'expoOut')
-		tweenActorProperty('screenRot', 'x', 0, crochet*0.001*8, 'expoOut')
-		tweenActorProperty('player', 'x', 0, crochet*0.001*8, 'expoOut')
-		tweenActorProperty('opponent', 'x', 0, crochet*0.001*8, 'expoOut')
-	end]]--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end
 function sectionHit(section)
 

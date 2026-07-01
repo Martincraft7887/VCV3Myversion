@@ -3,9 +3,9 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import VCSongText;
 
-// ==========================
-// VARIABLES
-// ==========================
+
+
+
 var lyric1;
 var lyric2;
 var lyric3;
@@ -18,15 +18,15 @@ var lyric8;
 var centerX:Float;
 var centerY:Float;
 
-// ==========================
-// INIT
-// ==========================
+
+
+
 function postCreate()
 {
     centerX = FlxG.width / 2;
     centerY = FlxG.height / 2;
 
-    // BOW (rosa)
+    
     lyric1 = makeCoolText("BOW", 128, 16, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
@@ -37,7 +37,7 @@ function postCreate()
         "innerBorderBot": "#000000"
     }');
 
-    // BEFORE ME (azul)
+    
     lyric2 = makeCoolText("BEFORE ME", 128, 16, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
@@ -48,7 +48,7 @@ function postCreate()
         "innerBorderBot": "#000000"
     }');
 
-    // MORTALS (rojo)
+    
     lyric3 = makeCoolText("MORTALS", 128, 16, '{
         "songFont": "dumbnerd.ttf",
         "outerBorderTop": "#000000",
@@ -107,9 +107,9 @@ function postCreate()
     
 }
 
-// ==========================
-// CREAR TEXTO (FIX JSON)
-// ==========================
+
+
+
 function makeCoolText(text:String, size:Float, spacing:Float, dataString:String)
 {
     var data = Json.parse(dataString);
@@ -123,9 +123,9 @@ function makeCoolText(text:String, size:Float, spacing:Float, dataString:String)
     return t;
 }
 
-// ==========================
-// MOSTRAR TEXTO
-// ==========================
+
+
+
 function showText(t, enterDir:String, exitDir:String, durationSteps:Int, xOffset:Float, yOffset:Float)
 {
     t.visible = true;
@@ -133,9 +133,9 @@ function showText(t, enterDir:String, exitDir:String, durationSteps:Int, xOffset
     var targetX = centerX - t.width/2 + xOffset;
     var targetY = centerY - t.height/2 + yOffset;
 
-    // ==========================
-    // POSICIÓN INICIAL (ENTRADA)
-    // ==========================
+    
+    
+    
     switch(enterDir)
     {
         case "down":
@@ -155,9 +155,9 @@ function showText(t, enterDir:String, exitDir:String, durationSteps:Int, xOffset
             t.y = targetY;
     }
 
-    // ==========================
-    // ENTRADA
-    // ==========================
+    
+    
+    
     FlxTween.tween(t, {x:targetX, y:targetY}, 0.25, {
         ease:FlxEase.quadOut,
         onComplete:function(_)
@@ -167,9 +167,9 @@ function showText(t, enterDir:String, exitDir:String, durationSteps:Int, xOffset
             var exitX = targetX;
             var exitY = targetY;
 
-            // ==========================
-            // DIRECCIÓN DE SALIDA
-            // ==========================
+            
+            
+            
             switch(exitDir)
             {
                 case "down": exitY = FlxG.height + 200;
@@ -178,9 +178,9 @@ function showText(t, enterDir:String, exitDir:String, durationSteps:Int, xOffset
                 case "right": exitX = FlxG.width + t.width + 200;
             }
 
-            // ==========================
-            // SALIDA
-            // ==========================
+            
+            
+            
             FlxTween.tween(t, {x:exitX, y:exitY}, 0.25, {
                 startDelay:waitTime,
                 ease:FlxEase.quadIn,
@@ -192,10 +192,10 @@ function showText(t, enterDir:String, exitDir:String, durationSteps:Int, xOffset
     });
 }
 
-// ==========================
-// STEPS
-// ==========================
-// showText(texto, entrada, salida, duracion, X, Y);
+
+
+
+
 function stepHit()
 {
     if(curStep == 832)

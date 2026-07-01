@@ -19,5 +19,5 @@ function postUpdate(elapsed) {
 		vShader.hue = colorswapShader.hue;
 	}
 	
-	//vShader.uTime = [colorswapShader.hue, 0, 0];
+	
 }

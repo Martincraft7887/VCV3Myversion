@@ -47,8 +47,8 @@ function create() {
 	if (noMechanicsEnabled()) return;
 
 	scripts.call("registerNoteTypes", []);
-	//canDie = false;
-	//downscroll = false;
+	
+	
 }
 
 
@@ -429,23 +429,23 @@ function triggerFistThrow() {
 	if (opponentAnimLocked) return;
 	opponentAnimLocked = true;
 
-	// guardar posición original
+	
 	dadStartX = dad.x;
 
-	// reproducir anim
+	
 	dad.playAnim("fistThrow", true);
 
-	// duración real de la anim
+	
 	var anim = dad.animation.curAnim;
 	var duration:Float = 0.6;
 	if (anim != null && anim.frameRate > 0)
 		duration = anim.numFrames / anim.frameRate;
 
-	// cancelar tween previo
+	
 	if (dadMoveTween != null)
 		dadMoveTween.cancel();
 
-	// 👉 mover hacia adelante (como el Lua)
+	
 	dadMoveTween = FlxTween.tween(
 		dad,
 		{ x: dadStartX - 450 },
@@ -453,7 +453,7 @@ function triggerFistThrow() {
 		{
 			ease: FlxEase.cubeOut,
 			onComplete: function(_) {
-				// 👉 regresar a posición original
+				
 				FlxTween.tween(
 					dad,
 					{ x: dadStartX },
@@ -464,7 +464,7 @@ function triggerFistThrow() {
 		}
 	);
 
-	// liberar lock al final
+	
 	if (fistThrowTimer != null)
 		fistThrowTimer.cancel();
 

@@ -102,18 +102,18 @@ function update(elapsed:Float)
         return;
     }
 
-    // mostrar texto
+    
     if (skipTxt.alpha < 1 && skipVisibleTime < 2)
         skipTxt.alpha += elapsed * 2;
 
-    // contar tiempo visible
+    
     skipVisibleTime += elapsed;
 
-    // desaparecer después de 2 segundos
+    
     if (skipVisibleTime >= 2 || skipped)
         skipTxt.alpha -= elapsed * 2;
 
-    // detectar tecla
+    
     if (FlxG.keys.justPressed.SHIFT && canSkip && !skipped && Conductor.songPosition < skipTargetTime)
     {
         skipped = true;

@@ -1,4 +1,4 @@
-//
+
 import funkin.editors.ui.UISubstateWindow;
 import funkin.editors.ui.UIButton;
 import funkin.editors.ui.UIText;
@@ -24,7 +24,7 @@ import Xml;
 import funkin.backend.MusicBeatGroup;
 
 
-//edit of UIButtonList
+
 class ModchartEditUIButtonList extends UIWindow {
 	public var buttons:MusicBeatGroup = new MusicBeatGroup();
 	public var draggingButton:ModchartEditButton = null;
@@ -87,7 +87,7 @@ class ModchartEditUIButtonList extends UIWindow {
 	public function remove(button:T) {
 		nextscrollY -= button.bHeight;
 		buttons.members.remove(button);
-		//button.destroy();
+		
 	}
 
 	public function beginDrag(button:ModchartEditButton) {
@@ -210,14 +210,14 @@ class ModchartEditUIButtonList extends UIWindow {
 		
 
 		if (__lastDrawCameras[0] != null) {
-			buttonCameras.height = bHeight - cameraSpacing - 1; // -1 for the little gap at the bottom of the window
+			buttonCameras.height = bHeight - cameraSpacing - 1; 
 			buttonCameras.x = __lastDrawCameras[0].x + x - __lastDrawCameras[0].scroll.x;
 			buttonCameras.y = __lastDrawCameras[0].y + y + cameraSpacing - __lastDrawCameras[0].scroll.y;
 			buttonCameras.zoom = __lastDrawCameras[0].zoom;
 		}
 	}
 
-	//custom class workaround
+	
 	public function actuallydestroy() {
 
 		if(buttonCameras != null) {
@@ -435,7 +435,7 @@ class ModchartEditButton extends UIButton {
 		}
 	}
 
-	public var extraValuesList = []; //make sure order is correct
+	public var extraValuesList = []; 
 	public var extraValues = [];
 	public var extraLabels = [];
 
@@ -494,14 +494,14 @@ class ModchartEditButton extends UIButton {
 		wheel.colorSlider.setPosition(wheel.colorPicker.x + 100 + 12.5, wheel.colorPicker.y);
 		wheel.colorHexTextBox.setPosition(wheel.colorSlider.x + 16 + 12.5, wheel.colorSlider.y + 16);
 
-		for (i in 0...3) { //numStepper
+		for (i in 0...3) { 
 			wheel.members[i].setPosition(wheel.colorSlider.x + 18 + 12.5 + (i * 44), wheel.colorHexTextBox.y + 28 + 6 + 13 + 6 + 0.5);
 		}
 		wheel.updateColorPickerSelector();
 		wheel.updateColorSliderPickerSelector();
 
-		wheel.members[wheel.members.length-2].setPosition(wheel.colorHexTextBox.x - 2, wheel.colorHexTextBox.y - 18); //hexlabel
-		wheel.members[wheel.members.length-1].setPosition(wheel.rgbNumSteppers[0].x - 2, wheel.rgbNumSteppers[0].y - 18); //rgblabel
+		wheel.members[wheel.members.length-2].setPosition(wheel.colorHexTextBox.x - 2, wheel.colorHexTextBox.y - 18); 
+		wheel.members[wheel.members.length-1].setPosition(wheel.rgbNumSteppers[0].x - 2, wheel.rgbNumSteppers[0].y - 18); 
 	}
 
 	public function saveToNode() {

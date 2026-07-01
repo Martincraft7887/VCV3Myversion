@@ -1,4 +1,4 @@
-//
+
 import modchart.backend.standalone.adapters.codename.Codename;
 
 class EditorAdapter extends modchart.backend.standalone.adapters.codename.Codename {
@@ -10,33 +10,33 @@ class EditorAdapter extends modchart.backend.standalone.adapters.codename.Codena
 	public function new() {super();}
 
 	override public function onModchartingInitialization() {
-		//__fCrochet = Conductor.crochet;
+		
 	}
 
 	public function isTapNote(sprite:FlxSprite) {
 		return false;
 	}
 
-	// Song related
-	//public function getSongPosition():Float {
-	//	return Conductor.songPosition;
-	//}
+	
+	
+	
+	
 
-	//public function getCurrentBeat():Float {
-	//	return Conductor.curBeatFloat;
-	//}
+	
+	
+	
 
-	//public function getCurrentCrochet():Float {
-	//	return Conductor.crochet;
-	//}	
+	
+	
+	
 
-	//public function getStaticCrochet():Float {
-	//	return __fCrochet;
-	//}
+	
+	
+	
 
-	//public function getBeatFromStep(step:Float):Float {
-	//	return step * Conductor.stepsPerBeat;
-	//}
+	
+	
+	
 
 	public function arrowHit(arrow:FlxSprite) {
 		return false;
@@ -65,7 +65,7 @@ class EditorAdapter extends modchart.backend.standalone.adapters.codename.Codena
 		return 0;
 	}
 
-	// im so fucking sorry for those conditionals
+	
 	public function getKeyCount(?player:Int = 0):Int {
 		return strumLines != null && strumLines[player] != null ? strumLines[player].length : 4;
 	}
@@ -102,10 +102,10 @@ class EditorAdapter extends modchart.backend.standalone.adapters.codename.Codena
 		return scrollSpeed;
 	}
 
-	// 0 receptors
-	// 1 tap arrows
-	// 2 hold arrows
-	// 3 lane attachments
+	
+	
+	
+	
 	public function getArrowItems() {
 		var pspr:Array<Array<Array<FlxSprite>>> = [];
 

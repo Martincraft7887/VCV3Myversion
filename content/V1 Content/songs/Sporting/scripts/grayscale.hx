@@ -66,7 +66,7 @@ function update(elapsed) {
 
         stageStrength = lerp(stageStrength, 1, elapsed * fadeSpeed);
 
-        // BF
+        
         if (isSinging(boyfriend)) {
             bfSingTimer = singHoldTime;
         } else {
@@ -76,7 +76,7 @@ function update(elapsed) {
         var bfTarget = (bfSingTimer > 0) ? 0 : 1;
         bfStrength = lerp(bfStrength, bfTarget, elapsed * fadeSpeed);
 
-        // DAD
+        
         if (isSinging(dad)) {
             dadSingTimer = singHoldTime;
         } else {
@@ -86,7 +86,7 @@ function update(elapsed) {
         var dadTarget = (dadSingTimer > 0) ? 0 : 1;
         dadStrength = lerp(dadStrength, dadTarget, elapsed * fadeSpeed);
 
-        // GF
+        
         if (gf != null) {
             if (isSinging(gf)) {
                 gfSingTimer = singHoldTime;

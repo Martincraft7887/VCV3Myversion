@@ -3,11 +3,11 @@ import flixel.text.FlxTextFormatMarkerPair;
 import flixel.text.FlxTextFormat;
 import flixel.text.FlxText.FlxTextAlign;
 
-/*
 
-Script by bctix
 
-*/
+
+
+
 
 var lyricsConfig = {
     xOffset: 0,
@@ -17,7 +17,7 @@ var lyricsConfig = {
     font: "vcr",
     size: 34,
     borderSize: 2,
-    textSpaceMovementMult: 1, // Multiplier for how far the text history moves. make it -1 to move down
+    textSpaceMovementMult: 1, 
     showHistory: true
 }
 
@@ -31,7 +31,7 @@ function create()
 
 function onEvent(eventEvent) {
     if(eventEvent.event.name != "Lyrics") return;
-    // trace(eventEvent.event.params);
+    
     switch(eventEvent.event.params[0]) {
         case "Add Text":
             addText(eventEvent.event.params[1]);

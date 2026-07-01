@@ -1,9 +1,9 @@
 import VCSongText;
 import flixel.util.FlxTimer;
 
-// ==========================
-// CONFIG HARD CODE
-// ==========================
+
+
+
 var hardcodedData = '
 {
 	"composer": "TheOnlyVolume,Wolfinu,ImSilv4,Aron_Aurora",
@@ -67,9 +67,9 @@ var hardcodedData = '
 	"innerBorderSize": 2
 }';
 
-// ==========================
-// VARIABLES
-// ==========================
+
+
+
 var Textiyo;
 var logo;
 var showedPopup:Bool = false;
@@ -84,9 +84,9 @@ var logoBaseScaleX:Float = 1;
 var logoBaseScaleY:Float = 1;
 var logoBumpTween:FlxTween = null;
 
-// ==========================
-// HELPERS
-// ==========================
+
+
+
 function getJsonFloat(field:String, fallback:Float):Float
 {
 	if (songData == null || Reflect.field(songData, field) == null)
@@ -113,9 +113,9 @@ function getLogoName():String
 	return "Logo";
 }
 
-// ==========================
-// INIT
-// ==========================
+
+
+
 function postCreate()
 {
 	songData = Json.parse(hardcodedData);
@@ -164,9 +164,9 @@ if (strumIndex != -1)
 }
 }
 
-// ==========================
-// CREAR TEXTO
-// ==========================
+
+
+
 function makeCoolText(text:String, size:Float, spacing:Float, dataString:String)
 {
 	var data = Json.parse(dataString);
@@ -182,9 +182,9 @@ function makeCoolText(text:String, size:Float, spacing:Float, dataString:String)
 	return t;
 }
 
-// ==========================
-// POSICIONES
-// ==========================
+
+
+
 function setupEnter(obj:FlxSprite, enterDir:String, targetX:Float, targetY:Float)
 {
 	switch(enterDir)
@@ -288,9 +288,9 @@ function updateCenterFollowers(elapsed:Float)
 	}
 }
 
-// ==========================
-// MOSTRAR OBJETO
-// ==========================
+
+
+
 function showObject(
 	obj:FlxSprite,
 	enterDir:String,
@@ -357,9 +357,9 @@ function showObject(
 	});
 }
 
-// ==========================
-// UPDATE
-// ==========================
+
+
+
 function update(elapsed)
 {
 	updateCenterFollowers(elapsed);
@@ -399,9 +399,9 @@ function update(elapsed)
 	}
 }
 
-// ==========================
-// BEAT LOGO
-// ==========================
+
+
+
 function beatHit(curBeat:Int)
 {
 	if (logo != null && logo.visible)

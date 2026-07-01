@@ -1,4 +1,4 @@
---https://github.com/Wavalab/rgb-hsl-rgb/blob/master/rgbhsl.lua
+
 local function hslToRgb(h, s, l)
     if s == 0 then return l, l, l end
     local function to(p, q, t)
@@ -30,7 +30,7 @@ local function rgbToHsl(r, g, b)
 end
 
 function preGenerateArrows()
-    --setProperty('', 'showKeyPopups', false)
+    
 end
 
 
@@ -43,18 +43,18 @@ function createPost()
     setObjectCamera('black', 'hud')
     makeGraphic('black', 4000, 2000, '0xFF000000')
     actorScreenCenter('black')
-    --tweenActorProperty('black', 'alpha', 1, crochet*0.001*16, 'quadIn')
+    
 
 
     initShader('raymarch', 'RaymarchDepthEffect')
-    --setCameraShader('game', 'raymarch')
+    
     setCameraShader('hud', 'raymarch')
     setShaderProperty('raymarch', 'boxDepth', 0.0)
 	setShaderProperty('raymarch', 'boxAngleY0', 180)
 	setShaderProperty('raymarch', 'z', -2.1)
-	--setShaderProperty('raymarch', 'zoom', -2)
+	
 
-    --tweenShaderProperty('raymarch', 'boxAngleY0', 360, 5, 'linear')
+    
 
 
 
@@ -113,16 +113,16 @@ function createPost()
 
     
 
-    --setStageColorSwap('hue', 0.5) --green
+    
 
-    --setStageColorSwap('hue', 0.7) --cyan
+    
 
-    --setStageColorSwap('hue', 0.2)
+    
 
-    --setStageColorSwap('hue', 0.5)
+    
 
 
-    --setStageColorSwap('hue', 0.25)
+    
 
 end
 
@@ -134,7 +134,7 @@ function updateSparks(hue)
 
     r,g,b = rgbToHsl(r,g,b)
 
-    r = r + hue --add hue
+    r = r + hue 
 
     r,g,b = hslToRgb(r,g,b)
     setShaderProperty('sparks', 'red', r)
@@ -144,7 +144,7 @@ end
 
 
 function lerp(a, b, ratio)
-	return a + ratio * (b - a); --the funny lerp
+	return a + ratio * (b - a); 
 end
 local perlinX = 0
 local perlinY = 0
@@ -168,8 +168,8 @@ function update(elapsed)
     perlinX = perlinX + elapsed*math.random()*perlinSpeed
 	perlinY = perlinY + elapsed*math.random()*perlinSpeed
 	perlinZ = perlinZ + elapsed*math.random()*perlinSpeed
-    --local noiseX = perlin.noise(perlinX, 0, 0)
-	--trace(perlin(perlinX, 0, 0)*0.1)
+    
+	
     setShaderProperty('mirror2', 'x', ((-0.5 + perlin(perlinX, 0, 0))*perlinXRange))
 	setShaderProperty('mirror2', 'y', ((-0.5 + perlin(0, perlinY, 0))*perlinYRange))
 	setShaderProperty('mirror2', 'angle', ((-0.5 + perlin(0, 0, perlinZ))*perlinZRange))
@@ -209,7 +209,7 @@ local coolsectionhues = {0.0, 0.25, 0.5, 0.75}
 function onEvent(name, position, value1, value2)
 	if string.lower(name) == "add camera zoom" then
         if section >= 128 and section < 137 then
-            depthStrength = depthStrength + 0.15 --cant to half steps with scripts so just using events that were already there
+            depthStrength = depthStrength + 0.15 
         end
 
         if section >= 144 and section < 152 then 
@@ -235,7 +235,7 @@ end
 
 local swap = 1
 function songStart()
-    --showBinds();
+    
     tweenActorProperty('black', 'alpha', 0.0, crochet*0.001*16*8, 'cubeInOut')
     tweenShaderProperty('mirror', 'zoom', 1.0, crochet*0.001*16*8, 'cubeInOut')
 end
@@ -360,11 +360,11 @@ function stepHit()
         if secStep == 0 then 
             setAndEaseBackToShader('grey', 'strength', 0.0, crochet*0.001*16, 'cubeIn', 1.0)
             bloomBurst(1, 1, 16)
-            --tweenShaderProperty('mirror2', 'zoom', 1.0, crochet*0.001*4, 'cubeOut')
+            
             tweenShaderProperty('raymarch', 'boxDepth', 0.0, crochet*0.001*4, 'cubeOut')
         elseif secStep == 4 then 
             tweenShaderProperty('raymarch', 'boxDepth', 0.1, crochet*0.001*12, 'cubeIn')
-            --tweenShaderProperty('mirror2', 'zoom', 0.7, crochet*0.001*12, 'cubeIn')
+            
         end
     end
 
@@ -404,11 +404,11 @@ function stepHit()
         tweenStageColorSwap('hue', 0.0, crochet*0.001*16, 'cubeIn')
     end
 
-    --if curStep == 32 then 
-        --makeCameraSpriteClone('test', 'game')
-        --setObjectCamera('test', 'hud')
-        --setAndEaseBack('test', 'angle', 360, 2, 'cubeOut')
-    --end
+    
+        
+        
+        
+    
 
     if section == 64 then 
         if secStep == 0 then 
@@ -615,7 +615,7 @@ function stepHit()
     end
 
     function angShit()
-        --trace('fyck')
+        
         setAndEaseBackToShader('grey', 'strength', 0.0, crochet*0.001*4, 'cubeIn', 1.0)
         setAndEaseBackShader('mirror', 'angle', 20.0*swap, crochet*0.001*4, 'cubeOut')
         swap = swap * -1

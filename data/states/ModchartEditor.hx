@@ -1,4 +1,4 @@
-//
+
 import funkin.editors.ui.UISliceSprite;
 import funkin.game.HudCamera;
 import funkin.menus.FreeplayState;
@@ -37,7 +37,7 @@ import Xml;
 import ModchartEventObjects;
 import UIScrollBarHorizontal;
 
-public static var CURRENT_EVENT = null; //event used by edit substate
+public static var CURRENT_EVENT = null; 
 public static var EVENT_EDIT_EVENT_SCRIPT = null;
 public static var EVENT_EDIT_CALLBACK:Void->Void = null;
 public static var EVENT_EDIT_CANCEL_CALLBACK:Void->Void = null;
@@ -108,7 +108,7 @@ public function callItemScriptFromItem(item, func, args) {
 }
 
 public function callEventScriptFromItem(item, func, args) {
-	//items could technically support multiple types of event based on the name
+	
 	var script = eventScripts.get(callItemScriptFromItem(item, "getEventNameFromItem", [item]));
 	if (script != null) {
 		script.call(func, args);
@@ -122,17 +122,17 @@ public function callEventScriptFromEvent(e, func, args) {
 	}
 }
 
-/*
-{
-	name: "",
-	type: "",
-	defaultValue: 0,
-	currentValue: 0,
-	lastValue: -9999
-	property: "",
-	object: null //shader/modifier/whatever idk
-}
-*/
+
+
+
+
+
+
+
+
+
+
+
 public var timelineItems = [];
 public var timelineIndexMap = ["" => -1];
 public function createTimelineItem(name, type, object) {
@@ -157,26 +157,26 @@ var eventRenderer = null;
 var eventIndexList = [0];
 var events = [];
 
-//array<String>
+
 public var timelineList = [];
 
-/*
-{
-	bg: null,
-	nameText: null,
-	valueText: null
-}
-*/
+
+
+
+
+
+
+
 public var timelineUIList = [];
 
-/*
-{
-	startIndex: -1,
-	endIndex: 0,
-	color: -1,
-	bg: null
-}
-*/
+
+
+
+
+
+
+
+
 public var timelineGroups = [];
 
 public var timelineUIBG = new MusicBeatGroup();
@@ -252,7 +252,7 @@ var clipboard = [];
 var snapIndex:Int = 6;
 public var quantButtons:Array<CharterQuantButton> = [];
 public var quant:Int = 16;
-public var quants:Array<Int> = [4, 8, 12, 16, 20, 24, 32, 48, 64, 192]; // different quants
+public var quants:Array<Int> = [4, 8, 12, 16, 20, 24, 32, 48, 64, 192]; 
 
 public var strumLines = [];
 public var downscroll = Options.downscroll;
@@ -284,10 +284,10 @@ function postCreate() {
 					keybind: [FlxKey.CONTROL, FlxKey.S],
 					onSelect: _save
 				},
-				/*{
-					label: "Save (Optimized)",
-					onSelect: _save_opt
-				},*/
+				
+
+
+
 				null,
 				{
 					label: "Export Packaged Modchart",
@@ -303,17 +303,17 @@ function postCreate() {
 		{
 			label: "Edit",
 			childs: [
-				/*{
-					label: "Undo",
-					keybind: [FlxKey.CONTROL, FlxKey.Z],
-					onSelect: _edit_undo
-				},
-				{
-					label: "Redo",
-					keybinds: [[FlxKey.CONTROL, FlxKey.Y], [FlxKey.CONTROL, FlxKey.SHIFT, FlxKey.Z]],
-					onSelect: _edit_redo
-				},
-				null,*/
+				
+
+
+
+
+
+
+
+
+
+
 				{
 					label: "Copy",
 					keybind: [FlxKey.CONTROL, FlxKey.C],
@@ -502,11 +502,11 @@ function postCreate() {
 	camTimeline.bgColor = 0;
 	FlxG.cameras.add(camTimeline);
 
-	//bg = new FlxSprite();
-	//bg.loadGraphic(Paths.image('menus/menuBG'));
-	//bg.color = 0xFF777777;
-	//add(bg);
-	//bg.cameras = [camGame];
+	
+	
+	
+	
+	
 
 	if (PlayState.SONG.stage == null) PlayState.SONG.stage = "stage";
 	stage = new Stage(PlayState.SONG.stage);
@@ -1876,14 +1876,14 @@ function update(elapsed) {
 		}
 	}
 
-	//trace(_timelineScrollY);
+	
 
 	var songLength = FlxG.sound.music.length;
 	Conductor.songPosition = FlxMath.bound(Conductor.songPosition + Conductor.songOffset, 0, songLength);
 	if (Conductor.songPosition >= songLength - Conductor.songOffset) {
 		FlxG.sound.music.pause();
 		vocals.pause();
-		//for (strumLine in strumLines.members) strumLine.vocals.pause();
+		
 	}
 
 	songPosInfo.text = CoolUtil.timeToStr(Conductor.songPosition) + '/' + CoolUtil.timeToStr(songLength)
@@ -1941,7 +1941,7 @@ function updateUI() {
 			button.framesOffset = button.quant == quant ? 9 : 0;
 			button.alpha = button.quant == quant ? 1 : (button.hovered ? 0.4 : 0);
 		}
-		//snapButton.x = (lastButtonX -= snapButton.bWidth)-10;
+		
 	}
 	
 }
@@ -2060,7 +2060,7 @@ function updateInputs() {
 	eventRenderer.visible = !_fullscreen;
 	if (_fullscreen) return;
 
-	// Stage pan
+	
 	if (!timelineWindow.hovered && wantsStagePan()) {
 
 		var mouse = FlxG.mouse.getScreenPosition();
@@ -2093,7 +2093,7 @@ function updateInputs() {
 	scrollBar.active = !isDragging && !isDraggingStage;
 	
 
-	//if (timelineWindow.hovered) {
+	
 		var mousePos = FlxG.mouse.getWorldPosition(camTimeline);
 		if (FlxG.mouse.justPressed && timelineWindow.hovered) {
 			dragStartPos = FlxG.mouse.getWorldPosition(camTimeline);
@@ -2136,14 +2136,14 @@ function updateInputs() {
 		eventRenderer.sizeX = ROW_SIZE_X;
 		eventRenderer.sizeY = ROW_SIZE_Y;
 		eventRenderer._timelineScrollY = camTimeline.scroll.y;
-		/*
-		for(i in eventGroup.getVisibleStartIndex()...eventGroup.getVisibleEndIndex()) {
-			var obj = eventGroup.members[i];
-			obj.x = obj.event.step * ROW_SIZE_X;
-			obj.y = obj.timelineIndex * ROW_SIZE_Y;
-			obj.updateLength(ROW_SIZE_X);
-		}
-		*/
+		
+
+
+
+
+
+
+
 
 
 		if (FlxG.mouse.justReleased && !isDragging && timelineWindow.hovered) {
@@ -2180,7 +2180,7 @@ function updateInputs() {
 		if (FlxG.mouse.justReleased) {
 			isDragging = false;
 		}
-	//}
+	
 
 	
 }
@@ -2238,7 +2238,7 @@ function loadSong() {
 	Conductor.setupSong(PlayState.SONG);
 
 	CoolUtil.setMusic(FlxG.sound, FlxG.sound.load(Paths.inst(PlayState.SONG.meta.name, PlayState.difficulty)));
-	if (PlayState.SONG.meta.needsVoices != false) // null or true
+	if (PlayState.SONG.meta.needsVoices != false) 
 		vocals = FlxG.sound.load(Paths.voices(PlayState.SONG.meta.name, PlayState.difficulty));
 	else
 		vocals = new FlxSound();
@@ -2454,7 +2454,7 @@ function loadEvents(reload) {
 		xml = Xml.parse(File.getContent(xmlPath)).firstElement();
 		loadDefaults();
 	} else {
-		//clear stuff for reload
+		
 		timelineGroups = [];
 		timelineItems = [];
 		timelineList = [];
@@ -2552,7 +2552,7 @@ function refreshEventTimings() {
 		}
 	}
 
-	//force update current event indexes
+	
 	var currentStep = curStepFloat;
 	if (!FlxG.sound.music.playing) {
 		currentStep = conductorSprY / ROW_SIZE_X;
@@ -2592,22 +2592,22 @@ function refreshEventTimings() {
 		}
 	}
 }
-/*
-function createEventObjects() {
-	for (i in 0...events.length) {
-		var e = events[i];
-		var n = callEventScriptFromEvent(e, "getItemName", [e]);
 
-		var obj = new EventObject(e);
-		obj.timelineIndex = timelineList.indexOf(n);
-		obj.x = e.step * ROW_SIZE_X;
-		obj.y = obj.timelineIndex * ROW_SIZE_Y;
-		obj.cameras = [camTimeline];
-		eventGroup.addSorted(obj);
-		obj.updateEvent();
-	}
-}
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function setShaderValue(obj, property:String, value:Float) {
@@ -2715,7 +2715,7 @@ function updateEvents(?forceStep:Float = null) {
 		if (lastStep != currentStep) {
 
 			if (currentStep > lastStep) {
-				//check for next event
+				
 				if (events[i].nextIndex != -1) {
 					while(true) {
 						var nextIndex = events[i].nextIndex;
@@ -2730,7 +2730,7 @@ function updateEvents(?forceStep:Float = null) {
 					}
 				}
 			} else {
-				//check for last (for rewinding)
+				
 				if (events[i].lastIndex != -1) {
 					while(true) {
 						var lastIndex = events[i].lastIndex;
@@ -2780,7 +2780,7 @@ function buildXMLFromEvents(?newInitEvents = null, ?packaged = false) {
 	var initEvents = newInitEvents == null ? Xml.createElement("Init") : newInitEvents;
 	var xmlEvents = Xml.createElement("Events");
 	
-	//copy init events
+	
 	if (xml != null && newInitEvents == null) {
 		for (list in xml.elementsNamed("Init")) {
 			for (name => script in itemScripts) {
@@ -2935,7 +2935,7 @@ function _modchart_edititems() {
 	ITEM_EDIT_LOADED_SCRIPTS = itemScripts;
 	ITEM_EDIT_SAVE_CALLBACK = function() {
 		xml = buildXMLFromEvents(ITEM_EDIT_SAVED_INIT_EVENTS);
-		xml = buildXMLFromEvents(); //do twice just in case
+		xml = buildXMLFromEvents(); 
 
 		loadEvents(true);
 	}
@@ -2998,7 +2998,7 @@ function _song_muteinst(t) {
 }
 function _song_mutevoices(t) {
 	vocals.volume = vocals.volume > 0 ? 0 : 1;
-	//for (strumLine in strumLines.members) strumLine.vocals.volume = strumLine.vocals.volume > 0 ? 0 : 1;
+	
 	t.icon = 1 - Std.int(Math.ceil(vocals.volume));
 }
 
@@ -3019,15 +3019,15 @@ function _playback_play() {
 	if (FlxG.sound.music.playing) {
 		FlxG.sound.music.pause();
 		vocals.pause();
-		//for (strumLine in strumLines.members) strumLine.vocals.pause();
+		
 	} else {
 		FlxG.sound.music.play(true, Conductor.songPosition + Conductor.songOffset);
 		vocals.play(true, FlxG.sound.music.getActualTime());
-		//vocals.time = FlxG.sound.music.time = Conductor.songPosition + Conductor.songOffset * 2;
-		//for (strumLine in strumLines.members) {
-		//	strumLine.vocals.play();
-		//	strumLine.vocals.time = vocals.time;
-		//}
+		
+		
+		
+		
+		
 	}
 }
 function _playback_back(_) {
@@ -3074,10 +3074,10 @@ function _edit_copy() {
 function _edit_paste() {
 	resetSelection();
 	if (clipboard.length > 0) {
-		var diff = curStep - clipboard[0].step; //TODO: maybe switch to use mouse pos instead?
+		var diff = curStep - clipboard[0].step; 
 
-		//trace(clipboard[0].step);
-		//trace(diff);
+		
+		
 
 		for (event in clipboard) {
 			var e = callEventScriptFromEvent(event, "copyEventEditor", [event]);

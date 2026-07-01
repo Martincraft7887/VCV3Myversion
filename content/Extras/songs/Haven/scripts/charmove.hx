@@ -13,7 +13,7 @@ function postCreate()
         extraChar = playerLine.characters[1];
         originalX = extraChar.x - 300;
 
-        // Invisible durante toda la canción por defecto
+        
         extraChar.alpha = 0;
     }
 }
@@ -24,7 +24,7 @@ function stepHit(curStep:Int)
 
     switch (curStep)
     {
-        // Mostrar y desplazar
+        
         case 831, 1600:
 
             extraChar.alpha = 1;
@@ -37,7 +37,7 @@ function stepHit(curStep:Int)
                 ease: FlxEase.quadOut
             });
 
-        // Regresar y ocultar
+        
         case 859, 1628:
 
             FlxTween.cancelTweensOf(extraChar);

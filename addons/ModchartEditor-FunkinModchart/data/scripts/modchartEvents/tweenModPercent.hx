@@ -1,4 +1,4 @@
-//
+
 import funkin.editors.ui.UIButton;
 import funkin.editors.ui.UIText;
 import funkin.editors.ui.UINumericStepper;
@@ -33,7 +33,7 @@ function updateEventGame(currentStep, e) {
     if (currentStep < e.step + e.time) {
         var l = (currentStep - e.step) * ((1) / ((e.step + e.time) - e.step));
         Manager.instance.setPercent(modchartItems[e.itemIndex].object, FlxMath.lerp(e.startValue, e.value, e.ease(l)), modchartItems[e.itemIndex].strumLineID, modchartItems[e.itemIndex].playFieldID);
-        return false; //dont remove yet
+        return false; 
     }
     Manager.instance.setPercent(modchartItems[e.itemIndex].object, e.value, modchartItems[e.itemIndex].strumLineID, modchartItems[e.itemIndex].playFieldID);
     return true;

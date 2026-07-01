@@ -86,12 +86,12 @@ var topHamsters:Array<FlxSprite> = [];
 
 var cycleRunning:Bool = false;
 
-// CONFIG INTERSECCIÓN
+
 var intersectionX:Float = 520;
 var intersectionY:Float = 360;
 
-var horizontalLanes:Int = 5; // filas de derecha a izquierda
-var verticalLanes:Int = 5;   // filas de arriba hacia abajo
+var horizontalLanes:Int = 5; 
+var verticalLanes:Int = 5;   
 
 var hamstersPerHorizontalLane:Int = 7;
 var hamstersPerVerticalLane:Int = 6;

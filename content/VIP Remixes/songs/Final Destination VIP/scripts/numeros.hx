@@ -62,9 +62,9 @@ function resetPositions()
 function stepHit()
 {
     if(curStep == 352) showNum(uno, "down");
-    //if(curStep == 708) showNum(dos, "left");
-    //if(curStep == 712) showNum(tres, "up");
-    //if(curStep == 716) showNum(cuatro, "right");
+    
+    
+    
 }
 
 function showNum(spr:FlxSprite, dir:String)

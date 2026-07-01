@@ -24,7 +24,7 @@ function postCreate()
 		{
 			Charter.keyCount = 4;
 		}
-		//trace(Std.int(keyCountStepper.value));
+		
 		var gridBackdropIdx = Charter.instance.members.indexOf(Charter.instance.gridBackdrops);
 
 		Charter.instance.remove(Charter.instance.gridBackdrops);
@@ -32,7 +32,7 @@ function postCreate()
 		Charter.instance.gridBackdrops.notesGroup = Charter.instance.notesGroup;
 		Charter.instance.insert(gridBackdropIdx, Charter.instance.gridBackdrops);
 
-		//dunno if this dummy is nessessary but just doing it to be safe
+		
 		var gridBackdropDummyIdx = Charter.instance.members.indexOf(Charter.instance.gridBackdropDummy);
 
 		Charter.instance.remove(Charter.instance.gridBackdropDummy);

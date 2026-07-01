@@ -53,11 +53,11 @@ function createPost()
 
 
 
-    --setShaderProperty('bloom2', 'contrast', -1)
-    --setCameraShader('hud', 'rain')
+    
+    
 
-    --setProperty('camGame', 'alpha', 0)
-    --setProperty('camHUD', 'alpha', 0)
+    
+    
 
 end
 local tilts = {
@@ -69,7 +69,7 @@ local zooms = {
 function stepHit()
     if curStep == 1 then 
         tweenActorProperty('black', 'alpha', 0, crochet*0.001*16*13.6, 'expoInOut')
-        --tweenActorProperty('camHUD', 'alpha', 1, crochet*0.001*16*13.6, 'expoIn')
+        
         tweenShaderProperty('blur', 'strength', 1, crochet*0.001*16*13.6, 'expoInOut')
     elseif curStep == 272 then 
         tweenActorProperty('black', 'alpha', 0, crochet*0.001*16*3, 'expoInOut')
@@ -100,7 +100,7 @@ function stepHit()
         end
     end
 
-    --probably not the best way of designing a modchart but i wanted to try it at least
+    
     doTiltOnStep(348, 15)
     doTiltOnStep(352, -15)
     doZoomOnStep(380)
@@ -278,29 +278,29 @@ function stepHit()
         end
 
 
-        --[[if curStep % 128 > 32 then 
-            if curStep % 32 < 16 then 
-                if curStep % 16 == 4 then 
-                    tweenShaderProperty('mirror', 'zoom', 0.85, crochet*0.001*1, 'cubeIn')
-                elseif curStep % 6 == 0 then
-                    tweenShaderProperty('mirror', 'zoom', 1, crochet*0.001*3, 'cubeOut')
-                end
-                if curStep % 16 == 10 then 
-                    tweenShaderProperty('mirror', 'zoom', 0.85, crochet*0.001*1, 'cubeIn')
-                elseif curStep % 12 == 0 then
-                    tweenShaderProperty('mirror', 'zoom', 1, crochet*0.001*3, 'cubeOut')
-                end
-            else 
-                if curStep % 16 == 12 then 
-                    triggerEvent('add camera zoom', 0.1, 0.1)
-                end
-                if curStep % 128 < 64 then
-                    if curStep % 16 == 14 then 
-                        triggerEvent('add camera zoom', 0.1, 0.1)
-                    end
-                end
-            end
-        end]]--
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     end
 
 
@@ -334,7 +334,7 @@ function stepHit()
 
 
 
-    --doTiltOnStep(1984-4, -15)
+    
     doTiltOnStep(1984, 15)
     doTiltOnStep(1984+6, -15)
     doTiltOnStep(1984+12, 15)
@@ -384,7 +384,7 @@ function stepHit()
     
     doZoomOnStep(2336+6)
     doZoomOnStep(2336+12)
-    --doZoomOnStep(2336+16+12)
+    
 
 
     if curStep == 2352 then 

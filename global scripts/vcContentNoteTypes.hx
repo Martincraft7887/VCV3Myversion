@@ -1,12 +1,12 @@
 function registerNoteTypes() {
-	// Collabs
+	
 	noteTypeData.set("RevPunch", {skin: "RevPunchAlt", mustPress: true, health: 1.5, echo: "Wiik3Rev", rotate: true, animSuffix: "-dodge", effect: "blur"});
 	noteTypeData.set("RevSword", {skin: "RevSword", mustPress: true, health: 0.5, echo: "Wiik4Rev", animSuffix: "-dodge", effect: "maxHealth", offsetsY: [-10, -10, -10, -10], offsetsYDS: [-10, -10, -10, -10]});
 
-	// Extras
+	
 	noteTypeData.set("REJECTED_NOTES", {skin: "REJECTED_NOTES", mustPress: false, health: 2.0, echo: "", offsetsY: [-145, -145, -145, -145], offsetsYDS: [-20, -20, -20, -20]});
 
-	// V2 Content
+	
 	noteTypeData.set("BoxingMatchPunch", {
 		skin: "BoxingMatchPunch",
 		mustPress: true,
@@ -63,11 +63,11 @@ function registerNoteTypes() {
 		parry: true
 	});
 
-	// V3 Content
+	
 	noteTypeData.set("GreedPunch", {skin: "GreedPunch", skinalt: "GreedNotes", mustPress: true, health: 0.75, echo: "GreedBlast", animSuffix: "-dodge", effect: "blurSmall", altoffsetsX: [-75, -75, -75, -75], altoffsetsY: [-145, -145, -145, -145], altoffsetsYDS: [-145, -145, -145, -145]});
 	noteTypeData.set("SwordGreen", {skin: "SwordGreen", mustPress: true, health: 0.35, echo: "Wiik4Purple", animSuffix: "-dodge", effect: "maxHealth", offsetsY: [-10, -10, -10, -10], offsetsYDS: [-10, -10, -10, -10]});
 
-	// VIP Remixes
+	
 	noteTypeData.set("RejectedPunch", {skin: "RejectedPunch", mustPress: true, health: 1.0, echo: "Wiik3Purple", animSuffix: "-dodge", effect: "blur"});
 	noteTypeData.set("RejectedSword", {skin: "RejectedSword", mustPress: true, health: 0.35, echo: "Wiik4Purple", animSuffix: "-dodge", effect: "maxHealth", offsetsY: [-10, -10, -10, -10], offsetsYDS: [-10, -10, -10, -10]});
 	noteTypeData.set("RejectedBullet", {skin: "RejectedBullet", mustPress: true, health: 0.4, echo: "Wiik2", animSuffix: "-dodge", effect: "drain", offsetsX: [-25, -4, -7, 5], offsetsY: [0, 0, -32, 0], offsetsYDS: [-40, -30, 0, -40]});

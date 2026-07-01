@@ -159,7 +159,7 @@ function postCreate() {
 	}
 }
 
-///characters/////////
+
 function onCharactersPreload(group:String, characterNames:String) {
 	var strumlineID = groupNameToStrumlineID(group);
 	if (strumlineID < 0) return;
@@ -299,7 +299,7 @@ function strumlineIDToGroupName(i:Int) {
 
 
 
-///stages////////////
+
 
 function onStagePreload(name:String) {
 	if (stageMap.exists(name)) {
