@@ -2,8 +2,10 @@
 
 import Camera3D;
 import ModifierTable;
+import haxe.ds.ObjectMap;
 public var modchartCamera = new Camera3D();
 public var modTable:ModifierTable = new ModifierTable();
+var shaderFrameUVCache:ObjectMap<Dynamic, Dynamic> = new ObjectMap();
 
 var modchartInitialized = false;
 
@@ -35,7 +37,7 @@ function postUpdate(elapsed)
 
 		if (PlayState.instance != null)
 		{
-			strumLines.members[p].notes.limit = 2500 / scrollSpeed;
+			strumLines.members[p].notes.limit = 1750 / scrollSpeed;
 			strumLines.members[p].notes.forEach(function(n)
 			{
 				if (n.shader == null) {
@@ -49,8 +51,7 @@ function postUpdate(elapsed)
 				n.shader.isSustainNote = n.isSustainNote;
 				//if (n.isSustainNote)
 	
-				if (n.frame != null)
-					n.shader.frameUV = [n.frame.uv.x,n.frame.uv.y,n.frame.uv.width,n.frame.uv.height];
+				updateShaderFrameUV(n, n.shader);
 	
 				var curPos = Conductor.songPosition - n.strumTime;
 				var nextCurPos = curPos;
@@ -81,7 +82,7 @@ function postUpdate(elapsed)
 				
 				n.shader.strumID = n.strumID;
 				n.shader.strumLineID = p;
-				n.shader.data.noteCurPos.value = [curPos, curPos, nextCurPos, nextCurPos];
+				setNoteCurPosUniform(n.shader, curPos, curPos, nextCurPos, nextCurPos);
 				n.shader.scrollSpeed = strumLines.members[p].members[n.strumID].getScrollSpeed(n);
 			});
 		}
@@ -99,11 +100,10 @@ function updateStrum(strum, p) {
 
 	strum.shader.strumID = strum.ID;
 	strum.shader.strumLineID = p;
-	strum.shader.data.noteCurPos.value = [0.0, 0.0, 0.0, 0.0];
+	setNoteCurPosUniform(strum.shader, 0.0, 0.0, 0.0, 0.0);
 	strum.shader.scrollSpeed = 0.0;
 
-	if (strum.frame != null)
-		strum.shader.frameUV = [strum.frame.uv.x,strum.frame.uv.y,strum.frame.uv.width,strum.frame.uv.height];
+	updateShaderFrameUV(strum, strum.shader);
 
 
 	//calculate screen position for rotation and scaling inside shader
@@ -117,6 +117,26 @@ function updateStrum(strum, p) {
 	strum.shader.isSustainNote = false;
 
 	modTable.applyValuesToShader(strum.shader, p, strum.ID);
+}
+
+function updateShaderFrameUV(obj:Dynamic, shader:Dynamic) {
+	if (obj == null || shader == null || obj.frame == null) return;
+	if (shaderFrameUVCache.exists(obj) && shaderFrameUVCache.get(obj) == obj.frame) return;
+	shaderFrameUVCache.set(obj, obj.frame);
+	shader.frameUV = [obj.frame.uv.x, obj.frame.uv.y, obj.frame.uv.width, obj.frame.uv.height];
+}
+
+function setNoteCurPosUniform(shader:Dynamic, a:Float, b:Float, c:Float, d:Float) {
+	if (shader == null || shader.data == null || shader.data.noteCurPos == null) return;
+	var values = shader.data.noteCurPos.value;
+	if (values == null || values.length < 4) {
+		shader.data.noteCurPos.value = [a, b, c, d];
+		return;
+	}
+	values[0] = a;
+	values[1] = b;
+	values[2] = c;
+	values[3] = d;
 }
 
 function onDeleteNote(e) {
@@ -194,7 +214,7 @@ public function updateNotePaths() {
 				n.shader = modTable.getShader(p, i);
 				n.shader.isSustainNote = true;
 
-				if (n.frame != null) n.shader.frameUV = [n.frame.uv.x,n.frame.uv.y,n.frame.uv.width,n.frame.uv.height];
+				updateShaderFrameUV(n, n.shader);
 				var point = FlxPoint.weak();
 				n.getScreenPosition(point, camHUD);
 				n.shader.screenX = (n.origin.x + point.x - n.offset.x);
@@ -210,9 +230,9 @@ public function updateNotePaths() {
 				n.shader.strumID = i;
 				n.shader.strumLineID = p;
 				if (downscroll) {
-					n.shader.data.noteCurPos.value = [nextTime, nextTime, time, time];
+					setNoteCurPosUniform(n.shader, nextTime, nextTime, time, time);
 				} else {
-					n.shader.data.noteCurPos.value = [time, time, nextTime, nextTime];
+					setNoteCurPosUniform(n.shader, time, time, nextTime, nextTime);
 				}
 				
 				n.shader.scrollSpeed = PlayState.SONG.scrollSpeed;

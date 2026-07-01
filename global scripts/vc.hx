@@ -107,6 +107,43 @@ var colorFillBG = null;
 var topBar = null;
 var botBar = null;
 
+function getFirstCharacterIndex():Int {
+	var index = members.length;
+	for (s in strumLines) {
+		for (char in s.characters) {
+			var charIndex = members.indexOf(char);
+			if (charIndex >= 0 && charIndex < index)
+				index = charIndex;
+		}
+	}
+	return index;
+}
+
+function refreshColorFillLayer() {
+	if (colorFillBG == null) return;
+
+	if (members.indexOf(colorFillBG) >= 0)
+		remove(colorFillBG, true);
+
+	var index = getFirstCharacterIndex();
+	if (index >= 0 && index < members.length)
+		insert(index, colorFillBG);
+	else
+		add(colorFillBG);
+}
+
+function applyColorFillCharacterState() {
+	var fillActive = colorFillBG != null && colorFillBG.alpha > 0.001;
+	for (s in strumLines) {
+		for (char in s.characters) {
+			if (char == null) continue;
+			char.colorTransform.redMultiplier = fillActive ? 0 : 1;
+			char.colorTransform.greenMultiplier = fillActive ? 0 : 1;
+			char.colorTransform.blueMultiplier = fillActive ? 0 : 1;
+		}
+	}
+}
+
 function onEvent(e) {
 	var event = e.event;
 
@@ -127,6 +164,7 @@ function onEvent(e) {
 			var charData = event.params[0].split(',');
 			var easeData = event.params[1].split(',');
 
+			refreshColorFillLayer();
 			var easeFunc = CoolUtil.flxeaseFromString(easeData[1], "");
 			var time = Std.parseFloat(easeData[0]);
 			for (s in strumLines) {
@@ -182,6 +220,7 @@ function postCreate() {
 	colorFillBG.updateHitbox();
 	colorFillBG.screenCenter();
 	colorFillBG.scrollFactor.set();
+	colorFillBG.cameras = [camGame];
 	insert(members.indexOf(gf), colorFillBG);
 	colorFillBG.alpha = 0;
 
@@ -209,6 +248,11 @@ function postCreate() {
 			char.dance();
 		}
 	}
+}
+
+function onStageChanged(name:String) {
+	refreshColorFillLayer();
+	applyColorFillCharacterState();
 }
 
 public function flashImage(path, time) {

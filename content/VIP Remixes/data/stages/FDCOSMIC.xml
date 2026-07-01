@@ -22,10 +22,10 @@
 
 
 	<dad
-		x="30"
+		x="0"
 		y="1325"
 		camxoffset="150"
-		camyoffset="140"
+		camyoffset="50"
 		spacingy="0" 
 		spacingx="250" 
 	/>

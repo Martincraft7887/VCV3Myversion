@@ -1,0 +1,14 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.53" name="BMVIP" folder="stages/BMVIP" startCamPosX="0" startCamPosY="0">
+	<sprite name="cielo" x="-557" y="-238" sprite="cielo" scroll="0.15" scale="0.8" />
+	<sprite name="nubes" x="-495" y="-238" sprite="nubes" scroll="0.2" scale="0.8" />
+	<sprite name="xd" x="-395" y="-238" sprite="xd" scroll="0.3" scale="0.8" />
+	<sprite name="awa" x="-395" y="-238" sprite="awa" scroll="0.3" scale="0.8" />
+	<sprite name="montanas" x="-395" y="-238" sprite="montanas" scroll="0.3" scale="0.8" />
+	<sprite name="campo" x="-395" y="-238" sprite="campo" scroll="0.33" scale="0.8" />
+	<sprite name="plataforma" x="195" y="-438" sprite="plataforma" scroll="1" scale="1" />
+	<sprite name="ring" x="-195" y="-638" sprite="ring" scroll="1" scale="1.1" />
+	<girlfriend x="1740" y="798" camxoffset="0" camyoffset="0" scroll="1" />
+	<dad x="1037" y="952" camxoffset="0" camyoffset="0" scroll="1" />
+	<boyfriend x="2393" y="965" camxoffset="0" camyoffset="0" scroll="1" />
+</stage>

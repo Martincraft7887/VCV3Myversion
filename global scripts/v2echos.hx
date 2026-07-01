@@ -221,6 +221,8 @@ function onEchoCreate(time, name) {
 }
 var firstFrame = true;
 function postUpdate(elapsed) {
+	if (echosData.length <= 0)
+		return;
 
 	if (firstFrame) {
 		firstFrame = false;

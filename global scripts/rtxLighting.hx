@@ -275,6 +275,11 @@ function getRTXOverride(field:String):Dynamic {
 function update(elapsed:Float) {
 	if (rtxData == null) return;
 	if (!getRTXBool("update", true)) return;
+	if (rtxTargets == null || rtxTargets.length <= 0) return;
+
+	var usePointLights = getRTXBool("pointLight", false);
+	var lights = usePointLights ? getRTXPointLights() : [];
+	var defaultAngle = getRTXFloat("innerAngle", 270) * Math.PI / 180;
 
 	for (i in 0...rtxTargets.length) {
 		var sprite = rtxTargets[i];
@@ -282,8 +287,8 @@ function update(elapsed:Float) {
 		if (sprite == null || shader == null) continue;
 		if (sprite.shader != shader) continue;
 
-		setRTXUniform(shader, "innerShadowAngle", getRTXAngle(sprite));
-		applyRTXLightUniforms(shader, sprite, getRTXAngles(sprite));
+		setRTXUniform(shader, "innerShadowAngle", getRTXAngle(sprite, usePointLights, lights, defaultAngle));
+		applyRTXLightUniforms(shader, sprite, getRTXAngles(sprite, usePointLights, lights), lights);
 	}
 }
 
@@ -298,12 +303,13 @@ function applyRTXAngleUniforms(shader:Dynamic, angles:Array<Float>) {
 	}
 }
 
-function applyRTXLightUniforms(shader:Dynamic, sprite:Dynamic, angles:Array<Float>) {
+function applyRTXLightUniforms(shader:Dynamic, sprite:Dynamic, angles:Array<Float>, ?lights:Array<Dynamic>) {
 	applyRTXAngleUniforms(shader, angles);
 
-	var lights = getRTXBool("pointLight", false) ? getRTXPointLights() : [];
+	if (lights == null)
+		lights = getRTXBool("pointLight", false) ? getRTXPointLights() : [];
 	for (i in 0...4) {
-		var light = i < lights.length ? normalizeRTXPointLight(lights[i]) : null;
+		var light = i < lights.length ? lights[i] : null;
 		setRTXUniform(shader, "overlayColor" + i, colorToVec4(getLightString(light, "overlay", getRTXString("overlay", "0x000000")), getLightFloat(light, "overlayAlpha", getRTXFloat("overlayAlpha", 0))));
 		setRTXUniform(shader, "satinColor" + i, colorToVec4(getLightString(light, "satin", getRTXString("satin", "0xFFFFFF")), getLightFloat(light, "satinAlpha", getRTXFloat("satinAlpha", 0))));
 		setRTXUniform(shader, "innerShadowColor" + i, colorToVec4(getLightString(light, "inner", getRTXString("inner", "0x000000")), getLightFloat(light, "innerAlpha", getRTXFloat("innerAlpha", 0))));
@@ -313,31 +319,38 @@ function applyRTXLightUniforms(shader:Dynamic, sprite:Dynamic, angles:Array<Floa
 	}
 }
 
-function getRTXAngles(sprite:Dynamic):Array<Float> {
+function getRTXAngles(sprite:Dynamic, ?usePointLights:Dynamic, ?lights:Array<Dynamic>):Array<Float> {
 	var angles:Array<Float> = [];
-	if (!getRTXBool("pointLight", false) || sprite == null)
+	if (usePointLights == null)
+		usePointLights = getRTXBool("pointLight", false);
+	if (lights == null)
+		lights = usePointLights == true ? getRTXPointLights() : [];
+	if (usePointLights != true || sprite == null)
 		return angles;
 
-	var lights = getRTXPointLights();
 	for (light in lights) {
 		if (angles.length >= 4)
 			break;
-		var normalizedLight = normalizeRTXPointLight(light);
-		angles.push(getRTXPointLightAngle(sprite, getDynamicFloat(normalizedLight, "x", 0), getDynamicFloat(normalizedLight, "y", 0)));
+		angles.push(getRTXPointLightAngle(sprite, getDynamicFloat(light, "x", 0), getDynamicFloat(light, "y", 0)));
 	}
 	return angles;
 }
 
-function getRTXAngle(sprite:Dynamic):Float {
-	if (getRTXBool("pointLight", false) && sprite != null) {
-		var lights = getRTXPointLights();
+function getRTXAngle(sprite:Dynamic, ?usePointLights:Dynamic, ?lights:Array<Dynamic>, ?defaultAngle:Dynamic):Float {
+	if (usePointLights == null)
+		usePointLights = getRTXBool("pointLight", false);
+	if (lights == null)
+		lights = usePointLights == true ? getRTXPointLights() : [];
+	if (defaultAngle == null)
+		defaultAngle = getRTXFloat("innerAngle", 270) * Math.PI / 180;
+	if (usePointLights == true && sprite != null) {
 		if (lights.length > 0) {
-			var firstLight = normalizeRTXPointLight(lights[0]);
+			var firstLight = lights[0];
 			return getRTXPointLightAngle(sprite, getDynamicFloat(firstLight, "x", getRTXFloat("lightX", 0)), getDynamicFloat(firstLight, "y", getRTXFloat("lightY", 0)));
 		}
 	}
 
-	var radians = getRTXFloat("innerAngle", 270) * Math.PI / 180;
+	var radians = defaultAngle;
 	if (sprite != null && sprite.flipX) {
 		radians = Math.atan2(Math.sin(radians), -Math.cos(radians));
 	}

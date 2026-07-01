@@ -103,15 +103,10 @@ function lerp(a:Float, b:Float, t:Float):Float {
 }
 
 function update(elapsed) {
-
-    // asegurar que nunca se quite
-    for (name => spr in stage.stageSprites) {
-        spr.shader = stageSobel;
+    if (Math.abs(currentStrength - targetStrength) <= 0.001) {
+        currentStrength = targetStrength;
+        return;
     }
-
-    if (boyfriend != null) boyfriend.shader = bfSobel;
-    if (dad != null) dad.shader = dadSobel;
-    if (gf != null) gf.shader = gfSobel;
 
     currentStrength = lerp(currentStrength, targetStrength, elapsed * fadeSpeed * 10);
 

@@ -16,7 +16,6 @@ var redirectedInitialMenuToPortFreeplay:Bool = false;
 var windowTitleBase:String = "Voiid Chronicles v3";
 var lastAppliedWindowTitle:String = "";
 var lastAppliedDiscordState:String = "";
-var windowTitleUpdateTimer:Float = 0;
 var discordWasDisabled:Bool = false;
 
 function new() {
@@ -176,10 +175,6 @@ function updateVoiidWindowTitle(force:Bool = false) {
 	if (FlxG.state == null)
 		return;
 
-	if (!force && windowTitleUpdateTimer > 0)
-		return;
-
-	windowTitleUpdateTimer = 0.25;
 	setVoiidWindowTitle(getCurrentWindowTitleDetail());
 }
 
@@ -265,11 +260,6 @@ function postStateSwitch()
 	}
 }
 
-function postUpdate(elapsed:Float) {
-	windowTitleUpdateTimer -= elapsed;
-	updateVoiidWindowTitle(false);
-	updateVoiidDiscordState(false);
-}
 //make sure that saving charts/characters go to the correct content folder
 function normalizeAssetPath(path:String):String {
 	return path == null ? "" : StringTools.replace(path, "\\", "/");

@@ -23,9 +23,14 @@ var wiikList:Array<String> = ["Wiik 1", "Wiik 2", "Wiik 3", "Wiik 100"];
 var wiikNumbers:Array<String> = ["1", "2", "3", "100"];
 var wiiks:Array<Array<String>> = [
 	["Light It Up", "Ruckus", "Target Practice"],
-	["Burnout", "Sporting", "Boxing Match"],
-	["Fisticuffs", "Blastout", "Immortal", "King Hit"],
-	["Mat", "Banger", "Edgy"]
+	["Burnout", "Sporting", "Boxing Match", "Sport Swinging", "Boxing Gladiators", "Flaming Glove"],
+	["Fisticuffs", "Blastout", "Immortal", "King Hit", "TKO", "Mat", "Banger", "Edgy", "Venom"],
+	[
+		"Power Link", "Revenge", "Final Destination", "Final Destination God",
+		"Soothing Power", "Thunderstorm", "Disassembler", "Cosmic Memories",
+		"New Horizon", "Galactic Storm", "Disadvantage", "Champion",
+		"Recovery", "Last Combat", "Greedoom", "Purgatory", "Krakatoa", "Showdown"
+	]
 ];
 
 var selectedWiik:Int = 0;

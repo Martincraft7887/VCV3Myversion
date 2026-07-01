@@ -17,6 +17,7 @@ var perspectiveMatrix:Array<Float> =
 	0, 0, 0, 0
 ];
 var viewMatrix:Array<Float> = [];
+var shaderFrameUVCache:ObjectMap<Dynamic, Dynamic> = new ObjectMap();
 
 public var eye:Array<Float> = [0, 0, -0.71, 0];
 public var lookAt:Array<Float> = [0, 0, 0, 0];
@@ -75,7 +76,9 @@ var shaderPool:Array<Dynamic> = [];
 var shaderModValueCache:ObjectMap<Dynamic, StringMap<Float>> = new ObjectMap();
 
 function isPerspectiveShader(shader) {
-	return shader != null && shader.data != null && Reflect.field(shader.data, "noteCurPos") != null;
+	return shader != null
+		&& shader.data != null
+		&& Reflect.field(shader.data, "noteCurPos") != null;
 }
 
 function getPerspectiveShader(strumLineID, strumID) {
@@ -84,7 +87,6 @@ function getPerspectiveShader(strumLineID, strumID) {
 	if (pool.length < 1) {
 		var shader = new FunkinShader(modShaderFragTable[strumLineID][strumID], modShaderVertTable[strumLineID][strumID]);
 		shader.data.vertexID.value = [0, 1, 2, 3];
-		shader.perspectiveMatrix = perspectiveMatrix;
 		return shader;
 	} else {
 		var shader = pool.pop();
@@ -103,9 +105,18 @@ function createPerspectiveShader(obj, strumLineID, strumID)
 	//shader.data.vertexYOffset.value = [0.0, 0.0, 0.0, 0.0];
 	//shader.data.vertexZOffset.value = [0.0, 0.0, 0.0, 0.0];
 	shader.data.vertexID.value = [0, 1, 2, 3];
-	shader.perspectiveMatrix = perspectiveMatrix;
-	shader.viewMatrix = viewMatrix;
+	applyPerspectiveMatrices(shader);
 	obj.shader = shader;
+}
+
+function applyPerspectiveMatrices(shader):Bool {
+	if (shader == null) return false;
+	try {
+		shader.viewMatrix = viewMatrix;
+		shader.perspectiveMatrix = perspectiveMatrix;
+		return true;
+	} catch(e:Dynamic) {}
+	return false;
 }
 /////////////////////////////////////
 
@@ -201,17 +212,19 @@ function postUpdate(elapsed)
 					n.shader = getPerspectiveShader(p, n.strumID);
 					debugShaderAppliedCount++;
 				}
+				if (!applyPerspectiveMatrices(n.shader)) {
+					n.shader = getPerspectiveShader(p, n.strumID);
+					applyPerspectiveMatrices(n.shader);
+					debugShaderAppliedCount++;
+				}
 				n.forceIsOnScreen = true;
-				n.shader.viewMatrix = viewMatrix;
-				n.shader.perspectiveMatrix = perspectiveMatrix;
 				n.shader.songPosition = Conductor.songPosition;
 				n.shader.curBeat = Conductor.curBeatFloat;
 				n.shader.downscroll = downscroll;
 				n.shader.isSustainNote = n.isSustainNote;
 				//if (n.isSustainNote)
 	
-				if (n.frame != null)
-					n.shader.frameUV = [n.frame.uv.x,n.frame.uv.y,n.frame.uv.width,n.frame.uv.height];
+				updateShaderFrameUV(n, n.shader);
 	
 				var curPos = Conductor.songPosition - n.strumTime;
 				var nextCurPos = curPos;
@@ -253,7 +266,7 @@ function postUpdate(elapsed)
 				
 				n.shader.strumID = n.strumID;
 				n.shader.strumLineID = p;
-				n.shader.data.noteCurPos.value = [curPos, curPos, nextCurPos, nextCurPos];
+				setNoteCurPosUniform(n.shader, curPos, curPos, nextCurPos, nextCurPos);
 				n.shader.scrollSpeed = getSafeNoteScrollSpeed(n, p, noteStrum);
 				applyModifierValuesToShader(n.shader, p, n.strumID);
 			});
@@ -301,22 +314,43 @@ function getDynamicFloat(obj, field:String, fallback:Float):Float {
 	return Math.isNaN(parsed) ? fallback : parsed;
 }
 
+function updateShaderFrameUV(obj:Dynamic, shader:Dynamic) {
+	if (obj == null || shader == null || obj.frame == null) return;
+	if (shaderFrameUVCache.exists(obj) && shaderFrameUVCache.get(obj) == obj.frame) return;
+	shaderFrameUVCache.set(obj, obj.frame);
+	shader.frameUV = [obj.frame.uv.x, obj.frame.uv.y, obj.frame.uv.width, obj.frame.uv.height];
+}
+
+function setNoteCurPosUniform(shader:Dynamic, a:Float, b:Float, c:Float, d:Float) {
+	if (shader == null || shader.data == null || shader.data.noteCurPos == null) return;
+	var values = shader.data.noteCurPos.value;
+	if (values == null || values.length < 4) {
+		shader.data.noteCurPos.value = [a, b, c, d];
+		return;
+	}
+	values[0] = a;
+	values[1] = b;
+	values[2] = c;
+	values[3] = d;
+}
+
 function updateStrum(strum, p) {
 	if (!isPerspectiveShader(strum.shader)) {
 		strum.shader = getPerspectiveShader(p, strum.ID);
 	}
-	strum.shader.viewMatrix = viewMatrix;
-	strum.shader.perspectiveMatrix = perspectiveMatrix;
+	if (!applyPerspectiveMatrices(strum.shader)) {
+		strum.shader = getPerspectiveShader(p, strum.ID);
+		applyPerspectiveMatrices(strum.shader);
+	}
 	strum.shader.songPosition = Conductor.songPosition;
 	strum.shader.curBeat = Conductor.curBeatFloat;
 
 	strum.shader.strumID = strum.ID;
 	strum.shader.strumLineID = p;
-	strum.shader.data.noteCurPos.value = [0.0, 0.0, 0.0, 0.0];
+	setNoteCurPosUniform(strum.shader, 0.0, 0.0, 0.0, 0.0);
 	strum.shader.scrollSpeed = 0.0;
 
-	if (strum.frame != null)
-		strum.shader.frameUV = [strum.frame.uv.x,strum.frame.uv.y,strum.frame.uv.width,strum.frame.uv.height];
+	updateShaderFrameUV(strum, strum.shader);
 
 
 	//calculate screen position for rotation and scaling inside shader

@@ -668,6 +668,9 @@ function onNoteHit(event) {
 }
 
 function postUpdate(elapsed:Float) {
+	if (doubleGhostPools.length <= 0 && doubleGhostFollowData.length <= 0)
+		return;
+
 	trackActiveCharacters();
 	updateFollowGhosts();
 

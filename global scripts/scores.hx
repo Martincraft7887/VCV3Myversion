@@ -28,6 +28,12 @@ var lastHudBaseText:String = "";
 var lastHudRatingText:String = "";
 var lastRatingCounterText:String = "";
 var lastHudRatingColor:Int = -1;
+var lastHudScore:Int = -999999;
+var lastHudMisses:Int = -999999;
+var lastHudAccuracy:Float = -999999;
+var lastHudSkin:String = "";
+var lastHudVisible:Bool = true;
+var lastHudDownscroll:Bool = false;
 
 var popupCombo:Int = 0;
 var popupScale:Float = 0.5;
@@ -301,7 +307,7 @@ function update(elapsed:Float) {
 	syncDirtyResults(elapsed);
 
 	if (ratingCounterTxt != null && cachedSideRatings) {
-		ratingCounterTxt.visible = true;
+		ratingCounterTxt.visible = hudVisible;
 	} else if (fadeTimer > 0 && ratingCounterTxt != null) {
 		fadeTimer -= elapsed;
 		if (fadeTimer <= 0)
@@ -313,6 +319,17 @@ function updateScoreHud(ps:PlayState) {
 	if (hudBase == null || hudRating == null) return;
 
 	var isPaper = scoreSkinPrefix == "paper/";
+	var layoutChanged = lastPaperScoreLayout != isPaper || lastHudDownscroll != downscroll || lastHudSkin != scoreSkinPrefix || lastHudVisible != hudVisible;
+	var valuesChanged = ps.songScore != lastHudScore || ps.misses != lastHudMisses || ps.accuracy != lastHudAccuracy || layoutChanged;
+	if (!valuesChanged) return;
+
+	lastHudScore = ps.songScore;
+	lastHudMisses = ps.misses;
+	lastHudAccuracy = ps.accuracy;
+	lastHudSkin = scoreSkinPrefix;
+	lastHudVisible = hudVisible;
+	lastHudDownscroll = downscroll;
+
 	var scoreStr = scoreSkinPrefix == "paper/" ? "SCORE: " + ps.songScore : "Score: " + ps.songScore;
 	var missesStr = scoreSkinPrefix == "paper/" ? "MISSES: " + ps.misses : "Combo Breaks: " + ps.misses;
 	var baseText:String;
@@ -432,17 +449,23 @@ function onEvent(e) {
 	if (e.event.name != "Toggle Custom HUD")
 		return;
 
-	var ps = PlayState.instance;
-	if (ps == null || hudBase == null || hudRating == null) return;
-
 	var params:Array = e.event.params;
-	hudVisible = params[0];
-	hudBase.visible = hudVisible;
-	hudRating.visible = hudVisible;
-	ps.healthBar.visible = hudVisible;
-	ps.healthBarBG.visible = hudVisible;
-	ps.iconP1.visible = hudVisible;
-	ps.iconP2.visible = hudVisible;
+	setCustomHudVisible(params[0]);
+}
+
+function setCustomHudVisible(visible:Bool) {
+	var ps = PlayState.instance;
+	hudVisible = visible;
+	lastHudVisible = !visible;
+	if (hudBase != null) hudBase.visible = visible;
+	if (hudRating != null) hudRating.visible = visible;
+	if (ratingCounterTxt != null) ratingCounterTxt.visible = visible && cachedSideRatings;
+	if (msTxt != null) msTxt.visible = false;
+	if (ps == null) return;
+	if (ps.healthBar != null) ps.healthBar.visible = visible;
+	if (ps.healthBarBG != null) ps.healthBarBG.visible = visible;
+	if (ps.iconP1 != null) ps.iconP1.visible = visible;
+	if (ps.iconP2 != null) ps.iconP2.visible = visible;
 }
 
 function onPlayerHit(e) {
@@ -654,7 +677,7 @@ function showCombo(value:Int, startY:Float, centerX:Float) {
 }
 
 function showMsText(diffMs:Float) {
-	if (msTxt == null || !cachedDisplayMs)
+	if (msTxt == null || !cachedDisplayMs || !hudVisible)
 		return;
 
 	FlxTween.cancelTweensOf(msTxt);

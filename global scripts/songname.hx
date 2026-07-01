@@ -429,20 +429,36 @@ function updateTimerText() {
     if (inst != null)
         timeRemaining = Std.int(Math.max(0, inst.length - Conductor.songPosition) / 1000);
 
-    if (isPaperTimer()) {
-        timeTxt.text = formatTime(timeRemaining);
-        timeTxt.size = 24;
-        timeTxt.borderSize = 2.5;
-        timeTxt.fieldWidth = 220;
-        if (healthBarBG != null) {
-            timeTxt.x = healthBarBG.x + (healthBarBG.width * 0.5) - (timeTxt.fieldWidth * 0.5);
-            timeTxt.y = healthBarBG.y + 12;
+if (isPaperTimer()) {
+    timeTxt.text = formatTime(timeRemaining);
+    timeTxt.size = 24;
+    timeTxt.borderSize = 2.5;
+    timeTxt.fieldWidth = 220;
+
+    // Importante para que timeTxt.height sea correcto después de cambiar size/texto
+    timeTxt.updateHitbox();
+
+    if (healthBarBG != null) {
+        timeTxt.x = healthBarBG.x + (healthBarBG.width * 0.5) - (timeTxt.fieldWidth * 0.5);
+
+        // Posición visual dentro del HUD Paper
+        var paperTimerOffset:Float = 12;
+
+        if (!downscroll) {
+            // Upscroll: desde arriba del healthBarBG
+            timeTxt.y = healthBarBG.y + paperTimerOffset;
         } else {
-            timeTxt.screenCenter(FlxAxes.X);
-            timeTxt.y = downscroll ? FlxG.height - 118 : 18;
+            // Downscroll: se espejea desde abajo del healthBarBG
+            timeTxt.y = healthBarBG.y + healthBarBG.height - paperTimerOffset - timeTxt.height;
         }
-        return;
+    } else {
+        timeTxt.screenCenter(FlxAxes.X);
+        timeTxt.y = downscroll ? FlxG.height - 118 : 18;
     }
+
+    return;
+}
+
 
     timeTxt.text = songName + " - " + difficulty + " (" + formatTime(timeRemaining) + ")" + getTimerTags();
     timeTxt.size = 16;

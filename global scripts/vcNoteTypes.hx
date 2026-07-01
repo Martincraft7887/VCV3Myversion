@@ -11,6 +11,7 @@ var deadParries:Array<Dynamic> = [];
 var parriesDirty:Bool = false;
 var storedParryTimes:StringMap<Bool> = new StringMap();
 var noteTypeCache:ObjectMap<Dynamic, Dynamic> = new ObjectMap();
+var hasCachedNoteTypeVisuals:Bool = false;
 var activeParry:Dynamic = null;
 var parryAttack:FunkinSprite = null;
 var flamePunch:FunkinSprite = null;
@@ -176,6 +177,9 @@ function cacheNoteTypeForNote(note:Dynamic, noteType:Dynamic) {
 	var offsetX = getArrayValue(getNoteTypeOffsetArray(data, "offsetsX"), dir);
 	var offsetY = getArrayValue(getNoteTypeOffsetArray(data, "offsetsY"), dir);
 	var offsetYDS = getArrayValue(getNoteTypeOffsetArray(data, "offsetsYDS"), dir);
+	var rotate = shouldRotateNoteType(data);
+	if (offsetX != null || offsetY != null || offsetYDS != null || rotate)
+		hasCachedNoteTypeVisuals = true;
 
 	noteTypeCache.set(note, {
 		data: data,
@@ -183,7 +187,7 @@ function cacheNoteTypeForNote(note:Dynamic, noteType:Dynamic) {
 		offsetX: offsetX,
 		offsetY: offsetY,
 		offsetYDS: offsetYDS,
-		rotate: shouldRotateNoteType(data)
+		rotate: rotate
 	});
 
 	if (isParryNoteData(data))
@@ -789,9 +793,11 @@ function postUpdate(elapsed) {
 	updateEffects(elapsed);
 	updateParryNotes();
 
-	for (p in strumLines) {
-		p.notes.forEach(function(note) {
-			applyCachedNoteTypeVisual(note);
-		});
+	if (hasCachedNoteTypeVisuals) {
+		for (p in strumLines) {
+			p.notes.forEach(function(note) {
+				applyCachedNoteTypeVisual(note);
+			});
+		}
 	}
 }

@@ -18,6 +18,7 @@ var currentGapMs:Float = 0;
 var playerNoteTimes:Array<Float> = [];
 var nextNoteIndex:Int = 0;
 var lastShownSecond:Int = -999;
+var lastRingProgressBucket:Int = -1;
 
 var minSpawnGapMs:Float = 3000; // < 4s entre spawns: oculto | >= 4s: visible
 var fontSize:Int = 30;
@@ -168,6 +169,7 @@ function hideCountdown()
     countdownTxt.alpha = 0;
     countdownRing.visible = false;
     lastShownSecond = -999;
+    lastRingProgressBucket = -1;
 }
 
 function update(elapsed:Float)
@@ -216,5 +218,9 @@ function update(elapsed:Float)
     if (ringProgress < 0) ringProgress = 0;
 
     countdownTxt.alpha = 1.0; 
-    drawCountdownRing(ringProgress);
+    var ringBucket = Std.int(ringProgress * 100);
+    if (ringBucket != lastRingProgressBucket) {
+        lastRingProgressBucket = ringBucket;
+        drawCountdownRing(ringProgress);
+    }
 }

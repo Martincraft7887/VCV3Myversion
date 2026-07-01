@@ -3,7 +3,8 @@
 	"opponentModeAllowed": true,
 	"difficulties": [
 		"mania",
-		"canon"
+		"canon",
+		"My version"
 	],
 	"icon": "SXMICON",
 	"coopAllowed": true,

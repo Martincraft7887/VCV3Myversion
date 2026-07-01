@@ -51,11 +51,8 @@ function lerp(a:Float, b:Float, t:Float):Float {
 }
 
 function update(elapsed) {
-
-    // asegurar shader en stage
-    for (name => spr in stage.stageSprites) {
-        spr.shader = stageShader;
-    }
+    if (!grayscale && stageStrength <= 0.001 && bfStrength <= 0.001 && dadStrength <= 0.001 && gfStrength <= 0.001)
+        return;
 
     if (!grayscale) {
 

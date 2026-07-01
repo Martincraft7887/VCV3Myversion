@@ -79,6 +79,11 @@
 			<Property value="1" name="decay"/>
 			<Property value="1.2" name="exposure"/>
 		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="VHSEffect" name="VHSEffect" color="#545454">
+			<Property value="0.005" name="chromStrength"/>
+			<Property value="0" name="iTime"/>
+			<Property value="0" name="effect"/>
+		</Shader>
 		<Modifier strumID="-1" strumLineID="-1" value="0" name="X" modifier="x" color="#545454"/>
 		<Modifier strumID="-1" strumLineID="1" value="0" name="XP" modifier="x" color="#5600FF"/>
 		<Modifier strumID="-1" strumLineID="0" value="0" name="XO" modifier="x" color="#FF0000"/>
@@ -127,6 +132,7 @@
 			<SubMod value="0" name="x"/>
 			<SubMod value="0" name="y"/>
 		</Modifier>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="xSplit" modifier="xSplit" color="#545454"/>
 	</Init>
 	<Events>
 		<Event step="0" time="128" value="0" property="effect" ease="linear" type="tweenShaderProperty" startValue="0.5" name="Bars"/>
@@ -460,12 +466,15 @@
 		<Event step="896" time="12" value="-600" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="XPLeft"/>
 		<Event step="912" time="12" value="-800" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="YPDown"/>
 		<Event step="912" time="12" value="400" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="0" name="YPUp"/>
+		<Event step="928" time="4" value="1" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="VHSEffect"/>
+		<Event step="928" time="4" value="0.5" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bars"/>
 		<Event step="928" time="12" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="250" name="ZO"/>
 		<Event step="944" time="0" value="400" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="YOUp"/>
 		<Event step="944" time="0" value="-800" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="YODown"/>
 		<Event step="944" time="0" value="90000" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XORight"/>
 		<Event step="944" time="0" value="-600" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="XOLeft"/>
 		<Event step="944" time="12" value="320" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-900" name="XO"/>
+		<Event step="956" time="4" value="0" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.5" name="Bars"/>
 		<Event step="960" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="600" name="XORight"/>
 		<Event step="960" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-600" name="XPLeft"/>
 		<Event step="960" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="600" name="XPRight"/>
@@ -476,6 +485,9 @@
 		<Event step="976" time="16" value="0" property="value" ease="smootherStepInOut" type="tweenModifierValue" startValue="-800" name="YODown"/>
 		<Event step="992" time="16" value="0" property="value" ease="elasticInOut" type="tweenModifierValue" startValue="320" name="XO"/>
 		<Event step="992" time="16" value="0" property="value" ease="elasticInOut" type="tweenModifierValue" startValue="-320" name="XP"/>
+		<Event step="1180" time="2" value="0.5" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Bars"/>
+		<Event step="1180" time="4" value="0" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="VHSEffect"/>
 		<Event step="1180" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="grey"/>
+		<Event step="1182" time="4" value="0" property="effect" ease="cubeInOut" type="tweenShaderProperty" startValue="0.5" name="Bars"/>
 	</Events>
 </Modchart>

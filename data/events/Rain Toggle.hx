@@ -41,8 +41,7 @@ function removeRainFilter(cam) {
 }
 
 function update(elapsed:Float) {
-
-    rainShader.hset("iTime", Conductor.songPosition / 1000);
+    if (!rainEnabled && !rainApplied) return;
 
     if (rainEnabled && !rainApplied) {
 
@@ -58,4 +57,7 @@ function update(elapsed:Float) {
 
         rainApplied = false;
     }
+
+    if (rainApplied)
+        rainShader.hset("iTime", Conductor.songPosition / 1000);
 }
