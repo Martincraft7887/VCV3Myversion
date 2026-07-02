@@ -1,0 +1,24 @@
+{
+	"categories": [
+		{
+			"name": "NEW GREED",
+			"songs": [
+				{
+					"name": "Vulgrath",
+					"port": "Wiik_4",
+					"loadingScreen": "Wiik4"
+				},
+				{
+					"name": "Last Combat V3",
+					"port": "Wiik_4",
+					"loadingScreen": "Wiik4"
+				},
+				{
+					"name": "Greedoom V3",
+					"port": "Greed",
+					"loadingScreen": "Wiik4"
+				}
+			]
+		}
+	]
+}
