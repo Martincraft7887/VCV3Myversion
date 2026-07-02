@@ -12,6 +12,7 @@ public var crochet = Conductor.stepCrochet;
 public static var songSpeed:Float = 1.0;
 
 function create() {
+	PauseSubState.script = "data/scripts/pause";
 
 	if (Script.staticVariables.exists("SONG_SPEED")) {
 		songSpeed = SONG_SPEED;
@@ -74,12 +75,9 @@ function loadLEEvents() {
 				case "change character":
 					cneEvent.name = "Change Characters";
 					cneEvent.params = [e[2], e[3]];
-					scripts.call("onCharactersPreload", [e[2], e[3]]);
 				case "change stage":
 					cneEvent.name = "Change Stage";
 					cneEvent.params = [e[2]];
-					trace("[VC LE Events] queued Change Stage: " + e[2] + " at " + e[1]);
-					scripts.call("onStagePreload", [e[2]]);
 				case "change ui skin":
 					cneEvent.name = "not ui skin change";
 				case "punch" | "slash":

@@ -5,6 +5,8 @@ var charactersMap:Array<Dynamic> = [];
 var stageMap = ["" => null];
 var warmObjects:Array<Dynamic> = [];
 var preloadedObjectStates:Array<Dynamic> = [];
+var pendingPreloads:Array<Dynamic> = [];
+var preloadLeadTime:Float = 12000;
 
 function voiidDebugTrace(message:String) {
 	if (Reflect.field(FlxG.save.data, "voiidDebugLogs") == true)
@@ -152,11 +154,45 @@ function postCreate() {
 	for (event in events) {
 		switch(event.name) {
 			case "Change Characters":
-				onCharactersPreload(event.params[0], event.params[1]);
+				queueTimedPreload(event.time, "characters", event.params[0], event.params[1]);
 			case "Change Stage":
-				onStagePreload(event.params[0]);
+				queueTimedPreload(event.time, "stage", event.params[0], null);
 		}
 	}
+
+	processPendingPreloads();
+}
+
+function queueTimedPreload(time:Float, type:String, a:Dynamic, b:Dynamic) {
+	pendingPreloads.push({
+		time: time,
+		type: type,
+		a: a,
+		b: b,
+		done: false
+	});
+}
+
+function processPendingPreloads() {
+	if (pendingPreloads.length <= 0) return;
+
+	var now = Conductor.songPosition;
+	for (preload in pendingPreloads) {
+		if (preload.done) continue;
+		if (preload.time - now > preloadLeadTime) continue;
+
+		switch(preload.type) {
+			case "characters":
+				onCharactersPreload(preload.a, preload.b);
+			case "stage":
+				onStagePreload(preload.a);
+		}
+		preload.done = true;
+	}
+}
+
+function update(elapsed:Float) {
+	processPendingPreloads();
 }
 
 

@@ -237,8 +237,19 @@ function applyOption(option:Dynamic) {
 	} else {
 		FlxG.save.flush();
 	}
+	refreshAssistOptionsIfNeeded(option);
 	if (option.field == "volumeMusic")
 		FlxG.sound.defaultMusicGroup.volume = option.engine ? Options.volumeMusic : getValue(option);
+}
+
+function refreshAssistOptionsIfNeeded(option:Dynamic) {
+	if (option == null || (option.field != "voiidBotplay" && option.field != "voiidNoDeath"))
+		return;
+
+	try {
+		if (PlayState.instance != null)
+			PlayState.instance.scripts.call("refreshVoiidAssistOptions", []);
+	} catch(e:Dynamic) {}
 }
 
 function currentPage():String {

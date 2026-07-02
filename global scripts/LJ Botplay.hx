@@ -8,6 +8,10 @@ public static var perfectBotHits:Bool = true;
 public static var botHitLeadMs:Float = 8;
 
 var _allowedGitaroo:Bool = allowGitaroo;
+var cachedBotplay:Bool = false;
+var cachedNoDeath:Bool = false;
+var noDeathDied:Bool = false;
+var noDeathDeathHealth:Float = 0.05;
 
 function saveBool(name:String, fallback:Bool):Bool {
     var value = Reflect.field(FlxG.save.data, name);
@@ -23,14 +27,31 @@ function noDeathEnabled():Bool {
     return saveBool("voiidNoDeath", false);
 }
 
-function syncBotplayFromSave() {
-    botplay = saveBool("voiidBotplay", botplay);
+function syncOptionsFromSave(force:Bool = false) {
+    var savedBotplay = saveBool("voiidBotplay", botplay);
+    var savedNoDeath = noDeathEnabled();
+    if (!force && savedBotplay == cachedBotplay && savedNoDeath == cachedNoDeath)
+        return;
+
+    botplay = savedBotplay;
+    cachedBotplay = savedBotplay;
+    cachedNoDeath = savedNoDeath;
+    applyBotplayState();
+}
+
+function refreshVoiidAssistOptions() {
+    syncOptionsFromSave(true);
 }
 
 function setBotplay(value:Bool) {
+    if (botplay == value && saveBool("voiidBotplay", value) == value)
+        return;
+
     botplay = value;
     Reflect.setField(FlxG.save.data, "voiidBotplay", botplay);
     FlxG.save.flush();
+    cachedBotplay = botplay;
+    cachedNoDeath = noDeathEnabled();
     applyBotplayState();
 }
 
@@ -43,11 +64,32 @@ function isTogglePressed():Bool {
 }
 
 function applyBotplayState() {
-    canDie = !(botplay || noDeathEnabled());
+    canDie = !(botplay || cachedNoDeath);
     if (_allowedGitaroo) allowGitaroo = !botplay;
     try {
         if (strumLines != null && strumLines.members != null && strumLines.members[1] != null)
             strumLines.members[1].cpu = botplay;
+    } catch(e:Dynamic) {}
+}
+
+function markNoDeathDied() {
+    if (noDeathDied)
+        return;
+
+    noDeathDied = true;
+    Reflect.setField(FlxG.save.data, "voiidNoDeathDied", true);
+    FlxG.save.flush();
+}
+
+function checkNoDeathDied() {
+    if (!cachedNoDeath || noDeathDied)
+        return;
+
+    try {
+        if (health <= 0) {
+            markNoDeathDied();
+            health = noDeathDeathHealth;
+        }
     } catch(e:Dynamic) {}
 }
 
@@ -77,19 +119,21 @@ function botGoodNoteHit(strumLine, daNote:Note) {
 }
 
 function update(elapsed) {
-    syncBotplayFromSave();
+    syncOptionsFromSave();
+    checkNoDeathDied();
 
     if (isTogglePressed()) {
         setBotplay(!botplay);
         return;
     }
-
-    applyBotplayState();
 }
 
 function postCreate() {
-    syncBotplayFromSave();
-    applyBotplayState();
+    noDeathDied = false;
+    Reflect.setField(FlxG.save.data, "voiidNoDeathDied", false);
+    FlxG.save.flush();
+
+    syncOptionsFromSave(true);
 
     strumLines.forEach(function(strum) {
         if (strum.cpu) return;

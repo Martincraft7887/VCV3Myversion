@@ -65,7 +65,7 @@ function isBotplayAwardBlocked():Bool {
 
 function isValidCompletion():Bool {
 	return Reflect.field(FlxG.save.data, "voiidBotplay") != true
-		&& Reflect.field(FlxG.save.data, "voiidNoDeath") != true
+		&& Reflect.field(FlxG.save.data, "voiidNoDeathDied") != true
 		&& !PlayState.chartingMode;
 }
 

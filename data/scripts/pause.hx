@@ -8,7 +8,6 @@ import flixel.text.FlxText.FlxTextBorderStyle;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
 import funkin.backend.FunkinText;
 import funkin.backend.scripting.ModState;
 import funkin.backend.utils.Paths;
@@ -20,16 +19,22 @@ var pauseBG:FlxSprite;
 var pauseInfoTexts:FlxTypedGroup<FunkinText>;
 var pauseMenuTexts:FlxTypedGroup<FunkinText>;
 var pauseOptions:Array<String> = [];
+
 var pauseSongText:FlxSprite = null;
 var pauseLogo:FlxSprite = null;
+
 var pauseTitleRevealed:Bool = false;
 var pauseLogoHasIdleAnim:Bool = false;
 var pauseLogoBaseScaleX:Float = 1;
 var pauseLogoBaseScaleY:Float = 1;
 var pauseLogoBumpTimer:Float = 0;
 var pauseLogoBumpTween:FlxTween = null;
+
 var songData:Dynamic = null;
 var oldMouseVisible:Bool = false;
+var pauseSetupStep:Int = 0;
+var pauseReady:Bool = false;
+var pauseMenuBuildIndex:Int = 0;
 
 var logoTable = [
     {
@@ -77,31 +82,6 @@ var defaultSong = '
     "innerBorderBot": "#121617"
 }';
 
-var afkTime:Float = 0;
-var hamsterLines:FlxTypedGroup<FlxSprite>;
-var spawned:Bool = false;
-
-var rightHamsters:Array<FlxSprite> = [];
-var topHamsters:Array<FlxSprite> = [];
-
-var cycleRunning:Bool = false;
-
-
-var intersectionX:Float = 520;
-var intersectionY:Float = 360;
-
-var horizontalLanes:Int = 5; 
-var verticalLanes:Int = 5;   
-
-var hamstersPerHorizontalLane:Int = 7;
-var hamstersPerVerticalLane:Int = 6;
-
-var laneSpacing:Float = 70;
-var hamsterSpacing:Float = 115;
-
-var minPassTime:Float = 15;
-var maxPassTime:Float = 30;
-
 var quickOptionName:String = "Quick Options";
 var quickMenuOpen:Bool = false;
 var quickSelected:Int = 0;
@@ -138,6 +118,18 @@ function setSaveBool(name:String, value:Bool)
     FlxG.save.flush();
 }
 
+function refreshAssistOptionsIfNeeded(name:String)
+{
+    if (name != "voiidBotplay" && name != "voiidNoDeath") return;
+
+    try
+    {
+        if (PlayState.instance != null)
+            PlayState.instance.scripts.call("refreshVoiidAssistOptions", []);
+    }
+    catch(e:Dynamic) {}
+}
+
 function quickItemLabel(index:Int):String
 {
     var item = quickItems[index];
@@ -146,7 +138,6 @@ function quickItemLabel(index:Int):String
 
 function create(event)
 {
-
     if (!event.options.contains(quickOptionName))
         event.options.insert(Std.int(Math.max(1, event.options.length - 1)), quickOptionName);
 
@@ -154,11 +145,19 @@ function create(event)
     pauseOptions = event.options;
     curSelected = 0;
     loadPauseCredits();
+    createPauseShell();
+    pauseSetupStep = 0;
+    pauseReady = false;
+    pauseMenuBuildIndex = 0;
+}
 
+function createPauseShell()
+{
     pauseCam = new FlxCamera();
     pauseCam.bgColor = 0;
     FlxG.cameras.add(pauseCam, false);
     cameras = [pauseCam];
+
     oldMouseVisible = FlxG.mouse.visible;
     FlxG.mouse.visible = true;
 
@@ -167,37 +166,87 @@ function create(event)
     pauseBG.scrollFactor.set();
     pauseBG.screenCenter();
     add(pauseBG);
-    FlxTween.tween(pauseBG, {alpha: 0.62}, 0.18, {ease: FlxEase.quadOut});
 
+    FlxTween.tween(pauseBG, {alpha: 0.62}, 0.18, {
+        ease: FlxEase.quadOut
+    });
+}
+
+function buildPauseHeaderFrame()
+{
     createPauseSongHeader();
+}
 
+function buildPauseInfoFrame()
+{
     pauseInfoTexts = new FlxTypedGroup<FunkinText>();
     add(pauseInfoTexts);
+
     addCreditInfoTexts();
     addInfoText("Blue balled: " + PlayState.deathCounter, 101);
+
     if (PlayState.opponentMode)
         addInfoText("OPPONENT MODE", 133);
     else if (PlayState.coopMode)
         addInfoText("CO-OP MODE", 133);
+}
 
-    pauseMenuTexts = new FlxTypedGroup<FunkinText>();
-    add(pauseMenuTexts);
-    for (i in 0...pauseOptions.length)
+function createPauseMenuItem(index:Int)
+{
+    var txt = new FunkinText(
+        90,
+        FlxG.height * 0.46 + (index * 45),
+        0,
+        getPauseOptionLabel(pauseOptions[index]),
+        32,
+        true
+    );
+
+    txt.setFormat(
+        Paths.font("Contb___.ttf"),
+        32,
+        FlxColor.WHITE,
+        "left",
+        FlxTextBorderStyle.OUTLINE,
+        FlxColor.BLACK
+    );
+
+    txt.borderSize = 1.25;
+    txt.ID = index;
+    txt.scrollFactor.set();
+    txt.alpha = 0;
+
+    pauseMenuTexts.add(txt);
+
+    FlxTween.tween(txt, {alpha: 0.6, x: 110}, 0.16, {
+        ease: FlxEase.quadOut
+    });
+}
+
+function buildPauseMenuFrame():Bool
+{
+    if (pauseMenuTexts == null)
     {
-        var txt = new FunkinText(90, FlxG.height * 0.46 + (i * 45), 0, getPauseOptionLabel(pauseOptions[i]), 32, true);
-        txt.setFormat(Paths.font("Contb___.ttf"), 32, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        txt.borderSize = 1.25;
-        txt.ID = i;
-        txt.scrollFactor.set();
-        txt.alpha = 0;
-        pauseMenuTexts.add(txt);
-        FlxTween.tween(txt, {alpha: 0.6, x: 110}, 0.16, {ease: FlxEase.quadOut, startDelay: i * 0.025});
+        pauseMenuTexts = new FlxTypedGroup<FunkinText>();
+        add(pauseMenuTexts);
+        pauseMenuBuildIndex = 0;
     }
 
-    hamsterLines = new FlxTypedGroup<FlxSprite>();
-    add(hamsterLines);
+    if (pauseMenuBuildIndex < pauseOptions.length)
+    {
+        createPauseMenuItem(pauseMenuBuildIndex);
+        pauseMenuBuildIndex++;
+        refreshPauseMenu();
+        return false;
+    }
 
     refreshPauseMenu();
+    return true;
+}
+
+function finishPauseSetup()
+{
+    pauseReady = true;
     game.updateDiscordPresence();
 }
 
@@ -205,19 +254,47 @@ function postCreate()
 {
 }
 
+function runPauseSetupFrame()
+{
+    var advance = true;
+
+    switch(pauseSetupStep)
+    {
+        case 0:
+            buildPauseHeaderFrame();
+        case 1:
+            buildPauseInfoFrame();
+        case 2:
+            advance = buildPauseMenuFrame();
+        case 3:
+            finishPauseSetup();
+        default:
+            pauseReady = true;
+    }
+
+    if (advance)
+        pauseSetupStep++;
+}
+
 function loadPauseCredits()
 {
-    var basePath = "songs/" + PlayState.SONG.meta.name + "/credits.json";
-    var diffPath = "songs/" + PlayState.SONG.meta.name + "/credits-" + PlayState.difficulty + ".json";
-
     try
     {
-        if (Assets.exists(Paths.getPath(diffPath)))
-            songData = Json.parse(Assets.getText(Paths.getPath(diffPath)));
-        else if (Assets.exists(Paths.getPath(basePath)))
-            songData = Json.parse(Assets.getText(Paths.getPath(basePath)));
-        else
-            songData = Json.parse(defaultSong);
+        var baseData = loadPauseCreditSet("");
+        if (baseData == null)
+            baseData = Json.parse(defaultSong);
+
+        var secondData = loadPauseCreditSet("2");
+        songData = baseData;
+
+        if (secondData != null)
+        {
+            secondData = mergeCreditData(baseData, secondData);
+
+            var secondTime = getDataFloat(secondData, "startTime", 0);
+            if (secondTime >= 0 && Conductor.songPosition >= secondTime)
+                songData = secondData;
+        }
     }
     catch(e:Dynamic)
     {
@@ -225,9 +302,39 @@ function loadPauseCredits()
     }
 }
 
+function loadPauseCreditSet(suffix:String):Dynamic
+{
+    var songPath = "songs/" + PlayState.SONG.meta.name + "/";
+    var diffPath = songPath + "credits" + suffix + "-" + PlayState.difficulty + ".json";
+    var basePath = songPath + "credits" + suffix + ".json";
+
+    try
+    {
+        if (Assets.exists(Paths.getPath(diffPath)))
+            return Json.parse(Assets.getText(Paths.getPath(diffPath)));
+        if (Assets.exists(Paths.getPath(basePath)))
+            return Json.parse(Assets.getText(Paths.getPath(basePath)));
+    }
+    catch(e:Dynamic) {}
+
+    return null;
+}
+
+function mergeCreditData(baseData:Dynamic, overrideData:Dynamic):Dynamic
+{
+    var merged = Json.parse(Json.stringify(baseData));
+
+    for (field in Reflect.fields(overrideData))
+        Reflect.setField(merged, field, Reflect.field(overrideData, field));
+
+    return merged;
+}
+
 function getCreditField(name:String):String
 {
-    if (songData == null || Reflect.field(songData, name) == null) return "";
+    if (songData == null || Reflect.field(songData, name) == null)
+        return "";
+
     return Std.string(Reflect.field(songData, name));
 }
 
@@ -235,19 +342,26 @@ function getPauseSongDisplayName():String
 {
     if (songData != null && Reflect.field(songData, "overrideName") != null)
         return Std.string(Reflect.field(songData, "overrideName"));
+
     return PlayState.SONG.meta.displayName;
 }
 
-function isFinalDestinationVip():Bool
+function getDataFloat(data:Dynamic, field:String, fallback:Float):Float
 {
-    return PlayState.SONG != null && PlayState.SONG.meta != null
-        && PlayState.SONG.meta.name.toLowerCase() == "final destination vip";
+    if (data == null || Reflect.field(data, field) == null)
+        return fallback;
+
+    var value = Std.parseFloat(Std.string(Reflect.field(data, field)));
+    return Math.isNaN(value) ? fallback : value;
 }
 
 function getRevealTime():Float
 {
     var jsonTime = getJsonFloat("startTime", -1);
-    if (jsonTime >= 0) return jsonTime;
+
+    if (jsonTime >= 0)
+        return jsonTime;
+
     return 0;
 }
 
@@ -263,71 +377,7 @@ function getPauseTitleText():String
 
 function getPauseSongTextData():Dynamic
 {
-    if (!isFinalDestinationVip() || Conductor.songPosition < 156800)
-        return songData;
-
-    return Json.parse('
-{
-	"composer": "TheOnlyVolume,Wolfinu,ImSilv4,Aron_Aurora",
-	"charter": "Sharik,Sanek,Parko",
-	"originalComposer": "Srperez",
-
-	"startTime": 156800,
-
-	"songFont": "dumbnerd.ttf",
-	"songFontSize": 64,
-	"infoFontSize": 12,
-
-	"diagonalSplit": true,
-	"splitAngle": 45,
-	"splitSoftness": 0.25,
-	"splitOffset": 0.15,
-
-	"outerBorderTop": "#000000",
-	"outerBorderBot": "#000000",
-
-	"midBorderTop": "#1ffbfe",
-	"midBorderBot": "#ffa8f2",
-
-	"innerBorderTop": "#1595f1",
-	"innerBorderBot": "#5a3cb1",
-
-	"leftOuterBorderTop": "#000000",
-	"leftOuterBorderBot": "#000000",
-	"leftMidBorderTop": "#1ffbfe",
-	"leftMidBorderBot": "#1595f1",
-	"leftInnerBorderTop": "#2a8cb5",
-	"leftInnerBorderBot": "#0d3f88",
-
-	"rightOuterBorderTop": "#000000",
-	"rightOuterBorderBot": "#000000",
-	"rightMidBorderTop": "#ff4bd8",
-	"rightMidBorderBot": "#ff7a1f",
-	"rightInnerBorderTop": "#b64f9f",
-	"rightInnerBorderBot": "#8f1f00",
-
-	"textOffsetY": 120,
-
-	"logo": "FDVIP",
-	"logoOffsetY": 0,
-	"logoScale": 1,
-
-	"sobelStrength": 0.6,
-	"sobelIntensity": 1.0,
-
-	"vipFont": "Onslaughter.otf",
-
-	"outerBorderTopVIP": "#000000",
-	"outerBorderBotVIP": "#000000",
-	"midBorderTopVIP": "#474747",
-	"midBorderBotVIP": "#474747",
-	"innerBorderTopVIP": "#FFFFFF",
-	"innerBorderBotVIP": "#FFFFFF",
-
-	"outerBorderSize": 5,
-	"midBorderSize": 2,
-	"innerBorderSize": 2
-}');
+    return songData;
 }
 
 function getJsonFloat(field:String, fallback:Float):Float
@@ -349,16 +399,16 @@ function getPauseLogoName():String
     if (!shouldRevealPauseTitle())
         return "";
 
-    if (isFinalDestinationVip() && Conductor.songPosition >= 156800 && logoExists("FDVIP"))
-        return "FDVIP";
-
     if (songData != null && Reflect.field(songData, "logo") != null && Std.string(Reflect.field(songData, "logo")) != "")
     {
         var jsonLogo = Std.string(Reflect.field(songData, "logo"));
-        if (logoExists(jsonLogo)) return jsonLogo;
+
+        if (logoExists(jsonLogo))
+            return jsonLogo;
     }
 
     var curSongName = PlayState.SONG.meta.name.toLowerCase();
+
     for (entry in logoTable)
     {
         for (song in entry.songs)
@@ -373,17 +423,48 @@ function getPauseLogoName():String
 
 function getPauseLogoScale():Float
 {
-    if (isFinalDestinationVip() && Conductor.songPosition >= 156800)
-        return 1.75;
+    if (songData != null && Reflect.field(songData, "pauseLogoScale") != null)
+        return getJsonFloat("pauseLogoScale", 1.0);
 
     return getJsonFloat("logoScale", 0.8) * 1.8375;
 }
 
+function getPauseSongFontSize():Float
+{
+    if (!pauseTitleRevealed)
+        return getJsonFloat("pauseHiddenSongFontSize", 120) * 0.68;
+
+    if (songData != null && Reflect.field(songData, "pauseSongFontSize") != null)
+        return getJsonFloat("pauseSongFontSize", 64);
+
+    return getJsonFloat("songFontSize", 128) * 0.68;
+}
+
+function getPauseCenterX():Float
+{
+    return FlxG.width * getJsonFloat("pauseCenterX", 0.53);
+}
+
+function getPauseLogoOffsetX():Float
+{
+    if (songData != null && Reflect.field(songData, "pauseLogoOffsetX") != null)
+        return getJsonFloat("pauseLogoOffsetX", 0);
+
+    return getJsonFloat("logoOffsetX", 0);
+}
+
+function getPauseSongTextOffsetX():Float
+{
+    return getJsonFloat("pauseSongTextOffsetX", 0);
+}
+
 function fitSpriteToBox(sprite:FlxSprite, maxW:Float, maxH:Float)
 {
-    if (sprite == null || sprite.width <= 0 || sprite.height <= 0) return;
+    if (sprite == null || sprite.width <= 0 || sprite.height <= 0)
+        return;
 
     var scale = Math.min(maxW / sprite.width, maxH / sprite.height);
+
     if (scale < 1)
     {
         sprite.scale.set(sprite.scale.x * scale, sprite.scale.y * scale);
@@ -396,33 +477,52 @@ function tweenInFromRight(sprite:FlxSprite, targetX:Float, targetY:Float, delay:
     sprite.x = FlxG.width + 80;
     sprite.y = targetY;
     sprite.alpha = 0;
-    FlxTween.tween(sprite, {x: targetX, alpha: 1}, 0.55, {ease: FlxEase.expoOut, startDelay: delay});
+
+    FlxTween.tween(sprite, {x: targetX, alpha: 1}, 0.55, {
+        ease: FlxEase.expoOut,
+        startDelay: delay
+    });
 }
 
 function createPauseSongHeader()
 {
-    var centerX = FlxG.width * 0.53;
+    var centerX = getPauseCenterX();
     pauseTitleRevealed = shouldRevealPauseTitle();
 
     var logoName = getPauseLogoName();
+
     if (logoName != "")
     {
         try
         {
             pauseLogo = new FlxSprite();
             pauseLogo.frames = Paths.getFrames("logos/" + logoName);
+
             pauseLogo.animation.addByPrefix("idle", "idle", 24, true);
             pauseLogoHasIdleAnim = pauseLogo.animation.exists("idle");
-            if (pauseLogoHasIdleAnim) pauseLogo.animation.play("idle");
+
+            if (pauseLogoHasIdleAnim)
+                pauseLogo.animation.play("idle");
+
             pauseLogo.setGraphicSize(Std.int(pauseLogo.width * getPauseLogoScale()));
             pauseLogo.updateHitbox();
+
             fitSpriteToBox(pauseLogo, 900, 360);
+
             pauseLogoBaseScaleX = pauseLogo.scale.x;
             pauseLogoBaseScaleY = pauseLogo.scale.y;
+
             pauseLogo.cameras = [pauseCam];
             pauseLogo.scrollFactor.set();
+
             add(pauseLogo);
-            tweenInFromRight(pauseLogo, centerX - (pauseLogo.width * 0.5), 118 + getJsonFloat("logoOffsetY", 0) * 0.5, 0.05);
+
+            tweenInFromRight(
+                pauseLogo,
+                centerX - (pauseLogo.width * 0.5) + getPauseLogoOffsetX(),
+                118 + getJsonFloat("logoOffsetY", 0) * 0.5,
+                0.05
+            );
         }
         catch(e:Dynamic) {}
     }
@@ -430,40 +530,55 @@ function createPauseSongHeader()
     try
     {
         var titleData = getPauseSongTextData();
-        var size = (pauseTitleRevealed ? getJsonFloat("songFontSize", 128) : 120) * 0.68;
-        if (isFinalDestinationVip() && Conductor.songPosition >= 156800)
-            size = 64 * 0.86;
+        var size = getPauseSongFontSize();
 
         pauseSongText = createSongText(getPauseTitleText(), size, 10, titleData);
+
         fitSpriteToBox(pauseSongText, 560, 170);
+
         pauseSongText.cameras = [pauseCam];
         pauseSongText.scrollFactor.set();
+
         add(pauseSongText);
-        tweenInFromRight(pauseSongText, centerX - (pauseSongText.width * 0.5), 455, 0.14);
+
+        tweenInFromRight(
+            pauseSongText,
+            centerX - (pauseSongText.width * 0.5) + getPauseSongTextOffsetX(),
+            455,
+            0.14
+        );
     }
     catch(e:Dynamic) {}
 }
 
 function scaleSpriteFromCenter(sprite:FlxSprite, scaleX:Float, scaleY:Float)
 {
-    if (sprite == null) return;
+    if (sprite == null)
+        return;
 
     var centerX = sprite.x + sprite.width * 0.5;
     var centerY = sprite.y + sprite.height * 0.5;
+
     sprite.scale.set(scaleX, scaleY);
     sprite.updateHitbox();
+
     sprite.x = centerX - sprite.width * 0.5;
     sprite.y = centerY - sprite.height * 0.5;
 }
 
 function bumpPauseLogo()
 {
-    if (pauseLogo == null || pauseLogoHasIdleAnim) return;
+    if (pauseLogo == null || pauseLogoHasIdleAnim)
+        return;
 
     if (pauseLogoBumpTween != null)
         pauseLogoBumpTween.cancel();
 
-    scaleSpriteFromCenter(pauseLogo, pauseLogoBaseScaleX * 1.08, pauseLogoBaseScaleY * 1.08);
+    scaleSpriteFromCenter(
+        pauseLogo,
+        pauseLogoBaseScaleX * 1.08,
+        pauseLogoBaseScaleY * 1.08
+    );
 
     pauseLogoBumpTween = FlxTween.tween(pauseLogo.scale, {
         x: pauseLogoBaseScaleX,
@@ -479,10 +594,13 @@ function bumpPauseLogo()
 
 function updatePauseLogoBump(elapsed:Float)
 {
-    if (pauseLogo == null || pauseLogoHasIdleAnim) return;
+    if (pauseLogo == null || pauseLogoHasIdleAnim)
+        return;
 
     pauseLogoBumpTimer += elapsed;
+
     var interval = Math.max(0.18, Conductor.crochet / 1000);
+
     if (pauseLogoBumpTimer >= interval)
     {
         pauseLogoBumpTimer = 0;
@@ -493,26 +611,47 @@ function updatePauseLogoBump(elapsed:Float)
 function addCreditInfoTexts()
 {
     var y = 18;
+
     var composer = getCreditField("composer");
     var charter = getCreditField("charter");
     var originalComposer = getCreditField("originalComposer");
 
-    if (composer != "") { addInfoText("Composer: " + composer, y); y += 24; }
-    if (charter != "") { addInfoText("Charter: " + charter, y); y += 24; }
-    if (originalComposer != "") { addInfoText("Original: " + originalComposer, y); y += 24; }
+    if (composer != "")
+    {
+        addInfoText("Composer: " + composer, y);
+        y += 24;
+    }
+
+    if (charter != "")
+    {
+        addInfoText("Charter: " + charter, y);
+        y += 24;
+    }
+
+    if (originalComposer != "")
+    {
+        addInfoText("Original: " + originalComposer, y);
+        y += 24;
+    }
 }
 
 function addInfoText(text:String, y:Float)
 {
-    if (text == null || text == "") return;
+    if (text == null || text == "")
+        return;
 
     var label = new FunkinText(FlxG.width - 560, y, 540, text, 18, false);
+
     label.setFormat(Paths.font("Contb___.ttf"), 18, FlxColor.WHITE, "right");
     label.scrollFactor.set();
     label.alpha = 0;
     label.updateHitbox();
+
     pauseInfoTexts.add(label);
-    FlxTween.tween(label, {alpha: 1, y: y + 4}, 0.18, {ease: FlxEase.quadOut});
+
+    FlxTween.tween(label, {alpha: 1, y: y + 4}, 0.18, {
+        ease: FlxEase.quadOut
+    });
 }
 
 function getPauseOptionLabel(option:String):String
@@ -530,12 +669,15 @@ function getPauseOptionLabel(option:String):String
 
 function refreshPauseMenu()
 {
-    if (pauseMenuTexts == null) return;
+    if (pauseMenuTexts == null)
+        return;
 
     for (i in 0...pauseMenuTexts.members.length)
     {
         var txt = pauseMenuTexts.members[i];
-        if (txt == null) continue;
+
+        if (txt == null)
+            continue;
 
         txt.text = (i == curSelected ? "> " : "  ") + getPauseOptionLabel(pauseOptions[i]);
         txt.alpha = i == curSelected ? 1 : 0.55;
@@ -546,16 +688,22 @@ function refreshPauseMenu()
 
 function changePauseSelection(change:Dynamic)
 {
-    if (pauseOptions.length < 1) return;
+    if (pauseOptions.length < 1)
+        return;
+
     var amount = Std.int(change);
-    if (amount == 0) return;
+
+    if (amount == 0)
+        return;
+
     curSelected = FlxMath.wrap(curSelected + amount, 0, pauseOptions.length - 1);
     refreshPauseMenu();
 }
 
 function clickPauseOption():Bool
 {
-    if (pauseMenuTexts == null || !FlxG.mouse.justPressed) return false;
+    if (pauseMenuTexts == null || !FlxG.mouse.justPressed)
+        return false;
 
     var mx = FlxG.mouse.x;
     var my = FlxG.mouse.y;
@@ -563,19 +711,29 @@ function clickPauseOption():Bool
     for (i in 0...pauseMenuTexts.members.length)
     {
         var txt = pauseMenuTexts.members[i];
-        if (txt == null) continue;
+
+        if (txt == null)
+            continue;
 
         var hitW = Math.max(txt.width, 300);
-        if (mx >= txt.x - 18 && mx <= txt.x + hitW + 18 && my >= txt.y - 8 && my <= txt.y + txt.height + 8)
+
+        if (
+            mx >= txt.x - 18 &&
+            mx <= txt.x + hitW + 18 &&
+            my >= txt.y - 8 &&
+            my <= txt.y + txt.height + 8
+        )
         {
             curSelected = i;
             refreshPauseMenu();
+
             if (pauseOptions[curSelected] == quickOptionName)
                 openQuickOptions();
             else if (pauseOptions[curSelected] == "Change Options")
                 openVoiidOptionsMenu();
             else
                 selectOption();
+
             return true;
         }
     }
@@ -587,15 +745,20 @@ function refreshQuickOptionLabels()
 {
     try
     {
-        if (pauseMenuTexts == null || pauseOptions == null) return;
+        if (pauseMenuTexts == null || pauseOptions == null)
+            return;
 
         for (i in 0...pauseOptions.length)
         {
             var option = pauseOptions[i];
-            if (option != quickOptionName) continue;
+
+            if (option != quickOptionName)
+                continue;
 
             var item = pauseMenuTexts.members[i];
-            if (item != null) item.text = (i == curSelected ? "> " : "  ") + "Quick Options";
+
+            if (item != null)
+                item.text = (i == curSelected ? "> " : "  ") + "Quick Options";
         }
     }
     catch(e:Dynamic) {}
@@ -603,7 +766,8 @@ function refreshQuickOptionLabels()
 
 function openQuickOptions()
 {
-    if (quickMenuOpen) return;
+    if (quickMenuOpen)
+        return;
 
     quickMenuOpen = true;
     quickSelected = 0;
@@ -629,8 +793,10 @@ function openQuickOptions()
     for (i in 0...quickItems.length)
     {
         var txt = new FunkinText(0, 230 + (i * 62), FlxG.width, "", 28, true);
+
         txt.alignment = "center";
         txt.scrollFactor.set();
+
         quickTexts.add(txt);
     }
 
@@ -641,8 +807,19 @@ function closeQuickOptions()
 {
     quickMenuOpen = false;
 
-    if (quickBG != null) { remove(quickBG); quickBG.destroy(); quickBG = null; }
-    if (quickTitle != null) { remove(quickTitle); quickTitle.destroy(); quickTitle = null; }
+    if (quickBG != null)
+    {
+        remove(quickBG);
+        quickBG.destroy();
+        quickBG = null;
+    }
+
+    if (quickTitle != null)
+    {
+        remove(quickTitle);
+        quickTitle.destroy();
+        quickTitle = null;
+    }
 
     if (quickNotice != null)
     {
@@ -662,12 +839,15 @@ function closeQuickOptions()
 
 function refreshQuickMenu()
 {
-    if (quickTexts == null) return;
+    if (quickTexts == null)
+        return;
 
     for (i in 0...quickTexts.members.length)
     {
         var txt = quickTexts.members[i];
-        if (txt == null) continue;
+
+        if (txt == null)
+            continue;
 
         txt.text = (i == quickSelected ? "> " : "  ") + quickItemLabel(i) + (i == quickSelected ? " <" : "  ");
         txt.alpha = i == quickSelected ? 1 : 0.55;
@@ -677,14 +857,18 @@ function refreshQuickMenu()
 function changeQuickSelection(change:Dynamic)
 {
     var amount = Std.int(change);
-    if (amount == 0) return;
+
+    if (amount == 0)
+        return;
+
     quickSelected = FlxMath.wrap(quickSelected + amount, 0, quickItems.length - 1);
     refreshQuickMenu();
 }
 
 function clickQuickOption():Bool
 {
-    if (quickTexts == null || !FlxG.mouse.justPressed) return false;
+    if (quickTexts == null || !FlxG.mouse.justPressed)
+        return false;
 
     var mx = FlxG.mouse.x;
     var my = FlxG.mouse.y;
@@ -692,9 +876,16 @@ function clickQuickOption():Bool
     for (i in 0...quickTexts.members.length)
     {
         var txt = quickTexts.members[i];
-        if (txt == null) continue;
 
-        if (mx >= txt.x && mx <= txt.x + txt.width && my >= txt.y - 8 && my <= txt.y + txt.height + 8)
+        if (txt == null)
+            continue;
+
+        if (
+            mx >= txt.x &&
+            mx <= txt.x + txt.width &&
+            my >= txt.y - 8 &&
+            my <= txt.y + txt.height + 8
+        )
         {
             quickSelected = i;
             refreshQuickMenu();
@@ -711,6 +902,7 @@ function toggleQuickSelected()
     var item = quickItems[quickSelected];
 
     setSaveBool(item.save, !saveBool(item.save, item.fallback));
+    refreshAssistOptionsIfNeeded(item.save);
     refreshQuickMenu();
 
     if (item.needsRestart == true)
@@ -719,7 +911,8 @@ function toggleQuickSelected()
 
 function showQuickNotice(text:String)
 {
-    if (quickNotice == null) return;
+    if (quickNotice == null)
+        return;
 
     FlxTween.cancelTweensOf(quickNotice);
 
@@ -734,6 +927,12 @@ function showQuickNotice(text:String)
 
 function onSelectOption(event)
 {
+    if (!pauseReady)
+    {
+        event.cancel();
+        return;
+    }
+
     if (quickMenuOpen)
     {
         event.cancel();
@@ -757,26 +956,37 @@ function onSelectOption(event)
 function openVoiidOptionsMenu()
 {
     Reflect.setField(FlxG.save.data, "voiidOptionsOpenedFromPause", true);
+
     if (PlayState.SONG != null && PlayState.SONG.meta != null)
         Reflect.setField(FlxG.save.data, "voiidPauseSong", PlayState.SONG.meta.name);
+
     Reflect.setField(FlxG.save.data, "voiidPauseDifficulty", PlayState.difficulty);
     Reflect.setField(FlxG.save.data, "voiidPauseVariation", PlayState.variation);
     Reflect.setField(FlxG.save.data, "voiidPauseStoryMode", PlayState.isStoryMode);
     Reflect.setField(FlxG.save.data, "voiidPauseOpponentMode", PlayState.opponentMode);
     Reflect.setField(FlxG.save.data, "voiidPauseCoopMode", PlayState.coopMode);
     Reflect.setField(FlxG.save.data, "voiidPauseChartingMode", PlayState.chartingMode);
+
     FlxG.save.flush();
+
     FlxG.switchState(new ModState("VoiidOptionsState"));
 }
 
 function onChangeItem(event)
 {
-    if (quickMenuOpen)
+    if (!pauseReady || quickMenuOpen)
         event.cancel();
 }
 
 function update(elapsed:Float)
 {
+    if (!pauseReady)
+    {
+        runPauseSetupFrame();
+        updatePauseLogoBump(elapsed);
+        return;
+    }
+
     updatePauseLogoBump(elapsed);
 
     if (quickMenuOpen)
@@ -826,260 +1036,6 @@ function update(elapsed:Float)
         else
             selectOption();
     }
-
-    afkTime += elapsed;
-
-    if (afkTime >= 30 && !spawned)
-    {
-        spawned = true;
-        createHamsterIntersection();
-    }
-
-    if (FlxG.keys.justPressed.ANY)
-    {
-        afkTime = 0;
-
-        if (spawned)
-        {
-            spawned = false;
-            cycleRunning = false;
-
-            for (spr in hamsterLines.members)
-            {
-                if (spr != null)
-                {
-                    FlxTween.cancelTweensOf(spr);
-                    spr.destroy();
-                }
-            }
-
-            hamsterLines.clear();
-            rightHamsters = [];
-            topHamsters = [];
-        }
-    }
-}
-
-function makeHamster():FlxSprite
-{
-    var hamster = new FlxSprite();
-
-    hamster.frames = Paths.getSparrowAtlas("hampster/hampster");
-    hamster.animation.addByPrefix("Hampster", "Hampster", 24, true);
-    hamster.animation.play("Hampster");
-
-    hamster.antialiasing = true;
-
-    hamster.setGraphicSize(150, 150);
-    hamster.updateHitbox();
-
-    hamster.scrollFactor.set();
-
-    return hamster;
-}
-
-function getRandomMoveEase():Dynamic
-{
-    return switch(FlxG.random.int(0, 11))
-    {
-        case 0: FlxEase.linear;
-        case 1: FlxEase.sineInOut;
-        case 2: FlxEase.quadInOut;
-        case 3: FlxEase.cubeInOut;
-        case 4: FlxEase.quartInOut;
-        case 5: FlxEase.quintInOut;
-        case 6: FlxEase.backOut;
-        case 7: FlxEase.elasticOut;
-        case 8: FlxEase.bounceOut;
-        case 9: FlxEase.expoOut;
-        case 10: FlxEase.circInOut;
-        default: FlxEase.sineOut;
-    }
-}
-
-function laneOffset(index:Int, total:Int):Float
-{
-    return (index - ((total - 1) / 2)) * laneSpacing;
-}
-
-function createHamsterIntersection()
-{
-    rightHamsters = [];
-    topHamsters = [];
-
-    for (lane in 0...horizontalLanes)
-    {
-        for (i in 0...hamstersPerHorizontalLane)
-        {
-            var h = makeHamster();
-
-            h.x = FlxG.width + 180 + (i * hamsterSpacing) + FlxG.random.int(-20, 60);
-            h.y = intersectionY + laneOffset(lane, horizontalLanes) + FlxG.random.float(-10, 10);
-
-            hamsterLines.add(h);
-            rightHamsters.push(h);
-        }
-    }
-
-    for (lane in 0...verticalLanes)
-    {
-        for (i in 0...hamstersPerVerticalLane)
-        {
-            var h = makeHamster();
-
-            h.x = intersectionX + laneOffset(lane, verticalLanes) + FlxG.random.float(-10, 10);
-            h.y = -200 - (i * hamsterSpacing) - FlxG.random.int(0, 180);
-
-            hamsterLines.add(h);
-            topHamsters.push(h);
-        }
-    }
-
-    cycleRunning = true;
-    startIntersectionCycle();
-}
-
-function startIntersectionCycle()
-{
-    if (!spawned || !cycleRunning) return;
-
-    resetIntersectionPositions();
-    bunchRightHamsters();
-
-    var topPassTime = FlxG.random.float(minPassTime, maxPassTime);
-    var rightPassTime = FlxG.random.float(minPassTime, maxPassTime);
-
-    new FlxTimer().start(1.0, function(tmr:FlxTimer)
-    {
-        if (!spawned || !cycleRunning) return;
-
-        passTopHamsters(topPassTime);
-
-        new FlxTimer().start(topPassTime + FlxG.random.float(0.5, 1.5), function(tmr2:FlxTimer)
-        {
-            if (!spawned || !cycleRunning) return;
-
-            passRightHamsters(rightPassTime);
-
-            new FlxTimer().start(rightPassTime + FlxG.random.float(0.8, 2.0), function(tmr3:FlxTimer)
-            {
-                if (!spawned || !cycleRunning) return;
-                startIntersectionCycle();
-            });
-        });
-    });
-}
-
-function bunchRightHamsters()
-{
-    var perLane = hamstersPerHorizontalLane;
-
-    for (i in 0...rightHamsters.length)
-    {
-        var h = rightHamsters[i];
-        if (h == null) continue;
-
-        FlxTween.cancelTweensOf(h);
-
-        var lane = Std.int(i / perLane);
-        var pos = i % perLane;
-
-        var stopX = intersectionX + 220 + (pos * 80) + FlxG.random.float(-18, 18);
-        var stopY = intersectionY + laneOffset(lane, horizontalLanes) + FlxG.random.float(-12, 12);
-
-        FlxTween.tween(h, {
-            x: stopX,
-            y: stopY
-        }, FlxG.random.float(0.8, 2.2), {
-            ease: FlxEase.backOut,
-            startDelay: FlxG.random.float(0, 0.65)
-        });
-    }
-}
-
-function passTopHamsters(duration:Float)
-{
-    var perLane = hamstersPerVerticalLane;
-
-    for (i in 0...topHamsters.length)
-    {
-        var h = topHamsters[i];
-        if (h == null) continue;
-
-        FlxTween.cancelTweensOf(h);
-
-        var lane = Std.int(i / perLane);
-        var pos = i % perLane;
-
-        h.x = intersectionX + laneOffset(lane, verticalLanes) + FlxG.random.float(-12, 12);
-        h.y = -220 - (pos * hamsterSpacing) - FlxG.random.int(0, 180);
-
-        FlxTween.tween(h, {
-            y: FlxG.height + 220 + FlxG.random.int(0, 180)
-        }, FlxG.random.float(duration * 0.75, duration * 1.15), {
-            ease: getRandomMoveEase(),
-            startDelay: FlxG.random.float(0, duration * 0.35)
-        });
-    }
-}
-
-function passRightHamsters(duration:Float)
-{
-    var perLane = hamstersPerHorizontalLane;
-
-    for (i in 0...rightHamsters.length)
-    {
-        var h = rightHamsters[i];
-        if (h == null) continue;
-
-        FlxTween.cancelTweensOf(h);
-
-        var lane = Std.int(i / perLane);
-        var pos = i % perLane;
-
-        h.x = intersectionX + 220 + (pos * 80) + FlxG.random.float(-18, 18);
-        h.y = intersectionY + laneOffset(lane, horizontalLanes) + FlxG.random.float(-15, 15);
-
-        FlxTween.tween(h, {
-            x: -260 - FlxG.random.int(0, 300)
-        }, FlxG.random.float(duration * 0.75, duration * 1.15), {
-            ease: getRandomMoveEase(),
-            startDelay: FlxG.random.float(0, duration * 0.35)
-        });
-    }
-}
-
-function resetIntersectionPositions()
-{
-    for (i in 0...rightHamsters.length)
-    {
-        var h = rightHamsters[i];
-        if (h == null) continue;
-
-        FlxTween.cancelTweensOf(h);
-
-        var lane = Std.int(i / hamstersPerHorizontalLane);
-        var pos = i % hamstersPerHorizontalLane;
-
-        h.x = FlxG.width + 180 + (pos * hamsterSpacing) + FlxG.random.int(0, 250);
-        h.y = intersectionY + laneOffset(lane, horizontalLanes) + FlxG.random.float(-10, 10);
-        h.alpha = 1;
-    }
-
-    for (i in 0...topHamsters.length)
-    {
-        var h = topHamsters[i];
-        if (h == null) continue;
-
-        FlxTween.cancelTweensOf(h);
-
-        var lane = Std.int(i / hamstersPerVerticalLane);
-        var pos = i % hamstersPerVerticalLane;
-
-        h.x = intersectionX + laneOffset(lane, verticalLanes) + FlxG.random.float(-10, 10);
-        h.y = -220 - (pos * hamsterSpacing) - FlxG.random.int(0, 250);
-        h.alpha = 1;
-    }
 }
 
 function destroy()
@@ -1089,15 +1045,6 @@ function destroy()
 
     if (quickMenuOpen)
         closeQuickOptions();
-
-    if (hamsterLines != null)
-    {
-        for (spr in hamsterLines.members)
-        {
-            if (spr != null)
-                FlxTween.cancelTweensOf(spr);
-        }
-    }
 
     if (pauseCam != null && FlxG.cameras.list.contains(pauseCam))
         FlxG.cameras.remove(pauseCam, true);

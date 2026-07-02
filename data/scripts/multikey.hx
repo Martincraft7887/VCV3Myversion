@@ -32,6 +32,9 @@ var playFadeIn = true;
 var strumLineHasSustains:Array<Bool> = [];
 
 var maxKeyCount = 0;
+var framesCache:Map<String, Dynamic> = [];
+var splashNameCache:Map<String, String> = [];
+var defaultSplashName:String = null;
 
 
 public var multikeyScales:Array<Float> = [];
@@ -98,6 +101,43 @@ public function getCappedKeyCount(strumlineID:Int)
 	return kc;
 }
 
+public function getKeyCountIndexFromCount(kc:Int)
+{
+	if (kc < 1) kc = 1;
+	if (kc > multikeyScales.length) kc = multikeyScales.length;
+	return kc - 1;
+}
+
+function getCachedFrames(sprite:String) {
+	if (!framesCache.exists(sprite))
+		framesCache.set(sprite, Paths.getFrames(sprite));
+	return framesCache.get(sprite);
+}
+
+function getManiaKeyCountAt(strumlineID:Int, time:Float):Int {
+	if (strumlineID < 0 || strumlineID >= strumLineKeyCounts.length)
+		return 4;
+	if (strumlineID < 0 || strumlineID >= maniaChanges.length || maniaChanges[strumlineID].length <= 0)
+		return strumLineKeyCounts[strumlineID];
+
+	var changes = maniaChanges[strumlineID];
+	var low = 0;
+	var high = changes.length - 1;
+	var result = changes[0][1];
+
+	while (low <= high) {
+		var mid = Std.int((low + high) / 2);
+		if (time >= changes[mid][0]) {
+			result = changes[mid][1];
+			low = mid + 1;
+		} else {
+			high = mid - 1;
+		}
+	}
+
+	return result;
+}
+
 var controlsList:Array<Array<Int>> = [];
 var controlsListP2:Array<Array<Int>> = [];
 
@@ -123,7 +163,7 @@ function onStrumCreation(event)
 	var kc = getKeyCountIndex(event.player);
 
     var strum = event.strum;
-    strum.frames = Paths.getFrames(event.sprite);
+    strum.frames = getCachedFrames(event.sprite);
     strum.antialiasing = true;
     strum.setGraphicSize(Std.int((strum.width * strumLineNoteScales[event.player] * strumLines.members[event.player].strumScale)));
 
@@ -211,28 +251,19 @@ function onNoteCreation(event) {
 
 	event.cancel();
 
-	if (maniaChanges[event.strumLineID].length > 0)
-	{
-		for (mc in maniaChanges[event.strumLineID])
-		{
-			if (event.note.strumTime > mc[0])
-			{
-				strumLineKeyCounts[event.strumLineID] = mc[1]; 
-			}
-		}
-	}
+	var currentKeyCount = getManiaKeyCountAt(event.strumLineID, event.note.strumTime);
+	var kc = getKeyCountIndexFromCount(currentKeyCount);
 
-	var kc = getKeyCountIndex(event.strumLineID);
 
 	var note = event.note;
 	note.splash = getSplashForTime(note.strumTime);
-	note.frames = Paths.getFrames(event.noteSprite);
+	note.frames = getCachedFrames(event.noteSprite);
 	if (note.isSustainNote && event.strumLineID >= 0 && event.strumLineID < strumLineHasSustains.length)
 		strumLineHasSustains[event.strumLineID] = true;
 
 	var strumScale = strumLines.members[event.strumLineID].strumScale;
 
-	note.noteData = note.noteData % strumLineKeyCounts[event.strumLineID];
+	note.noteData = note.noteData % currentKeyCount;
 
     note.animation.addByPrefix('scroll', multikeyNoteAnims[kc][note.noteData][0]);
     note.animation.addByPrefix('hold', multikeyNoteAnims[kc][note.noteData][1]);
@@ -244,8 +275,6 @@ function onNoteCreation(event) {
 
 	note.updateHitbox();
 
-    if (maniaChanges[event.strumLineID] != null && maniaChanges[event.strumLineID].length > 0)
-        strumLineKeyCounts[event.strumLineID] = maniaChanges[event.strumLineID][0][1]; 
 }
 
 function create()
@@ -354,28 +383,8 @@ function create()
 
 						var daStrumTime:Float = note[0];
 
-						var keyCount = 4;
-						var playerKeyCount = 4;
-						if (maniaChanges[0].length > 0) 
-						{
-							for (mc in maniaChanges[0])
-							{
-								if (daStrumTime > mc[0])
-								{
-									keyCount = mc[1];
-								}
-							}
-						}
-						if (maniaChanges[1].length > 0) 
-						{
-							for (mc in maniaChanges[1])
-							{
-								if (daStrumTime > mc[0])
-								{
-									playerKeyCount = mc[1];
-								}
-							}
-						}
+						var keyCount = getManiaKeyCountAt(0, daStrumTime);
+						var playerKeyCount = getManiaKeyCountAt(1, daStrumTime);
 
 						var daNoteData:Int = Std.int(note[1] % (keyCount+playerKeyCount));
 
@@ -519,20 +528,27 @@ function normalizeSplashPrefix(prefix:String):String {
 
 function splashNameForPrefix(prefix:String):String {
 	prefix = normalizeSplashPrefix(prefix);
+	if (splashNameCache.exists(prefix))
+		return splashNameCache.get(prefix);
+
+	var result = "default";
 	if (prefix == "")
-		return Assets.exists(Paths.xml("splashes/codename")) ? "codename" : "default";
-	if (prefix == "voiid/")
-		return Assets.exists(Paths.xml("splashes/voiid")) ? "voiid" : "default";
+		result = Assets.exists(Paths.xml("splashes/codename")) ? "codename" : "default";
+	else if (prefix == "voiid/")
+		result = Assets.exists(Paths.xml("splashes/voiid")) ? "voiid" : "default";
+	else {
+		var name = StringTools.endsWith(prefix, "/") ? prefix.substr(0, prefix.length - 1) : prefix;
+		if (Assets.exists(Paths.xml("splashes/" + name)))
+			result = name;
+	}
 
-	var name = StringTools.endsWith(prefix, "/") ? prefix.substr(0, prefix.length - 1) : prefix;
-	if (Assets.exists(Paths.xml("splashes/" + name)))
-		return name;
-
-	return "default";
+	splashNameCache.set(prefix, result);
+	return result;
 }
 
 function cacheSplashSkinChanges() {
 	splashSkinChanges = [];
+	defaultSplashName = splashNameForPrefix(defaultSplashSkinPrefix);
 	for (event in events) {
 		if (event.name == "Change UI Skin") {
 			splashSkinChanges.push({
@@ -552,7 +568,7 @@ function cacheSplashSkinChanges() {
 }
 
 function getSplashForTime(time:Float):String {
-	var splash = splashNameForPrefix(defaultSplashSkinPrefix);
+	var splash = defaultSplashName == null ? splashNameForPrefix(defaultSplashSkinPrefix) : defaultSplashName;
 	for (change in splashSkinChanges) {
 		if (time >= change.time)
 			splash = change.splash;

@@ -73,6 +73,8 @@ var defaultSong = '
 }';
 
 var songData = null;
+var songCreditEntries:Array<Dynamic> = [];
+var nextCreditIndex:Int = 0;
 
 
 
@@ -192,31 +194,102 @@ function logoExists(logoName:String):Bool
     return Assets.exists(Paths.image("logos/" + logoName));
 }
 
-function getJsonFloat(field:String, fallback:Float):Float
+function getDataFloat(data:Dynamic, field:String, fallback:Float):Float
 {
-    if (songData == null || Reflect.field(songData, field) == null)
+    if (data == null || Reflect.field(data, field) == null)
         return fallback;
 
-    var value = Std.parseFloat(Std.string(Reflect.field(songData, field)));
+    var value = Std.parseFloat(Std.string(Reflect.field(data, field)));
     return Math.isNaN(value) ? fallback : value;
+}
+
+function getJsonFloat(field:String, fallback:Float):Float
+{
+    return getDataFloat(songData, field, fallback);
+}
+
+function getDataBool(data:Dynamic, field:String, fallback:Bool):Bool
+{
+    if (data == null || Reflect.field(data, field) == null)
+        return fallback;
+
+    var v = Std.string(Reflect.field(data, field)).toLowerCase();
+    return v == "true" || v == "1";
 }
 
 function getJsonBool(field:String, fallback:Bool):Bool
 {
-    if (songData == null || Reflect.field(songData, field) == null)
+    return getDataBool(songData, field, fallback);
+}
+
+function getDataInt(data:Dynamic, field:String, fallback:Int):Int
+{
+    if (data == null || Reflect.field(data, field) == null)
         return fallback;
 
-    var v = Std.string(Reflect.field(songData, field)).toLowerCase();
-    return v == "true" || v == "1";
+    var value = Std.parseInt(Std.string(Reflect.field(data, field)));
+    return value == null ? fallback : value;
 }
 
 function getJsonInt(field:String, fallback:Int):Int
 {
-    if (songData == null || Reflect.field(songData, field) == null)
-        return fallback;
+    return getDataInt(songData, field, fallback);
+}
 
-    var value = Std.parseInt(Std.string(Reflect.field(songData, field)));
-    return value == null ? fallback : value;
+function loadCreditData(fileName:String):Dynamic
+{
+    var path = "songs/" + PlayState.SONG.meta.name + "/" + fileName;
+
+    try
+    {
+        if (Assets.exists(path))
+            return Json.parse(Assets.getText(path));
+    }
+    catch(e:Dynamic) {}
+
+    return null;
+}
+
+function loadSongCreditEntries()
+{
+    songCreditEntries = [];
+    nextCreditIndex = 0;
+
+    var baseData = loadCreditData("credits.json");
+    if (baseData == null)
+        baseData = Json.parse(defaultSong);
+
+    songCreditEntries.push({
+        data: baseData,
+        time: getDataFloat(baseData, "startTime", 0)
+    });
+
+    var secondData = loadCreditData("credits2.json");
+    if (secondData != null)
+    {
+        secondData = mergeCreditData(baseData, secondData);
+
+        songCreditEntries.push({
+            data: secondData,
+            time: getDataFloat(secondData, "startTime", 0)
+        });
+    }
+
+    songCreditEntries.sort(function(a, b) {
+        if(a.time < b.time) return -1;
+        else if(a.time > b.time) return 1;
+        else return 0;
+    });
+}
+
+function mergeCreditData(baseData:Dynamic, overrideData:Dynamic):Dynamic
+{
+    var merged = cloneData(baseData);
+
+    for (field in Reflect.fields(overrideData))
+        Reflect.setField(merged, field, Reflect.field(overrideData, field));
+
+    return merged;
 }
 
 function cloneData(data:Dynamic):Dynamic
@@ -283,6 +356,14 @@ function getCustomLogoYOffset():Float
     if (!logoFromJson || songData == null || songData.logoOffsetY == null)
         return 0;
     var offset = Std.parseFloat(Std.string(songData.logoOffsetY));
+    return Math.isNaN(offset) ? 0 : offset;
+}
+
+function getCustomLogoXOffset():Float
+{
+    if (!logoFromJson || songData == null || songData.logoOffsetX == null)
+        return 0;
+    var offset = Std.parseFloat(Std.string(songData.logoOffsetX));
     return Math.isNaN(offset) ? 0 : offset;
 }
 
@@ -363,6 +444,8 @@ function getTimerTags():String {
         tags.push("BOT");
     if (saveBool("voiidNoDeath", false))
         tags.push("NO DEATH");
+    if (saveBool("voiidNoDeathDied", false))
+        tags.push("DIED");
 
     return tags.length > 0 ? " (" + tags.join(") (") + ")" : "";
 }
@@ -488,35 +571,42 @@ function updateTimerBar() {
     timerBarFill.y = timerBarBG.y + timerBarPadding;
 }
 
-
-
-
-function postCreate()
+function clearPopupSprites()
 {
-    centerX = FlxG.width / 2;
-    centerY = FlxG.height / 2;
+    centerFollowers = [];
 
-    cacheTimerSkinChanges();
+    if (logoBumpTween != null)
+    {
+        logoBumpTween.cancel();
+        logoBumpTween = null;
+    }
 
-    
-    
-    
-    if (Assets.exists("songs/" + PlayState.SONG.meta.name + "/credits.json"))
+    for (obj in [t1, tLeft, tRight, logo])
     {
-        songData = Json.parse(
-            Assets.getText("songs/" + PlayState.SONG.meta.name + "/credits.json")
-        );
+        if (obj != null)
+        {
+            remove(obj);
+            obj.destroy();
+        }
     }
-    else
-    {
-        songData = Json.parse(defaultSong);
-    }
+
+    t1 = null;
+    tLeft = null;
+    tRight = null;
+    logo = null;
+    logoHasIdleAnim = false;
+    logoBaseScaleX = 1;
+    logoBaseScaleY = 1;
+}
+
+function preparePopup(data:Dynamic)
+{
+    clearPopupSprites();
+    songData = data;
+
     logoScale = getJsonFloat("logoScale", 0.8);
     customTextOffsetY = getJsonFloat("textOffsetY", 200);
 
-    
-    
-    
     useSplitText = getJsonBool("splitText", false);
     splitTextAt = getJsonInt("splitTextAt", -1);
     splitTextGap = getJsonFloat("splitTextGap", 0);
@@ -555,28 +645,18 @@ function postCreate()
     else
     {
         t1 = makeCoolText(
-            PlayState.SONG.meta.displayName,
+            displaySongName,
             songData.songFontSize,
             12,
             Json.stringify(songData)
         );
     }
-    
-    
-    
+
     var logoName = getLogoName();
 
     logo = new FlxSprite();
-
     logo.frames = Paths.getFrames("logos/" + logoName);
-
-    
-    logo.animation.addByPrefix(
-        "idle",
-        "idle",
-        24,
-        false 
-    );
+    logo.animation.addByPrefix("idle", "idle", 24, false);
 
     logoHasIdleAnim = logo.animation.exists("idle");
     if (logoHasIdleAnim)
@@ -592,6 +672,57 @@ function postCreate()
     logo.visible = false;
 
     add(logo);
+}
+
+function showPreparedPopup()
+{
+    revealTimerSongName(displaySongName);
+
+    if (useSplitText)
+    {
+        showSplitText(
+            tLeft,
+            tRight,
+            "down",
+            "right",
+            2500,
+            0,
+            customTextOffsetY
+        );
+    }
+    else
+    {
+        showObject(
+            t1,
+            "down",
+            "right",
+            2500,
+            0,
+            customTextOffsetY
+        );
+    }
+
+    showObject(
+        logo,
+        "left",
+        "up",
+        2500,
+        getCustomLogoXOffset(),
+        -100 + getCustomLogoYOffset()
+    );
+}
+
+
+
+
+function postCreate()
+{
+    centerX = FlxG.width / 2;
+    centerY = FlxG.height / 2;
+
+    cacheTimerSkinChanges();
+
+    loadSongCreditEntries();
 
     createTimerUI();
 }
@@ -894,55 +1025,21 @@ function update(elapsed)
     updateCenterFollowers(elapsed);
     updateTimerSkinBySongPosition();
     
-    if (!showedPopup)
+    if (nextCreditIndex < songCreditEntries.length)
     {
-        var popupTime = 0;
-
-        if (songData.startTime != null)
-            popupTime = songData.startTime;
+        var entry = songCreditEntries[nextCreditIndex];
+        var popupTime:Float = entry.time;
 
         if (popupTime == -1)
         {
-            showedPopup = true;
-            return;
+            nextCreditIndex++;
         }
-
-        if (Conductor.songPosition >= popupTime)
+        else if (Conductor.songPosition >= popupTime)
         {
             showedPopup = true;
-            revealTimerSongName(displaySongName);
-
-        if (useSplitText)
-        {
-            showSplitText(
-                tLeft,
-                tRight,
-                "down",
-                "right",
-                2500,
-                0,
-                customTextOffsetY
-            );
-        }
-        else
-        {
-            showObject(
-                t1,
-                "down",
-                "right",
-                2500,
-                0,
-                customTextOffsetY
-            );
-        }
-            showObject(
-                logo,
-                "left",
-                "up",
-                2500,
-                0,
-                -100 + getCustomLogoYOffset()
-            );
+            nextCreditIndex++;
+            preparePopup(entry.data);
+            showPreparedPopup();
         }
     }
 

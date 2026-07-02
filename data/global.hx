@@ -228,7 +228,6 @@ var loadedPaths:Array<String> = [];
 var init = false;
 function postStateSwitch()
 {
-	PauseSubState.script = "data/scripts/pause";
 	if (Std.isOfType(FlxG.state, StoryMenuState)) {
 		FlxG.switchState(new ModState("VoiidMainMenuState"));
 		return;
