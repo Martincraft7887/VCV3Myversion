@@ -2,7 +2,10 @@ import VCSongText;
 import flixel.util.FlxTimer;
 import flixel.text.FlxTextBorderStyle;
 import flixel.math.FlxMath;
-
+import openfl.display.BitmapData;
+import openfl.display.Shape;
+import openfl.display.GradientType;
+import openfl.geom.Matrix;
 
 
 
@@ -463,6 +466,48 @@ function getOpponentTimerColor():Int {
 
     return 0xFFFF0000;
 }
+function getPlayerTimerColor():Int {
+    try {
+        if (boyfriend != null && boyfriend.iconColor != null)
+            return boyfriend.iconColor;
+    } catch(e:Dynamic) {}
+
+    return 0xFF66FFFF;
+}
+
+function updateTimerGradient()
+{
+    if (timerBarFill == null)
+        return;
+
+    var w = Std.int(timerBarWidth - (timerBarPadding * 2));
+    var h = Std.int(timerBarHeight - (timerBarPadding * 2));
+
+    var shape = new Shape();
+    var matrix = new Matrix();
+
+    matrix.createGradientBox(w, h, 0);
+
+    shape.graphics.beginGradientFill(
+        GradientType.LINEAR,
+        [
+            getOpponentTimerColor(),
+            getPlayerTimerColor()
+        ],
+        [1, 1],
+        [0, 255],
+        matrix
+    );
+
+    shape.graphics.drawRect(0, 0, w, h);
+    shape.graphics.endFill();
+
+    var bmp = new BitmapData(w, h, true, 0x00000000);
+    bmp.draw(shape);
+
+    timerBarFill.pixels = bmp;
+    timerBarFill.dirty = true;
+}
 
 function createTimerUI() {
     var style = saveString("voiidTimeBarStyle", "leather engine");
@@ -481,7 +526,13 @@ function createTimerUI() {
     add(timerBarBG);
 
     timerBarFill = new FlxSprite(timerBarBG.x + timerBarPadding, timerBarBG.y + timerBarPadding);
-    timerBarFill.makeGraphic(Std.int(timerBarWidth - (timerBarPadding * 2)), Std.int(timerBarHeight - (timerBarPadding * 2)), getOpponentTimerColor());
+    timerBarFill.makeGraphic(
+        Std.int(timerBarWidth - (timerBarPadding * 2)),
+        Std.int(timerBarHeight - (timerBarPadding * 2)),
+        0xFFFFFFFF
+    );
+
+    updateTimerGradient();
     timerBarFill.scrollFactor.set();
     timerBarFill.origin.set(0, 0);
     timerBarFill.scale.x = 0;
@@ -564,7 +615,6 @@ function updateTimerBar() {
     timerBarBG.visible = true;
     timerBarFill.visible = true;
 
-    timerBarFill.color = getOpponentTimerColor();
     timerBarFill.scale.x = FlxMath.bound(Conductor.songPosition / inst.length, 0, 1);
     timerBarFill.updateHitbox();
     timerBarFill.x = timerBarBG.x + timerBarPadding;
@@ -721,12 +771,37 @@ function postCreate()
     centerY = FlxG.height / 2;
 
     cacheTimerSkinChanges();
-
     loadSongCreditEntries();
-
     createTimerUI();
-}
 
+    for (entry in songCreditEntries)
+    {
+        var tempSongData = entry.data;
+        var logoToCache = "Logo";
+
+        if (tempSongData != null && tempSongData.logo != null && Std.string(tempSongData.logo) != "") 
+        {
+            if (logoExists(Std.string(tempSongData.logo))) {
+                logoToCache = Std.string(tempSongData.logo);
+            }
+        } 
+        else 
+        {
+            var curSongName = PlayState.SONG.meta.name.toLowerCase();
+            for (logoEntry in logoTable) {
+                for (song in logoEntry.songs) {
+                    if (curSongName == song.toLowerCase()) {
+                        if (logoExists(logoEntry.logo)) logoToCache = logoEntry.logo;
+                        break;
+                    }
+                }
+            }
+        }
+
+        Paths.getFrames("logos/" + logoToCache);
+        Paths.image("logos/" + logoToCache); 
+    }
+}
 
 
 
