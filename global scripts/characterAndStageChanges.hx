@@ -70,7 +70,7 @@ function finishWarmPreloadedObject(obj:Dynamic) {
 	}
 }
 
-function restoreWarmObject(obj:Dynamic) {
+function restoreWarmObject(obj:Dynamic, restoreSavedState:Bool = true) {
 	if (obj == null) return;
 
 	for (i in 0...warmObjects.length) {
@@ -83,6 +83,10 @@ function restoreWarmObject(obj:Dynamic) {
 		warmObjects.splice(i, 1);
 		return;
 	}
+
+	// Stage sprites keep their live state between activations. The warm-up state
+	// only needs to be restored while a warm-up is still pending.
+	if (!restoreSavedState) return;
 
 	var state = getPreloadedObjectState(obj);
 	if (state != null) {
@@ -391,7 +395,7 @@ function changeStage(name:String) {
 		switch(n.nodeName) {
 			case "sprite" | "spr" | "sparrow":
 				var spr = stage.stageSprites.get(n.get("name"));
-				restoreWarmObject(spr);
+				restoreWarmObject(spr, false);
 				add(spr);
 			case "boyfriend" | "bf" | "player":
 				add(stage.characterPoses["boyfriend"]);

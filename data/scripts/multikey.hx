@@ -582,6 +582,13 @@ function getShaderFloat(shader:Dynamic, name:String, fallback:Float = 0):Float {
 	if (shader == null) return fallback;
 
 	try {
+		if (shader.data != null) {
+			var parameter = Reflect.field(shader.data, name);
+			if (parameter != null && parameter.value != null && parameter.value.length > 0) {
+				var attributeValue = Std.parseFloat(Std.string(parameter.value[0]));
+				if (!Math.isNaN(attributeValue)) return attributeValue;
+			}
+		}
 		var value = Reflect.getProperty(shader, name);
 		if (value == null) value = Reflect.field(shader, name);
 		if (value == null) return fallback;
@@ -647,10 +654,30 @@ function getSplashShader(splashName:String, strumID:Int, strumLineID:Int, noteTy
 	return fallback;
 }
 
+function getNoteSplashStrum(note:Dynamic, strumLineID:Int, strumID:Int):Dynamic {
+	if (note == null) return null;
+
+	var strum = Reflect.field(note, "__strum");
+	if (strum != null) return strum;
+
+	if (strumLineID < 0 || strumLineID >= strumLines.members.length) return null;
+	var line = strumLines.members[strumLineID];
+	if (line == null || line.members == null || strumID < 0 || strumID >= line.members.length) return null;
+
+	strum = line.members[strumID];
+	if (strum != null)
+		Reflect.setField(note, "__strum", strum);
+	return strum;
+}
+
 function onNoteHit(event)
 {
-    var index = event.note.strumID;
-    event.direction = multikeySingDirs[getKeyCountIndex(event.note.strumLine.ID)][index]; 
+	if (event == null || event.note == null || event.note.strumLine == null) return;
+
+	var index = event.note.strumID;
+	var strumLineID = event.note.strumLine.ID;
+	var keyCountIndex = getKeyCountIndex(strumLineID);
+	event.direction = multikeySingDirs[keyCountIndex][index]; 
 
     if (event.direction == 4) 
     {
@@ -663,20 +690,21 @@ function onNoteHit(event)
     }
 
     
-    if (event.showSplash)
-    {
-        event.showSplash = false;
+	if (event.showSplash)
+	{
+		event.showSplash = false;
 		var splashName = event.note.splash == null ? getSplashForTime(event.note.strumTime) : event.note.splash;
+		var strum = getNoteSplashStrum(event.note, strumLineID, index);
+		if (strum == null || keyCountIndex < 0 || keyCountIndex >= multikeySplashIDs.length) return;
+		var splashIDs = multikeySplashIDs[keyCountIndex];
+		if (splashIDs == null || index < 0 || index >= splashIDs.length) return;
 
-		
-        event.note.__strum.ID = multikeySplashIDs[getKeyCountIndex(event.note.strumLine.ID)][index]; 
-        
-
-		
+		var originalStrumID = strum.ID;
+		strum.ID = splashIDs[index];
 		splashHandler.__grp = splashHandler.getSplashGroup(splashName);
-		var splash = splashHandler.__grp.showOnStrum(event.note.__strum);
+		var splash = splashHandler.__grp == null ? null : splashHandler.__grp.showOnStrum(strum);
+		strum.ID = originalStrumID;
 		if (splash == null) {
-			event.note.__strum.ID = event.note.strumID;
 			return;
 		}
 		splashHandler.add(splash);
@@ -684,26 +712,23 @@ function onNoteHit(event)
 		while(splashHandler.members.length > 8)
 			splashHandler.remove(splashHandler.members[0], true);
 
-		event.note.__strum.ID = event.note.strumID; 
-
-		
 		if (!splashScales.exists(splashName))
 		{
 			splashScales.set(splashName, splash.scale.x); 
 		}
 		var scale:Float = splashScales.get(splashName);
 		
-		splash.shader = getSplashShader(splashName, index, event.note.strumLine.ID, getNoteTypeForSplash(event.note), event.note.__strum.shader);
+		splash.shader = getSplashShader(splashName, index, strumLineID, getNoteTypeForSplash(event.note), strum.shader);
 
 		
 		splash.scale.set(
-			strumLineNoteScales[event.note.strumLine.ID]*splashScaleMult*scale, 
-			strumLineNoteScales[event.note.strumLine.ID]*splashScaleMult*scale);
+			strumLineNoteScales[strumLineID]*splashScaleMult*scale, 
+			strumLineNoteScales[strumLineID]*splashScaleMult*scale);
 		splash.updateHitbox();
 		splash.setPosition(
-			getVisualStrumCenterX(event.note.__strum) - (splash.width / 2), 
-			getVisualStrumCenterY(event.note.__strum) - (splash.height / 2));
-    }
+			strum.x + ((strum.width - splash.width) / 2),
+			strum.y + ((strum.height - splash.height) / 2));
+	}
 }
 function onPlayerMiss(event)
 {

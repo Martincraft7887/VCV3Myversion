@@ -1,4 +1,4 @@
-
+//
 import funkin.editors.ui.UIButton;
 import funkin.editors.ui.UIText;
 import funkin.editors.ui.UINumericStepper;
@@ -27,7 +27,7 @@ function updateEventGame(currentStep, e) {
     if (currentStep < e.step + e.time) {
         var l = (currentStep - e.step) * ((1) / ((e.step + e.time) - e.step));
         modchartItems[e.itemIndex].object.value = FlxMath.lerp(e.startValue, e.value, e.ease(l));
-        return false; 
+        return false; //dont remove yet
     }
     modchartItems[e.itemIndex].object.value = e.value;
     return true;

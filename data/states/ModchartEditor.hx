@@ -46,6 +46,8 @@ public static var EVENT_DELETE_CALLBACK:Void->Void = null;
 public static var ITEM_EDIT_LOADED_SCRIPTS = ["" => null];
 public static var ITEM_EDIT_SAVE_CALLBACK:Void->Void = null;
 public static var ITEM_EDIT_SAVED_INIT_EVENTS = null;
+public static var ITEM_EDIT_IS_LEGACY:Bool = false;
+public static var ITEM_EDIT_PRESERVED_INIT_NODES = [];
 
 public static var CURRENT_XML:Xml;
 var dragStartPos = null;
@@ -64,6 +66,8 @@ function destroy() {
 	EVENT_DELETE_CALLBACK = null;
 	ITEM_EDIT_SAVE_CALLBACK = null;
 	ITEM_EDIT_SAVED_INIT_EVENTS = null;
+	ITEM_EDIT_IS_LEGACY = false;
+	ITEM_EDIT_PRESERVED_INIT_NODES = [];
 	ITEM_EDIT_LOADED_SCRIPTS = null;
 	CURRENT_XML = null;
 }
@@ -155,7 +159,10 @@ public function createTimelineItem(name, type, object) {
 }
 var eventRenderer = null;
 var eventIndexList = [0];
+var eventItemIndices:Array<Int> = [];
+var iTimeItemIndices:Array<Int> = [];
 var events = [];
+var preservedModchartEvents = [];
 
 
 public var timelineList = [];
@@ -224,6 +231,8 @@ var experimentalRTXShaders:Array<Dynamic> = [];
 var experimentalRTXHue:Float = 0;
 inline static var EXPERIMENTAL_PREVIEW_PAST_WINDOW:Float = 350;
 inline static var EXPERIMENTAL_PREVIEW_FUTURE_WINDOW:Float = 2500;
+inline static var EXPERIMENTAL_PREVIEW_VISUALS_PER_FRAME:Int = 8;
+inline static var EXPERIMENTAL_PREVIEW_SEEK_THRESHOLD:Float = 1000;
 
 var xml:Xml;
 
@@ -927,28 +936,41 @@ function clearExperimentalGameplayPreview() {
 	experimentalPreviewCharGroups = [];
 	experimentalPreviewCharData = [];
 
-	for (data in experimentalPreviewNotes) {
-		if (data != null && data.sprite != null) {
-			remove(data.sprite, true);
-			data.sprite.destroy();
-		}
-		if (data != null && data.sustain != null) {
-			remove(data.sustain, true);
-			data.sustain.destroy();
-		}
-		if (data != null && data.sustainEnd != null) {
-			remove(data.sustainEnd, true);
-			data.sustainEnd.destroy();
-		}
-		if (data != null && data.sustainBody != null) {
-			remove(data.sustainBody, true);
-			data.sustainBody.destroy();
-		}
-	}
+	for (data in experimentalPreviewNotes)
+		releaseExperimentalNoteVisual(data);
 	experimentalPreviewNotes = [];
 	experimentalPreviewNextNoteIndex = 0;
 	experimentalPreviewFirstRenderIndex = 0;
 	experimentalPreviewLastSongPosition = Math.NEGATIVE_INFINITY;
+}
+
+function destroyExperimentalNoteSprite(sprite:Dynamic) {
+	if (sprite == null) return;
+	remove(sprite, true);
+	sprite.destroy();
+}
+
+function releaseExperimentalNoteVisual(data:Dynamic) {
+	if (data == null) return;
+	if (data.sprite == null && data.sustain == null && data.sustainBody == null && data.sustainEnd == null) {
+		data.visibleInPreview = false;
+		data.sustainLastHeight = -1;
+		return;
+	}
+	destroyExperimentalNoteSprite(data.sprite);
+	destroyExperimentalNoteSprite(data.sustain);
+	destroyExperimentalNoteSprite(data.sustainBody);
+	destroyExperimentalNoteSprite(data.sustainEnd);
+	data.sprite = null;
+	data.sustain = null;
+	data.sustainBody = null;
+	data.sustainEnd = null;
+	data.visibleInPreview = false;
+	data.sustainLastHeight = -1;
+	for (fieldName in ["shader", "sustainShader", "sustainBodyShader", "sustainEndShader"]) {
+		Reflect.setField(data, fieldName, null);
+		Reflect.setField(data, fieldName + "Table", null);
+	}
 }
 
 function loadExperimentalRTX() {
@@ -1153,13 +1175,50 @@ function getExperimentalNoteSkinForTime(time:Float, noteType:String = "none"):St
 	return "game/" + noteSkinPrefix + "notes/default";
 }
 
-function makeExperimentalNoteSprite(strumLineID:Int, noteData:Dynamic) {
+function makeExperimentalNoteData(strumLineID:Int, noteData:Dynamic) {
 	var id:Int = Std.int(Reflect.field(noteData, "id"));
 	var time:Float = Std.parseFloat(Std.string(Reflect.field(noteData, "time")));
 	var sustainMs:Float = Std.parseFloat(Std.string(Reflect.field(noteData, "sLen")));
 	if (Math.isNaN(sustainMs)) sustainMs = 0;
 	var noteType:String = getExperimentalNoteTypeName(noteData);
-	var noteSkin:String = getExperimentalNoteSkinForTime(time, noteType);
+
+	return {
+		sprite: null,
+		sustain: null,
+		sustainBody: null,
+		sustainEnd: null,
+		noteSkin: null,
+		sustainBodyFrameHeight: 1.0,
+		sustainBodyBaseScaleX: 1.0,
+		strumLineID: strumLineID,
+		time: time,
+		id: id,
+		lane: getExperimentalLane(strumLineID, id),
+		noteType: noteType,
+		type: Reflect.field(noteData, "type"),
+		sLen: sustainMs,
+		endTime: time + sustainMs,
+		wasHit: false,
+		visibleInPreview: false,
+		baseScaleX: 1.0,
+		baseScaleY: 1.0,
+		modifierTransform: {x: 0.0, y: 0.0, angle: 0.0, scaleX: 1.0, scaleY: 1.0, alpha: 1.0},
+		sustainLastHeight: -1,
+		nextSustainConfirmTime: time + (Conductor.stepCrochet > 0 ? Conductor.stepCrochet : 125)
+	};
+}
+
+function createExperimentalNoteVisual(data:Dynamic) {
+	if (data == null || data.sprite != null) return;
+	var strumLineID:Int = data.strumLineID;
+	var id:Int = data.id;
+	var sustainMs:Float = data.sLen;
+	var noteSkin:String = data.noteSkin;
+	if (noteSkin == null) {
+		noteSkin = getExperimentalNoteSkinForTime(data.time, data.noteType);
+		data.noteSkin = noteSkin;
+	}
+
 	var sprite = new FlxSprite();
 	sprite.frames = Paths.getFrames(noteSkin);
 	sprite.antialiasing = true;
@@ -1174,6 +1233,7 @@ function makeExperimentalNoteSprite(strumLineID:Int, noteData:Dynamic) {
 	sprite.updateHitbox();
 	sprite.cameras = [camHUD];
 	sprite.visible = false;
+	sprite.active = false;
 	add(sprite);
 
 	var sustain:FlxSprite = null;
@@ -1195,6 +1255,7 @@ function makeExperimentalNoteSprite(strumLineID:Int, noteData:Dynamic) {
 		sustainBodyBaseScaleX = sustainScaleX;
 		sustainBody.cameras = [camHUD];
 		sustainBody.visible = false;
+		sustainBody.active = false;
 		add(sustainBody);
 
 		sustainEnd = new FlxSprite();
@@ -1206,6 +1267,7 @@ function makeExperimentalNoteSprite(strumLineID:Int, noteData:Dynamic) {
 		sustainEnd.updateHitbox();
 		sustainEnd.cameras = [camHUD];
 		sustainEnd.visible = false;
+		sustainEnd.active = false;
 		add(sustainEnd);
 	}
 
@@ -1214,35 +1276,22 @@ function makeExperimentalNoteSprite(strumLineID:Int, noteData:Dynamic) {
 		add(sprite);
 	}
 
-	return {
-		sprite: sprite,
-		sustain: sustain,
-		sustainBody: sustainBody,
-		sustainEnd: sustainEnd,
-		sustainBodyFrameHeight: sustainBodyFrameHeight,
-		sustainBodyBaseScaleX: sustainBodyBaseScaleX,
-		strumLineID: strumLineID,
-		time: time,
-		id: id,
-		lane: getExperimentalLane(strumLineID, id),
-		noteType: noteType,
-		type: Reflect.field(noteData, "type"),
-		sLen: sustainMs,
-		endTime: time + sustainMs,
-		wasHit: false,
-		visibleInPreview: false,
-		baseScaleX: sprite.scale.x,
-		baseScaleY: sprite.scale.y,
-		sustainLastHeight: -1,
-		nextSustainConfirmTime: time + (Conductor.stepCrochet > 0 ? Conductor.stepCrochet : 125)
-	};
+	data.sprite = sprite;
+	data.sustain = sustain;
+	data.sustainBody = sustainBody;
+	data.sustainEnd = sustainEnd;
+	data.sustainBodyFrameHeight = sustainBodyFrameHeight;
+	data.sustainBodyBaseScaleX = sustainBodyBaseScaleX;
+	data.baseScaleX = sprite.scale.x;
+	data.baseScaleY = sprite.scale.y;
+	data.sustainLastHeight = -1;
 }
 
 function createExperimentalNotes() {
 	for (strumLineID => strumLine in PlayState.SONG.strumLines) {
 		if (strumLine == null || strumLine.notes == null) continue;
 		for (note in strumLine.notes) {
-			experimentalPreviewNotes.push(makeExperimentalNoteSprite(strumLineID, note));
+			experimentalPreviewNotes.push(makeExperimentalNoteData(strumLineID, note));
 		}
 	}
 	experimentalPreviewNotes.sort(function(a, b) {
@@ -1278,7 +1327,7 @@ function refreshExperimentalPreviewNoteIndex() {
 	for (data in experimentalPreviewNotes) {
 		if (data != null) {
 			data.wasHit = data.time < Conductor.songPosition;
-			hideExperimentalPreviewNote(data);
+			releaseExperimentalNoteVisual(data);
 		}
 	}
 	experimentalPreviewLastSongPosition = Conductor.songPosition;
@@ -1389,7 +1438,8 @@ function updateExperimentalCharacterHits() {
 		return;
 	}
 
-	if (Conductor.songPosition < experimentalPreviewLastSongPosition) {
+	var songDelta:Float = Conductor.songPosition - experimentalPreviewLastSongPosition;
+	if (songDelta < -100 || songDelta > EXPERIMENTAL_PREVIEW_SEEK_THRESHOLD) {
 		refreshExperimentalPreviewNoteIndex();
 		for (group in experimentalPreviewCharGroups) {
 			if (group == null) continue;
@@ -1414,7 +1464,10 @@ function updateExperimentalCharacterHits() {
 		}
 	}
 
-	experimentalPreviewLastSongPosition = Conductor.songPosition;
+	// Ignore tiny backwards corrections from the audio clock. Treating them as a
+	// seek would repeatedly rebuild the visible preview window.
+	if (Conductor.songPosition > experimentalPreviewLastSongPosition)
+		experimentalPreviewLastSongPosition = Conductor.songPosition;
 }
 
 function hideExperimentalPreviewNote(data:Dynamic) {
@@ -1447,6 +1500,18 @@ function forceExperimentalModifierValues(shader:Dynamic, table:Dynamic, strumLin
 	}
 }
 
+function applyExperimentalNoteModifierValues(shader:Dynamic, table:Dynamic, strumLineID:Int, lane:Int) {
+	if (shader == null || table == null) return;
+	var applyFunc = Reflect.field(table, "applyValuesToShader");
+	if (applyFunc != null) {
+		try {
+			Reflect.callMethod(table, applyFunc, [shader, strumLineID, lane]);
+			return;
+		} catch(e:Dynamic) {}
+	}
+	forceExperimentalModifierValues(shader, table, strumLineID, lane);
+}
+
 function getExperimentalSubModValue(mod:Dynamic, name:String, fallback:Float = 0):Float {
 	if (mod == null || mod.subMods == null) return fallback;
 	for (sub in mod.subMods) {
@@ -1456,15 +1521,17 @@ function getExperimentalSubModValue(mod:Dynamic, name:String, fallback:Float = 0
 	return fallback;
 }
 
-function getExperimentalModifierTransform(strumLineID:Int, lane:Int, curPos:Float) {
-	var result = {
-		x: 0.0,
-		y: 0.0,
-		angle: 0.0,
-		scaleX: 1.0,
-		scaleY: 1.0,
-		alpha: 1.0
-	};
+function getExperimentalModifierTransform(strumLineID:Int, lane:Int, curPos:Float, result:Dynamic = null) {
+	if (result == null) {
+		result = {x: 0.0, y: 0.0, angle: 0.0, scaleX: 1.0, scaleY: 1.0, alpha: 1.0};
+	} else {
+		result.x = 0.0;
+		result.y = 0.0;
+		result.angle = 0.0;
+		result.scaleX = 1.0;
+		result.scaleY = 1.0;
+		result.alpha = 1.0;
+	}
 
 	var table = getExperimentalModTable();
 	if (table == null || table.modTable == null || table.modTable[strumLineID] == null || table.modTable[strumLineID][lane] == null) return result;
@@ -1568,6 +1635,31 @@ function getExperimentalPerspectiveShader(data:Dynamic, fieldName:String, strumL
 	return shader;
 }
 
+function updateExperimentalFrameUV(target:Dynamic, shader:Dynamic) {
+	if (target == null || shader == null || target.frame == null) return;
+	if (Reflect.field(target, "experimentalFrameUVFrame") == target.frame) return;
+	Reflect.setField(target, "experimentalFrameUVFrame", target.frame);
+	shader.frameUV = [target.frame.uv.x, target.frame.uv.y, target.frame.uv.width, target.frame.uv.height];
+}
+
+function setExperimentalNoteCurPos(shader:Dynamic, a:Float, b:Float, c:Float, d:Float) {
+	if (shader == null) return;
+	try {
+		var data = Reflect.field(shader, "data");
+		var uniform = data == null ? null : Reflect.field(data, "noteCurPos");
+		if (uniform == null) return;
+		var values = Reflect.field(uniform, "value");
+		if (values == null || values.length < 4) {
+			Reflect.setField(uniform, "value", [a, b, c, d]);
+			return;
+		}
+		values[0] = a;
+		values[1] = b;
+		values[2] = c;
+		values[3] = d;
+	} catch(e:Dynamic) {}
+}
+
 function applyExperimentalPerspectiveToSprite(target:Dynamic, shader:Dynamic, strum:Dynamic, strumLineID:Int, lane:Int, curPos:Float, nextCurPos:Float, isSustain:Bool) {
 	try {
 		var table = getExperimentalModTable();
@@ -1582,8 +1674,7 @@ function applyExperimentalPerspectiveToSprite(target:Dynamic, shader:Dynamic, st
 		shader.downscroll = downscroll;
 		shader.isSustainNote = isSustain;
 
-		if (target.frame != null)
-			shader.frameUV = [target.frame.uv.x, target.frame.uv.y, target.frame.uv.width, target.frame.uv.height];
+		updateExperimentalFrameUV(target, shader);
 
 		var point = FlxPoint.weak();
 		target.getScreenPosition(point, camHUD);
@@ -1593,9 +1684,9 @@ function applyExperimentalPerspectiveToSprite(target:Dynamic, shader:Dynamic, st
 
 		shader.strumID = lane;
 		shader.strumLineID = strumLineID;
-		shader.data.noteCurPos.value = [curPos, curPos, nextCurPos, nextCurPos];
+		setExperimentalNoteCurPos(shader, curPos, curPos, nextCurPos, nextCurPos);
 		shader.scrollSpeed = PlayState.SONG.scrollSpeed == null ? 1 : PlayState.SONG.scrollSpeed;
-		forceExperimentalModifierValues(shader, table, strumLineID, lane);
+		applyExperimentalNoteModifierValues(shader, table, strumLineID, lane);
 	} catch(e:Dynamic) {
 	}
 }
@@ -1666,16 +1757,23 @@ function updateExperimentalGameplayPreview() {
 	}
 
 	while (experimentalPreviewFirstRenderIndex < experimentalPreviewNotes.length && experimentalPreviewNotes[experimentalPreviewFirstRenderIndex].endTime < Conductor.songPosition - EXPERIMENTAL_PREVIEW_PAST_WINDOW) {
-		hideExperimentalPreviewNote(experimentalPreviewNotes[experimentalPreviewFirstRenderIndex]);
+		releaseExperimentalNoteVisual(experimentalPreviewNotes[experimentalPreviewFirstRenderIndex]);
 		experimentalPreviewFirstRenderIndex++;
 	}
 
+	var visualsLeft:Int = EXPERIMENTAL_PREVIEW_VISUALS_PER_FRAME;
 	for (i in experimentalPreviewFirstRenderIndex...experimentalPreviewNotes.length) {
 		var data = experimentalPreviewNotes[i];
-		if (data == null || data.sprite == null) continue;
+		if (data == null) continue;
 		if (data.time - Conductor.songPosition > EXPERIMENTAL_PREVIEW_FUTURE_WINDOW) {
 			hideExperimentalPreviewNote(data);
 			break;
+		}
+		if (data.sprite == null) {
+			if (visualsLeft <= 0) continue;
+			createExperimentalNoteVisual(data);
+			visualsLeft--;
+			if (data.sprite == null) continue;
 		}
 
 		if (strumLines[data.strumLineID] == null) {
@@ -1719,7 +1817,7 @@ function updateExperimentalGameplayPreview() {
 		}
 
 		var noteCurPosForMods:Float = Conductor.songPosition - data.time;
-		var noteTransform = getExperimentalModifierTransform(data.strumLineID, lane, noteCurPosForMods);
+		var noteTransform = getExperimentalModifierTransform(data.strumLineID, lane, noteCurPosForMods, data.modifierTransform);
 		data.sprite.x = strum.x + ((strum.width - data.sprite.width) / 2);
 		data.sprite.y = strum.y + (diff * pxPerMs * scrollDir);
 		data.sprite.x += offsetX + noteTransform.x;
@@ -2378,19 +2476,26 @@ function processLegacyInitEvent(event:Xml) {
 	}
 }
 
-function pushLegacyTimelineEvent(event:Xml) {
+function cloneModchartXMLNode(node:Xml):Xml {
+	if (node == null) return null;
+	return Xml.parse(node.toString()).firstElement();
+}
+
+function pushLegacyTimelineEvent(event:Xml):Bool {
 	var eventType = event.get("type");
 	if (!eventScripts.exists(eventType)) {
 		trace('legacy modchart: no event script for "${eventType}"');
-		return;
+		return false;
 	}
 
 	var e = eventScripts.get(eventType).call("eventFromXMLEditor", [event]);
 	var n = callEventScriptFromEvent(e, "getItemName", [e]);
 	if (timelineIndexMap.exists(n)) {
 		events.push(e);
+		return true;
 	} else {
 		trace('legacy modchart: skipping event for "${n}" (${eventType})');
+		return false;
 	}
 }
 
@@ -2426,7 +2531,8 @@ function loadLegacyModchartEditor(xml:Xml, reload:Bool) {
 
 	for (list in xml.elementsNamed("Events")) {
 		for (event in list.elementsNamed("Event")) {
-			pushLegacyTimelineEvent(event);
+			if (!pushLegacyTimelineEvent(event))
+				preservedModchartEvents.push(cloneModchartXMLNode(event));
 		}
 	}
 
@@ -2469,7 +2575,10 @@ function loadEvents(reload) {
 		loadDefaults();
 	}
 
-	if (isLegacyModchartXML(xml)) {
+	var legacyFormat = isLegacyModchartXML(xml);
+	if (!reload || legacyFormat) preservedModchartEvents = [];
+
+	if (legacyFormat) {
 		loadLegacyModchartEditor(xml, reload);
 	} else {
 		for (list in xml.elementsNamed("Init")) {
@@ -2488,7 +2597,10 @@ function loadEvents(reload) {
 							events.push(e);
 						} else {
 							trace("skipping event for \"" + n + "\"");
+							preservedModchartEvents.push(cloneModchartXMLNode(event));
 						}
+					} else {
+						preservedModchartEvents.push(cloneModchartXMLNode(event));
 					}
 				}
 			}
@@ -2517,11 +2629,14 @@ function resetValuesToDefault() {
 
 function refreshEventTimings() {
 	eventIndexList = [];
+	eventItemIndices = [];
+	iTimeItemIndices = [];
 
-	for (item in timelineItems) {
+	for (itemIndex => item in timelineItems) {
 		item.currentValue = item.defaultValue;
 		item.lastValue = Math.NEGATIVE_INFINITY;
 		eventIndexList.push(-1);
+		if (isITimeItem(item)) iTimeItemIndices.push(itemIndex);
 	}
 	lastStep = Math.NEGATIVE_INFINITY;
 
@@ -2539,6 +2654,7 @@ function refreshEventTimings() {
 
 		if (eventIndexList[itemIndex] == -1) {
 			eventIndexList[itemIndex] = i;
+			eventItemIndices.push(itemIndex);
 		} else {
 			var lastIndex = eventIndexList[itemIndex];
 
@@ -2557,7 +2673,8 @@ function refreshEventTimings() {
 	if (!FlxG.sound.music.playing) {
 		currentStep = conductorSprY / ROW_SIZE_X;
 	}
-	for (itemIndex => index in eventIndexList) {
+	for (itemIndex in eventItemIndices) {
+		var index = eventIndexList[itemIndex];
 		var i = index;
 		if (events[i] == null) continue;
 
@@ -2655,8 +2772,8 @@ function isITimeItem(item):Bool {
 }
 
 function updateShaderITime() {
-	for (i => item in timelineItems) {
-		if (!isITimeItem(item)) continue;
+	for (i in iTimeItemIndices) {
+		var item = timelineItems[i];
 		if (item.object == null) continue;
 
 		var value:Float = Conductor.songPosition * 0.001;
@@ -2708,7 +2825,8 @@ function updateEvents(?forceStep:Float = null) {
 	}
 	if (forceStep != null) currentStep = forceStep;
 
-	for (itemIndex => index in eventIndexList) {
+	for (itemIndex in eventItemIndices) {
+		var index = eventIndexList[itemIndex];
 		var i = index;
 		if (events[i] == null) continue;
 
@@ -2764,8 +2882,8 @@ function updateEvents(?forceStep:Float = null) {
 		if (item.currentValue != item.lastValue) {
 			item.lastValue = item.currentValue;
 			callItemScriptFromItem(item, "updateItem", [item, i]);
+			applyStageHuePreview(item);
 		}
-		applyStageHuePreview(item);
 	}
 	updateShaderITime();
 	lastStep = currentStep;
@@ -2779,12 +2897,28 @@ function buildXMLFromEvents(?newInitEvents = null, ?packaged = false) {
 	var newXml = Xml.createElement("Modchart");
 	var initEvents = newInitEvents == null ? Xml.createElement("Init") : newInitEvents;
 	var xmlEvents = Xml.createElement("Events");
-	
-	
+	var legacyFormat = isLegacyModchartXML(xml);
+
+	// The root flags are part of the format. In particular, dropping
+	// noteModchart="true" silently converts a legacy chart on the next load.
+	if (xml != null) {
+		for (attribute in xml.attributes())
+			newXml.set(attribute, xml.get(attribute));
+	}
+
 	if (xml != null && newInitEvents == null) {
-		for (list in xml.elementsNamed("Init")) {
-			for (name => script in itemScripts) {
-				script.call("copyXMLItems", [list, initEvents, packaged]);
+		if (legacyFormat) {
+			// Legacy Init data is made out of Event nodes, not the Shader/Modifier
+			// nodes understood by the modern item scripts. Copy it verbatim.
+			for (list in xml.elementsNamed("Init")) {
+				for (node in list.elements())
+					initEvents.addChild(cloneModchartXMLNode(node));
+			}
+		} else {
+			for (list in xml.elementsNamed("Init")) {
+				for (name => script in itemScripts) {
+					script.call("copyXMLItems", [list, initEvents, packaged]);
+				}
 			}
 		}
 	}
@@ -2799,9 +2933,18 @@ function buildXMLFromEvents(?newInitEvents = null, ?packaged = false) {
 
 		xmlEvents.addChild(node);
 	}
+	for (node in preservedModchartEvents) {
+		if (node != null) xmlEvents.addChild(cloneModchartXMLNode(node));
+	}
 
 	newXml.addChild(initEvents);
-    newXml.addChild(xmlEvents);
+	newXml.addChild(xmlEvents);
+	if (xml != null) {
+		for (node in xml.elements()) {
+			if (node.nodeName != "Init" && node.nodeName != "Events")
+				newXml.addChild(cloneModchartXMLNode(node));
+		}
+	}
 	refreshEventTimings();
 	return newXml;
 }
@@ -2933,10 +3076,10 @@ function _exit() {
 function _modchart_edititems() {
 	CURRENT_XML = xml;
 	ITEM_EDIT_LOADED_SCRIPTS = itemScripts;
+	ITEM_EDIT_IS_LEGACY = isLegacyModchartXML(xml);
+	ITEM_EDIT_PRESERVED_INIT_NODES = [];
 	ITEM_EDIT_SAVE_CALLBACK = function() {
 		xml = buildXMLFromEvents(ITEM_EDIT_SAVED_INIT_EVENTS);
-		xml = buildXMLFromEvents(); 
-
 		loadEvents(true);
 	}
 	var win = new UISubstateWindow(true, 'ModchartEditDataSubstate');

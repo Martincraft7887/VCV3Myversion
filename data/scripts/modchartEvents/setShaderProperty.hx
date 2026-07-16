@@ -82,3 +82,5 @@ function getEventWindowWidth() {
 function getEventWindowHeight() {
 	return 300;
 }
+
+

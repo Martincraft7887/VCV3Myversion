@@ -7,11 +7,6 @@
 			<Property value="50" name="num_samples"/>
 			<Property value="0.1" name="kstep"/>
 		</Shader>
-		<Shader camHUD="true" camOther="false" camGame="true" shader="colorswap" name="color" color="#545454">
-			<Property value="0" name="brt"/>
-			<Property value="0" name="sat"/>
-			<Property value="0" name="hue"/>
-		</Shader>
 		<Shader camHUD="true" camOther="false" camGame="true" shader="negative" name="negative" color="#545454">
 			<Property value="0" name="strength"/>
 		</Shader>
@@ -85,11 +80,6 @@
 			<Property value="0" name="sat"/>
 			<Property value="0" name="hue"/>
 		</Shader>
-		<Shader camHUD="true" camOther="false" camGame="true" shader="ColorSwapEffect" name="ColorSwapEffect" color="#545454">
-			<Property value="0" name="brt"/>
-			<Property value="0" name="sat"/>
-			<Property value="0" name="hue"/>
-		</Shader>
 		<Shader camHUD="true" camOther="false" camGame="false" shader="M/alpha" name="alpha" color="#545454">
 			<Property value="1" name="intensity"/>
 			<Property value="0" name="strength"/>
@@ -99,55 +89,16 @@
 			<Property value="0" name="u_pointCount"/>
 		</Shader>
 		<Modifier strumID="-1" strumLineID="-1" value="0" name="X" modifier="x" color="#545454"/>
-		<Modifier strumID="-1" strumLineID="1" value="0" name="XP" modifier="x" color="#5600FF"/>
-		<Modifier strumID="-1" strumLineID="0" value="0" name="XO" modifier="x" color="#FF0000"/>
 		<Modifier strumID="-1" strumLineID="-1" value="250" name="Y" modifier="y" color="#545454"/>
-		<Modifier strumID="-1" strumLineID="1" value="0" name="YP" modifier="y" color="#5600FF"/>
-		<Modifier strumID="-1" strumLineID="0" value="0" name="YO" modifier="y" color="#FF0000"/>
-		<Modifier strumID="-1" strumLineID="-1" value="0" name="Z" modifier="Z" color="#545454"/>
-		<Modifier strumID="-1" strumLineID="1" value="0" name="ZP" modifier="Z" color="#5600FF"/>
-		<Modifier strumID="0" strumLineID="1" value="0" name="ZPLeft" modifier="Z" color="#E200FF"/>
-		<Modifier strumID="1" strumLineID="1" value="0" name="ZPDown" modifier="Z" color="#00F8FF"/>
-		<Modifier strumID="2" strumLineID="1" value="0" name="ZPUp" modifier="Z" color="#2CFF00"/>
-		<Modifier strumID="3" strumLineID="1" value="0" name="ZPRight" modifier="Z" color="#FF0000"/>
-		<Modifier strumID="4" strumLineID="1" value="0" name="ZPRightE" modifier="Z" color="#FF0000"/>
-		<Modifier strumID="-1" strumLineID="0" value="0" name="ZO" modifier="Z" color="#FF0000"/>
-		<Modifier strumID="0" strumLineID="0" value="0" name="ZOLeft" modifier="Z" color="#E200FF"/>
-		<Modifier strumID="1" strumLineID="0" value="0" name="ZODown" modifier="Z" color="#00F8FF"/>
-		<Modifier strumID="2" strumLineID="0" value="0" name="ZOUp" modifier="Z" color="#2CFF00"/>
-		<Modifier strumID="4" strumLineID="0" value="0" name="ZORightE" modifier="Z" color="#FF0000"/>
-		<Modifier strumID="-1" strumLineID="-1" value="0" name="AngleZ" modifier="angleZ" color="#545454"/>
-		<Modifier strumID="-1" strumLineID="1" value="0" name="AngleZP" modifier="angleZ" color="#5600FF"/>
-		<Modifier strumID="-1" strumLineID="0" value="0" name="AngleZO" modifier="angleZ" color="#FF0000"/>
-		<Modifier strumID="-1" strumLineID="-1" value="0" name="AngleY" modifier="angleY" color="#545454"/>
-		<Modifier strumID="-1" strumLineID="1" value="0" name="AngleYP" modifier="angleY" color="#5600FF"/>
-		<Modifier strumID="-1" strumLineID="0" value="0" name="AngleYO" modifier="angleY" color="#FF0000"/>
-		<Modifier strumID="-1" strumLineID="-1" value="0" name="AngleX" modifier="angleX" color="#545454"/>
-		<Modifier strumID="-1" strumLineID="1" value="0" name="AngleXP" modifier="angleX" color="#5600FF"/>
-		<Modifier strumID="-1" strumLineID="0" value="0" name="AngleXO" modifier="angleX" color="#FF0000"/>
 		<Modifier strumID="-1" strumLineID="-1" value="0" name="tipsy" modifier="tipsy" color="#545454">
 			<SubMod value="1" name="speed"/>
 		</Modifier>
-		<Modifier strumID="-1" strumLineID="-1" value="0" name="drunk" modifier="drunk" color="#545454">
-			<SubMod value="0" name="time"/>
-			<SubMod value="0" name="speed"/>
-		</Modifier>
-		<Modifier strumID="-1" strumLineID="1" value="0" name="IncomingAngleXP" modifier="incomingAngleX" color="#5600FF"/>
-		<Modifier strumID="-1" strumLineID="0" value="0" name="IncomingAngleXO" modifier="incomingAngleX" color="#FF0000"/>
-		<Modifier strumID="-1" strumLineID="1" value="0" name="incomingAngleYP" modifier="incomingAngleY" color="#5600FF"/>
-		<Modifier strumID="-1" strumLineID="0" value="0" name="incomingAngleYO" modifier="incomingAngleY" color="#FF0000"/>
-		<Modifier strumID="-1" strumLineID="1" value="0" name="incomingAngleZP" modifier="incomingAngleZ" color="#5600FF"/>
-		<Modifier strumID="-1" strumLineID="0" value="0" name="incomingAngleZO" modifier="incomingAngleZ" color="#FF0000"/>
-		<Modifier strumID="0" strumLineID="1" value="0" name="XPLeft" modifier="x" color="#E200FF"/>
-		<Modifier strumID="1" strumLineID="1" value="0" name="XPDown" modifier="x" color="#00F8FF"/>
-		<Modifier strumID="2" strumLineID="1" value="0" name="XPUp" modifier="x" color="#2CFF00"/>
-		<Modifier strumID="3" strumLineID="1" value="0" name="XPRight" modifier="x" color="#FF0000"/>
-		<Modifier strumID="4" strumLineID="1" value="0" name="XPRightE" modifier="x" color="#FF0000"/>
-		<Modifier strumID="0" strumLineID="1" value="0" name="YPLeft" modifier="y" color="#E200FF"/>
-		<Modifier strumID="1" strumLineID="1" value="0" name="YPDown" modifier="y" color="#00F8FF"/>
-		<Modifier strumID="2" strumLineID="1" value="0" name="YPUp" modifier="y" color="#2CFF00"/>
-		<Modifier strumID="3" strumLineID="1" value="0" name="YPRight" modifier="y" color="#FF0000"/>
-		<Modifier strumID="4" strumLineID="1" value="0" name="YPRightE" modifier="y" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="CenterHitXO" modifier="centerHitX" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="CenterHitXP" modifier="centerHitX" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="CenterHitYO" modifier="centerHitY" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="CenterHitYP" modifier="centerHitY" color="#5600FF"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="CenterHitZO" modifier="centerHitZ" color="#FF0000"/>
+		<Modifier strumID="-1" strumLineID="1" value="0" name="CenterHitZP" modifier="centerHitZ" color="#5600FF"/>
 	</Init>
 	<Events>
 		<Event step="0" time="130" value="0" property="effect" ease="linear" type="tweenShaderProperty" startValue="0.5" name="bars"/>

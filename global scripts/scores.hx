@@ -546,6 +546,13 @@ function getShaderFloat(shader:Dynamic, name:String, fallback:Float = 0):Float {
 	if (shader == null) return fallback;
 
 	try {
+		if (shader.data != null) {
+			var parameter = Reflect.field(shader.data, name);
+			if (parameter != null && parameter.value != null && parameter.value.length > 0) {
+				var attributeValue = Std.parseFloat(Std.string(parameter.value[0]));
+				if (!Math.isNaN(attributeValue)) return attributeValue;
+			}
+		}
 		var value = Reflect.getProperty(shader, name);
 		if (value == null) value = Reflect.field(shader, name);
 		if (value == null) return fallback;

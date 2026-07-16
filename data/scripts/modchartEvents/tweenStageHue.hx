@@ -131,3 +131,5 @@ function saveEventWindow(event, propertyMap) {
 	event.time = propertyMap.get("time").value;
 	event.ease = STAGE_HUE_EASE;
 }
+
+

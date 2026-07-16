@@ -1,4 +1,4 @@
-
+//
 import Modifier;
 import ModifierTable;
 import funkin.editors.ui.UISubstateWindow;
@@ -33,7 +33,7 @@ function setupItemsFromXMLGame(xml) {
         if (!noteModchart) {
             noteModchart = true;
             importScript("data/scripts/noteModchartManager.hx");
-            
+            //useNotePaths = true;
         }
 
         var subMods = [];
@@ -110,7 +110,7 @@ function copyXMLItems(xml, output, packaged) {
         if (packaged) {
             var path = "modifiers/" + event.get("modifier");
             if (Assets.exists(path+".frag")) {
-                event.set("fragCode", Bytes.ofString(Assets.getText(path+".frag")).toHex()); 
+                event.set("fragCode", Bytes.ofString(Assets.getText(path+".frag")).toHex()); //ensures that shader code wont break xml parsing
             } else {
                 event.set("fragCode", "");
             }
@@ -218,7 +218,7 @@ function getNoteModifierVisualOffsetX(strumLineID:Int, strumID:Int, baseCenter:F
     return center - baseCenter;
 }
 
-
+//edit menu stuff
 function isEditable() { return true; }
 function getXMLNodeName() {return "Modifier";}
 function getEditButtonText() { return "Add GPU Note Modifier"; }
@@ -304,8 +304,8 @@ function updateEditItem(data, itemButton) {
     }
     }
 
-    
-    
+    //TODO: make sure ini stuff is sorted same as text file
+    //maybe just parse it myself
 
     if (iniExists) {
         itemButton.descText.text = iniData.exists("desc") ? StringTools.replace(iniData.get("desc"), "#", "\n") : "";
@@ -344,7 +344,7 @@ function updateEditItem(data, itemButton) {
             inputBox.value = prop.value;
         }
     }
-    data.subMods = []; 
+    data.subMods = []; //temp remove to clear out any properties that shouldnt be there
     for (i => names in itemButton.extraValuesList) {
         data.subMods.push({
             name: names,

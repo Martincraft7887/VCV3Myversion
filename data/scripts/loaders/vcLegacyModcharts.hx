@@ -19,18 +19,18 @@ function getShaderIndex(n:String) {
 }
 
 var iTimeShaderData = [];
+/*
+{
+	shader: null,
+	iTime: 0,
+	hasSpeed: false
+}
+*/
 
-
-
-
-
-
-
-
-
-
-
-
+//basically the playstate version uses this instead of storing multiple strings with every single event/shader/modifier
+//using a string array that will be indexed from
+//should hopefully give better performance!
+//(makes the code much harder to understand though)
 var valueNameList:Array<String> = [];
 function getValueIndex(n:String) {
 	if (valueNameList.indexOf(n) != -1)
@@ -68,11 +68,6 @@ function getEventTypeID(name) {
 var legacyNoteModchart:Bool = false;
 var noteModifiers:Array<Int> = [];
 var debugInitModifierCount:Int = 0;
-
-function voiidDebugTrace(message:String) {
-	if (Reflect.field(FlxG.save.data, "voiidDebugLogs") == true)
-		trace(message);
-}
 
 function destroy() {
 	for (s in shaders) s = null;
@@ -114,7 +109,7 @@ function loadEvents() {
 	if (xml.get("noteModchart") == "true") {
 		legacyNoteModchart = true;
 		importScript("data/scripts/loaders/modchartManager.hx");
-		voiidDebugTrace("vcLegacyModcharts: noteModchart true, imported legacy modchartManager");
+		trace("vcLegacyModcharts: noteModchart true, imported legacy modchartManager");
 	}
 
 	for (list in xml.elementsNamed("Init")) {
@@ -194,7 +189,7 @@ function loadEvents() {
 			}
 		}
 	}
-	voiidDebugTrace("vcLegacyModcharts: initModifiers=" + debugInitModifierCount + " values=" + valueNameList.length + " noteModchart=" + legacyNoteModchart);
+	trace("vcLegacyModcharts: initModifiers=" + debugInitModifierCount + " values=" + valueNameList.length + " noteModchart=" + legacyNoteModchart);
 	for (i in 0...defaultValueList.length) {
 		currentValueList[i] = defaultValueList[i];
 	}
@@ -231,7 +226,7 @@ function loadEvents() {
 						"startValue": event.exists("startValue") ? Std.parseFloat(event.get("startValue")) : currentValueList[getValueIndex(n)]
 					});
 
-					
+					//DI = Downscroll Inverse
 					if (event.exists("DI_startValue")) {
 						if (downscroll && event.get("DI_startValue") == "true") {
 							events[events.length-1].startValue *= -1;
@@ -295,11 +290,11 @@ function loadEvents() {
 		}
 	}
 	if (legacyNoteModchart) {
-		voiidDebugTrace("vcLegacyModcharts: calling initModchart");
+		trace("vcLegacyModcharts: calling initModchart");
 		initModchart();
 	}
 	resetValuesToDefault();
-	
+	//refreshEventTimings();
 
 	events.sort(function(a, b) {
 		if(a.step < b.step) return -1;
@@ -332,44 +327,44 @@ function resetValuesToDefault() {
 		currentValueList[i] = defaultValueList[i];
 	}
 }
+/*
+function refreshEventTimings() {
 
+	for (i in 0...defaultValueList.length) {
+		currentValueList[i] = defaultValueList[i];
+		eventIndexList[i] = -1;
+	}
 
+	for (i in 0...events.length) {
+		var e = events[i];
+		
+		e.lastIndex = -1;
+		e.nextIndex = -1;
+		
+		var n = "";
+		switch(e.type) {
+			case 0 | 1 | 2 | 3:
+				n = valueNameList[e.name];
+		}
+		if (n == "") continue;
 
+		var valueIndex = getValueIndex(n);
+		e.lastValue = currentValueList[valueIndex];
 
+		if (eventIndexList[valueIndex] == -1) {
+			eventIndexList[valueIndex] = i;
+		} else {
+			var lastIndex = eventIndexList[valueIndex];
 
+			events[lastIndex].nextIndex = i;
+			e.lastIndex = lastIndex;
+			e.lastValue = events[lastIndex].value;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			eventIndexList[valueIndex] = i;
+		}
+	}
+}
+*/
 
 function applyLegacyEvent(currentStep:Float, e:Dynamic, skipImpulses:Bool):Bool {
 	switch(e.type) {

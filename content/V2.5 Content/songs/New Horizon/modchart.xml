@@ -1,98 +1,142 @@
 <Modchart>
 	<Init>
-		<Shader camHUD="true" shader="colorswap" camGame="true" camOther="false" color="#545454" name="colorswap">
-			<Property name="brt" value="0"/>
-			<Property name="sat" value="0"/>
-			<Property name="hue" value="0"/>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="colorswap" name="colorswap" color="#545454">
+			<Property value="0" name="hue"/>
+			<Property value="0" name="sat"/>
+			<Property value="0" name="brt"/>
 		</Shader>
-		<Shader camHUD="true" shader="M/color" camGame="true" camOther="false" color="#545454" name="color">
-			<Property name="contrast" value="1"/>
-			<Property name="saturation" value="1"/>
-			<Property name="temperature" value="3.5"/>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="M/color" name="color" color="#545454">
+			<Property value="3.5" name="temperature"/>
+			<Property value="1" name="saturation"/>
+			<Property value="1" name="contrast"/>
 		</Shader>
-		<Shader camHUD="false" shader="M/spiral" camGame="true" camOther="false" color="#545454" name="spiral">
-			<Property name="iTime" value="0"/>
-			<Property name="speed" value="0"/>
-			<Property name="strength" value="0"/>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="M/spiral" name="spiral" color="#545454">
+			<Property value="0" name="iTime"/>
+			<Property value="0" name="strength"/>
+			<Property value="0" name="speed"/>
 		</Shader>
-		<Shader camHUD="false" shader="MirrorRepeatWarpEffect" camGame="true" camOther="false" color="#545454" name="MirrorGAME">
-			<Property name="warp" value="0"/>
-			<Property name="x" value="0"/>
-			<Property name="y" value="0"/>
-			<Property name="zoom" value="6"/>
-			<Property name="angle" value="0"/>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="M/GlowingBlack" name="Coloritos" color="#545454">
+			<Property value="0" name="iTime"/>
+			<Property value="0" name="strength"/>
+			<Property value="0" name="money"/>
+			<Property value="0" name="saturation"/>
 		</Shader>
-		<Shader camHUD="true" shader="MirrorRepeatWarpEffect" camGame="false" camOther="false" color="#545454" name="MirrorHUD">
-			<Property name="warp" value="0"/>
-			<Property name="x" value="0"/>
-			<Property name="y" value="0"/>
-			<Property name="zoom" value="1"/>
-			<Property name="angle" value="0"/>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="SplitCamMania" name="Split" color="#545454">
+			<Property value="0" name="iTime"/>
+			<Property value="0.5" name="center1X"/>
+			<Property value="0.6" name="center1Y"/>
+			<Property value="1.5" name="zoom1"/>
+			<Property value="0" name="invert1"/>
+			<Property value="0" name="temperature1"/>
+			<Property value="0" name="hue1"/>
+			<Property value="1" name="saturation1"/>
+			<Property value="1" name="contrast1"/>
+			<Property value="0.8" name="center2X"/>
+			<Property value="0.6" name="center2Y"/>
+			<Property value="1.5" name="zoom2"/>
+			<Property value="0" name="invert2"/>
+			<Property value="0" name="temperature2"/>
+			<Property value="0" name="hue2"/>
+			<Property value="1" name="saturation2"/>
+			<Property value="1" name="contrast2"/>
+			<Property value="0" name="strength"/>
+			<Property value="0" name="directsplit"/>
+			<Property value="0" name="bordersize"/>
+			<Property value="0" name="animation"/>
+			<Property value="0" name="move"/>
+			<Property value="0" name="split1"/>
+			<Property value="0" name="split2"/>
 		</Shader>
-		<Shader camHUD="true" shader="BlurEffect" camGame="true" camOther="false" color="#545454" name="Blur">
-			<Property name="strengthY" value="0"/>
-			<Property name="strength" value="0"/>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="MirrorRepeatWarpEffect" name="MirrorGAME" color="#545454">
+			<Property value="6" name="zoom"/>
+			<Property value="0" name="angle"/>
+			<Property value="0" name="x"/>
+			<Property value="0" name="y"/>
+			<Property value="0" name="warp"/>
+			<Property value="0" name="iTime"/>
 		</Shader>
-		<Shader camHUD="true" shader="BloomEffect" camGame="true" camOther="false" color="#545454" name="Bloom">
-			<Property name="contrast" value="1"/>
-			<Property name="strength" value="0"/>
-			<Property name="effect" value="0"/>
-			<Property name="brightness" value="0"/>
+		<Shader camHUD="true" camOther="false" camGame="false" shader="MirrorRepeatWarpEffect" name="MirrorHUD" color="#545454">
+			<Property value="1" name="zoom"/>
+			<Property value="0" name="angle"/>
+			<Property value="0" name="x"/>
+			<Property value="0" name="y"/>
+			<Property value="0" name="warp"/>
+			<Property value="0" name="iTime"/>
 		</Shader>
-		<Shader camHUD="true" shader="ChromAbEffect" camGame="true" camOther="false" color="#545454" name="ChromAb">
-			<Property name="strength" value="0"/>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="BlurEffect" name="Blur" color="#545454">
+			<Property value="0" name="strength"/>
+			<Property value="0" name="strengthY"/>
 		</Shader>
-		<Shader camHUD="true" shader="M/WaterEffect" camGame="true" camOther="false" color="#545454" name="Water">
-			<Property name="iTime" value="0"/>
-			<Property name="speed" value="0"/>
-			<Property name="strength" value="0"/>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="BloomEffect" name="Bloom" color="#545454">
+			<Property value="1" name="contrast"/>
+			<Property value="0" name="brightness"/>
+			<Property value="0" name="effect"/>
+			<Property value="0" name="strength"/>
 		</Shader>
-		<Shader camHUD="false" shader="WiggleEffect" camGame="true" camOther="false" color="#545454" name="Wiggle">
-			<Property name="waveAmplitude" value="0"/>
-			<Property name="waveSpeed" value="0"/>
-			<Property name="iTime" value="0"/>
-			<Property name="waveFrequency" value="1"/>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="ChromAbEffect" name="ChromAb" color="#545454">
+			<Property value="0" name="strength"/>
 		</Shader>
-		<Shader camHUD="false" shader="GreyscaleEffect" camGame="true" camOther="false" color="#545454" name="Grey">
-			<Property name="strength" value="0"/>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="M/WaterEffect" name="Water" color="#545454">
+			<Property value="0" name="iTime"/>
+			<Property value="0" name="strength"/>
+			<Property value="0" name="speed"/>
 		</Shader>
-		<Shader camHUD="false" shader="M/Sunrays" camGame="true" camOther="false" color="#545454" name="Sunrays">
-			<Property name="ksum" value="1"/>
-			<Property name="eatt" value="1"/>
-			<Property name="hh" value="0.5"/>
-			<Property name="num_samples" value="50"/>
-			<Property name="iTime" value="0"/>
-			<Property name="kstep" value="0.1"/>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="WiggleEffect" name="Wiggle" color="#545454">
+			<Property value="0" name="iTime"/>
+			<Property value="0" name="effectType"/>
+			<Property value="0" name="waveSpeed"/>
+			<Property value="0" name="waveAmplitude"/>
+			<Property value="1" name="waveFrequency"/>
 		</Shader>
-		<Shader camHUD="false" shader="barscolor" camGame="true" camOther="false" color="#545454" name="bars">
-			<Property name="angle1" value="45"/>
-			<Property name="angle2" value="0"/>
-			<Property name="effect2" value="0"/>
-			<Property name="effect" value="0.5"/>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="GreyscaleEffect" name="Grey" color="#545454">
+			<Property value="0" name="strength"/>
 		</Shader>
-		<Shader camHUD="true" shader="rayMarch" camGame="false" camOther="false" color="#545454" name="rayMarchHUD">
-			<Property name="rotationZ" value="0"/>
-			<Property name="direction360" value="0"/>
-			<Property name="Ydirection" value="0"/>
-			<Property name="rotationX" value="0"/>
-			<Property name="Ydirection360" value="0"/>
-			<Property name="rotationY" value="0"/>
-			<Property name="Xdirection" value="0"/>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="M/Sunrays" name="Sunrays" color="#545454">
+			<Property value="50" name="num_samples"/>
+			<Property value="0.5" name="hh"/>
+			<Property value="1" name="eatt"/>
+			<Property value="0.1" name="kstep"/>
+			<Property value="1" name="ksum"/>
+			<Property value="0" name="iTime"/>
 		</Shader>
-		<Shader camHUD="true" shader="GlitchEffect" camGame="true" camOther="false" color="#545454" name="glitch">
-			<Property name="iTime" value="0"/>
-			<Property name="strength" value="0"/>
+		<Shader camHUD="false" camOther="false" camGame="true" shader="barscolor" name="bars" color="#545454">
+			<Property value="0.5" name="effect"/>
+			<Property value="0" name="effect2"/>
+			<Property value="45" name="angle1"/>
+			<Property value="0" name="angle2"/>
+			<Property value="0" name="color1R"/>
+			<Property value="0" name="color1G"/>
+			<Property value="0" name="color1B"/>
+			<Property value="1" name="color1A"/>
+			<Property value="0" name="color2R"/>
+			<Property value="0" name="color2G"/>
+			<Property value="0" name="color2B"/>
+			<Property value="1" name="color2A"/>
 		</Shader>
-		<Modifier strumLineID="-1" strumID="-1" value="0" color="#545454" modifier="M/9kagleXsplit" name="angleXSplit"/>
-		<Modifier strumLineID="-1" strumID="-1" value="0" color="#545454" modifier="M/9kagleYsplit" name="angleYsplit"/>
-		<Modifier strumLineID="-1" strumID="-1" value="0" color="#545454" modifier="M/9kagleZsplit" name="angleZsplit"/>
-		<Modifier strumLineID="-1" strumID="-1" value="0" color="#545454" modifier="M/9kX" name="Xsplit"/>
-		<Modifier strumLineID="-1" strumID="4" value="0" color="#545454" modifier="angleZ" name="angleZcenter"/>
-		<Modifier strumLineID="-1" strumID="-1" value="0" color="#545454" modifier="x" name="X"/>
-		<Modifier strumLineID="-1" strumID="-1" value="0" color="#545454" modifier="y" name="Y"/>
-		<Modifier strumLineID="0" strumID="4" value="0" color="#545454" modifier="angleZ" name="angZcenO"/>
-		<Modifier strumLineID="0" strumID="-1" value="0" color="#545454" modifier="M/9kX" name="splitXO"/>
-		<Modifier strumLineID="-1" strumID="-1" value="0" color="#545454" modifier="drunknotime" name="zig"/>
+		<Shader camHUD="true" camOther="false" camGame="false" shader="rayMarch" name="rayMarchHUD" color="#545454">
+			<Property value="0" name="rotationX"/>
+			<Property value="0" name="rotationY"/>
+			<Property value="0" name="rotationZ"/>
+			<Property value="0" name="Xdirection"/>
+			<Property value="0" name="Ydirection"/>
+			<Property value="0" name="direction360"/>
+			<Property value="0" name="Ydirection360"/>
+		</Shader>
+		<Shader camHUD="true" camOther="false" camGame="true" shader="GlitchEffect" name="glitch" color="#545454">
+			<Property value="0" name="iTime"/>
+			<Property value="0" name="strength"/>
+		</Shader>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="angleX" modifier="angleX" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="angleY" modifier="angleY" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="angleZ" modifier="angleZ" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="Xsplit" modifier="M/9kX" color="#545454"/>
+		<Modifier strumID="4" strumLineID="-1" value="0" name="angleZcenter" modifier="angleZ" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="X" modifier="x" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="Y" modifier="y" color="#545454"/>
+		<Modifier strumID="4" strumLineID="0" value="0" name="angZcenO" modifier="angleZ" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="0" value="0" name="splitXO" modifier="M/9kX" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="-1" value="0" name="zig" modifier="drunknotime" color="#545454"/>
+		<Modifier strumID="-1" strumLineID="-1" value="1" name="scale" modifier="scale" color="#545454"/>
 	</Init>
 	<Events>
 		<Event step="-1" time="0" value="0.2" property="warp" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
@@ -385,6 +429,8 @@
 		<Event step="760" time="8" value="1" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="glitch"/>
 		<Event step="764" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="Water"/>
 		<Event step="766" time="4" value="10" property="value" ease="quintOut" type="tweenModifierValue" startValue="0" name="Xsplit"/>
+		<Event step="766" time="4" value="0.5" property="zoom" ease="quintIn" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="766" time="4" value="-0.2" property="x" ease="circIn" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
 		<Event step="768" time="12" value="360" property="value" ease="elasticOut" type="tweenModifierValue" startValue="0" name="angleZcenter"/>
 		<Event step="768" time="0" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="glitch"/>
 		<Event step="773" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="10" name="Xsplit"/>
@@ -400,6 +446,7 @@
 		<Event step="796" time="2" value="10" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="Xsplit"/>
 		<Event step="796" time="4" value="-180" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="angleZcenter"/>
 		<Event step="798" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="10" name="Xsplit"/>
+		<Event step="800" time="4" value="0.2" property="x" ease="circIn" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
 		<Event step="800" time="2" value="10" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="Xsplit"/>
 		<Event step="800" time="4" value="360" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-180" name="angleZcenter"/>
 		<Event step="802" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="9.99" name="Xsplit"/>
@@ -407,9 +454,28 @@
 		<Event step="808" time="4" value="540" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="360" name="angleZcenter"/>
 		<Event step="810" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="9.99" name="Xsplit"/>
 		<Event step="815" time="2" value="10" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="Xsplit"/>
+		<Event step="816" time="0" value="-0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
 		<Event step="816" time="4" value="720" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="540" name="angleZcenter"/>
+		<Event step="818" time="0" value="0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
 		<Event step="818" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="9.99" name="Xsplit"/>
+		<Event step="820" time="0" value="-0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
+		<Event step="822" time="0" value="0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
+		<Event step="824" time="0" value="-0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
+		<Event step="825" time="0" value="0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
+		<Event step="826" time="0" value="-0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
+		<Event step="827" time="0" value="0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
+		<Event step="828" time="0" value="-0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
+		<Event step="828.5" time="0" value="0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
+		<Event step="829" time="0" value="-0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
+		<Event step="829.5" time="0" value="0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
+		<Event step="830" time="0" value="-0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
 		<Event step="830" time="4" value="10" property="value" ease="quintOut" type="tweenModifierValue" startValue="0" name="Xsplit"/>
+		<Event step="830.5" time="0" value="0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
+		<Event step="831" time="0" value="-0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
+		<Event step="831.5" time="0" value="0.2" property="x" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
+		<Event step="832" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.5" name="MirrorGAME"/>
+		<Event step="832" time="16" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="832" time="4" value="0" property="x" ease="circOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
 		<Event step="832" time="12" value="360" property="value" ease="elasticOut" type="tweenModifierValue" startValue="0" name="angleZcenter"/>
 		<Event step="837" time="2" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="10" name="Xsplit"/>
 		<Event step="839" time="4" value="10" property="value" ease="quintOut" type="tweenModifierValue" startValue="0" name="Xsplit"/>
@@ -431,9 +497,203 @@
 		<Event step="872" time="4" value="540" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="360" name="angleZcenter"/>
 		<Event step="874" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="9.99" name="Xsplit"/>
 		<Event step="879" time="2" value="10" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="Xsplit"/>
-		<Event step="880" time="16" value="720" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="angleZcenter"/>
-		<Event step="892" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="9.99" name="Xsplit"/>
-		<Event step="896" time="8" value="-400" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="0" name="angleZcenter"/>
+		<Event step="880" time="16" value="10" property="zoom" ease="expoIn" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="880" time="16" value="0" property="angle" ease="expoIn" type="tweenShaderProperty" startValue="-720" name="MirrorGAME"/>
+		<Event step="880" time="16" value="720" property="value" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZ"/>
+		<Event step="880" time="16" value="720" property="value" ease="circIn" type="tweenModifierValue" startValue="0" name="angleZcenter"/>
+		<Event step="890" time="4" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="9.99" name="Xsplit"/>
+		<Event step="896" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="896" time="6" value="-400" property="value" ease="circOut" type="tweenModifierValue" startValue="0" name="angleZ"/>
+		<Event step="896" time="8" value="400" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="896" time="8" value="-400" property="value" ease="circOut" type="tweenModifierValue" startValue="0" name="angleZcenter"/>
+		<Event step="902" time="2" value="-360" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-400" name="angleZ"/>
 		<Event step="902" time="4" value="-360" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-400" name="angleZcenter"/>
+		<Event step="904" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-90" name="angleZ"/>
+		<Event step="904" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-90" name="MirrorGAME"/>
+		<Event step="905" time="0" value="0" property="value" ease="cubeInOut" type="tweenModifierValue" startValue="-362.5" name="angleZcenter"/>
+		<Event step="910" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="910" time="8" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="920" time="4" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="20" name="angleZ"/>
+		<Event step="920" time="4" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="20" name="MirrorGAME"/>
+		<Event step="924" time="4" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-20" name="angleZ"/>
+		<Event step="924" time="4" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-20" name="MirrorGAME"/>
+		<Event step="928" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="928" time="8" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="936" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-40" name="angleZ"/>
+		<Event step="936" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="942" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="942" time="8" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="960" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="960" time="8" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="968" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-40" name="angleZ"/>
+		<Event step="968" time="6" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="974" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="974" time="8" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="984" time="4" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="20" name="angleZ"/>
+		<Event step="984" time="4" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-20" name="MirrorGAME"/>
+		<Event step="988" time="4" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-20" name="angleZ"/>
+		<Event step="988" time="4" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="20" name="MirrorGAME"/>
+		<Event step="992" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="992" time="8" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-35" name="MirrorGAME"/>
+		<Event step="1000" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-40" name="angleZ"/>
+		<Event step="1000" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="35" name="MirrorGAME"/>
+		<Event step="1006" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="1006" time="16" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-80" name="MirrorGAME"/>
+		<Event step="1024" time="0" value="1" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Coloritos"/>
+		<Event step="1024" time="0" value="0.583" property="money" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Coloritos"/>
+		<Event step="1024" time="0" value="1" property="saturation" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Coloritos"/>
+		<Event step="1024" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1024" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1024" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleX"/>
+		<Event step="1024" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1024" time="4" value="1.5" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="1024" time="256" value="20" property="x" ease="linear" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="1030" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-90" name="angleZ"/>
+		<Event step="1030" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-45" name="angleX"/>
+		<Event step="1030" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="1.3" name="MirrorGAME"/>
+		<Event step="1030" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1036" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1036" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleX"/>
+		<Event step="1036" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1036" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1056" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1056" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleY"/>
+		<Event step="1056" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1056" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1062" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="1.3" name="MirrorGAME"/>
+		<Event step="1062" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-90" name="angleZ"/>
+		<Event step="1062" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-45" name="angleY"/>
+		<Event step="1062" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1068" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1068" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleY"/>
+		<Event step="1068" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1068" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1088" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1088" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleX"/>
+		<Event step="1088" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1088" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1094" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-45" name="angleX"/>
+		<Event step="1094" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-90" name="angleZ"/>
+		<Event step="1094" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="1.3" name="MirrorGAME"/>
+		<Event step="1094" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1100" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleX"/>
+		<Event step="1100" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1100" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1100" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1120" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleY"/>
+		<Event step="1120" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1120" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1120" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1126" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-45" name="angleY"/>
+		<Event step="1126" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-90" name="angleZ"/>
+		<Event step="1126" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="1.3" name="MirrorGAME"/>
+		<Event step="1126" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1132" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1132" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1132" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleY"/>
+		<Event step="1132" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1152" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleX"/>
+		<Event step="1152" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1152" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1152" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1158" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-45" name="angleX"/>
+		<Event step="1158" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-90" name="angleZ"/>
+		<Event step="1158" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="1.3" name="MirrorGAME"/>
+		<Event step="1158" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1164" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleX"/>
+		<Event step="1164" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1164" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1164" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1184" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleY"/>
+		<Event step="1184" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1184" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1184" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1190" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-45" name="angleY"/>
+		<Event step="1190" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-90" name="angleZ"/>
+		<Event step="1190" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="1.3" name="MirrorGAME"/>
+		<Event step="1190" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1196" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1196" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleY"/>
+		<Event step="1196" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1196" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1216" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1216" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleX"/>
+		<Event step="1216" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1216" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1222" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-45" name="angleX"/>
+		<Event step="1222" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-90" name="angleZ"/>
+		<Event step="1222" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="1.3" name="MirrorGAME"/>
+		<Event step="1222" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1228" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleX"/>
+		<Event step="1228" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1228" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1228" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1248" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleY"/>
+		<Event step="1248" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1248" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1248" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1254" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-45" name="angleY"/>
+		<Event step="1254" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-90" name="angleZ"/>
+		<Event step="1254" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="1.3" name="MirrorGAME"/>
+		<Event step="1254" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1260" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
+		<Event step="1260" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleY"/>
+		<Event step="1260" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
+		<Event step="1260" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1276" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="Coloritos"/>
+		<Event step="1278" time="4" value="1" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Split"/>
+		<Event step="1280" time="16" value="0.2" property="hue1" ease="linear" type="tweenShaderProperty" startValue="0" name="Split"/>
+		<Event step="1280" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1.5" name="MirrorGAME"/>
+		<Event step="1408" time="16" value="0.2" property="hue2" ease="linear" type="tweenShaderProperty" startValue="0" name="Split"/>
+		<Event step="1408" time="16" value="0" property="hue1" ease="linear" type="tweenShaderProperty" startValue="0.2" name="Split"/>
+		<Event step="1536" time="4" value="0.5" property="split2" ease="circOut" type="tweenShaderProperty" startValue="0" name="Split"/>
+		<Event step="1536" time="8" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="-70" name="MirrorGAME"/>
+		<Event step="1536" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="1536" time="4" value="0.5" property="split1" ease="circOut" type="tweenShaderProperty" startValue="0" name="Split"/>
+		<Event step="1544" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-40" name="angleZ"/>
+		<Event step="1544" time="6" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1550" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="1550" time="8" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1560" time="4" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="20" name="angleZ"/>
+		<Event step="1560" time="4" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-20" name="MirrorGAME"/>
+		<Event step="1564" time="4" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-20" name="angleZ"/>
+		<Event step="1564" time="4" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="20" name="MirrorGAME"/>
+		<Event step="1568" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="20" name="angleZ"/>
+		<Event step="1568" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="20" name="MirrorGAME"/>
+		<Event step="1576" time="4" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-20" name="angleZ"/>
+		<Event step="1576" time="4" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-20" name="MirrorGAME"/>
+		<Event step="1582" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="20" name="angleZ"/>
+		<Event step="1582" time="6" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="20" name="MirrorGAME"/>
+		<Event step="1586" time="2" value="0.051" property="x" ease="circOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
+		<Event step="1588" time="4" value="0" property="x" ease="circOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
+		<Event step="1590" time="2" value="0.051" property="y" ease="circOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
+		<Event step="1592" time="6" value="0.051" property="y" ease="circOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
+		<Event step="1593" time="4" value="0" property="x" ease="circOut" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
+		<Event step="1594" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-0.2" name="MirrorGAME"/>
+		<Event step="1596" time="2" value="0" property="x" ease="circOut" type="tweenShaderProperty" startValue="0.135" name="MirrorGAME"/>
+		<Event step="1598" time="12" value="0" property="x" ease="circOut" type="tweenShaderProperty" startValue="0.5" name="MirrorGAME"/>
+		<Event step="1600" time="8" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1600" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="1608" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-40" name="angleZ"/>
+		<Event step="1608" time="6" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1614" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="1614" time="8" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1624" time="4" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="20" name="angleZ"/>
+		<Event step="1624" time="4" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-20" name="MirrorGAME"/>
+		<Event step="1628" time="4" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-20" name="angleZ"/>
+		<Event step="1628" time="4" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="20" name="MirrorGAME"/>
+		<Event step="1632" time="8" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1632" time="8" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="40" name="angleZ"/>
+		<Event step="1640" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-40" name="angleZ"/>
+		<Event step="1640" time="6" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
+		<Event step="1646" time="18" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="720" name="angleZ"/>
+		<Event step="1646" time="18" value="0.3" property="warp" ease="circOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
+		<Event step="1646" time="8" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
+		<Event step="1646" time="18" value="0" property="value" ease="circIn" type="tweenModifierValue" startValue="1" name="scale"/>
+		<Event step="1646" time="18" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="720" name="MirrorGAME"/>
+		<Event step="1646" time="18" value="0.5" property="effect" ease="circOut" type="tweenShaderProperty" startValue="0" name="bars"/>
+		<Event step="1646" time="18" value="10" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="1656" time="4" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-20" name="MirrorGAME"/>
+		<Event step="1660" time="4" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="20" name="MirrorGAME"/>
 	</Events>
 </Modchart>

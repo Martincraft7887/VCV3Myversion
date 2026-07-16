@@ -1,7 +1,7 @@
 {
     "params": [
-        { "name": "Push", "type": "Bool", "defaultValue": true },
-        { "name": "Push Trails", "type": "Bool", "defaultValue": true },
+        { "name": "Push", "type": "Bool", "defaultValue": false },
+        { "name": "Push Trails", "type": "Bool", "defaultValue": false },
         { "name": "BF Block", "type": "Bool", "defaultValue": true },
         { "name": "Matt Block", "type": "Bool", "defaultValue": true },
         { "name": "BF Echo", "type": "Bool", "defaultValue": false },
@@ -21,6 +21,9 @@
         { "name": "BF Splashes", "type": "Bool", "defaultValue": false },
         { "name": "Matt Splashes", "type": "Bool", "defaultValue": false },
         { "name": "Health Drain", "type": "Bool", "defaultValue": true },
-        { "name": "Drain Amount", "type": "Float(0, 1, 0.001, 3)", "defaultValue": 0.008 }
+        { "name": "Drain Amount", "type": "Float(0, 1, 0.001, 3)", "defaultValue": 0.008 },
+        { "name": "BF Shield", "type": "Bool", "defaultValue": false },
+        { "name": "Matt Shield", "type": "Bool", "defaultValue": false },
+        { "name": "Stand Punches Without Block", "type": "Bool", "defaultValue": false }
     ]
 }

@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-stage>
+<stage folder="stages/Tricky Stage/" name="Tricky Stage" zoom="0.54">
+	<sprite x="-1156" updateHitbox="true" scroll="0.2" sprite="Sky" y="-580" name="unknown0"/>
+	<sprite x="-1036" updateHitbox="true" scroll="0.35" sprite="aquiestanlospersonajes" y="-800" name="unknown1"/>
+	<girlfriend scale="0.9" x="1214.52395334175" scroll="0.35" y="899.116882454314"/>
+	<dad camxoffset="400" x="504.986734897986" scroll="0.35" y="953.150617938247"/>
+	<boyfriend camxoffset="-415" x="1667.81127636153" scroll="0.35" camyoffset="-25" y="1105.56082297814"/>
+	<sprite x="-836" updateHitbox="true" scroll="0.5" sprite="rocasdeatras" y="-180" name="unknown2"/>
+	<sprite x="-436" updateHitbox="true" sprite="rocasdealante" y="-180" name="unknown3"/>
+</stage>

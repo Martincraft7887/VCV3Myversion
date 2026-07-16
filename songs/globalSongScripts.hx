@@ -7,7 +7,7 @@ var preferredGlobalScriptOrder:Array<String> = [
 	"v2echos",
 	"vc",
 	"vcUI",
-	"modchartLoader",
+	"vcModcharts",
 	"rtxLighting",
 	"characterAndStageChanges",
 	"songname",

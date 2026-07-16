@@ -1,28 +1,31 @@
-
+//
 
 import Camera3D;
 import ModifierTable;
-import haxe.ds.ObjectMap;
 public var modchartCamera = new Camera3D();
 public var modTable:ModifierTable = new ModifierTable();
-var shaderFrameUVCache:ObjectMap<Dynamic, Dynamic> = new ObjectMap();
 
 var modchartInitialized = false;
 
 public var modchartManagerKeyCount:Int = 4;
 public var useNotePaths = false;
 public var notePathGroup = [];
+
+function isModchartShader(shader) {
+	return shader != null && shader.data != null && Reflect.field(shader.data, "noteCurPos") != null;
+}
+
 function postUpdate(elapsed)
 {
 	if (!modchartInitialized)
 		return;
 
-	
-	
+	//modchartCamera.position.x = Math.sin(Conductor.songPosition * 0.001);
+	//modchartCamera.position.z = Math.cos(Conductor.songPosition * 0.001);
 
-	
+	//updateModifers();
 	modchartCamera.updateViewMatrix();
-	
+	//shader updates
 	for(p in 0...strumLines.length)
 	{
 		if (PlayState.instance != null) {
@@ -37,39 +40,41 @@ function postUpdate(elapsed)
 
 		if (PlayState.instance != null)
 		{
-			strumLines.members[p].notes.limit = 1750 / scrollSpeed;
+			strumLines.members[p].notes.limit = 2500 / scrollSpeed;
 			strumLines.members[p].notes.forEach(function(n)
 			{
-				if (n.shader == null) {
+				if (!isModchartShader(n.shader)) {
 					n.shader = modTable.getShader(p, n.strumID);
 				}
+				if (n.shader == null) return;
 				n.forceIsOnScreen = true;
-				
-				
-				
-				
+				//n.shader.viewMatrix = modchartCamera.viewMatrix;
+				//n.shader.songPosition = Conductor.songPosition;
+				//n.shader.curBeat = Conductor.curBeatFloat;
+				//n.shader.downscroll = downscroll;
 				n.shader.isSustainNote = n.isSustainNote;
-				
+				//if (n.isSustainNote)
 	
-				updateShaderFrameUV(n, n.shader);
+				if (n.frame != null)
+					n.shader.frameUV = [n.frame.uv.x,n.frame.uv.y,n.frame.uv.width,n.frame.uv.height];
 	
 				var curPos = Conductor.songPosition - n.strumTime;
 				var nextCurPos = curPos;
 	
-				
+				//curpos for next sustain to match
 				if (n.isSustainNote && n.nextNote != null && n.nextNote.isSustainNote) 
 					nextCurPos = Conductor.songPosition - n.nextNote.strumTime;
 	
-				
+				//sustain ends
 				if (n.isSustainNote && n.nextSustain == null) 
 					nextCurPos = Conductor.songPosition - (n.strumTime + (Conductor.stepCrochet*0.5));
 	
-				
+				//clip to strum
 				if (n.isSustainNote && n.wasGoodHit && curPos >= 0) 
 					curPos = 0;
 	
 	
-				
+				//calculate screen position for rotation and scaling inside shader
 				var point = FlxPoint.weak();
 				n.getScreenPosition(point, camHUD);
 				n.shader.screenX = (n.origin.x + point.x - n.offset.x) + n.__strum.x;
@@ -82,16 +87,19 @@ function postUpdate(elapsed)
 				
 				n.shader.strumID = n.strumID;
 				n.shader.strumLineID = p;
-				setNoteCurPosUniform(n.shader, curPos, curPos, nextCurPos, nextCurPos);
-				n.shader.scrollSpeed = strumLines.members[p].members[n.strumID].getScrollSpeed(n);
+				n.shader.data.noteCurPos.value = [curPos, curPos, nextCurPos, nextCurPos];
+				var targetStrum = strumLines.members[p].members[n.strumID];
+				if (targetStrum != null)
+					n.shader.scrollSpeed = targetStrum.getScrollSpeed(n);
 			});
 		}
 	}
 }
 function updateStrum(strum, p) {
-	if (strum.shader == null) {
+	if (!isModchartShader(strum.shader)) {
 		strum.shader = modTable.getShader(p, strum.ID);
 	}
+	if (strum.shader == null) return;
 	
 	strum.shader.viewMatrix = modchartCamera.viewMatrix;
 	strum.shader.perspectiveMatrix = modchartCamera.perspectiveMatrix;
@@ -100,13 +108,14 @@ function updateStrum(strum, p) {
 
 	strum.shader.strumID = strum.ID;
 	strum.shader.strumLineID = p;
-	setNoteCurPosUniform(strum.shader, 0.0, 0.0, 0.0, 0.0);
+	strum.shader.data.noteCurPos.value = [0.0, 0.0, 0.0, 0.0];
 	strum.shader.scrollSpeed = 0.0;
 
-	updateShaderFrameUV(strum, strum.shader);
+	if (strum.frame != null)
+		strum.shader.frameUV = [strum.frame.uv.x,strum.frame.uv.y,strum.frame.uv.width,strum.frame.uv.height];
 
 
-	
+	//calculate screen position for rotation and scaling inside shader
 	var point = FlxPoint.weak();
 	strum.getScreenPosition(point, camHUD);
 	strum.shader.screenX = strum.origin.x + point.x - strum.offset.x;
@@ -119,47 +128,73 @@ function updateStrum(strum, p) {
 	modTable.applyValuesToShader(strum.shader, p, strum.ID);
 }
 
-function updateShaderFrameUV(obj:Dynamic, shader:Dynamic) {
-	if (obj == null || shader == null || obj.frame == null) return;
-	if (shaderFrameUVCache.exists(obj) && shaderFrameUVCache.get(obj) == obj.frame) return;
-	shaderFrameUVCache.set(obj, obj.frame);
-	shader.frameUV = [obj.frame.uv.x, obj.frame.uv.y, obj.frame.uv.width, obj.frame.uv.height];
-}
-
-function setNoteCurPosUniform(shader:Dynamic, a:Float, b:Float, c:Float, d:Float) {
-	if (shader == null || shader.data == null || shader.data.noteCurPos == null) return;
-	var values = shader.data.noteCurPos.value;
-	if (values == null || values.length < 4) {
-		shader.data.noteCurPos.value = [a, b, c, d];
-		return;
-	}
-	values[0] = a;
-	values[1] = b;
-	values[2] = c;
-	values[3] = d;
-}
-
 function onDeleteNote(e) {
+	if (e == null || e.note == null || !isModchartShader(e.note.shader) || e.note.strumLine == null) return;
 	modTable.putShader(e.note.shader, e.note.strumLine.ID, e.note.strumID);
+}
+
+function updateModchartManagerKeyCount()
+{
+	modchartManagerKeyCount = 0;
+
+	for (p in 0...strumLines.length)
+	{
+		var count = 0;
+
+		if (PlayState.instance != null) {
+			if (strumLines.members[p] != null && strumLines.members[p].members != null)
+				count = strumLines.members[p].members.length;
+		} else if (strumLines[p] != null) {
+			count = strumLines[p].length;
+		}
+
+		if (count > modchartManagerKeyCount)
+			modchartManagerKeyCount = count;
+	}
+
+	if (modchartManagerKeyCount < 1)
+		modchartManagerKeyCount = 1;
+}
+
+function clearModchartShaders()
+{
+	for (p in 0...strumLines.length)
+	{
+		if (PlayState.instance != null) {
+			if (strumLines.members[p] == null) continue;
+
+			for (strum in strumLines.members[p].members)
+				if (strum != null && isModchartShader(strum.shader)) strum.shader = null;
+
+			strumLines.members[p].notes.forEach(function(n) {
+				if (n != null && isModchartShader(n.shader)) n.shader = null;
+			});
+		} else {
+			for (strum in strumLines[p])
+				if (strum != null && isModchartShader(strum.shader)) strum.shader = null;
+		}
+	}
+}
+
+function rebuildModchartShaders()
+{
+	updateModchartManagerKeyCount();
+	modTable.init();
+	clearModchartShaders();
+	if (modchartInitialized && useNotePaths) updateNotePaths();
+}
+
+function onPostManiaChange(strumlineID)
+{
+	if (!modchartInitialized)
+		return;
+
+	rebuildModchartShaders();
 }
 
 public function initModchart()
 {
-	modchartManagerKeyCount = 0;
-
-for (p in 0...strumLines.length)
-{
-    var count = 0;
-
-    if (PlayState.instance != null)
-        count = strumLines.members[p].members.length;
-    else
-        count = strumLines[p].length;
-
-    if (count > modchartManagerKeyCount)
-        modchartManagerKeyCount = count;
-}
-	modTable.init();
+	rebuildModchartShaders();
 	if (!modchartInitialized) {
 		var segmentsToMake = Math.ceil((3500 / PlayState.SONG.scrollSpeed) / (Conductor.stepCrochet));
 
@@ -207,21 +242,23 @@ public function updateNotePaths() {
 			shitarray = strumLines[p];
 		}
 		for (i => strum in shitarray) {
+			if (notePathGroup[p] == null || notePathGroup[p][i] == null) continue;
 
 			var curTime = 0;
 			for (lineSpr in notePathGroup[p][i]) {
 				var n = lineSpr;
 				n.shader = modTable.getShader(p, i);
+				if (n.shader == null) continue;
 				n.shader.isSustainNote = true;
 
-				updateShaderFrameUV(n, n.shader);
+				if (n.frame != null) n.shader.frameUV = [n.frame.uv.x,n.frame.uv.y,n.frame.uv.width,n.frame.uv.height];
 				var point = FlxPoint.weak();
 				n.getScreenPosition(point, camHUD);
 				n.shader.screenX = (n.origin.x + point.x - n.offset.x);
 				if (downscroll)
-					n.shader.screenY = (n.origin.y + point.y - n.offset.y); 
+					n.shader.screenY = (n.origin.y + point.y - n.offset.y);// - strum.y;
 				else
-					n.shader.screenY = (n.origin.y + point.y - n.offset.y); 
+					n.shader.screenY = (n.origin.y + point.y - n.offset.y);// + strum.y;
 				point.put();
 
 				var time = -curTime;
@@ -230,9 +267,9 @@ public function updateNotePaths() {
 				n.shader.strumID = i;
 				n.shader.strumLineID = p;
 				if (downscroll) {
-					setNoteCurPosUniform(n.shader, nextTime, nextTime, time, time);
+					n.shader.data.noteCurPos.value = [nextTime, nextTime, time, time];
 				} else {
-					setNoteCurPosUniform(n.shader, time, time, nextTime, nextTime);
+					n.shader.data.noteCurPos.value = [time, time, nextTime, nextTime];
 				}
 				
 				n.shader.scrollSpeed = PlayState.SONG.scrollSpeed;
@@ -244,64 +281,19 @@ public function updateNotePaths() {
 	}
 }
 
-
-function getSplashShaderFloat(shader:Dynamic, name:String, fallback:Float = 0):Float {
-	if (shader == null) return fallback;
-
-	try {
-		var value = Reflect.getProperty(shader, name);
-		if (value == null) value = Reflect.field(shader, name);
-		if (value == null) return fallback;
-
-		var parsed = Std.parseFloat(Std.string(value));
-		return Math.isNaN(parsed) ? fallback : parsed;
-	} catch(e:Dynamic) {
-		return fallback;
-	}
-}
-
-function getSplashVisualCenterX(strum:Dynamic):Float {
-	if (strum == null) return FlxG.width * 0.5;
-
-	var center = strum.x + (strum.width * 0.5);
-	var shader = Reflect.field(strum, "shader");
-	if (shader != null) {
-		var shaderCenter = getSplashShaderFloat(shader, "screenX", Math.NaN);
-		if (!Math.isNaN(shaderCenter))
-			center = shaderCenter;
-	}
-	return center;
-}
-
-function getSplashVisualCenterY(strum:Dynamic):Float {
-	if (strum == null) return FlxG.height * 0.5;
-
-	var center = strum.y + (strum.height * 0.5);
-	var shader = Reflect.field(strum, "shader");
-	if (shader != null) {
-		var shaderCenter = getSplashShaderFloat(shader, "screenY", Math.NaN);
-		if (!Math.isNaN(shaderCenter))
-			center = shaderCenter;
-	}
-	return center;
-}
-
+//fixes for splashes
 function onNoteHit(event)
 {
 	if (event.showSplash)
 	{
 		event.showSplash = false;
 		
-		
+		//show splash func (but we need to keep the splash sprite for after)
 		splashHandler.__grp = splashHandler.getSplashGroup(event.note.splash);
 		var splash = splashHandler.__grp.showOnStrum(event.note.__strum);
-		if (splash == null) return;
 		splash.shader = event.note.__strum.shader;
-		splash.setPosition(
-			getSplashVisualCenterX(event.note.__strum) - (splash.width / 2),
-			getSplashVisualCenterY(event.note.__strum) - (splash.height / 2));
 		splashHandler.add(splash);
-		
+		// max 8 rendered splashes
 		while(splashHandler.members.length > 8)
 			splashHandler.remove(splashHandler.members[0], true);
 	}

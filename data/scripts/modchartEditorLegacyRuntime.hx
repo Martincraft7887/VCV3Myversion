@@ -1,6 +1,6 @@
-
-
-
+//
+// Legacy note modchart preview in ModchartEditor — must run in a script that
+// importScript-merges modchartManager (same scope as gameplay legacy).
 importScript("data/scripts/loaders/modchartManager.hx");
 
 var editorNotePathGroup = [];
@@ -166,7 +166,7 @@ function initEditor() {
 	editorModchartReady = true;
 }
 
-
+// modchartManager.postUpdate is a CE lifecycle hook — not callable by name from here.
 
 function editorPostUpdate(elapsed:Float) {
 	if (!editorModchartReady)

@@ -1,4 +1,4 @@
-
+//
 
 class SubModifier {
     public var name:String;

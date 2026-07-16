@@ -1,4 +1,4 @@
-
+//
 import haxe.io.Path;
 import Xml;
 
@@ -14,9 +14,6 @@ public var itemTypes = [];
 var eventUpdateFuncs = [];
 
 public var modchartItems = [];
-var useNewModchartLoader:Bool = true;
-var legacyModchartLoaded:Bool = false;
-
 public function createModchartItem(n, p, t, v, o) {
 	var item = {
 		name: n,
@@ -34,11 +31,7 @@ var originalEvents:Array<Dynamic> = [];
 var didInitialTimelineSync:Bool = false;
 var lastModchartSongPosition:Float = Math.NEGATIVE_INFINITY;
 var seekThresholdMs:Float = 250;
-
-function voiidDebugTrace(message:String) {
-	if (Reflect.field(FlxG.save.data, "voiidDebugLogs") == true)
-		trace(message);
-}
+var activeLegacyModchart:Bool = false;
 
 function ensureModchartOption() {
 	if (Reflect.field(FlxG.save.data, "voiidModcharts") == null) {
@@ -60,6 +53,12 @@ function getModchartXMLPath():String {
 	if (Assets.exists(extensionlessPath)) return extensionlessPath;
 
 	return null;
+}
+
+function getModchartXML():Xml {
+	var xmlPath = getModchartXMLPath();
+	if (xmlPath == null) return null;
+	return Xml.parse(Assets.getText(xmlPath)).firstElement();
 }
 
 function isLegacyModchartXML(xml:Xml):Bool {
@@ -94,7 +93,13 @@ function isLegacyModchartXML(xml:Xml):Bool {
 	return false;
 }
 
+function useLegacyLoader():Bool {
+	return isLegacyModchartXML(getModchartXML());
+}
+
 function destroy() {
+	if (activeLegacyModchart) return;
+
 	for (e in modchartItems) e = null;
 	modchartItems.splice(0, modchartItems.length);
 	for (e in events) e = null;
@@ -123,9 +128,10 @@ function isImpulseEvent(e:Dynamic):Bool {
 	return typeName == "addCameraZoom" || typeName == "addHUDZoom";
 }
 
-function loadEvents() {
-
+function loadNewModchart() {
 	eventScripts.clear();
+	eventTypes = [];
+	eventUpdateFuncs = [];
 	for (path in Paths.getFolderContent('data/scripts/modchartEvents/', true, null)) {
 		if (Path.extension(path) == "hx") {
 			var file = CoolUtil.getFilename(path);
@@ -136,6 +142,7 @@ function loadEvents() {
 	}
 
 	itemScripts.clear();
+	itemTypes = [];
 	for (path in Paths.getFolderContent('data/scripts/modchartTimelineItems/', true, null)) {
 		if (Path.extension(path) == "hx") {
 			var file = CoolUtil.getFilename(path);
@@ -144,14 +151,8 @@ function loadEvents() {
 		}
 	}
 
-	var xmlPath = getModchartXMLPath();
-	if (xmlPath == null || !Assets.exists(xmlPath)) return;
-
-	var xml = Xml.parse(Assets.getText(xmlPath)).firstElement();
-	if (isLegacyModchartXML(xml)) {
-		voiidDebugTrace("modchartLoader: skipping legacy modchart xml");
-		return;
-	}
+	var xml = getModchartXML();
+	if (xml == null) return;
 
 	for (name => script in itemScripts) {
 		script.call("setupDefaultsGame", []);
@@ -193,6 +194,8 @@ function loadEvents() {
 }
 
 function syncModchartToStep(step:Float, skipImpulses:Bool = true) {
+	if (activeLegacyModchart) return;
+
 	for (item in modchartItems)
 		applyItemDefault(item);
 
@@ -210,6 +213,8 @@ function syncModchartToStep(step:Float, skipImpulses:Bool = true) {
 }
 
 function forceModchartSeekSync(step:Float = -1) {
+	if (activeLegacyModchart) return;
+
 	syncModchartToStep(step < 0 ? curStepFloat : step, true);
 	didInitialTimelineSync = true;
 	lastModchartSongPosition = Conductor.songPosition;
@@ -229,8 +234,28 @@ function consumeDueEvents(currentStep:Float) {
 	}
 }
 
+function create() {
+	ensureModchartOption();
+	if (!modcharts) return;
+
+	activeLegacyModchart = useLegacyLoader();
+	if (activeLegacyModchart) {
+		importScript("data/scripts/loaders/vcLegacyModcharts.hx");
+		return;
+	}
+
+	camOther = new FlxCamera();
+	camOther.bgColor = 0;
+	FlxG.cameras.add(camOther, false);
+}
+
+function postCreate() {
+	if (!modcharts || activeLegacyModchart) return;
+	loadNewModchart();
+}
+
 function postUpdate(elapsed) {
-	if (!modcharts || !useNewModchartLoader) return;
+	if (!modcharts || activeLegacyModchart) return;
 
 	var expectedPosition = lastModchartSongPosition == Math.NEGATIVE_INFINITY ? Conductor.songPosition : lastModchartSongPosition + (elapsed * 1000);
 	var didSeek = lastModchartSongPosition != Math.NEGATIVE_INFINITY && Math.abs(Conductor.songPosition - expectedPosition) > seekThresholdMs;
@@ -243,40 +268,9 @@ function postUpdate(elapsed) {
 	}
 	lastModchartSongPosition = Conductor.songPosition;
 
-	
-
-
-
-
-
-
-
 	for (item in modchartItems) {
-    if (item.property == "iTime") {
-        item.object.hset("iTime", Conductor.songPosition * 0.001);
-    }
-}
-}
-
-function create() {
-	ensureModchartOption();
-
-	camOther = new FlxCamera();
-	camOther.bgColor = 0;
-	FlxG.cameras.add(camOther, false);
-
-	var xmlPath = getModchartXMLPath();
-	if (modcharts && xmlPath != null && Assets.exists(xmlPath)) {
-		var xml = Xml.parse(Assets.getText(xmlPath)).firstElement();
-		if (isLegacyModchartXML(xml)) {
-			useNewModchartLoader = false;
-			legacyModchartLoaded = true;
-			importScript("data/scripts/loaders/vcLegacyModcharts.hx");
-			voiidDebugTrace("modchartLoader: using legacy old reader");
+		if (item.property == "iTime") {
+			item.object.hset("iTime", Conductor.songPosition * 0.001);
 		}
 	}
-}
-function postCreate() {
-	if (!modcharts || !useNewModchartLoader) return;
-	loadEvents();
 }

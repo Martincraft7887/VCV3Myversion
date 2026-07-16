@@ -1,4 +1,4 @@
-
+//
 import funkin.editors.ui.UIButton;
 import funkin.editors.ui.UIText;
 import funkin.editors.ui.UINumericStepper;
@@ -25,7 +25,7 @@ function updateEventGame(currentStep, e) {
     if (currentStep < e.step + e.time) {
         var l = (currentStep - e.step) * ((1) / ((e.step + e.time) - e.step));
         modchartItems[e.itemIndex].object.hset(modchartItems[e.itemIndex].property, FlxMath.lerp(e.startValue, e.value, e.ease(l)));
-        return false; 
+        return false; //dont remove yet
     }
     modchartItems[e.itemIndex].object.hset(modchartItems[e.itemIndex].property, e.value);
     return true;
@@ -156,7 +156,7 @@ function setupEventWindow(event, propertyMap, windowData) {
     windowData.curX += 65;
 
     windowData.curY += 100;
-    
+    //TODO: change to textbox instead
     var dropdown = new UIDropDown(windowData.windowSpr.x+(windowData.windowSpr.bWidth/2)-150, windowData.curY, 320, 32, easeList, easeList.indexOf(event.ease));
     propertyMap.set("ease", dropdown);
     var changeEaseFunc = windowData.changeEaseFunc;

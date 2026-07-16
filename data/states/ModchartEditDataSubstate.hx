@@ -73,7 +73,7 @@ class ModchartEditUIButtonList extends UIWindow {
 	}
 
 	public function add(button:T) {
-		button.ID = buttons.members.length-1;
+		button.ID = buttons.members.length;
 		buttons.add(button);
 		nextscrollY += button.bHeight;
 	}
@@ -228,6 +228,243 @@ class ModchartEditUIButtonList extends UIWindow {
 	}
 }
 
+// Legacy modcharts describe their editable items as Init/Event entries. This
+// adapter exposes those entries through the same UI contract used by the
+// modern Shader/Modifier item scripts without converting the XML format.
+class LegacyModchartItemScript {
+	public var eventType:String;
+
+	public function new(eventType:String) {
+		this.eventType = eventType;
+	}
+
+	public function call(func:String, args:Array<Dynamic>):Dynamic {
+		switch (func) {
+			case "isEditable": return true;
+			case "isLegacyEditable": return true;
+			case "getLegacyEventType": return eventType;
+			case "getXMLNodeName": return "Event";
+			case "getEditButtonText": return getEditButtonText();
+			case "setupItemData": setupItemData(args[0], args[1]); return null;
+			case "setupDefaultItemData": setupDefaultItemData(args[0]); return null;
+			case "getAvailableFiles": return getAvailableFiles();
+			case "getEditDisplayName": return getEditDisplayName();
+			case "getFolderDisplayName": return getFolderDisplayName();
+			case "setupEditMenu": setupEditMenu(args[0], args[1]); return null;
+			case "updateMenuPositions": updateMenuPositions(args[0]); return null;
+			case "getMenuHeight": return getMenuHeight();
+			case "getBaseWindowHeight": return getBaseWindowHeight();
+			case "updateEditItem": updateEditItem(args[0], args[1]); return null;
+			case "setDataValues": setDataValues(args[0], args[1]); return null;
+			case "createNodeFromData": return createNodeFromData(args[0]);
+		}
+		return null;
+	}
+
+	function saveOriginalAttributes(data:Dynamic, node:Xml) {
+		data.originalAttributes = [];
+		for (attribute in node.attributes()) {
+			data.originalAttributes.push({name: attribute, value: node.get(attribute)});
+		}
+	}
+
+	function restoreOriginalAttributes(data:Dynamic, node:Xml) {
+		if (data.originalAttributes == null) return;
+		for (attribute in data.originalAttributes)
+			node.set(attribute.name, attribute.value);
+	}
+
+	function setupItemData(data:Dynamic, node:Xml) {
+		saveOriginalAttributes(data, node);
+		data.eventType = eventType;
+		switch (eventType) {
+			case "initShader":
+				data.file = node.get("shader");
+			case "setCameraShader":
+				data.file = node.get("camera");
+			case "setShaderProperty":
+				data.file = node.get("property");
+				data.valueString = node.get("value");
+				data.value = Std.parseFloat(data.valueString);
+				data.valueIsNumeric = !Math.isNaN(data.value);
+			case "initModifier":
+				data.file = node.get("code");
+				data.value = Std.parseFloat(node.get("value"));
+				data.strumLineID = node.exists("strumLineID") ? Std.parseInt(node.get("strumLineID")) : -1;
+				data.strumID = node.exists("strumID") ? node.get("strumID") : "-1";
+		}
+	}
+
+	function setupDefaultItemData(data:Dynamic) {
+		data.eventType = eventType;
+		data.originalAttributes = [];
+		data.file = "";
+		data.value = 0;
+		data.valueString = "0";
+		data.valueIsNumeric = true;
+		data.strumLineID = -1;
+		data.strumID = "-1";
+	}
+
+	function getAvailableFiles():Array<String> {
+		if (eventType == "setCameraShader") return ["game", "hud", "other"];
+		if (eventType != "initShader") return [];
+
+		var files:Array<String> = [];
+		for (path in Paths.getFolderContent('shaders/legacy/', true, null)) {
+			var extension = Path.extension(path).toLowerCase();
+			if (extension == "frag" || extension == "vert") {
+				var file = CoolUtil.getFilename(path);
+				if (!files.contains(file)) files.push(file);
+			}
+		}
+		return files;
+	}
+
+	function getEditButtonText():String {
+		switch (eventType) {
+			case "initShader": return "Add Legacy Shader";
+			case "setCameraShader": return "Add Legacy Camera Binding";
+			case "setShaderProperty": return "Add Legacy Shader Property";
+			case "initModifier": return "Add Legacy Modifier";
+		}
+		return "Add Legacy Item";
+	}
+
+	function getEditDisplayName():String {
+		switch (eventType) {
+			case "initShader": return "Legacy Shader";
+			case "setCameraShader": return "Legacy Camera Binding";
+			case "setShaderProperty": return "Legacy Shader Property";
+			case "initModifier": return "Legacy Modifier";
+		}
+		return "Legacy Item";
+	}
+
+	function getFolderDisplayName():String {
+		switch (eventType) {
+			case "initShader": return "(shaders/legacy/)";
+			case "setCameraShader": return "(game / hud / other)";
+			case "setShaderProperty": return "(property name)";
+			case "initModifier": return "(inline code)";
+		}
+		return "";
+	}
+
+	function setupEditMenu(data:Dynamic, itemButton:Dynamic) {
+		if (eventType == "setShaderProperty") {
+			var valueInput:Dynamic = data.valueIsNumeric
+				? new UINumericStepper(16, 100, data.value, 0, 6, null, null, 200)
+				: new UITextBox(16, 100, data.valueString, 200);
+			itemButton.addLabelOn(valueInput, "Default Value");
+			itemButton.members.push(valueInput);
+			itemButton.menuObjects.set("valueInput", valueInput);
+		} else if (eventType == "initModifier") {
+			var valueInput = new UINumericStepper(16, 100, data.value, 0, 6, null, null, 200);
+			itemButton.addLabelOn(valueInput, "Default Value");
+			itemButton.members.push(valueInput);
+			itemButton.menuObjects.set("valueInput", valueInput);
+
+			var strumLineIDInput = new UINumericStepper(16, 166, data.strumLineID, 0, 0, -1, null, 200);
+			itemButton.addLabelOn(strumLineIDInput, "StrumLine ID (-1 = all)");
+			itemButton.members.push(strumLineIDInput);
+			itemButton.menuObjects.set("strumLineIDInput", strumLineIDInput);
+
+			var strumIDInput = new UITextBox(16, 232, data.strumID, 200);
+			itemButton.addLabelOn(strumIDInput, "Strum ID (-1 = all)");
+			itemButton.members.push(strumIDInput);
+			itemButton.menuObjects.set("strumIDInput", strumIDInput);
+		}
+	}
+
+	function updateMenuPositions(itemButton:Dynamic) {
+		if (eventType == "setShaderProperty") {
+			itemButton.follow(itemButton, itemButton.menuObjects.get("valueInput"), 16, 100);
+		} else if (eventType == "initModifier") {
+			itemButton.follow(itemButton, itemButton.menuObjects.get("valueInput"), 16, 100);
+			itemButton.follow(itemButton, itemButton.menuObjects.get("strumLineIDInput"), 16, 166);
+			itemButton.follow(itemButton, itemButton.menuObjects.get("strumIDInput"), 16, 232);
+		}
+	}
+
+	function getMenuHeight():Int {
+		if (eventType == "initModifier") return 298;
+		if (eventType == "setShaderProperty") return 166;
+		return 100;
+	}
+
+	function getBaseWindowHeight():Int {
+		if (eventType == "initModifier") return 340;
+		if (eventType == "setShaderProperty") return 250;
+		return 220;
+	}
+
+	function updateEditItem(data:Dynamic, itemButton:Dynamic) {
+		switch (eventType) {
+			case "initShader":
+				var basePath = "shaders/legacy/" + data.file;
+				var exists = Assets.exists(basePath + ".frag") || Assets.exists(basePath + ".vert") || Assets.exists(basePath + ".FRAG");
+				itemButton.descText.text = exists || data.file == "" ? "Legacy shader file" : '"' + data.file + '" could not be found!';
+			case "setCameraShader":
+				itemButton.descText.text = "Attach the named legacy shader to this camera.";
+			case "setShaderProperty":
+				itemButton.descText.text = "Set a legacy shader property before timeline events run.";
+			case "initModifier":
+				itemButton.descText.text = "Inline legacy modifier code.";
+		}
+	}
+
+	function commitStepper(stepper:Dynamic) {
+		stepper.__onChange(stepper.label.text);
+	}
+
+	function setDataValues(data:Dynamic, itemButton:Dynamic) {
+		if (eventType == "setShaderProperty") {
+			var valueInput = itemButton.menuObjects.get("valueInput");
+			if (data.valueIsNumeric) {
+				commitStepper(valueInput);
+				data.value = valueInput.value;
+				data.valueString = Std.string(data.value);
+			} else {
+				data.valueString = valueInput.label.text;
+			}
+		} else if (eventType == "initModifier") {
+			var valueInput = itemButton.menuObjects.get("valueInput");
+			var strumLineIDInput = itemButton.menuObjects.get("strumLineIDInput");
+			commitStepper(valueInput);
+			commitStepper(strumLineIDInput);
+			data.value = valueInput.value;
+			data.strumLineID = Std.int(strumLineIDInput.value);
+			data.strumID = itemButton.menuObjects.get("strumIDInput").label.text;
+		}
+	}
+
+	function createNodeFromData(data:Dynamic):Xml {
+		var node = Xml.createElement("Event");
+		restoreOriginalAttributes(data, node);
+		node.set("type", eventType);
+		node.set("name", data.name);
+
+		switch (eventType) {
+			case "initShader":
+				node.set("shader", data.file);
+			case "setCameraShader":
+				node.set("camera", data.file);
+			case "setShaderProperty":
+				node.set("property", data.file);
+				node.set("value", data.valueIsNumeric ? data.value : data.valueString);
+			case "initModifier":
+				node.set("code", data.file);
+				node.set("value", data.value);
+				if (data.strumLineID >= 0) node.set("strumLineID", data.strumLineID);
+				else node.remove("strumLineID");
+				if (data.strumID != null && data.strumID != "" && data.strumID != "-1") node.set("strumID", data.strumID);
+				else node.remove("strumID");
+		}
+		return node;
+	}
+}
+
 class ModchartEditButton extends UIButton {
 	public var topText:UIText;
 	public var itemDisplayName:String = "";
@@ -283,7 +520,8 @@ class ModchartEditButton extends UIButton {
 
 			script.call("setupItemData", [itemData, node]);
 
-			itemData.color = FlxColor.fromString(node.get("color"));
+			if (node.exists("color"))
+				itemData.color = FlxColor.fromString(node.get("color"));
 		} else {
 			itemData.type = modType;
 			script.call("setupDefaultItemData", [itemData]);
@@ -331,6 +569,10 @@ class ModchartEditButton extends UIButton {
 		dragHandle.shouldPress = false;
 		dragHandle.autoAlpha = false;
 		dragHandle.color = 0xFF606060;
+		dragHandle.hoverCallback = function() {
+			if (FlxG.mouse.justPressed && !expanded)
+				itemList.beginDrag(this);
+		};
 		members.push(dragHandle);
 
 
@@ -386,10 +628,6 @@ class ModchartEditButton extends UIButton {
 		follow(this, topText, 16, 10);
 		follow(this, expandButton, 880, 8);
 		follow(this, dragHandle, 832, 8);
-
-		if (dragHandle.hovered && FlxG.mouse.justPressed && !expanded) {
-			itemList.beginDrag(this);
-		}
 
 		if (expanded) {
 			dragHandle.visible = false;
@@ -516,6 +754,14 @@ class ModchartEditButton extends UIButton {
 }
 
 var itemList = null;
+var legacyEditScripts = ["" => null];
+var normalEditScripts = ["" => null];
+var itemInitLayout = [];
+
+function cloneItemXMLNode(node:Xml):Xml {
+	if (node == null) return null;
+	return Xml.parse(node.toString()).firstElement();
+}
 
 function create() {
 	winTitle = "Edit Modchart Data";
@@ -528,21 +774,60 @@ function postCreate() {
 	itemList.frames = Paths.getFrames('editors/ui/inputbox');
 	itemList.cameraSpacing = 0;
 
-	for (name => script in ITEM_EDIT_LOADED_SCRIPTS) {
-		if (script.call("isEditable", []) == true) {
-			var itemScript = script;
-			var itemName = name;
-			itemList.setupAddButton(script.call("getEditButtonText", []), function() {
+	if (ITEM_EDIT_IS_LEGACY) {
+		legacyEditScripts.clear();
+		for (eventType in ["initShader", "setCameraShader", "setShaderProperty", "initModifier"]) {
+			var itemScript = new LegacyModchartItemScript(eventType);
+			var itemName = "legacy_" + eventType;
+			legacyEditScripts.set(eventType, itemScript);
+			itemList.setupAddButton(itemScript.call("getEditButtonText", []), function() {
 				itemList.add(new ModchartEditButton(itemList.buttons.length, itemName, null, itemList, itemScript));
 			});
 		}
-	}
-
-	for (list in CURRENT_XML.elementsNamed("Init")) {
+	} else {
+		normalEditScripts.clear();
 		for (name => script in ITEM_EDIT_LOADED_SCRIPTS) {
 			if (script.call("isEditable", []) == true) {
-				for (node in list.elementsNamed(script.call("getXMLNodeName", []))) {
-					itemList.add(new ModchartEditButton(itemList.buttons.length, name, node, itemList, script));
+				var itemScript = script;
+				var itemName = name;
+				normalEditScripts.set(script.call("getXMLNodeName", []), {name: itemName, script: itemScript});
+				itemList.setupAddButton(script.call("getEditButtonText", []), function() {
+					itemList.add(new ModchartEditButton(itemList.buttons.length, itemName, null, itemList, itemScript));
+				});
+			}
+		}
+	}
+
+	ITEM_EDIT_PRESERVED_INIT_NODES = [];
+	itemInitLayout = [];
+	if (ITEM_EDIT_IS_LEGACY) {
+		for (list in CURRENT_XML.elementsNamed("Init")) {
+			for (node in list.elements()) {
+				var eventType = node.nodeName == "Event" ? node.get("type") : null;
+				var script = eventType == null ? null : legacyEditScripts.get(eventType);
+				if (script != null) {
+					itemInitLayout.push({editable: true, node: null});
+					itemList.add(new ModchartEditButton(itemList.buttons.length, "legacy_" + eventType, node, itemList, script));
+				} else {
+					// Never discard an Init entry just because this version of the
+					// editor does not know how to expose it.
+					var preservedNode = cloneItemXMLNode(node);
+					ITEM_EDIT_PRESERVED_INIT_NODES.push(preservedNode);
+					itemInitLayout.push({editable: false, node: preservedNode});
+				}
+			}
+		}
+	} else {
+		for (list in CURRENT_XML.elementsNamed("Init")) {
+			for (node in list.elements()) {
+				var editData = normalEditScripts.get(node.nodeName);
+				if (editData != null) {
+					itemInitLayout.push({editable: true, node: null});
+					itemList.add(new ModchartEditButton(itemList.buttons.length, editData.name, node, itemList, editData.script));
+				} else {
+					var preservedNode = cloneItemXMLNode(node);
+					ITEM_EDIT_PRESERVED_INIT_NODES.push(preservedNode);
+					itemInitLayout.push({editable: false, node: preservedNode});
 				}
 			}
 		}
@@ -568,9 +853,22 @@ function postCreate() {
 
 function save() {
 	var initEvents = Xml.createElement("Init");
+	var savedNodes = [];
 	for (button in itemList.buttons.members) {
-		initEvents.addChild(button.saveToNode());
+		savedNodes.push(button.saveToNode());
 	}
+
+	var savedIndex = 0;
+	for (slot in itemInitLayout) {
+		if (slot.editable) {
+			if (savedIndex < savedNodes.length)
+				initEvents.addChild(savedNodes[savedIndex++]);
+		} else if (slot.node != null) {
+			initEvents.addChild(cloneItemXMLNode(slot.node));
+		}
+	}
+	while (savedIndex < savedNodes.length)
+		initEvents.addChild(savedNodes[savedIndex++]);
 	ITEM_EDIT_SAVED_INIT_EVENTS = initEvents;
 }
 

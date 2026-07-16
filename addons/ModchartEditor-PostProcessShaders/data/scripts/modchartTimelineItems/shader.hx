@@ -1,4 +1,4 @@
-
+//
 import funkin.editors.ui.UISubstateWindow;
 import funkin.editors.ui.UIButton;
 import funkin.editors.ui.UIText;
@@ -15,6 +15,7 @@ import funkin.editors.ui.UITextBox;
 import funkin.editors.ui.UIAutoCompleteTextBox;
 import funkin.backend.utils.IniUtil;
 import Xml;
+
 
 function getItemTypeName() {
     return "shader";
@@ -54,7 +55,7 @@ function setupItemsFromXMLEditor(xml) {
 
         var tlStartIndex = timelineList.length;
         
-        for (prop in node.elementsNamed("Property")) {
+        for (prop in getOrderedShaderNodeProperties(node)) {
             var n = node.get("name") + "." + prop.get("name");
             var item = createTimelineItem(n, getItemTypeName(), s);
             item.property = prop.get("name");
@@ -90,7 +91,7 @@ function copyXMLItems(xml, output, packaged) {
         if (packaged) {
             var path = "shaders/modcharts/" + event.get("shader");
             if (Assets.exists(path+".frag")) {
-                event.set("fragCode", Bytes.ofString(Assets.getText(path+".frag")).toHex()); 
+                event.set("fragCode", Bytes.ofString(Assets.getText(path+".frag")).toHex()); //ensures that shader code wont break xml parsing
             } else {
                 event.set("fragCode", "");
             }
@@ -129,7 +130,7 @@ function reloadItems() {
 }
 
 
-
+//edit menu stuff
 function isEditable() { return true; }
 function getXMLNodeName() {return "Shader";}
 function getEditButtonText() { return "Add Post Process Shader"; }
@@ -170,6 +171,56 @@ function getAvailableFiles() {
 function getEditDisplayName() { return "Shader"; }
 function getFolderDisplayName() { return "(shaders/modcharts/)"; }
 
+function getOrderedIniProperties(path:String, iniData) {
+    var order:Array<String> = [];
+    if (!Assets.exists(path) || iniData == null) return order;
+
+    for (rawLine in Assets.getText(path).split("\n")) {
+        var line = StringTools.trim(rawLine);
+        if (line == "" || StringTools.startsWith(line, ";") || StringTools.startsWith(line, "#") || StringTools.startsWith(line, "[")) continue;
+
+        var separator = line.indexOf("=");
+        if (separator < 0) continue;
+
+        var key = StringTools.trim(line.substr(0, separator));
+        if (key != "" && key != "desc" && iniData.exists(key) && !order.contains(key))
+            order.push(key);
+    }
+
+    // Keep supporting values accepted by IniUtil even if their formatting was
+    // not recognized above, while preserving file order whenever possible.
+    for (key => val in iniData) {
+        if (key != "" && key != "desc" && !order.contains(key))
+            order.push(key);
+    }
+
+    return order;
+}
+
+function getOrderedShaderNodeProperties(node) {
+    var properties = [];
+    var ordered = [];
+    for (prop in node.elementsNamed("Property")) properties.push(prop);
+
+    var iniPath = "shaders/modcharts/" + node.get("shader") + ".ini";
+    if (Assets.exists(iniPath)) {
+        var iniData = IniUtil.parseAsset(iniPath).get("Global");
+        for (key in getOrderedIniProperties(iniPath, iniData)) {
+            for (prop in properties) {
+                if (prop.get("name") == key && !ordered.contains(prop))
+                    ordered.push(prop);
+            }
+        }
+    }
+
+    // Unknown or old properties are preserved after the INI-defined ones.
+    for (prop in properties) {
+        if (!ordered.contains(prop)) ordered.push(prop);
+    }
+
+    return ordered;
+}
+
 function setupEditMenu(data, itemButton) {
     var camGameCheckbox = new UICheckbox(16, 100, "Use on Game Camera?", data.camGame);
     itemButton.members.push(camGameCheckbox);
@@ -200,12 +251,16 @@ function updateEditItem(data, itemButton) {
     var fileExists = false;
     var iniExists = false;
     var iniData = ["" => ""];
+    var iniPropertyOrder:Array<String> = [];
+    var iniPath = "shaders/modcharts/" + data.file + ".ini";
     if (Assets.exists("shaders/modcharts/" + data.file + ".vert") || Assets.exists("shaders/modcharts/" + data.file + ".frag")) {
         fileExists = true;
     }
-    if (Assets.exists("shaders/modcharts/" + data.file + ".ini")) {
+    if (Assets.exists(iniPath)) {
         iniExists = true;
-iniData = IniUtil.parseAsset("shaders/modcharts/" + data.file + ".ini").get("Global");    }
+        iniData = IniUtil.parseAsset(iniPath).get("Global");
+        iniPropertyOrder = getOrderedIniProperties(iniPath, iniData);
+    }
 
     if (iniExists) {
         itemButton.descText.text = iniData.exists("desc") ? StringTools.replace(iniData.get("desc"), "#", "\n") : "";
@@ -225,17 +280,15 @@ iniData = IniUtil.parseAsset("shaders/modcharts/" + data.file + ".ini").get("Glo
     itemButton.extraValuesList = [];
     itemButton.extraLabels = [];
 
-    for (key => val in iniData) {
-        if (key != "desc" && key != "") {
-            var input = new UINumericStepper(16, 100, Std.parseFloat(val), 0, 6, null, null, 200);
-            itemButton.members.push(input);
-            itemButton.extraValues.push(input);
-            itemButton.extraValuesList.push(key);
+    for (key in iniPropertyOrder) {
+        var input = new UINumericStepper(16, 100, Std.parseFloat(iniData.get(key)), 0, 6, null, null, 200);
+        itemButton.members.push(input);
+        itemButton.extraValues.push(input);
+        itemButton.extraValuesList.push(key);
 
-            var label:UIText = new UIText(0, 0, 0, key);
-            itemButton.members.push(label);
-            itemButton.extraLabels.push(label);
-        }
+        var label:UIText = new UIText(0, 0, 0, key);
+        itemButton.members.push(label);
+        itemButton.extraLabels.push(label);
     }
 
     for (prop in data.properties) {
@@ -244,7 +297,7 @@ iniData = IniUtil.parseAsset("shaders/modcharts/" + data.file + ".ini").get("Glo
             inputBox.value = prop.value;
         }
     }
-    data.properties = []; 
+    data.properties = []; //temp remove to clear out any properties that shouldnt be there
     for (i => names in itemButton.extraValuesList) {
         data.properties.push({
             name: names,

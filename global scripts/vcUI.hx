@@ -25,7 +25,7 @@ var paperBoxingPunchRGB:Array<Int> = [0xFF0052C8, 0xFFFFFFFF, 0xFF001B58];
 var paperIconScale:Float = 0.66;
 
 function normalizeNoteSkinPrefix(prefix:String):String {
-	if (prefix == null || prefix == "" || prefix == "codename/")
+	if (prefix == null || prefix == "" || prefix == "codename/" || prefix == "default" || prefix == "default/")
 		return "";
 	return prefix;
 }
@@ -33,7 +33,9 @@ function normalizeNoteSkinPrefix(prefix:String):String {
 function noteSkinPath(prefix:String):String {
 	prefix = normalizeNoteSkinPrefix(prefix);
 	if (prefix == "")
-		return uiPath + "codename/notes/default";
+		// This atlas uses the same Codename texture, but also includes the
+		// multikey aliases (left static, down0, hold/end, etc.).
+		return uiPath + "notes/default";
 	return uiPath + prefix + "notes/default";
 }
 
@@ -259,7 +261,10 @@ function updateNoteSkin() {
 			var kc = getKeyCountIndex(strumLine.ID);
 			strum.frames = Paths.getFrames(noteSkinPath(noteSkinPrefix));
 			strum.antialiasing = true;
-			strum.setGraphicSize(Std.int((strum.width * strumLineNoteScales[strumLine.ID] * strumLines.members[strumLine.ID].strumScale)));
+			// Apply the absolute intended scale. Using strum.width here multiplies
+			// the previous scale again on every skin change (Insano alternates often).
+			var targetScale = strumLineNoteScales[strumLine.ID] * strumLines.members[strumLine.ID].strumScale;
+			strum.scale.set(targetScale, targetScale);
 
 			strum.animation.addByPrefix('static', multikeyStrumAnims[kc][strum.ID][0]);
 			strum.animation.addByPrefix('pressed', multikeyStrumAnims[kc][strum.ID][2], 24, false);

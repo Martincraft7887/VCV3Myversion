@@ -78,6 +78,16 @@ var defaultSong = '
 var songData = null;
 var songCreditEntries:Array<Dynamic> = [];
 var nextCreditIndex:Int = 0;
+var preloadWarmupObjects:Array<Dynamic> = [];
+var preloadWarmupFrames:Int = 0;
+var pausePreloadWarmupObjects:Array<Dynamic> = [];
+var loadedBaseCreditData:Dynamic = null;
+var loadedSecondCreditData:Dynamic = null;
+var loadedRawSecondCreditData:Dynamic = null;
+// pause.hx is created only when pausing, so its reusable resources live here.
+// Global scripts stay alive for the whole song and ScriptPack.get() can expose
+// this cache to the temporary pause script without modifying PlayState fields.
+var voiidPauseCache:Dynamic = null;
 
 
 
@@ -257,10 +267,14 @@ function loadSongCreditEntries()
 {
     songCreditEntries = [];
     nextCreditIndex = 0;
+    loadedBaseCreditData = null;
+    loadedSecondCreditData = null;
+    loadedRawSecondCreditData = null;
 
     var baseData = loadCreditData("credits.json");
     if (baseData == null)
         baseData = Json.parse(defaultSong);
+    loadedBaseCreditData = baseData;
 
     songCreditEntries.push({
         data: baseData,
@@ -270,7 +284,9 @@ function loadSongCreditEntries()
     var secondData = loadCreditData("credits2.json");
     if (secondData != null)
     {
+        loadedRawSecondCreditData = secondData;
         secondData = mergeCreditData(baseData, secondData);
+        loadedSecondCreditData = secondData;
 
         songCreditEntries.push({
             data: secondData,
@@ -682,14 +698,14 @@ function preparePopup(data:Dynamic)
             leftText,
             songData.songFontSize,
             12,
-            Json.stringify(splitLeftData)
+            splitLeftData
         );
 
         tRight = makeCoolText(
             rightText,
             songData.songFontSize,
             12,
-            Json.stringify(splitRightData)
+            splitRightData
         );
     }
     else
@@ -698,7 +714,7 @@ function preparePopup(data:Dynamic)
             displaySongName,
             songData.songFontSize,
             12,
-            Json.stringify(songData)
+            songData
         );
     }
 
@@ -722,6 +738,340 @@ function preparePopup(data:Dynamic)
     logo.visible = false;
 
     add(logo);
+}
+
+function capturePreparedPopup():Dynamic
+{
+    return {
+        data: songData,
+        text: t1,
+        leftText: tLeft,
+        rightText: tRight,
+        logo: logo,
+        splitText: useSplitText,
+        splitGap: splitTextGap,
+        displayName: displaySongName,
+        textY: customTextOffsetY,
+        logoFromJson: logoFromJson,
+        logoHasIdleAnim: logoHasIdleAnim,
+        logoBaseScaleX: logoBaseScaleX,
+        logoBaseScaleY: logoBaseScaleY
+    };
+}
+
+function detachPreparedPopupGlobals()
+{
+    t1 = null;
+    tLeft = null;
+    tRight = null;
+    logo = null;
+    songData = null;
+    centerFollowers = [];
+    logoBumpTween = null;
+}
+
+function setPreparedObjectAlpha(obj:Dynamic, value:Float)
+{
+    if (obj == null)
+        return;
+
+    obj.alpha = value;
+
+    // VCSongText draws the VIP child manually, outside the parent's alpha.
+    // Mirror the warmup alpha so it cannot flash at full opacity.
+    var child = Reflect.field(obj, "childText");
+    if (child != null)
+        child.alpha = value;
+}
+
+function addPreparedObjectsToWarmup(prepared:Dynamic)
+{
+    for (obj in [prepared.text, prepared.leftText, prepared.rightText, prepared.logo])
+    {
+        if (obj == null)
+            continue;
+
+        // Let OpenFL upload the generated bitmap and compile its shader during
+        // the first rendered frame. The alpha is intentionally imperceptible.
+        setPreparedObjectAlpha(obj, 0.001);
+        obj.visible = true;
+        preloadWarmupObjects.push(obj);
+    }
+}
+
+function finishPreloadWarmup()
+{
+    for (obj in preloadWarmupObjects)
+    {
+        if (obj == null)
+            continue;
+        obj.visible = false;
+        setPreparedObjectAlpha(obj, 1);
+    }
+
+    for (obj in pausePreloadWarmupObjects)
+    {
+        if (obj == null)
+            continue;
+
+        obj.visible = false;
+        setPreparedObjectAlpha(obj, 1);
+        remove(obj, false);
+    }
+
+    preloadWarmupObjects = [];
+    pausePreloadWarmupObjects = [];
+    preloadWarmupFrames = 0;
+}
+
+function updatePreloadWarmup()
+{
+    if (preloadWarmupFrames <= 0)
+        return;
+
+    preloadWarmupFrames--;
+    if (preloadWarmupFrames <= 0)
+        finishPreloadWarmup();
+}
+
+function preloadCreditPopups()
+{
+    preloadWarmupObjects = [];
+    preloadWarmupFrames = 0;
+
+    for (entry in songCreditEntries)
+    {
+        entry.prepared = null;
+
+        if (entry.time == -1)
+            continue;
+
+        try
+        {
+            preparePopup(entry.data);
+            entry.prepared = capturePreparedPopup();
+            addPreparedObjectsToWarmup(entry.prepared);
+            detachPreparedPopupGlobals();
+        }
+        catch(e:Dynamic)
+        {
+            clearPopupSprites();
+            detachPreparedPopupGlobals();
+            trace("[songname] No se pudo precargar un cartel: " + Std.string(e));
+        }
+    }
+
+    // Keep the objects drawable for one full frame before hiding them.
+    if (preloadWarmupObjects.length > 0)
+        preloadWarmupFrames = 2;
+}
+
+function activatePreparedPopup(prepared:Dynamic)
+{
+    clearPopupSprites();
+
+    songData = prepared.data;
+    t1 = prepared.text;
+    tLeft = prepared.leftText;
+    tRight = prepared.rightText;
+    logo = prepared.logo;
+    useSplitText = prepared.splitText;
+    splitTextGap = prepared.splitGap;
+    displaySongName = prepared.displayName;
+    customTextOffsetY = prepared.textY;
+    logoFromJson = prepared.logoFromJson;
+    logoHasIdleAnim = prepared.logoHasIdleAnim;
+    logoBaseScaleX = prepared.logoBaseScaleX;
+    logoBaseScaleY = prepared.logoBaseScaleY;
+
+    for (obj in [t1, tLeft, tRight, logo])
+    {
+        if (obj != null)
+        {
+            obj.visible = false;
+            setPreparedObjectAlpha(obj, 1);
+        }
+    }
+}
+
+function loadPausePreloadCreditSet(suffix:String):Dynamic
+{
+    var songPath = "songs/" + PlayState.SONG.meta.name + "/";
+    var diffAsset = Paths.getPath(songPath + "credits" + suffix + "-" + PlayState.difficulty + ".json");
+
+    try
+    {
+        if (Assets.exists(diffAsset))
+            return Json.parse(Assets.getText(diffAsset));
+    }
+    catch(e:Dynamic) {}
+
+    // Reuse the JSON already loaded by the song popup whenever there is no
+    // difficulty-specific file, avoiding a second disk read at startup.
+    if (suffix == "")
+        return loadedBaseCreditData;
+    if (suffix == "2")
+        return loadedRawSecondCreditData;
+
+    return null;
+}
+
+function getPausePreloadTitle(data:Dynamic):String
+{
+    if (data != null && Reflect.field(data, "overrideName") != null)
+        return Std.string(Reflect.field(data, "overrideName"));
+    return PlayState.SONG.meta.displayName;
+}
+
+function getPausePreloadFontSize(data:Dynamic, revealed:Bool):Float
+{
+    if (!revealed)
+        return getDataFloat(data, "pauseHiddenSongFontSize", 120) * 0.68;
+
+    if (data != null && Reflect.field(data, "pauseSongFontSize") != null)
+        return getDataFloat(data, "pauseSongFontSize", 64);
+
+    return getDataFloat(data, "songFontSize", 128) * 0.68;
+}
+
+function fitPausePreloadText(sprite:FlxSprite, maxW:Float, maxH:Float)
+{
+    if (sprite == null || sprite.width <= 0 || sprite.height <= 0)
+        return;
+
+    var scale = Math.min(maxW / sprite.width, maxH / sprite.height);
+    if (scale < 1)
+    {
+        sprite.scale.set(sprite.scale.x * scale, sprite.scale.y * scale);
+        sprite.updateHitbox();
+    }
+}
+
+function createPausePreloadText(text:String, data:Dynamic, revealed:Bool):FlxSprite
+{
+    var result = createSongText(text, getPausePreloadFontSize(data, revealed), 10, data);
+    fitPausePreloadText(result, 560, 170);
+    result.cameras = [camGame];
+    result.scrollFactor.set();
+    result.visible = true;
+    setPreparedObjectAlpha(result, 0.001);
+    add(result);
+    pausePreloadWarmupObjects.push(result);
+    return result;
+}
+
+function getPausePreloadLogoName(data:Dynamic):String
+{
+    if (data != null && Reflect.field(data, "logo") != null && Std.string(Reflect.field(data, "logo")) != "")
+    {
+        var jsonLogo = Std.string(Reflect.field(data, "logo"));
+        if (logoExists(jsonLogo))
+            return jsonLogo;
+    }
+
+    var curSongName = PlayState.SONG.meta.name.toLowerCase();
+    for (entry in logoTable)
+    {
+        for (song in entry.songs)
+        {
+            if (curSongName == song.toLowerCase() && logoExists(entry.logo))
+                return entry.logo;
+        }
+    }
+
+    return logoExists("Logo") ? "Logo" : "";
+}
+
+function createPausePreloadEntry(data:Dynamic):Dynamic
+{
+    if (data == null)
+        return null;
+
+    var cachedText:FlxSprite = null;
+    try
+    {
+        cachedText = createPausePreloadText(getPausePreloadTitle(data), data, true);
+    }
+    catch(e:Dynamic)
+    {
+        trace("[songname] No se pudo precargar el título de pausa: " + Std.string(e));
+    }
+
+    var logoName = getPausePreloadLogoName(data);
+    if (logoName != "")
+    {
+        try
+        {
+            Paths.getFrames("logos/" + logoName);
+            Paths.image("logos/" + logoName);
+        }
+        catch(e:Dynamic) {}
+    }
+
+    return {
+        data: data,
+        text: cachedText,
+        logoName: logoName
+    };
+}
+
+function preloadPauseMenuAssets()
+{
+    if (PlayState.instance == null)
+        return;
+
+    var baseData = loadPausePreloadCreditSet("");
+    if (baseData == null)
+        baseData = Json.parse(defaultSong);
+
+    var secondOverride = loadPausePreloadCreditSet("2");
+    var secondData = secondOverride == null ? null : mergeCreditData(baseData, secondOverride);
+
+    var baseEntry = createPausePreloadEntry(baseData);
+    var secondEntry = createPausePreloadEntry(secondData);
+    var hiddenText:FlxSprite = null;
+    var cachedBackground:FlxSprite = null;
+
+    try
+    {
+        hiddenText = createPausePreloadText("???", baseData, false);
+    }
+    catch(e:Dynamic)
+    {
+        trace("[songname] No se pudo precargar el título oculto de pausa: " + Std.string(e));
+    }
+
+    try
+    {
+        cachedBackground = new FlxSprite().makeSolid(FlxG.width + 8, FlxG.height + 8, FlxColor.BLACK);
+        cachedBackground.alpha = 0;
+        cachedBackground.visible = false;
+        cachedBackground.scrollFactor.set();
+        cachedBackground.screenCenter();
+    }
+    catch(e:Dynamic) {}
+
+    // PauseSubState always loads this track, even with its default UI cancelled.
+    // Decode it during song startup so opening pause does not hit the disk.
+    try Assets.getMusic(Paths.music("breakfast")) catch(e:Dynamic) {}
+    try Paths.font("Contb___.ttf") catch(e:Dynamic) {}
+
+    voiidPauseCache = {
+        songName: Std.string(PlayState.SONG.meta.name),
+        difficulty: Std.string(PlayState.difficulty),
+        variation: Std.string(PlayState.variation),
+        baseData: baseData,
+        secondData: secondData,
+        baseEntry: baseEntry,
+        secondEntry: secondEntry,
+        hiddenText: hiddenText,
+        background: cachedBackground,
+        menuTexts: null,
+        menuSignature: ""
+    };
+
+    if (pausePreloadWarmupObjects.length > 0)
+        preloadWarmupFrames = Math.max(preloadWarmupFrames, 2);
 }
 
 function showPreparedPopup()
@@ -773,42 +1123,14 @@ function postCreate()
     cacheTimerSkinChanges();
     loadSongCreditEntries();
     createTimerUI();
-
-    for (entry in songCreditEntries)
-    {
-        var tempSongData = entry.data;
-        var logoToCache = "Logo";
-
-        if (tempSongData != null && tempSongData.logo != null && Std.string(tempSongData.logo) != "") 
-        {
-            if (logoExists(Std.string(tempSongData.logo))) {
-                logoToCache = Std.string(tempSongData.logo);
-            }
-        } 
-        else 
-        {
-            var curSongName = PlayState.SONG.meta.name.toLowerCase();
-            for (logoEntry in logoTable) {
-                for (song in logoEntry.songs) {
-                    if (curSongName == song.toLowerCase()) {
-                        if (logoExists(logoEntry.logo)) logoToCache = logoEntry.logo;
-                        break;
-                    }
-                }
-            }
-        }
-
-        Paths.getFrames("logos/" + logoToCache);
-        Paths.image("logos/" + logoToCache); 
-    }
+    preloadCreditPopups();
+    preloadPauseMenuAssets();
 }
 
 
 
-function makeCoolText(text:String, size:Float, spacing:Float, dataString:String)
+function makeCoolText(text:String, size:Float, spacing:Float, data:Dynamic)
 {
-    var data = Json.parse(dataString);
-
     var t = createSongText(text, size, spacing, data);
 
     t.cameras = [camGame];
@@ -1097,6 +1419,7 @@ function showObject(
 
 function update(elapsed)
 {
+    updatePreloadWarmup();
     updateCenterFollowers(elapsed);
     updateTimerSkinBySongPosition();
     
@@ -1113,7 +1436,21 @@ function update(elapsed)
         {
             showedPopup = true;
             nextCreditIndex++;
-            preparePopup(entry.data);
+
+            // If the popup starts immediately, stop the warmup before activating
+            // it so the next frame cannot hide the active objects again.
+            if (preloadWarmupFrames > 0)
+                finishPreloadWarmup();
+
+            if (entry.prepared != null)
+            {
+                var prepared = entry.prepared;
+                entry.prepared = null;
+                activatePreparedPopup(prepared);
+            }
+            else
+                preparePopup(entry.data);
+
             showPreparedPopup();
         }
     }
@@ -1157,4 +1494,49 @@ function beatHit(curBeat:Int)
             );
         }
     }
+}
+
+function destroyPauseCacheObject(obj:Dynamic)
+{
+    if (obj == null)
+        return;
+
+    try FlxTween.cancelTweensOf(obj) catch(e:Dynamic) {}
+    try remove(obj, false) catch(e:Dynamic) {}
+
+    try
+    {
+        if (FlxG.state != null && FlxG.state.subState != null)
+            FlxG.state.subState.remove(obj, false);
+    }
+    catch(e:Dynamic) {}
+
+    var child = Reflect.field(obj, "childText");
+    if (child != null)
+    {
+        try child.destroy() catch(e:Dynamic) {}
+    }
+
+    try obj.destroy() catch(e:Dynamic) {}
+}
+
+function destroy()
+{
+    var cache = voiidPauseCache;
+    if (cache == null)
+        return;
+
+    destroyPauseCacheObject(Reflect.field(cache, "hiddenText"));
+    destroyPauseCacheObject(Reflect.field(cache, "background"));
+    destroyPauseCacheObject(Reflect.field(cache, "menuTexts"));
+
+    for (field in ["baseEntry", "secondEntry"])
+    {
+        var entry = Reflect.field(cache, field);
+        if (entry != null)
+            destroyPauseCacheObject(Reflect.field(entry, "text"));
+    }
+
+    voiidPauseCache = null;
+    pausePreloadWarmupObjects = [];
 }

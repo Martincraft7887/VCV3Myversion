@@ -29,6 +29,8 @@ var dadSingSuffix:String = "";
 var bfSingSuffix:String = "";
 var dadIdleSuffix:String = "";
 var bfIdleSuffix:String = "";
+var dadPreviousIdleSuffix:String = "";
+var bfPreviousIdleSuffix:String = "";
 
 var state = {
 	pushing: false,
@@ -37,6 +39,9 @@ var state = {
 	mattBlock: true,
 	bfEchoTrail: false,
 	mattEchoTrail: false,
+	bfShieldVisible: false,
+	mattShieldVisible: false,
+	standPunches: false,
 	mattParry: false,
 	ranged: true,
 	bfSplashes: false,
@@ -63,6 +68,8 @@ var mattShield:FlxSprite;
 var aura:FlxSprite;
 
 var doingPowerup:Bool = false;
+var powerupRising:Bool = false;
+var powerupYTween:FlxTween = null;
 var floatTime:Float = 0;
 var songLower:String = "";
 
@@ -153,22 +160,87 @@ function refreshCharacters(resetPositions:Bool) {
 	if (dad == null || boyfriend == null) return;
 	punchingEnabled = enabled && (dad.hasAnimation("singLEFT-block") || boyfriend.hasAnimation("singLEFT-block"));
 	if (!resetPositions) return;
-	defaultBFX = boyfriend.x - pushAmount;
-	defaultBFY = boyfriend.y;
-	defaultMattX = dad.x - pushAmount;
-	defaultMattY = dad.y;
+	// TKO changes stage while Matt is rising. Keep the original stage
+	// coordinates so that refreshCharacters does not turn an intermediate
+	// tween position into the new base position.
+	if (!doingPowerup) {
+		defaultBFX = boyfriend.x - pushAmount;
+		defaultBFY = boyfriend.y;
+		defaultMattX = dad.x - pushAmount;
+		defaultMattY = dad.y;
+	}
 	positionShields();
 }
 
 function positionShields() {
+	if (state.bfShieldVisible && state.mattShieldVisible) {
+		positionDoubleShields();
+		return;
+	}
+	positionBFShield(state.bfShieldVisible);
+	positionMattShield();
+}
+
+function positionBFShield(activeMode:Bool) {
+	if (bfShield == null || boyfriend == null) return;
+	// Same raw-character positioning used by new_BlockStuff.hx. Do not use
+	// Character.offset here: it changes with every animation frame.
+	bfShield.x = defaultBFX + pushAmount - (activeMode ? 100 : 50);
+	bfShield.y = boyfriend.y - 375;
+}
+
+function positionMattShield() {
+	if (mattShield == null || dad == null) return;
+	mattShield.x = defaultMattX + pushAmount - 250;
+	mattShield.y = dad.y - 375;
+}
+
+function positionDoubleShields() {
 	if (bfShield != null) {
-		bfShield.x = getBaseVisualX(boyfriend, defaultBFX) - 240;
-		bfShield.y = getBaseVisualY(boyfriend, defaultBFY) - 400;
+		bfShield.x = defaultBFX - 600;
+		bfShield.y = boyfriend.y - 375;
 	}
 	if (mattShield != null) {
-		mattShield.x = getBaseVisualX(dad, defaultMattX) - 240;
-		mattShield.y = getBaseVisualY(dad, defaultMattY) - 420;
+		mattShield.x = defaultMattX + 250;
+		mattShield.y = dad.y - 375;
 	}
+}
+
+function setShieldVisibility(showBF:Bool, showMatt:Bool) {
+	state.bfShieldVisible = showBF;
+	state.mattShieldVisible = showMatt;
+	// Clear any previous custom owner first, then apply mic only to the
+	// character whose shield is visible.
+	syncShieldMicSuffixes(showBF, showMatt);
+
+	if (showBF && showMatt) {
+		positionDoubleShields();
+		moveShieldCharacters(-500, 500);
+	} else if (showBF) {
+		positionBFShield(true);
+		moveShieldCharacters(0, 500);
+	} else if (showMatt) {
+		positionMattShield();
+		moveShieldCharacters(-500, 0);
+	} else {
+		moveShieldCharacters(0, 0);
+	}
+
+	if (bfShield != null) {
+		FlxTween.cancelTweensOf(bfShield);
+		bfShield.alpha = showBF ? 1 : 0;
+	}
+	if (mattShield != null) {
+		FlxTween.cancelTweensOf(mattShield);
+		mattShield.alpha = showMatt ? 1 : 0;
+	}
+}
+
+function syncShieldMicSuffixes(showBF:Bool, showMatt:Bool) {
+	setBFSuffix("", true);
+	setDadSuffix("", true);
+	if (showBF) setBFSuffix("-mic", true);
+	if (showMatt) setDadSuffix("-mic", true);
 }
 
 function getVisualX(char):Float {
@@ -208,13 +280,25 @@ function onStageChanged(name) {
 function onCharactersChanged(strumlineID, names) {
 	refreshCharacters(false);
 	if (strumlineID == 0) {
-		defaultMattX = dad.x - pushAmount;
-		defaultMattY = dad.y;
-		applyIdleSuffix(dad, dadIdleSuffix);
+		if (!doingPowerup) {
+			defaultMattX = dad.x - pushAmount;
+			defaultMattY = dad.y;
+		}
+		if (dadIdleSuffix != "") {
+			var currentSuffix = getCharacterIdleSuffix(dad);
+			if (currentSuffix != dadIdleSuffix) dadPreviousIdleSuffix = currentSuffix;
+			applyIdleSuffix(dad, dadIdleSuffix);
+		}
 	} else if (strumlineID == 1) {
-		defaultBFX = boyfriend.x - pushAmount;
-		defaultBFY = boyfriend.y;
-		applyIdleSuffix(boyfriend, bfIdleSuffix);
+		if (!doingPowerup) {
+			defaultBFX = boyfriend.x - pushAmount;
+			defaultBFY = boyfriend.y;
+		}
+		if (bfIdleSuffix != "") {
+			var currentSuffix = getCharacterIdleSuffix(boyfriend);
+			if (currentSuffix != bfIdleSuffix) bfPreviousIdleSuffix = currentSuffix;
+			applyIdleSuffix(boyfriend, bfIdleSuffix);
+		}
 	}
 	positionShields();
 }
@@ -224,32 +308,90 @@ function update(elapsed) {
 		firstFrame = false;
 		refreshCharacters(true);
 	}
-	if (!punchingEnabled) return;
 
 	if (stage != null && stage.stageSprites != null && stage.stageSprites.exists("tko-floorGlow"))
 		stage.stageSprites.get("tko-floorGlow").alpha = aura.alpha;
 
-	if (doingPowerup) {
+	// Once the 16-beat rise is complete, retain Restored's floating motion.
+	// This stays outside punchingEnabled because the powerup character may not
+	// contain boxing/block animations.
+	if (doingPowerup && !powerupRising) {
 		floatTime += elapsed;
 		dad.y = defaultMattY - 150 + Math.sin(floatTime) * 50;
 	}
+
+	if (!punchingEnabled) return;
+}
+
+function cancelPowerupYTween() {
+	if (powerupYTween == null) return;
+	powerupYTween.cancel();
+	powerupYTween = null;
+}
+
+function beginPowerupRise() {
+	cancelPowerupYTween();
+	doingPowerup = true;
+	powerupRising = true;
+	floatTime = 0;
+	if (dad == null) {
+		powerupRising = false;
+		return;
+	}
+
+	// Restored: tween dadCharacter0 to getMattY() - 150 over 16 beats.
+	powerupYTween = FlxTween.tween(dad, {y: defaultMattY - 150}, Conductor.crochet * 0.016, {
+		ease: FlxEase.cubeIn,
+		onComplete: function(_) {
+			powerupYTween = null;
+			if (!doingPowerup) return;
+			powerupRising = false;
+			floatTime = 0;
+			dad.y = defaultMattY - 150;
+		}
+	});
 }
 
 function postUpdate(elapsed) {
-	refreshIdleSuffix(dad, dadIdleSuffix);
-	refreshIdleSuffix(boyfriend, bfIdleSuffix);
+	// Empty means this script is not managing the idle. This lets built-in
+	// events such as Alt Animation Toggle keep idleSuffix = "-alt".
+	if (dadIdleSuffix != "") refreshIdleSuffix(dad, dadIdleSuffix);
+	if (bfIdleSuffix != "") refreshIdleSuffix(boyfriend, bfIdleSuffix);
 }
 
 function setDadSuffix(suffix:String, affectIdle:Bool) {
+	var previousManagedSuffix = dadIdleSuffix;
+	var nextIdleSuffix = affectIdle ? suffix : "";
 	dadSingSuffix = suffix;
-	dadIdleSuffix = affectIdle ? suffix : "";
-	applyIdleSuffix(dad, dadIdleSuffix);
+	if (previousManagedSuffix == "" && nextIdleSuffix != "")
+		dadPreviousIdleSuffix = getCharacterIdleSuffix(dad);
+	dadIdleSuffix = nextIdleSuffix;
+	if (dadIdleSuffix != "")
+		applyIdleSuffix(dad, dadIdleSuffix);
+	else if (previousManagedSuffix != "") {
+		applyIdleSuffix(dad, dadPreviousIdleSuffix);
+		dadPreviousIdleSuffix = "";
+	}
 }
 
 function setBFSuffix(suffix:String, affectIdle:Bool) {
+	var previousManagedSuffix = bfIdleSuffix;
+	var nextIdleSuffix = affectIdle ? suffix : "";
 	bfSingSuffix = suffix;
-	bfIdleSuffix = affectIdle ? suffix : "";
-	applyIdleSuffix(boyfriend, bfIdleSuffix);
+	if (previousManagedSuffix == "" && nextIdleSuffix != "")
+		bfPreviousIdleSuffix = getCharacterIdleSuffix(boyfriend);
+	bfIdleSuffix = nextIdleSuffix;
+	if (bfIdleSuffix != "")
+		applyIdleSuffix(boyfriend, bfIdleSuffix);
+	else if (previousManagedSuffix != "") {
+		applyIdleSuffix(boyfriend, bfPreviousIdleSuffix);
+		bfPreviousIdleSuffix = "";
+	}
+}
+
+function getCharacterIdleSuffix(char):String {
+	if (char == null || char.idleSuffix == null) return "";
+	return Std.string(char.idleSuffix);
 }
 
 function applyIdleSuffix(char, suffix:String) {
@@ -315,11 +457,11 @@ function onNoteHit(event) {
 	var direction:Int = correctPunchDirection(event);
 	var doPush:Bool = !event.note.isSustainNote;
 	if (event.note.strumLine.ID == 0) {
-		applyEventSingSuffix(event, dadSingSuffix);
+		applyShieldAwareSingSuffix(event, false);
 		onMattHit(direction, doPush);
-		if (doPush && state.healthDrain) drainHealth();
+		if (doPush && state.healthDrain && !bfShieldAbsorbsHit() && !mattShieldAbsorbsHit()) drainHealth();
 	} else if (event.note.strumLine.ID == 1) {
-		applyEventSingSuffix(event, bfSingSuffix);
+		applyShieldAwareSingSuffix(event, true);
 		if (!isDodgeNote(event))
 			onBFHit(direction, doPush);
 	}
@@ -327,12 +469,37 @@ function onNoteHit(event) {
 
 function onDadHit(event) {
 	correctPunchDirection(event);
-	applyEventSingSuffix(event, dadSingSuffix);
+	applyShieldAwareSingSuffix(event, false);
 }
 
 function onPlayerHit(event) {
 	correctPunchDirection(event);
-	applyEventSingSuffix(event, bfSingSuffix);
+	applyShieldAwareSingSuffix(event, true);
+}
+
+function applyShieldAwareSingSuffix(event, isBF:Bool) {
+	var ownsShield:Bool = isBF ? bfShieldAbsorbsHit() : mattShieldAbsorbsHit();
+	var attacksShield:Bool = isBF ? mattShieldAbsorbsHit() : bfShieldAbsorbsHit();
+	var suffix:String = isBF ? bfSingSuffix : dadSingSuffix;
+
+	// Shield ownership is authoritative while a shield is active. This also
+	// removes a stale -mic left by a previous shield/strumline before CNE
+	// chooses the note animation, without discarding -dodge or -alt.
+	if (ownsShield)
+		suffix = "-mic";
+	else if (attacksShield) {
+		suffix = "";
+		removeEventMicSuffix(event);
+	}
+
+	applyEventSingSuffix(event, suffix);
+}
+
+function removeEventMicSuffix(event) {
+	if (event == null) return;
+	var currentSuffix:String = event.animSuffix == null ? "" : Std.string(event.animSuffix);
+	if (!StringTools.endsWith(currentSuffix, "-mic")) return;
+	event.animSuffix = currentSuffix.substring(0, currentSuffix.length - 4);
 }
 
 function applyEventSingSuffix(event, suffix:String) {
@@ -359,41 +526,75 @@ function isDodgeNote(event):Bool {
 	return noteType == "Wiik3Punch" || noteType == "Wiik4Sword";
 }
 
-function onMattHit(direction:Int, doPush:Bool) {
-	if (doPush && state.mattSplashes) makeSplash(dad, direction, true);
-	if (!state.bfBlock || StringTools.endsWith(boyfriend.getAnimName(), "-dodge")) return;
+function bfShieldAbsorbsHit():Bool {
+	return state.bfShieldVisible;
+}
 
-	var blockAnim = singAnim(direction, "-block");
-	if (boyfriend.hasAnimation(blockAnim)) {
-		scripts.call("onDoubleNoteGhostScriptedAnim", [boyfriend, blockAnim]);
-		boyfriend.playSingAnim(direction, "-block");
+function mattShieldAbsorbsHit():Bool {
+	// tko-powerup reuses this sprite as part of the transformation, not as
+	// the regular blocking shield from shield/doubleshield/custom.
+	return state.mattShieldVisible && mode != "tko-powerup";
+}
+
+function onMattHit(direction:Int, doPush:Bool) {
+	// Matt is attacking BF. If BF's shield is visible, the hit ends at the
+	// shield: show the impact splash and skip block/echo/ranged punch logic.
+	var hitsBFShield:Bool = bfShieldAbsorbsHit();
+	if (doPush && (state.mattSplashes || hitsBFShield)) makeSplash(dad, direction, true);
+	if (hitsBFShield) return;
+	// Matt is behind his own shield and is using mic animations, so his notes
+	// must not create a ranged boxing attack against BF.
+	if (mattShieldAbsorbsHit()) return;
+	var bfCanBlock:Bool = state.bfBlock && !StringTools.endsWith(boyfriend.getAnimName(), "-dodge");
+
+	if (bfCanBlock) {
+		var blockAnim = singAnim(direction, "-block");
+		if (boyfriend.hasAnimation(blockAnim)) {
+			scripts.call("onDoubleNoteGhostScriptedAnim", [boyfriend, blockAnim]);
+			boyfriend.playSingAnim(direction, "-block");
+		}
+
+		if (doPush) pushCharacters(pushPower);
 	}
 
-	if (doPush) pushCharacters(pushPower);
-	showRangedPunch(dad, boyfriend, false, direction);
-	putAbove(dad, boyfriend);
-	if (state.mattEchoTrail)
+	if (bfCanBlock || state.standPunches) {
+		showRangedPunch(dad, boyfriend, false, direction);
+		putAbove(dad, boyfriend);
+	}
+	if (bfCanBlock && state.mattEchoTrail)
 		scripts.call("onDoubleNoteGhostEchoTrail", [dad, boyfriend]);
 }
 
 function onBFHit(direction:Int, doPush:Bool) {
-	if (doPush && state.bfSplashes) makeSplash(boyfriend, direction, false);
-	if (!state.mattBlock) return;
+	// BF is attacking Matt. Matt's shield absorbs the hit before Long/Mid
+	// punch sprites can target Matt himself.
+	var hitsMattShield:Bool = mattShieldAbsorbsHit();
+	if (doPush && (state.bfSplashes || hitsMattShield)) makeSplash(boyfriend, direction, false);
+	if (hitsMattShield) return;
+	// BF is behind his own shield; keep the mic sing animation but suppress
+	// the boxing Long/Mid attack generated by this script.
+	if (bfShieldAbsorbsHit()) return;
+	var mattCanBlock:Bool = state.mattBlock;
 
-	var parryAnim = singAnim(direction, "-parry");
-	var blockAnim = singAnim(direction, "-block");
-	if (state.mattParry && dad.hasAnimation(parryAnim)) {
-		scripts.call("onDoubleNoteGhostScriptedAnim", [dad, parryAnim]);
-		dad.playSingAnim(direction, "-parry");
-	} else if (dad.hasAnimation(blockAnim)) {
-		scripts.call("onDoubleNoteGhostScriptedAnim", [dad, blockAnim]);
-		dad.playSingAnim(direction, "-block");
+	if (mattCanBlock) {
+		var parryAnim = singAnim(direction, "-parry");
+		var blockAnim = singAnim(direction, "-block");
+		if (state.mattParry && dad.hasAnimation(parryAnim)) {
+			scripts.call("onDoubleNoteGhostScriptedAnim", [dad, parryAnim]);
+			dad.playSingAnim(direction, "-parry");
+		} else if (dad.hasAnimation(blockAnim)) {
+			scripts.call("onDoubleNoteGhostScriptedAnim", [dad, blockAnim]);
+			dad.playSingAnim(direction, "-block");
+		}
+
+		if (doPush) pushCharacters(-pushPower);
 	}
 
-	if (doPush) pushCharacters(-pushPower);
-	showRangedPunch(boyfriend, dad, true, direction);
-	putAbove(boyfriend, dad);
-	if (state.bfEchoTrail)
+	if (mattCanBlock || state.standPunches) {
+		showRangedPunch(boyfriend, dad, true, direction);
+		putAbove(boyfriend, dad);
+	}
+	if (mattCanBlock && state.bfEchoTrail)
 		scripts.call("onDoubleNoteGhostEchoTrail", [boyfriend, dad]);
 }
 
@@ -482,6 +683,9 @@ function resetOptions() {
 	state.mattBlock = false;
 	state.bfEchoTrail = false;
 	state.mattEchoTrail = false;
+	state.bfShieldVisible = false;
+	state.mattShieldVisible = false;
+	state.standPunches = false;
 	state.mattParry = false;
 	state.ranged = false;
 	state.bfSplashes = false;
@@ -492,10 +696,11 @@ function resetOptions() {
 }
 
 function leaveMode() {
-	if (mode == "shield" || mode == "bfshield" || mode == "duet" || mode == "duet-tko" || mode == "tko-closeup")
+	if (mode == "shield" || mode == "bfshield" || mode == "doubleshield"
+		|| (mode == "custom" && (state.bfShieldVisible || state.mattShieldVisible)))
+		moveShieldCharacters(0, 0);
+	else if (mode == "duet" || mode == "duet-tko" || mode == "tko-closeup")
 		moveCharacters(0, 0, 4);
-	else if (mode == "doubleshield")
-		moveCharacters(0, 0, 8);
 	else if (mode == "tko-powerup")
 		moveCharacters(0, 0, 4);
 
@@ -505,25 +710,45 @@ function leaveMode() {
 	else if (mode == "doubleshield") {
 		setDadSuffix("", true);
 		setBFSuffix("", true);
+	} else if (mode == "custom") {
+		if (state.mattShieldVisible) setDadSuffix("", true);
+		if (state.bfShieldVisible) setBFSuffix("", true);
 	}
 	if (bfShield != null) FlxTween.tween(bfShield, {alpha: 0}, Conductor.crochet * 0.004);
 	if (mattShield != null) FlxTween.tween(mattShield, {alpha: 0}, Conductor.crochet * 0.004);
+	state.bfShieldVisible = false;
+	state.mattShieldVisible = false;
 	if (aura != null && doingPowerup) FlxTween.tween(aura, {alpha: 0}, Conductor.crochet * 0.008);
 	if (doingPowerup) {
+		cancelPowerupYTween();
 		doingPowerup = false;
+		powerupRising = false;
 		playIfExists(dad, "destrans");
-		FlxTween.tween(dad, {y: defaultMattY}, Conductor.crochet * 0.008, {ease: FlxEase.sineOut});
+		powerupYTween = FlxTween.tween(dad, {y: defaultMattY}, Conductor.crochet * 0.008, {
+			ease: FlxEase.sineOut,
+			onComplete: function(_) powerupYTween = null
+		});
 	}
 }
 
 function playIfExists(char, animName:String) {
 	if (char != null && char.hasAnimation(animName))
-		char.playAnim(animName, true, "SING");
+		// NONE/null replaces the old engine's playFullAnim behavior: wait for
+		// trans/destrans to finish, then dance using the current idleSuffix.
+		char.playAnim(animName, true, null);
 }
 
 function moveCharacters(dadOffset:Float, bfOffset:Float, beats:Float) {
 	FlxTween.tween(dad, {x: defaultMattX + pushAmount + dadOffset}, Conductor.crochet * 0.001 * beats, {ease: FlxEase.cubeInOut});
 	FlxTween.tween(boyfriend, {x: defaultBFX + pushAmount + bfOffset}, Conductor.crochet * 0.001 * beats, {ease: FlxEase.cubeInOut});
+}
+
+function moveShieldCharacters(dadOffset:Float, bfOffset:Float) {
+	// new_BlockStuff.hx uses a fixed half-second movement for every shield layout.
+	FlxTween.cancelTweensOf(dad);
+	FlxTween.cancelTweensOf(boyfriend);
+	FlxTween.tween(dad, {x: defaultMattX + pushAmount + dadOffset}, 0.5);
+	FlxTween.tween(boyfriend, {x: defaultBFX + pushAmount + bfOffset}, 0.5);
 }
 
 function applyMode(nextMode:String) {
@@ -540,9 +765,9 @@ function applyMode(nextMode:String) {
 		case "no ranged":
 			state.bfBlock = true; state.mattBlock = true;
 		case "duet":
-			state.bfSplashes = true; moveCharacters(-130, 130, 4);
+			state.bfSplashes = true; state.ranged = true; state.standPunches = true; moveCharacters(-130, 130, 4);
 		case "duet-tko":
-			state.bfSplashes = true; moveCharacters(100, -100, 4);
+			state.bfSplashes = true; state.ranged = true; state.standPunches = true; moveCharacters(100, -100, 4);
 		case "tko-closeup":
 			state.bfBlock = true; state.mattBlock = true; moveCharacters(290, -290, 4);
 		case "tko-bfmoveright":
@@ -550,15 +775,20 @@ function applyMode(nextMode:String) {
 		case "tko-mattmoveleft":
 			state.bfBlock = true; state.mattBlock = true; state.ranged = true; moveCharacters(-200, 0, 31);
 		case "shield":
-			setDadSuffix("-mic", true); state.bfSplashes = true; state.healthDrain = false; moveCharacters(-450, 70, 4);
-			positionShields(); FlxTween.tween(mattShield, {alpha: 1}, Conductor.crochet * 0.004);
+			syncShieldMicSuffixes(false, true); state.bfSplashes = true; state.healthDrain = false;
+			state.mattShieldVisible = true;
+			positionMattShield(); moveShieldCharacters(-500, 0);
+			FlxTween.tween(mattShield, {alpha: 1}, Conductor.crochet * 0.004);
 		case "bfshield":
-			setBFSuffix("-mic", true); state.mattSplashes = true; state.healthDrain = false; moveCharacters(-150, 450, 4);
-			positionShields(); FlxTween.tween(bfShield, {alpha: 1}, Conductor.crochet * 0.004);
+			syncShieldMicSuffixes(true, false); state.mattSplashes = true; state.healthDrain = false;
+			state.bfShieldVisible = true;
+			positionBFShield(true); moveShieldCharacters(0, 500);
+			FlxTween.tween(bfShield, {alpha: 1}, Conductor.crochet * 0.004);
 		case "doubleshield":
-			setDadSuffix("-mic", true); setBFSuffix("-mic", true);
-			state.bfSplashes = true; state.mattSplashes = true; state.healthDrain = false; moveCharacters(-450, 450, 8);
-			positionShields();
+			syncShieldMicSuffixes(true, true);
+			state.bfSplashes = true; state.mattSplashes = true; state.healthDrain = false;
+			state.bfShieldVisible = true; state.mattShieldVisible = true;
+			positionDoubleShields(); moveShieldCharacters(-500, 500);
 			FlxTween.tween(bfShield, {alpha: 1}, Conductor.crochet * 0.004);
 			FlxTween.tween(mattShield, {alpha: 1}, Conductor.crochet * 0.004);
 		case "resetpush":
@@ -570,15 +800,14 @@ function applyMode(nextMode:String) {
 			enabled = true; refreshCharacters(false);
 		case "tko-powerup":
 			state.bfBlock = false; state.mattBlock = false;
-			doingPowerup = true; floatTime = 0;
+			state.mattShieldVisible = true;
 			playIfExists(dad, "trans");
-			moveCharacters(250, -290, 8);
-			positionShields();
+			positionMattShield(); moveCharacters(250, -290, 8);
+			beginPowerupRise();
 			FlxTween.tween(mattShield, {alpha: 1}, Conductor.crochet * 0.016);
 			FlxTween.tween(aura, {alpha: 1}, Conductor.crochet * 0.016);
 		case "tko-powerupEnd":
-			doingPowerup = false;
-			playIfExists(dad, "destrans");
+			state.mattShieldVisible = false;
 			state.bfBlock = true; state.mattBlock = true;
 			moveCharacters(290, -290, 8);
 			if (mattShield != null) FlxTween.tween(mattShield, {alpha: 0}, Conductor.crochet * 0.008);
@@ -650,5 +879,14 @@ function onEvent(event) {
 	refreshCharacters(false);
 
 	if (p.length > 11 && p[11] != null && p[11] != "")
-		applyMode(p[11]);
+		applyMode(Std.string(p[11]));
+
+	// These parameters were appended so older charts keep their original indices.
+	// Mode presets control their own shields; the booleans are for custom mode.
+	if (mode == "custom") {
+		if (p.length > 18)
+			setShieldVisibility(p[18] == true, p.length > 19 && p[19] == true);
+		if (p.length > 20)
+			state.standPunches = p[20] == true;
+	}
 }

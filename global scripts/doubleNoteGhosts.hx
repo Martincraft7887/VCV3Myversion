@@ -4,7 +4,6 @@ import funkin.backend.shaders.CustomShader;
 import StringTools;
 
 var doubleGhostPools:Array<Dynamic> = [];
-var doubleGhostLineData:Array<Dynamic> = [];
 var doubleGhostFollowData:Array<Dynamic> = [];
 var doubleGhostEchoPools:Array<Dynamic> = [];
 var doubleGhostEchoShader:CustomShader = null;
@@ -14,6 +13,7 @@ var doubleGhostEchoDuration:Float = 0.35;
 var doubleGhostMaxPerChar:Int = 8;
 var doubleGhostAlpha:Float = 0.5;
 var doubleGhostSpawnCount:Int = 0;
+var doubleGhostDebug:Bool = false;
 
 function getCharPool(char:Character):Dynamic {
 	for (pool in doubleGhostPools)
@@ -23,14 +23,12 @@ function getCharPool(char:Character):Dynamic {
 	var pool = {
 		char: char,
 		lastTime: Math.NEGATIVE_INFINITY,
+		lastID: -1,
 		lastAnimName: null,
 		lastHoldTime: 0.0,
 		lastSpawnTime: Math.NEGATIVE_INFINITY,
 		spawnedAnims: [],
 		activeHolds: [],
-		lastObservedAnimName: null,
-		lastObservedFrame: 0,
-		lastObservedHoldTime: 0.0,
 		ghosts: [],
 		index: 0
 	};
@@ -391,56 +389,10 @@ function recycleEchoGhost(pool:Dynamic, ghost:FunkinSprite) {
 		remove(ghost, true);
 }
 
-function getLineGhostData(line):Dynamic {
-	if (line == null || strumLines == null || strumLines.members == null)
-		return null;
-
-	var index = strumLines.members.indexOf(line);
-	if (index < 0)
-		return null;
-
-	while (doubleGhostLineData.length <= index)
-		doubleGhostLineData.push(null);
-
-	if (doubleGhostLineData[index] == null)
-		doubleGhostLineData[index] = {
-			lastTime: -9999.0,
-			lastID: -1,
-			lastHoldTime: 0.0
-		};
-
-	return doubleGhostLineData[index];
-}
-
 function getCurrentAnimName(char:Character):String {
 	if (char == null || char.animation == null || char.animation.curAnim == null)
 		return null;
 	return char.animation.curAnim.name;
-}
-
-function isActuallySinging(char:Character):Bool {
-	return char != null
-		&& char.visible
-		&& char.animation != null
-		&& char.animation.curAnim != null
-		&& char.animation.curAnim.name.indexOf("sing") != -1
-		&& !char.animation.curAnim.finished;
-}
-
-function getCurrentAnimHoldTime(char:Character):Float {
-	if (char == null || char.animation == null || char.animation.curAnim == null)
-		return 0;
-
-	var anim = char.animation.curAnim;
-	if (anim.frameRate <= 0 || anim.numFrames <= 0)
-		return 0;
-
-	var framesLeft = Math.max(0, anim.numFrames - anim.curFrame - 1);
-	return framesLeft / anim.frameRate;
-}
-
-function getBestHoldTime(event, char:Character):Float {
-	return getGhostHoldTime(event);
 }
 
 function isIdleAnim(animName:String):Bool {
@@ -454,45 +406,35 @@ function isIdleAnim(animName:String):Bool {
 		|| StringTools.startsWith(animName, "danceRight-");
 }
 
-function isSpecialConflictAnim(animName:String):Bool {
+function isDodgeBlockAnim(animName:String):Bool {
 	if (animName == null) return false;
 	var lowerAnim = animName.toLowerCase();
-	return StringTools.contains(lowerAnim, "-block")
+	return StringTools.contains(lowerAnim, "-dodge")
+		|| StringTools.contains(lowerAnim, "-block")
 		|| StringTools.contains(lowerAnim, "-parry")
-		|| StringTools.contains(lowerAnim, "-dodge")
-		|| StringTools.startsWith(lowerAnim, "block")
-		|| StringTools.startsWith(lowerAnim, "parry")
 		|| StringTools.startsWith(lowerAnim, "dodge")
-		|| StringTools.startsWith(lowerAnim, "shoot")
-		|| StringTools.startsWith(lowerAnim, "fist");
+		|| StringTools.startsWith(lowerAnim, "block")
+		|| StringTools.startsWith(lowerAnim, "parry");
 }
 
-function shouldGhostCurrentAnim(char:Character, pool:Dynamic, currentAnim:String, nextAnim:String):Bool {
-	if (currentAnim == null || currentAnim == nextAnim || isIdleAnim(currentAnim))
-		return false;
-	if (!char.hasAnimation(currentAnim))
-		return false;
+function getDoubleSpecialAnim(char:Character, event, eventAnim:String):String {
+	if (char == null || event == null)
+		return null;
 
-	return isSpecialConflictAnim(currentAnim)
-		|| (pool.lastObservedAnimName != null && pool.lastObservedAnimName != currentAnim);
-}
+	if (eventAnim != null && isDodgeBlockAnim(eventAnim) && char.hasAnimation(eventAnim))
+		return eventAnim;
 
-function isSingLikeAnim(animName:String):Bool {
-	if (animName == null) return false;
-	return StringTools.startsWith(animName.toLowerCase(), "sing");
-}
+	var suffix:String = event.animSuffix == null ? "" : Std.string(event.animSuffix);
+	if (suffix == "")
+		return null;
 
-function shouldSpawnObservedAnimGhost(previousAnim:String, currentAnim:String, char:Character):Bool {
-	if (previousAnim == null || currentAnim == null || previousAnim == currentAnim)
-		return false;
-	if (isIdleAnim(previousAnim) || isIdleAnim(currentAnim))
-		return false;
-	if (char == null || !char.hasAnimation(previousAnim))
-		return false;
+	var lowerSuffix = suffix.toLowerCase();
+	if (!StringTools.contains(lowerSuffix, "dodge")
+		&& !StringTools.contains(lowerSuffix, "block")
+		&& !StringTools.contains(lowerSuffix, "parry"))
+		return null;
 
-	return isSpecialConflictAnim(previousAnim)
-		|| isSpecialConflictAnim(currentAnim)
-		|| (isSingLikeAnim(previousAnim) && isSingLikeAnim(currentAnim));
+	return getFirstExistingAnim(char, getAnimCandidates(char, event.direction, suffix));
 }
 
 function spawnDoubleGhost(char:Character, animName:String, holdTime:Float, copyCurrentFrame:Bool = false, snapshotFrame:Int = 0) {
@@ -565,6 +507,9 @@ function updateFollowGhosts() {
 }
 
 function debugGhostTrace(char:Character, animName:String, actualAnimName:String, pool:Dynamic, holdTime:Float) {
+	if (!doubleGhostDebug)
+		return;
+
 	trace('[DoubleNoteGhosts] ghost #' + doubleGhostSpawnCount
 		+ ' char=' + char.curCharacter
 		+ ' anim=' + animName
@@ -582,35 +527,6 @@ function countActiveGhosts(pool:Dynamic):Int {
 	return count;
 }
 
-function trackActiveCharacters() {
-	if (strumLines == null || strumLines.members == null)
-		return;
-
-	for (line in strumLines.members) {
-		if (line == null || line.characters == null)
-			continue;
-
-		for (char in line.characters)
-			if (char != null)
-				getCharPool(char);
-	}
-}
-
-function rememberNoteEvent(event) {
-	for (char in getVCCharacters(event)) {
-		if (char == null)
-			continue;
-
-		var pool = getCharPool(char);
-		var eventAnim = getEventAnimName(char, event);
-		spawnActiveHoldInterruptGhosts(char, pool, event, eventAnim);
-		pool.lastTime = event.note.strumTime;
-		pool.lastAnimName = eventAnim;
-		pool.lastHoldTime = getGhostHoldTime(event);
-		updateActiveHold(pool, event, pool.lastAnimName);
-	}
-}
-
 function handleDoubleGhostHit(event) {
 	if (event == null || event.note == null)
 		return;
@@ -618,47 +534,53 @@ function handleDoubleGhostHit(event) {
 	if (event.note.isSustainNote)
 		return;
 
-	var lineData = getLineGhostData(event.note.strumLine);
-	if (lineData == null)
-		return;
-
 	var noteHoldTime = getGhostHoldTime(event);
-	var doDouble = (event.note.strumTime - lineData.lastTime) <= 2
-		&& event.note.noteData != lineData.lastID;
-
-	lineData.lastTime = event.note.strumTime;
-	lineData.lastID = event.note.noteData;
-	var pairHoldTime = Math.max(noteHoldTime, lineData.lastHoldTime);
-	lineData.lastHoldTime = noteHoldTime;
-
-	if (!doDouble) {
-		rememberNoteEvent(event);
-		return;
-	}
+	var noteTime:Float = event.note.strumTime;
+	var noteID:Int = event.note.noteData;
 
 	for (char in getVCCharacters(event)) {
 		if (char == null)
 			continue;
 
-		if (!isActuallySinging(char))
-			continue;
-
 		var pool = getCharPool(char);
 		var currentAnim = getCurrentAnimName(char);
 		var eventAnim = getEventAnimName(char, event);
-		spawnActiveHoldInterruptGhosts(char, pool, event, eventAnim);
-		var ghostAnim:String = pool.lastTime == event.note.strumTime && pool.lastAnimName != null
-			? pool.lastAnimName
-			: currentAnim;
-		if (!canSpawnAnimAtTime(pool, ghostAnim, event.note.strumTime))
+		var doDouble = Math.abs(noteTime - pool.lastTime) <= 2 && noteID != pool.lastID;
+		var pairHoldTime = Math.max(noteHoldTime, pool.lastHoldTime);
+
+		if (!doDouble) {
+			spawnActiveHoldInterruptGhosts(char, pool, event, eventAnim);
+			pool.lastTime = noteTime;
+			pool.lastID = noteID;
+			pool.lastAnimName = eventAnim;
+			pool.lastHoldTime = noteHoldTime;
+			updateActiveHold(pool, event, pool.lastAnimName);
 			continue;
+		}
 
-		spawnDoubleGhost(char, ghostAnim, Math.max(pairHoldTime, pool.lastHoldTime), ghostAnim == currentAnim);
+		spawnActiveHoldInterruptGhosts(char, pool, event, eventAnim);
+		var specialAnim = getDoubleSpecialAnim(char, event, eventAnim);
+		var ghostAnim:String = specialAnim != null
+			? specialAnim
+			: (Math.abs(noteTime - pool.lastTime) <= 2 && pool.lastAnimName != null ? pool.lastAnimName : currentAnim);
 
-		pool.lastTime = event.note.strumTime;
+		if (ghostAnim == null || isIdleAnim(ghostAnim) || !char.hasAnimation(ghostAnim)) {
+			pool.lastTime = noteTime;
+			pool.lastID = noteID;
+			pool.lastAnimName = eventAnim == null ? ghostAnim : eventAnim;
+			pool.lastHoldTime = noteHoldTime;
+			updateActiveHold(pool, event, pool.lastAnimName);
+			continue;
+		}
+
+		if (canSpawnAnimAtTime(pool, ghostAnim, event.note.strumTime)) {
+			spawnDoubleGhost(char, ghostAnim, Math.max(pairHoldTime, pool.lastHoldTime), ghostAnim == currentAnim);
+		}
+
+		pool.lastTime = noteTime;
+		pool.lastID = noteID;
 		pool.lastAnimName = eventAnim == null ? ghostAnim : eventAnim;
 		pool.lastHoldTime = noteHoldTime;
-		pool.lastObservedAnimName = currentAnim;
 		updateActiveHold(pool, event, pool.lastAnimName);
 	}
 }
@@ -668,23 +590,10 @@ function onNoteHit(event) {
 }
 
 function postUpdate(elapsed:Float) {
-	if (doubleGhostPools.length <= 0 && doubleGhostFollowData.length <= 0)
+	if (doubleGhostFollowData.length <= 0)
 		return;
 
-	trackActiveCharacters();
 	updateFollowGhosts();
-
-	for (pool in doubleGhostPools) {
-		if (pool == null || pool.char == null)
-			continue;
-
-		var char:Character = pool.char;
-		var currentAnim = getCurrentAnimName(char);
-
-		pool.lastObservedAnimName = currentAnim;
-		pool.lastObservedFrame = char.globalCurFrame;
-		pool.lastObservedHoldTime = getCurrentAnimHoldTime(char);
-	}
 }
 
 function destroy() {
@@ -705,7 +614,6 @@ function destroy() {
 		}
 	}
 	doubleGhostPools = [];
-	doubleGhostLineData = [];
 	doubleGhostFollowData = [];
 	doubleGhostEchoPools = [];
 }

@@ -31,6 +31,9 @@ var pauseLogoBumpTimer:Float = 0;
 var pauseLogoBumpTween:FlxTween = null;
 
 var songData:Dynamic = null;
+var persistentPauseCache:Dynamic = null;
+var cachedPauseSongText:FlxSprite = null;
+var cachedPauseBG:FlxSprite = null;
 var oldMouseVisible:Bool = false;
 var pauseSetupStep:Int = 0;
 var pauseReady:Bool = false;
@@ -161,7 +164,20 @@ function createPauseShell()
     oldMouseVisible = FlxG.mouse.visible;
     FlxG.mouse.visible = true;
 
-    pauseBG = new FlxSprite().makeSolid(FlxG.width + 8, FlxG.height + 8, FlxColor.BLACK);
+    cachedPauseBG = persistentPauseCache == null ? null : Reflect.field(persistentPauseCache, "background");
+    if (cachedPauseBG != null && cachedPauseBG.graphic != null)
+    {
+        FlxTween.cancelTweensOf(cachedPauseBG);
+        pauseBG = cachedPauseBG;
+        pauseBG.visible = true;
+    }
+    else
+    {
+        cachedPauseBG = null;
+        pauseBG = new FlxSprite().makeSolid(FlxG.width + 8, FlxG.height + 8, FlxColor.BLACK);
+    }
+
+    pauseBG.cameras = [pauseCam];
     pauseBG.alpha = 0;
     pauseBG.scrollFactor.set();
     pauseBG.screenCenter();
@@ -213,6 +229,7 @@ function createPauseMenuItem(index:Int)
 
     txt.borderSize = 1.25;
     txt.ID = index;
+    txt.cameras = [pauseCam];
     txt.scrollFactor.set();
     txt.alpha = 0;
 
@@ -223,10 +240,67 @@ function createPauseMenuItem(index:Int)
     });
 }
 
+function getPauseMenuSignature():String
+{
+    return pauseOptions.join("|");
+}
+
+function tryUseCachedPauseMenu():Bool
+{
+    if (persistentPauseCache == null)
+        return false;
+
+    var cachedGroup = Reflect.field(persistentPauseCache, "menuTexts");
+    var cachedSignature = Std.string(Reflect.field(persistentPauseCache, "menuSignature"));
+    if (cachedGroup == null || cachedSignature != getPauseMenuSignature())
+    {
+        if (cachedGroup != null)
+        {
+            try cachedGroup.destroy() catch(e:Dynamic) {}
+            Reflect.setField(persistentPauseCache, "menuTexts", null);
+        }
+        return false;
+    }
+
+    if (cachedGroup.members == null || cachedGroup.members.length != pauseOptions.length)
+    {
+        try cachedGroup.destroy() catch(e:Dynamic) {}
+        Reflect.setField(persistentPauseCache, "menuTexts", null);
+        return false;
+    }
+
+    pauseMenuTexts = cachedGroup;
+    pauseMenuTexts.visible = true;
+    Reflect.setField(persistentPauseCache, "menuTexts", null);
+
+    for (i in 0...pauseMenuTexts.members.length)
+    {
+        var txt = pauseMenuTexts.members[i];
+        if (txt == null)
+            continue;
+
+        FlxTween.cancelTweensOf(txt);
+        txt.ID = i;
+        txt.text = getPauseOptionLabel(pauseOptions[i]);
+        txt.cameras = [pauseCam];
+        txt.x = 110;
+        txt.y = FlxG.height * 0.46 + (i * 45);
+        txt.visible = true;
+    }
+
+    add(pauseMenuTexts);
+    pauseMenuBuildIndex = pauseOptions.length;
+    refreshPauseMenu();
+    return true;
+}
+
 function buildPauseMenuFrame():Bool
 {
     if (pauseMenuTexts == null)
     {
+        if (tryUseCachedPauseMenu())
+            return true;
+
         pauseMenuTexts = new FlxTypedGroup<FunkinText>();
         add(pauseMenuTexts);
         pauseMenuBuildIndex = 0;
@@ -278,6 +352,26 @@ function runPauseSetupFrame()
 
 function loadPauseCredits()
 {
+    persistentPauseCache = getPersistentPauseCache();
+
+    if (persistentPauseCache != null)
+    {
+        var baseData = Reflect.field(persistentPauseCache, "baseData");
+        var secondData = Reflect.field(persistentPauseCache, "secondData");
+        songData = baseData;
+
+        if (secondData != null)
+        {
+            var secondTime = getDataFloat(secondData, "startTime", 0);
+            if (secondTime >= 0 && Conductor.songPosition >= secondTime)
+                songData = secondData;
+        }
+
+        if (songData == null)
+            songData = Json.parse(defaultSong);
+        return;
+    }
+
     try
     {
         var baseData = loadPauseCreditSet("");
@@ -300,6 +394,32 @@ function loadPauseCredits()
     {
         songData = Json.parse(defaultSong);
     }
+}
+
+function getPersistentPauseCache():Dynamic
+{
+    if (PlayState.instance == null)
+        return null;
+
+    var cache:Dynamic = null;
+    try
+    {
+        if (PlayState.instance.scripts != null)
+            cache = PlayState.instance.scripts.get("voiidPauseCache");
+    }
+    catch(e:Dynamic) {}
+
+    if (cache == null)
+        return null;
+
+    if (Std.string(Reflect.field(cache, "songName")) != Std.string(PlayState.SONG.meta.name))
+        return null;
+    if (Std.string(Reflect.field(cache, "difficulty")) != Std.string(PlayState.difficulty))
+        return null;
+    if (Std.string(Reflect.field(cache, "variation")) != Std.string(PlayState.variation))
+        return null;
+
+    return cache;
 }
 
 function loadPauseCreditSet(suffix:String):Dynamic
@@ -378,6 +498,22 @@ function getPauseTitleText():String
 function getPauseSongTextData():Dynamic
 {
     return songData;
+}
+
+function getCachedPauseSongText():FlxSprite
+{
+    if (persistentPauseCache == null)
+        return null;
+
+    if (!pauseTitleRevealed)
+        return Reflect.field(persistentPauseCache, "hiddenText");
+
+    var secondData = Reflect.field(persistentPauseCache, "secondData");
+    var entry = secondData != null && songData == secondData
+        ? Reflect.field(persistentPauseCache, "secondEntry")
+        : Reflect.field(persistentPauseCache, "baseEntry");
+
+    return entry == null ? null : Reflect.field(entry, "text");
 }
 
 function getJsonFloat(field:String, fallback:Float):Float
@@ -530,11 +666,28 @@ function createPauseSongHeader()
     try
     {
         var titleData = getPauseSongTextData();
-        var size = getPauseSongFontSize();
+        cachedPauseSongText = getCachedPauseSongText();
 
-        pauseSongText = createSongText(getPauseTitleText(), size, 10, titleData);
+        if (cachedPauseSongText != null && cachedPauseSongText.graphic != null)
+        {
+            // It may still be attached to PlayState for its one-frame shader
+            // warmup. Detach without destroying and move it into this substate.
+            try game.remove(cachedPauseSongText, false) catch(e:Dynamic) {}
+            FlxTween.cancelTweensOf(cachedPauseSongText);
+            pauseSongText = cachedPauseSongText;
+            pauseSongText.visible = true;
+            pauseSongText.alpha = 1;
+        }
+        else
+        {
+            cachedPauseSongText = null;
+            var size = getPauseSongFontSize();
+            pauseSongText = createSongText(getPauseTitleText(), size, 10, titleData);
+            fitSpriteToBox(pauseSongText, 560, 170);
+        }
 
-        fitSpriteToBox(pauseSongText, 560, 170);
+        if (pauseSongText == null)
+            throw "Pause song text could not be created";
 
         pauseSongText.cameras = [pauseCam];
         pauseSongText.scrollFactor.set();
@@ -1045,6 +1198,52 @@ function destroy()
 
     if (quickMenuOpen)
         closeQuickOptions();
+
+    // Cached VCSongText belongs to PlayState, not to this temporary substate.
+    // Detach it before PauseSubState destroys its members so the next pause can
+    // reuse the same generated bitmap and shader.
+    if (cachedPauseSongText != null && pauseSongText == cachedPauseSongText)
+    {
+        FlxTween.cancelTweensOf(cachedPauseSongText);
+        remove(cachedPauseSongText, false);
+        if (cachedPauseSongText.graphic != null)
+        {
+            cachedPauseSongText.visible = false;
+            cachedPauseSongText.alpha = 1;
+            cachedPauseSongText.cameras = [];
+        }
+        pauseSongText = null;
+        cachedPauseSongText = null;
+    }
+
+    if (cachedPauseBG != null && pauseBG == cachedPauseBG)
+    {
+        FlxTween.cancelTweensOf(cachedPauseBG);
+        remove(cachedPauseBG, false);
+        if (cachedPauseBG.graphic != null)
+        {
+            cachedPauseBG.visible = false;
+            cachedPauseBG.alpha = 0;
+            cachedPauseBG.cameras = [];
+        }
+        pauseBG = null;
+        cachedPauseBG = null;
+    }
+
+    if (persistentPauseCache != null && pauseMenuTexts != null && pauseMenuTexts.members != null)
+    {
+        for (txt in pauseMenuTexts.members)
+        {
+            if (txt != null)
+                FlxTween.cancelTweensOf(txt);
+        }
+
+        remove(pauseMenuTexts, false);
+        pauseMenuTexts.visible = false;
+        Reflect.setField(persistentPauseCache, "menuTexts", pauseMenuTexts);
+        Reflect.setField(persistentPauseCache, "menuSignature", getPauseMenuSignature());
+        pauseMenuTexts = null;
+    }
 
     if (pauseCam != null && FlxG.cameras.list.contains(pauseCam))
         FlxG.cameras.remove(pauseCam, true);
