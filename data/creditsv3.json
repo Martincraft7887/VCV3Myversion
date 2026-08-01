@@ -416,6 +416,39 @@
             ]
         },
         {
+            "imageName": "VCCodenameRestored",
+            "people": [
+                {
+                    "name": "M4R71NKR4F7",
+                    "icon": "none",
+                    "iconScale": 0.7,
+                    "link": "",
+                    "desc": "Coder, Modcharter, Charter"
+                },
+                {
+                    "name": "Raayy",
+                    "icon": "none",
+                    "iconScale": 0.7,
+                    "link": "",
+                    "desc": "Modcharter"
+                },
+                {
+                    "name": "Yeravix51",
+                    "icon": "none",
+                    "iconScale": 0.7,
+                    "link": "",
+                    "desc": "Charter"
+                },
+                {
+                    "name": "Sanek team",
+                    "icon": "none",
+                    "iconScale": 0.7,
+                    "link": "",
+                    "desc": "charter, modcharter, coder & more"
+                }
+            ]
+        },
+        {
             "imageName": "VoiceActors",
             "people": [
                 {
