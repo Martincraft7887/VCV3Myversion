@@ -21,13 +21,21 @@ function createEventGame(typeID, node, itemIndex) {
 function getItemNameFromXML(node) {
     return node.get("name") + "." + node.get("property");
 }
+function setTweenShaderFloat(item, value:Float) {
+    var parameter = item == null || item.object == null || item.object.data == null ? null : Reflect.field(item.object.data, item.property);
+    if (parameter != null && parameter.value != null && parameter.value.length > 0)
+        parameter.value[0] = value;
+    else if (item != null && item.object != null)
+        item.object.hset(item.property, value);
+}
 function updateEventGame(currentStep, e) {
+    var item = modchartItems[e.itemIndex];
     if (currentStep < e.step + e.time) {
         var l = (currentStep - e.step) * ((1) / ((e.step + e.time) - e.step));
-        modchartItems[e.itemIndex].object.hset(modchartItems[e.itemIndex].property, FlxMath.lerp(e.startValue, e.value, e.ease(l)));
+        setTweenShaderFloat(item, FlxMath.lerp(e.startValue, e.value, e.ease(l)));
         return false; //dont remove yet
     }
-    modchartItems[e.itemIndex].object.hset(modchartItems[e.itemIndex].property, e.value);
+    setTweenShaderFloat(item, e.value);
     return true;
 }
 

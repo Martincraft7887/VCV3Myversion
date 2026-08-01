@@ -1,5 +1,6 @@
 //
 import haxe.io.Path;
+import haxe.Timer;
 import Xml;
 
 public var modcharts = Reflect.field(FlxG.save.data, "voiidModcharts") != false;
@@ -28,9 +29,12 @@ public function createModchartItem(n, p, t, v, o) {
 
 var events:Array<Dynamic> = [];
 var originalEvents:Array<Dynamic> = [];
+var nextEventIndex:Int = 0;
 var didInitialTimelineSync:Bool = false;
 var lastModchartSongPosition:Float = Math.NEGATIVE_INFINITY;
-var seekThresholdMs:Float = 250;
+var rewindThresholdMs:Float = 250;
+var modchartFullSyncCount:Int = 0;
+var lastModchartFullSyncMs:Float = 0;
 var activeLegacyModchart:Bool = false;
 
 function ensureModchartOption() {
@@ -106,10 +110,7 @@ function destroy() {
 	events.splice(0, events.length);
 	for (e in originalEvents) e = null;
 	originalEvents.splice(0, originalEvents.length);
-}
-
-function cloneEvent(e:Dynamic):Dynamic {
-	return Reflect.copy(e);
+	nextEventIndex = 0;
 }
 
 function applyItemDefault(item:Dynamic) {
@@ -189,8 +190,12 @@ function loadNewModchart() {
 		else return 0;
 	});
 
-	originalEvents = [];
-	for (e in events) originalEvents.push(cloneEvent(e));
+	// The timeline remains immutable; `events` contains active tweens only.
+	// This avoids cloning the complete XML and shifting thousands of entries
+	// with splice() as a song advances.
+	originalEvents = events;
+	events = [];
+	nextEventIndex = 0;
 }
 
 function syncModchartToStep(step:Float, skipImpulses:Bool = true) {
@@ -200,15 +205,16 @@ function syncModchartToStep(step:Float, skipImpulses:Bool = true) {
 		applyItemDefault(item);
 
 	events = [];
-	for (sourceEvent in originalEvents) {
-		var e = cloneEvent(sourceEvent);
-		if (step >= e.step) {
-			if (skipImpulses && isImpulseEvent(e)) continue;
+	nextEventIndex = 0;
+	while (nextEventIndex < originalEvents.length) {
+		var e = originalEvents[nextEventIndex];
+		if (step < e.step) break;
+
+		if (!(skipImpulses && isImpulseEvent(e))) {
 			var done = eventUpdateFuncs[e.type](step, e);
 			if (!done) events.push(e);
-		} else {
-			events.push(e);
 		}
+		nextEventIndex++;
 	}
 }
 
@@ -224,19 +230,39 @@ function consumeDueEvents(currentStep:Float) {
 	var i = 0;
 	while (i < events.length) {
 		var e = events[i];
-		if (currentStep < e.step) break;
-
 		if (eventUpdateFuncs[e.type](currentStep, e)) {
 			events.splice(i, 1);
 		} else {
 			i++;
 		}
 	}
+
+	while (nextEventIndex < originalEvents.length) {
+		var e = originalEvents[nextEventIndex];
+		if (currentStep < e.step) break;
+
+		if (!eventUpdateFuncs[e.type](currentStep, e))
+			events.push(e);
+		nextEventIndex++;
+	}
+}
+
+function ensureOtherCamera() {
+	if (camOther != null) return;
+
+	camOther = new FlxCamera();
+	camOther.bgColor = 0;
+	FlxG.cameras.add(camOther, false);
 }
 
 function create() {
 	ensureModchartOption();
-	if (!modcharts) return;
+	// camOther is also used by non-modchart systems such as Skip, lyrics and
+	// mechanic overlays. It must exist even when XML modcharts are disabled.
+	if (!modcharts) {
+		ensureOtherCamera();
+		return;
+	}
 
 	activeLegacyModchart = useLegacyLoader();
 	if (activeLegacyModchart) {
@@ -244,9 +270,7 @@ function create() {
 		return;
 	}
 
-	camOther = new FlxCamera();
-	camOther.bgColor = 0;
-	FlxG.cameras.add(camOther, false);
+	ensureOtherCamera();
 }
 
 function postCreate() {
@@ -257,11 +281,20 @@ function postCreate() {
 function postUpdate(elapsed) {
 	if (!modcharts || activeLegacyModchart) return;
 
-	var expectedPosition = lastModchartSongPosition == Math.NEGATIVE_INFINITY ? Conductor.songPosition : lastModchartSongPosition + (elapsed * 1000);
-	var didSeek = lastModchartSongPosition != Math.NEGATIVE_INFINITY && Math.abs(Conductor.songPosition - expectedPosition) > seekThresholdMs;
+	// Let normal forward audio corrections advance through the event cursor.
+	// Rebuilding every prior event after a >250 ms forward correction produces a
+	// large one-frame spike. Intentional forward skips synchronize explicitly.
+	var rewindAmountMs = lastModchartSongPosition == Math.NEGATIVE_INFINITY ? 0 : lastModchartSongPosition - Conductor.songPosition;
+	var didRewind = rewindAmountMs > rewindThresholdMs;
 
-	if (!didInitialTimelineSync || didSeek) {
-		syncModchartToStep(curStepFloat, didSeek || Conductor.songPosition > 100);
+	if (!didInitialTimelineSync || didRewind) {
+		var syncStart = Timer.stamp();
+		syncModchartToStep(curStepFloat, didRewind || Conductor.songPosition > 100);
+		lastModchartFullSyncMs = (Timer.stamp() - syncStart) * 1000;
+		modchartFullSyncCount++;
+		if (didRewind || lastModchartFullSyncMs >= 4) {
+			trace('[Voiid modchart] full sync #' + modchartFullSyncCount + ' at step ' + curStepFloat + ': ' + lastModchartFullSyncMs + ' ms (rewind ' + rewindAmountMs + ' ms)');
+		}
 		didInitialTimelineSync = true;
 	} else {
 		consumeDueEvents(curStepFloat);

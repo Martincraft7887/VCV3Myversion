@@ -754,9 +754,24 @@ class ModchartEditButton extends UIButton {
 }
 
 var itemList = null;
+var stageHueHUDCheckbox:UICheckbox = null;
 var legacyEditScripts = ["" => null];
 var normalEditScripts = ["" => null];
 var itemInitLayout = [];
+
+function getStageHueHUDSetting():Bool {
+	if (CURRENT_XML == null) return false;
+	if (CURRENT_XML.exists("stageHueCamHUD"))
+		return CURRENT_XML.get("stageHueCamHUD") == "true";
+
+	// Compatibility with the short-lived item-based version of this option.
+	for (list in CURRENT_XML.elementsNamed("Init")) {
+		for (node in list.elementsNamed("StageHue")) {
+			if (node.exists("camHUD") && node.get("camHUD") == "true") return true;
+		}
+	}
+	return false;
+}
 
 function cloneItemXMLNode(node:Xml):Xml {
 	if (node == null) return null;
@@ -835,6 +850,16 @@ function postCreate() {
 
 	add(itemList);
 
+	if (!ITEM_EDIT_IS_LEGACY) {
+		stageHueHUDCheckbox = new UICheckbox(
+			windowSpr.x + 20,
+			windowSpr.y + windowSpr.bHeight - 16 - 32,
+			"Apply Stage Hue to HUD Camera?",
+			getStageHueHUDSetting()
+		);
+		add(stageHueHUDCheckbox);
+	}
+
 	var saveButton = new UIButton(windowSpr.x + windowSpr.bWidth - 20, windowSpr.y + windowSpr.bHeight - 16 - 32, "Save & Close", function() {
 		save();
 		close();
@@ -852,6 +877,9 @@ function postCreate() {
 }
 
 function save() {
+	if (!ITEM_EDIT_IS_LEGACY && CURRENT_XML != null && stageHueHUDCheckbox != null)
+		CURRENT_XML.set("stageHueCamHUD", stageHueHUDCheckbox.checked ? "true" : "false");
+
 	var initEvents = Xml.createElement("Init");
 	var savedNodes = [];
 	for (button in itemList.buttons.members) {

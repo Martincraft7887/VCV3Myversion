@@ -1,4 +1,4 @@
-<Modchart>
+<Modchart stageHueCamHUD="true">
 	<Init>
 		<Shader camHUD="true" camOther="false" camGame="true" shader="colorswap" name="colorswap" color="#545454">
 			<Property value="0" name="hue"/>
@@ -21,31 +21,31 @@
 			<Property value="0" name="money"/>
 			<Property value="0" name="saturation"/>
 		</Shader>
-		<Shader camHUD="false" camOther="false" camGame="true" shader="SplitCamMania" name="Split" color="#545454">
-			<Property value="0" name="iTime"/>
-			<Property value="0.5" name="center1X"/>
-			<Property value="0.6" name="center1Y"/>
-			<Property value="1.5" name="zoom1"/>
-			<Property value="0" name="invert1"/>
-			<Property value="0" name="temperature1"/>
-			<Property value="0" name="hue1"/>
-			<Property value="1" name="saturation1"/>
-			<Property value="1" name="contrast1"/>
-			<Property value="0.8" name="center2X"/>
-			<Property value="0.6" name="center2Y"/>
-			<Property value="1.5" name="zoom2"/>
-			<Property value="0" name="invert2"/>
-			<Property value="0" name="temperature2"/>
-			<Property value="0" name="hue2"/>
-			<Property value="1" name="saturation2"/>
-			<Property value="1" name="contrast2"/>
-			<Property value="0" name="strength"/>
-			<Property value="0" name="directsplit"/>
-			<Property value="0" name="bordersize"/>
-			<Property value="0" name="animation"/>
-			<Property value="0" name="move"/>
-			<Property value="0" name="split1"/>
-			<Property value="0" name="split2"/>
+		<Shader camHUD="false" shader="SplitCamMania" camGame="true" camOther="false" color="#545454" name="Split">
+			<Property name="iTime" value="0"/>
+			<Property name="center1X" value="0.55"/>
+			<Property name="center1Y" value="0.4"/>
+			<Property name="zoom1" value="1.4"/>
+			<Property name="invert1" value="0"/>
+			<Property name="temperature1" value="0"/>
+			<Property name="hue1" value="0"/>
+			<Property name="saturation1" value="1"/>
+			<Property name="contrast1" value="1"/>
+			<Property name="center2X" value="0.8"/>
+			<Property name="center2Y" value="0.3"/>
+			<Property name="zoom2" value="1.5"/>
+			<Property name="invert2" value="0"/>
+			<Property name="temperature2" value="0"/>
+			<Property name="hue2" value="0"/>
+			<Property name="saturation2" value="1"/>
+			<Property name="contrast2" value="1"/>
+			<Property name="strength" value="0"/>
+			<Property name="directsplit" value="0"/>
+			<Property name="bordersize" value="0"/>
+			<Property name="animation" value="0"/>
+			<Property name="move" value="0"/>
+			<Property name="split1" value="0"/>
+			<Property name="split2" value="0"/>
 		</Shader>
 		<Shader camHUD="false" camOther="false" camGame="true" shader="MirrorRepeatWarpEffect" name="MirrorGAME" color="#545454">
 			<Property value="6" name="zoom"/>
@@ -139,15 +139,14 @@
 		<Modifier strumID="-1" strumLineID="-1" value="1" name="scale" modifier="scale" color="#545454"/>
 	</Init>
 	<Events>
-		<Event step="-1" time="0" value="0.2" property="warp" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
 		<Event step="0" time="24" value="-0.2" property="effect" ease="quadIn" type="tweenShaderProperty" startValue="0.5" name="bars"/>
 		<Event step="0" time="4" value="0" property="eatt" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="Sunrays"/>
-		<Event step="0" time="256" value="-0.1" property="hue" ease="linear" type="tweenShaderProperty" startValue="0" name="colorswap"/>
+		<Event step="0" time="256" value="-0.1" ease="linear" type="tweenStageHue" startValue="0"/>
 		<Event step="0" time="256" value="-3.5" property="temperature" ease="linear" type="tweenShaderProperty" startValue="3.5" name="color"/>
 		<Event step="0" time="4" value="0" property="kstep" ease="cubeInOut" type="tweenShaderProperty" startValue="0.1" name="Sunrays"/>
 		<Event step="0" time="24" value="1" property="zoom" ease="quadIn" type="tweenShaderProperty" startValue="6" name="MirrorGAME"/>
+		<Event step="0" time="24" value="0" property="warp" ease="circIn" type="tweenShaderProperty" startValue="0.2" name="MirrorGAME"/>
 		<Event step="6" time="4" value="1.5" property="ksum" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="Sunrays"/>
-		<Event step="24" time="0" value="0" property="warp" ease="cubeInOut" type="tweenShaderProperty" startValue="-0.1" name="MirrorGAME"/>
 		<Event step="144" time="4" value="45" property="value" ease="quadOut" type="tweenModifierValue" startValue="0" name="angZcenO"/>
 		<Event step="144" time="2" value="10" property="value" ease="quadOut" type="tweenModifierValue" startValue="0" name="splitXO"/>
 		<Event step="146" time="2" value="0" property="value" ease="quadOut" type="tweenModifierValue" startValue="10" name="splitXO"/>
@@ -546,7 +545,7 @@
 		<Event step="1024" time="6" value="0" property="y" ease="circOut" type="tweenShaderProperty" startValue="-1.3" name="MirrorGAME"/>
 		<Event step="1024" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="45" name="angleX"/>
 		<Event step="1024" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="90" name="angleZ"/>
-		<Event step="1024" time="4" value="1.5" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
+		<Event step="1024" time="4" value="0.75" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
 		<Event step="1024" time="256" value="20" property="x" ease="linear" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
 		<Event step="1030" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-90" name="angleZ"/>
 		<Event step="1030" time="6" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="-45" name="angleX"/>
@@ -643,7 +642,7 @@
 		<Event step="1276" time="4" value="0" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="1" name="Coloritos"/>
 		<Event step="1278" time="4" value="1" property="strength" ease="cubeInOut" type="tweenShaderProperty" startValue="0" name="Split"/>
 		<Event step="1280" time="16" value="0.2" property="hue1" ease="linear" type="tweenShaderProperty" startValue="0" name="Split"/>
-		<Event step="1280" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1.5" name="MirrorGAME"/>
+		<Event step="1280" time="4" value="1" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="0.75" name="MirrorGAME"/>
 		<Event step="1408" time="16" value="0.2" property="hue2" ease="linear" type="tweenShaderProperty" startValue="0" name="Split"/>
 		<Event step="1408" time="16" value="0" property="hue1" ease="linear" type="tweenShaderProperty" startValue="0.2" name="Split"/>
 		<Event step="1536" time="4" value="0.5" property="split2" ease="circOut" type="tweenShaderProperty" startValue="0" name="Split"/>
@@ -688,12 +687,9 @@
 		<Event step="1640" time="6" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="40" name="MirrorGAME"/>
 		<Event step="1646" time="18" value="0" property="value" ease="circOut" type="tweenModifierValue" startValue="720" name="angleZ"/>
 		<Event step="1646" time="18" value="0.3" property="warp" ease="circOut" type="tweenShaderProperty" startValue="0" name="MirrorGAME"/>
-		<Event step="1646" time="8" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-40" name="MirrorGAME"/>
 		<Event step="1646" time="18" value="0" property="value" ease="circIn" type="tweenModifierValue" startValue="1" name="scale"/>
-		<Event step="1646" time="18" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="720" name="MirrorGAME"/>
 		<Event step="1646" time="18" value="0.5" property="effect" ease="circOut" type="tweenShaderProperty" startValue="0" name="bars"/>
 		<Event step="1646" time="18" value="10" property="zoom" ease="circOut" type="tweenShaderProperty" startValue="1" name="MirrorGAME"/>
-		<Event step="1656" time="4" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="-20" name="MirrorGAME"/>
-		<Event step="1660" time="4" value="0" property="angle" ease="expoOut" type="tweenShaderProperty" startValue="20" name="MirrorGAME"/>
+		<Event step="1646" time="18" value="0" property="angle" ease="circOut" type="tweenShaderProperty" startValue="720" name="MirrorGAME"/>
 	</Events>
 </Modchart>

@@ -1,6 +1,7 @@
 var PUNCH_TIME = 333;
 var echosData = [];
-var deadEchos = [];
+var activeEchos = [];
+var nextEchoIndex:Int = 0;
 public var colorswapShader:CustomShader;
 var rejectedEchoShader:CustomShader = null;
 var lastTime = -5000;
@@ -233,22 +234,32 @@ function postUpdate(elapsed) {
 		 });
 	}
 
-
-	for (echo in echosData) {
-		if (Conductor.songPosition < echo.time) {
+	// Advance through the immutable, sorted timeline. Removing the first item
+	// from the full future array for every completed echo repeatedly shifted
+	// hundreds of entries during dense punch sections.
+	while (nextEchoIndex < echosData.length) {
+		var nextEcho = echosData[nextEchoIndex];
+		if (Conductor.songPosition < nextEcho.time)
 			break;
-		}
-		if (!echo.started) {
-			echo.started = true;
-			onEchoStart(echo);
-		}
+
+		nextEcho.started = true;
+		onEchoStart(nextEcho);
+		activeEchos.push(nextEcho);
+		nextEchoIndex++;
+	}
+
+	var echoIndex = 0;
+	while (echoIndex < activeEchos.length) {
+		var echo = activeEchos[echoIndex];
 		onEchoUpdate(echo);
 
 		if (echo.finished) {
 			onEchoFinish(echo);
-			deadEchos.push(echo);
-			echosData.remove(echo);
+			activeEchos.splice(echoIndex, 1);
+			continue;
 		}
+
+		echoIndex++;
 	}
 }
 
@@ -348,41 +359,57 @@ function onEchoUpdate(echo) {
 function onEchoFinish(echo) {
 	switch(echo.type) {
 		case "attack" | "greedBlast":
-			remove(echo.sprite);
+			if (members.indexOf(echo.sprite) >= 0)
+				remove(echo.sprite, true);
 		case "Wiik2":
-			remove(echo.sprite);
-			remove(echo.glove);
-			remove(echo.splash);
+			if (members.indexOf(echo.sprite) >= 0)
+				remove(echo.sprite, true);
+			if (members.indexOf(echo.glove) >= 0)
+				remove(echo.glove, true);
+			if (members.indexOf(echo.splash) >= 0)
+				remove(echo.splash, true);
 	}
+
+	// Echoes are one-shot. Retaining all completed objects until song end and
+	// removing them without splicing left permanent holes in PlayState.members.
+	destroyEcho(echo);
 }
 
 function destroyEcho(echo) {
 	switch(echo.type) {
 		case "attack" | "greedBlast":
-			echo.sprite.destroy();
-			echo.sprite = null;
+			if (echo.sprite != null) {
+				FlxTween.cancelTweensOf(echo.sprite);
+				echo.sprite.destroy();
+				echo.sprite = null;
+			}
 		case "Wiik2":
-			echo.sprite.destroy();
-			echo.sprite = null;
-			echo.glove.destroy();
-			echo.glove = null;
-			echo.splash.destroy();
-			echo.splash = null;
+			if (echo.sprite != null) {
+				FlxTween.cancelTweensOf(echo.sprite);
+				echo.sprite.destroy();
+				echo.sprite = null;
+			}
+			if (echo.glove != null) {
+				FlxTween.cancelTweensOf(echo.glove);
+				echo.glove.destroy();
+				echo.glove = null;
+			}
+			if (echo.splash != null) {
+				FlxTween.cancelTweensOf(echo.splash);
+				echo.splash.destroy();
+				echo.splash = null;
+			}
 	}
 }
 
 function destroy() {
-	for (echo in deadEchos) {
-		destroyEcho(echo);
-		echo = null;
-	}
-	deadEchos.splice(0, deadEchos.length);
-
 	for (echo in echosData) {
 		destroyEcho(echo);
 		echo = null;
 	}
 	echosData.splice(0, echosData.length);
+	activeEchos.splice(0, activeEchos.length);
+	nextEchoIndex = 0;
 }
 
 function getEchoScale(defaultScale:Float):Float {

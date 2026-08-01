@@ -14,7 +14,12 @@ function createEventGame(typeID, node, itemIndex) {
 }
 
 function updateEventGame(currentStep, e) {
-	modchartItems[e.itemIndex].object.hset(modchartItems[e.itemIndex].property, e.value);
+	var item = modchartItems[e.itemIndex];
+	var parameter = item == null || item.object == null || item.object.data == null ? null : Reflect.field(item.object.data, item.property);
+	if (parameter != null && parameter.value != null && parameter.value.length > 0)
+		parameter.value[0] = e.value;
+	else if (item != null && item.object != null)
+		item.object.hset(item.property, e.value);
 	return true;
 }
 
@@ -82,5 +87,4 @@ function getEventWindowWidth() {
 function getEventWindowHeight() {
 	return 300;
 }
-
 

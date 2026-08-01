@@ -1,4 +1,5 @@
 import Xml;
+import haxe.Timer;
 var enabled = Options.gameplayShaders;
 
 public var modcharts = Reflect.field(FlxG.save.data, "voiidModcharts") != false;
@@ -49,9 +50,12 @@ var eventIndexList:Array<Int> = [];
 
 var events:Array<Dynamic> = [];
 var originalEvents:Array<Dynamic> = [];
+var nextEventIndex:Int = 0;
 var didInitialTimelineSync:Bool = false;
 var lastModchartSongPosition:Float = Math.NEGATIVE_INFINITY;
-var seekThresholdMs:Float = 250;
+var rewindThresholdMs:Float = 250;
+var modchartFullSyncCount:Int = 0;
+var lastModchartFullSyncMs:Float = 0;
 
 function getEventTypeID(name) {
 	switch(name) {
@@ -86,10 +90,17 @@ function destroy() {
 	events.splice(0, events.length);
 	for (e in originalEvents) e = null;
 	originalEvents.splice(0, originalEvents.length);
+	nextEventIndex = 0;
 }
 
-function cloneEvent(e:Dynamic):Dynamic {
-	return Reflect.copy(e);
+function setLegacyShaderFloat(shader, property:String, value:Float) {
+	if (shader == null || shader.data == null) return;
+	var parameter = Reflect.field(shader.data, property);
+	if (parameter != null && parameter.value != null && parameter.value.length > 0) {
+		parameter.value[0] = value;
+	} else {
+		shader.hset(property, value);
+	}
 }
 
 function loadEvents() {
@@ -302,8 +313,13 @@ function loadEvents() {
 		else return 0;
 	});
 
-	originalEvents = [];
-	for (e in events) originalEvents.push(cloneEvent(e));
+	// Keep the sorted timeline immutable and use `events` only for the handful
+	// of tweens that are active right now. Previously both arrays contained all
+	// 5k+ events and every completed event did splice(0, 1), shifting the whole
+	// remaining timeline during gameplay.
+	originalEvents = events;
+	events = [];
+	nextEventIndex = 0;
 }
 function resetValuesToDefault() {
 	for (i in 0...defaultValueList.length) {
@@ -314,7 +330,7 @@ function resetValuesToDefault() {
 			shaderNamesList[i] = data[0];
 			shaderPropertiesList[i] = data[1];
 			shaderIndexList[i] = getShaderIndex(data[0]);
-			s.hset(data[1], defaultValueList[i]);
+			setLegacyShaderFloat(s, data[1], defaultValueList[i]);
 			if (data[0] == "colorswap" && data[1] == "hue") {
 				scripts.call("setRTXHue", [defaultValueList[i]]);
 			}
@@ -395,14 +411,14 @@ function syncLegacyModchartToStep(step:Float, skipImpulses:Bool = true) {
 	resetValuesToDefault();
 
 	events = [];
-	for (sourceEvent in originalEvents) {
-		var e = cloneEvent(sourceEvent);
-		if (step >= e.step) {
-			var done = applyLegacyEvent(step, e, skipImpulses);
-			if (!done) events.push(e);
-		} else {
-			events.push(e);
-		}
+	nextEventIndex = 0;
+	while (nextEventIndex < originalEvents.length) {
+		var e = originalEvents[nextEventIndex];
+		if (step < e.step) break;
+
+		var done = applyLegacyEvent(step, e, skipImpulses);
+		if (!done) events.push(e);
+		nextEventIndex++;
 	}
 }
 
@@ -413,27 +429,47 @@ function forceModchartSeekSync(step:Float = -1) {
 }
 
 function consumeLegacyDueEvents(currentStep:Float) {
+	// Update/remove only active tweens. This array stays small, so preserving
+	// its order (newer overlapping tweens win) is inexpensive.
 	var i = 0;
 	while (i < events.length) {
 		var e = events[i];
-		if (currentStep < e.step) break;
-
 		if (applyLegacyEvent(currentStep, e, false)) {
 			events.splice(i, 1);
 		} else {
 			i++;
 		}
 	}
+
+	// Advance through the immutable timeline without removing from its front.
+	while (nextEventIndex < originalEvents.length) {
+		var e = originalEvents[nextEventIndex];
+		if (currentStep < e.step) break;
+
+		if (!applyLegacyEvent(currentStep, e, false))
+			events.push(e);
+		nextEventIndex++;
+	}
 }
 
 function postUpdate(elapsed) {
 	if (!modcharts) return;
 
-	var expectedPosition = lastModchartSongPosition == Math.NEGATIVE_INFINITY ? Conductor.songPosition : lastModchartSongPosition + (elapsed * 1000);
-	var didSeek = lastModchartSongPosition != Math.NEGATIVE_INFINITY && Math.abs(Conductor.songPosition - expectedPosition) > seekThresholdMs;
+	// A forward audio correction is not a seek: consumeDueEvents can advance the
+	// cursor normally. Treating it as one rebuilt the whole timeline in one frame
+	// (thousands of events late in long songs), which caused the visible hitch.
+	// Real forward skips call forceModchartSeekSync explicitly from Skip.hx.
+	var rewindAmountMs = lastModchartSongPosition == Math.NEGATIVE_INFINITY ? 0 : lastModchartSongPosition - Conductor.songPosition;
+	var didRewind = rewindAmountMs > rewindThresholdMs;
 
-	if (!didInitialTimelineSync || didSeek) {
-		syncLegacyModchartToStep(curStepFloat, didSeek || Conductor.songPosition > 100);
+	if (!didInitialTimelineSync || didRewind) {
+		var syncStart = Timer.stamp();
+		syncLegacyModchartToStep(curStepFloat, didRewind || Conductor.songPosition > 100);
+		lastModchartFullSyncMs = (Timer.stamp() - syncStart) * 1000;
+		modchartFullSyncCount++;
+		if (didRewind || lastModchartFullSyncMs >= 4) {
+			trace('[Voiid modchart] full sync #' + modchartFullSyncCount + ' at step ' + curStepFloat + ': ' + lastModchartFullSyncMs + ' ms (rewind ' + rewindAmountMs + ' ms)');
+		}
 		didInitialTimelineSync = true;
 	} else {
 		consumeLegacyDueEvents(curStepFloat);
@@ -471,7 +507,7 @@ function setValue(i, value) {
 	} else {
 		var s = shaders[shaderIndexList[i]];
 		if (s != null) {
-			s.hset(shaderPropertiesList[i], value);
+			setLegacyShaderFloat(s, shaderPropertiesList[i], value);
 			if (shaderNamesList[i] == "colorswap" && shaderPropertiesList[i] == "hue") {
 				scripts.call("setRTXHue", [value]);
 			}

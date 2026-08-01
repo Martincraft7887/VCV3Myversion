@@ -593,7 +593,7 @@ function makeBulletTracer() {
 	FlxTween.tween(tracer, {alpha: 0}, 1, {
 		ease: FlxEase.cubeOut,
 		onComplete: function(_) {
-			remove(tracer);
+			remove(tracer, true);
 			tracer.destroy();
 		}
 	});
@@ -619,7 +619,8 @@ function postCreate() {
 	bleedShader.strength = 25;
 	bleedShader.size = 0;
 	bleedShader.red = 200;
-	camOther.addShader(bleedShader);
+	if (camOther != null)
+		camOther.addShader(bleedShader);
 
 	blurShaderV = new CustomShader("blur");
     blurShaderV.strength = 3;
@@ -641,8 +642,8 @@ function destroy() {
 	if (parryAttackTween != null) parryAttackTween.cancel();
 	if (flamePunchTween != null) flamePunchTween.cancel();
 	if (dadBulletShootTimer != null) dadBulletShootTimer.cancel();
-	if (parryAttack != null) remove(parryAttack);
-	if (flamePunch != null) remove(flamePunch);
+	if (parryAttack != null) remove(parryAttack, true);
+	if (flamePunch != null) remove(flamePunch, true);
 }
 
 public var drainHPBar:FlxSprite;
@@ -658,14 +659,14 @@ function onPostChangeHealthBar(t) {
 		drainHPBar.makeGraphic(1,1,0xFFFF0000);
 		drainHPBar.cameras = [camHUD];
 	} else {
-		remove(drainHPBar);
+		remove(drainHPBar, true);
 	}
 	if (lostHPBar == null) {
 		lostHPBar = new FlxSprite();
 		lostHPBar.makeGraphic(1,1,0xFF000000);
 		lostHPBar.cameras = [camHUD];
 	} else {
-		remove(lostHPBar);
+		remove(lostHPBar, true);
 	}
 
 	insert(members.indexOf(healthBar)+1, drainHPBar);
@@ -723,11 +724,13 @@ public function applyEffect(effect) {
 
 			FlxG.sound.play(Paths.sound("glass"+FlxG.random.int(0,3)), 0.6);
 
-			crack.cameras = [camOther];
+			crack.cameras = [camOther != null ? camOther : camHUD];
 			add(crack);
 			new FlxTimer().start(3.0, function(tmr){
 				FlxTween.tween(crack, {alpha: 0.0}, 1.0, {ease:FlxEase.cubeOut, onComplete:function(twn) {
-					remove(crack);
+					if (members.indexOf(crack) >= 0)
+						remove(crack, true);
+					crack.destroy();
 				}});
 			});
 		case "blurSmall":

@@ -148,8 +148,7 @@ void main(void)
 		pos.y -= y;
 
 	pos = openfl_Matrix * pos;
-	pos.z = (z * 0.001 * 1.5); //need to apply z after so it looks right
+	pos.z = ((z) * 0.001 * 1.5); //need to apply z after so it looks right
 	gl_Position = perspectiveMatrix * viewMatrix * pos;
 }
-
 

@@ -19,7 +19,8 @@ var allowedSongs:Array<String> = [
 	"flaming glove",
 	"flaming glove iii",	
 	"king hit vip",
-	"immortal vip"
+	"immortal vip",
+	"bombastic"
 ];
 
 var enabled:Bool = true;

@@ -1,0 +1,29 @@
+{
+    "params": [
+        {
+            "name": "Enable",
+            "type": "Bool",
+            "defaultValue": true
+        },
+        {
+            "name": "Strumline",
+            "type": "DropDown([\"all\",\"opponent\",\"player\",\"girlfriend\",\"strumline0\",\"strumline1\",\"strumline2\",\"strumline3\"])",
+            "defaultValue": "all"
+        },
+        {
+            "name": "Interval (Steps)",
+            "type": "Float(0.1, 64, 0.1, 2)",
+            "defaultValue": 0.5
+        },
+        {
+            "name": "Alpha",
+            "type": "Float(0, 1, 0.05, 2)",
+            "defaultValue": 0.35
+        },
+        {
+            "name": "Duration (Steps)",
+            "type": "Float(0.1, 64, 0.5, 2)",
+            "defaultValue": 8
+        }
+    ]
+}

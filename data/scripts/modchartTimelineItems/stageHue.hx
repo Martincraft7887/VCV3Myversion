@@ -4,6 +4,9 @@ import Xml;
 
 var stageHueShader = null;
 var stageHueGameItem = null;
+var stageHueApplyHUD:Bool = false;
+var stageHueHUDShader = null;
+var stageHueHUDCamera = null;
 
 function getItemTypeName() {
     return "stageHue";
@@ -31,16 +34,57 @@ function getStageHueStage() {
     return daStage;
 }
 
+function getStageHueHUDCamera() {
+    var hud = null;
+    try {
+        hud = Reflect.field(FlxG.state, "camHUD");
+    } catch(e:Dynamic) {}
+    if (hud == null) {
+        try {
+            hud = Reflect.field(PlayState.instance, "camHUD");
+        } catch(e:Dynamic) {}
+    }
+    return hud;
+}
+
+function clearStageHueHUDShader() {
+    if (stageHueHUDCamera != null && stageHueHUDShader != null) {
+        try {
+            stageHueHUDCamera.removeShader(stageHueHUDShader);
+        } catch(e:Dynamic) {}
+    }
+    stageHueHUDCamera = null;
+    stageHueHUDShader = null;
+}
+
+function applyStageHueHUDShader(shader) {
+    var hud = getStageHueHUDCamera();
+    if (!stageHueApplyHUD || shader == null || hud == null) {
+        clearStageHueHUDShader();
+        return;
+    }
+
+    if (stageHueHUDCamera == hud && stageHueHUDShader == shader) return;
+
+    clearStageHueHUDShader();
+    try {
+        hud.addShader(shader);
+        stageHueHUDCamera = hud;
+        stageHueHUDShader = shader;
+    } catch(e:Dynamic) {}
+}
+
 function applyStageHueShader(shader) {
     stageHueShader = shader;
     var daStage = getStageHueStage();
-    if (shader == null || daStage == null || daStage.stageSprites == null) return;
-
-    for (name => obj in daStage.stageSprites) {
-        if (obj != null) {
-            obj.shader = shader;
+    if (shader != null && daStage != null && daStage.stageSprites != null) {
+        for (name => obj in daStage.stageSprites) {
+            if (obj != null) {
+                obj.shader = shader;
+            }
         }
     }
+    applyStageHueHUDShader(shader);
 }
 
 function setStageHueValue(shader, value) {
@@ -82,6 +126,7 @@ function setupDefaultsGame() {
 function setupItemsFromXMLGame(xml) {
     for (node in xml.elementsNamed("StageHue")) {
         var value = node.exists("value") ? Std.parseFloat(node.get("value")) : 0.0;
+        stageHueApplyHUD = node.exists("camHUD") && node.get("camHUD") == "true";
         var shader = createStageHueShader(value);
         if (stageHueGameItem == null) {
             createStageHueItem(value);
@@ -95,6 +140,7 @@ function setupItemsFromXMLGame(xml) {
 function setupItemsFromXMLEditor(xml) {
     for (node in xml.elementsNamed("StageHue")) {
         var value = node.exists("value") ? Std.parseFloat(node.get("value")) : 0.0;
+        stageHueApplyHUD = node.exists("camHUD") && node.get("camHUD") == "true";
         var item = timelineIndexMap.exists("stageHue.hue") ? timelineItems[timelineIndexMap.get("stageHue.hue")] : createTimelineItem("stageHue.hue", getItemTypeName(), null);
         var shader = createStageHueShader(value);
         item.object = shader;
@@ -138,10 +184,14 @@ function updateItem(item, i) {
 }
 
 function postXMLLoad(xml) {
+    if (xml != null && xml.exists("stageHueCamHUD"))
+        stageHueApplyHUD = xml.get("stageHueCamHUD") == "true";
     applyStageHueShader(stageHueShader);
 }
 
 function postXMLLoadGame(xml) {
+    if (xml != null && xml.exists("stageHueCamHUD"))
+        stageHueApplyHUD = xml.get("stageHueCamHUD") == "true";
     applyStageHueShader(stageHueShader);
 }
 
@@ -149,4 +199,13 @@ function onStageChanged(n) {
     applyStageHueShader(stageHueShader);
 }
 
-function reloadItems() {}
+function reloadItems() {
+    clearStageHueHUDShader();
+    stageHueShader = null;
+    stageHueGameItem = null;
+    stageHueApplyHUD = false;
+}
+
+function destroy() {
+    clearStageHueHUDShader();
+}

@@ -240,7 +240,7 @@ vec2 uv = openfl_TextureCoordv.xy - center; //offset shit
 
 uv.y *= ASPECTRATIOINV; //fix aspect ratio
 	
-vec4 backgroundColor = vec4(0.0, 0.0, 0.0, 1.0);
+vec4 backgroundColor = vec4(0.0,0.0,0.0,0.0);
 
 mat2 rotation = mat2(
 	cos(tilt), -sin(tilt),
@@ -267,6 +267,5 @@ if (co.sd > MAX_DIST) {
 
 	//col = mix(col, backgroundColor, 1.0 - exp(fogAmount * co.sd * co.sd * co.sd)); // fog
 	//col = pow(col, vec3(1.0/1.1)); // Gamma correction
-	if (col.a <= 0.01) col = backgroundColor;
 	gl_FragColor = col; // Output to screen
 }

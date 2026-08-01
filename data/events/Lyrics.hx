@@ -82,7 +82,7 @@ function addText(setText)
     text.screenCenter(FlxAxes.X);
     text.x += lyricsConfig.xOffset;
     text.y += lyricsConfig.yOffset;
-    text.cameras = [camOther];
+    text.cameras = [camOther != null ? camOther : camHUD];
     textGroup.add(text);
 }
 

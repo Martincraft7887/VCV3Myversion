@@ -53,7 +53,9 @@ function postCreate()
     skipTxt.setFormat(Paths.font("vcr.ttf"), 28, FlxColor.WHITE, "center");
     skipTxt.scrollFactor.set();
     skipTxt.screenCenter(FlxAxes.X);
-    skipTxt.cameras = [camOther];
+    // camOther normally comes from vcModcharts, but never put null inside a
+    // sprite's camera list: FlxSprite.draw() will crash while dereferencing it.
+    skipTxt.cameras = [camOther != null ? camOther : camHUD];
     skipTxt.alpha = 0;
     add(skipTxt);
 }

@@ -1,5 +1,7 @@
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.math.FlxMatrix;
+import flixel.math.FlxPoint;
 import funkin.backend.shaders.CustomShader;
 import StringTools;
 
@@ -12,8 +14,13 @@ var doubleGhostEchoAlpha:Float = 0.35;
 var doubleGhostEchoDuration:Float = 0.35;
 var doubleGhostMaxPerChar:Int = 8;
 var doubleGhostAlpha:Float = 0.5;
-var doubleGhostSpawnCount:Int = 0;
-var doubleGhostDebug:Bool = false;
+var doubleGhostShuttingDown:Bool = false;
+
+function doubleGhostPlayStateIsAlive():Bool {
+	return !doubleGhostShuttingDown
+		&& PlayState.instance != null
+		&& FlxG.state == PlayState.instance;
+}
 
 function getCharPool(char:Character):Dynamic {
 	for (pool in doubleGhostPools)
@@ -61,11 +68,59 @@ function hasActiveGhostAnim(pool:Dynamic, animName:String):Bool {
 	return false;
 }
 
+function copyIndependentGhostAnimOffsets(ghost:FunkinSprite, char:Character) {
+	if (ghost == null || char == null || char.animOffsets == null)
+		return;
+
+	// FunkinSprite.copyFrom() and Map.copy() are shallow: their FlxPoints would
+	// still belong to the Character. Ghost destruction would then return those
+	// live points to the pool and corrupt the character's singing offsets.
+	if (ghost.extra != null && ghost.extra.exists("vcOwnedGhostAnimOffsets") && ghost.animOffsets != null) {
+		var oldNames:Array<String> = [];
+		for (name in ghost.animOffsets.keys())
+			oldNames.push(name);
+		for (name in oldNames) {
+			var oldPoint = ghost.animOffsets.get(name);
+			ghost.animOffsets.remove(name);
+			if (oldPoint != null)
+				oldPoint.put();
+		}
+	}
+
+	var copiedOffsets = char.animOffsets.copy();
+	for (name in copiedOffsets.keys()) {
+		var sourcePoint = copiedOffsets.get(name);
+		// Some character XML animations intentionally have no offset entry. The
+		// copied map keeps that animation usable instead of dereferencing null.
+		if (sourcePoint == null)
+			copiedOffsets.set(name, FlxPoint.get());
+		else
+			copiedOffsets.set(name, FlxPoint.get(sourcePoint.x, sourcePoint.y));
+	}
+	ghost.animOffsets = copiedOffsets;
+	ghost.extra.set("vcOwnedGhostAnimOffsets", true);
+}
+
+function copyCharacterDrawOrientationToGhost(ghost:FunkinSprite, char:Character) {
+	ghost.scale.copyFrom(char.scale);
+	ghost.flipX = char.flipX;
+	ghost.flipY = char.flipY;
+
+	// Character.draw() temporarily performs these two changes when the chart
+	// side (isPlayer) does not match the XML offset side (playerOffsets). A
+	// pooled FunkinSprite has no Character.draw(), so it must keep the effective
+	// draw values itself or every ghost is mirrored around the wrong origin.
+	if (char.isFlippedOffsets()) {
+		ghost.flipX = !char.flipX;
+		ghost.scale.x = -char.scale.x;
+	}
+}
+
 function copyPoseToGhost(ghost:FunkinSprite, char:Character, animName:String, copyCurrentFrame:Bool = false, snapshotFrame:Int = 0) {
 	ghost.setPosition(char.x + char.extraOffset.x, char.y + char.extraOffset.y);
 	ghost.frames = char.frames;
 	ghost.animation.copyFrom(char.animation);
-	ghost.animOffsets = char.animOffsets.copy();
+	copyIndependentGhostAnimOffsets(ghost, char);
 	ghost.playAnim(animName, true);
 	var copiedCurrentAnim = getCurrentAnimName(char) == animName;
 	ghost.globalCurFrame = copyCurrentFrame ? (copiedCurrentAnim ? char.globalCurFrame : snapshotFrame) : 0;
@@ -74,11 +129,9 @@ function copyPoseToGhost(ghost:FunkinSprite, char:Character, animName:String, co
 	animOffset.putWeak();
 	ghost.offset.copyFrom(char.offset);
 	ghost.origin.copyFrom(char.origin);
-	ghost.scale.copyFrom(char.scale);
 	ghost.scrollFactor.copyFrom(char.scrollFactor);
 	ghost.cameras = char.cameras;
-	ghost.flipX = char.flipX;
-	ghost.flipY = char.flipY;
+	copyCharacterDrawOrientationToGhost(ghost, char);
 	ghost.angle = char.angle;
 	ghost.alpha = Math.min(char.alpha, doubleGhostAlpha);
 	ghost.visible = char.visible;
@@ -96,7 +149,11 @@ function copyPoseToGhost(ghost:FunkinSprite, char:Character, animName:String, co
 	ghost.colorTransform.blueOffset = char.colorTransform.blueOffset;
 	ghost.colorTransform.alphaOffset = 0;
 	ghost.skew.set(char.skew.x, char.skew.y);
-	ghost.transformMatrix = char.transformMatrix;
+	if (char.transformMatrix != null) {
+		var independentMatrix = new FlxMatrix();
+		independentMatrix.copyFrom(char.transformMatrix);
+		ghost.transformMatrix = independentMatrix;
+	}
 	ghost.matrixExposed = char.matrixExposed;
 	ghost.revive();
 }
@@ -288,6 +345,9 @@ function canSpawnAnimAtTime(pool:Dynamic, animName:String, strumTime:Float):Bool
 }
 
 function onDoubleNoteGhostScriptedAnim(char:Character, animName:String) {
+	if (!doubleGhostPlayStateIsAlive())
+		return;
+
 	if (char == null || animName == null || animName == "" || !char.hasAnimation(animName))
 		return;
 
@@ -334,6 +394,9 @@ function getEchoGhost(pool:Dynamic, char:Character):FunkinSprite {
 }
 
 function onDoubleNoteGhostEchoTrail(char:Character, behindChar:Character = null) {
+	if (!doubleGhostPlayStateIsAlive())
+		return;
+
 	if (char == null || !char.visible || !char.isOnScreen())
 		return;
 
@@ -371,12 +434,67 @@ function onDoubleNoteGhostEchoTrail(char:Character, behindChar:Character = null)
 	FlxTween.tween(ghost, {alpha: 0}, doubleGhostEchoDuration, {
 		ease: FlxEase.cubeOut,
 		onComplete: function(_) {
-			recycleEchoGhost(pool, ghost);
+			if (doubleGhostPlayStateIsAlive())
+				recycleEchoGhost(pool, ghost);
+		}
+	});
+}
+
+function onGhostTrailSnapshot(char:Character, ghostAlpha:Float = 0.35, ghostDuration:Float = 0.75, behindChar:Character = null) {
+	if (!doubleGhostPlayStateIsAlive())
+		return;
+
+	if (char == null || !char.visible || !char.isOnScreen())
+		return;
+
+	var animName = getCurrentAnimName(char);
+	if (animName == null || !char.hasAnimation(animName))
+		return;
+
+	var pool = getEchoPool(char);
+	var ghost = getEchoGhost(pool, char);
+	copyPoseToGhost(ghost, char, animName, true);
+
+	// This trail is a clean character snapshot: no EchoEffect shader and no
+	// positional offset. Restore the exact visual state after copyPoseToGhost(),
+	// which normally applies the shared double-note ghost alpha limit.
+	ghost.shader = char.shader;
+	ghost.alpha = char.alpha * Math.max(0, Math.min(ghostAlpha, 1));
+	ghost.colorTransform.redMultiplier = char.colorTransform.redMultiplier;
+	ghost.colorTransform.greenMultiplier = char.colorTransform.greenMultiplier;
+	ghost.colorTransform.blueMultiplier = char.colorTransform.blueMultiplier;
+	ghost.colorTransform.alphaMultiplier = char.colorTransform.alphaMultiplier;
+	ghost.colorTransform.redOffset = char.colorTransform.redOffset;
+	ghost.colorTransform.greenOffset = char.colorTransform.greenOffset;
+	ghost.colorTransform.blueOffset = char.colorTransform.blueOffset;
+	ghost.colorTransform.alphaOffset = char.colorTransform.alphaOffset;
+
+	var charIndex = members.indexOf(char);
+	var behindIndex = behindChar == null ? -1 : members.indexOf(behindChar);
+	var insertIndex = charIndex;
+	if (behindIndex >= 0 && (insertIndex < 0 || behindIndex < insertIndex))
+		insertIndex = behindIndex;
+	if (members.indexOf(ghost) >= 0)
+		remove(ghost, true);
+	insert(insertIndex < 0 ? members.length : insertIndex, ghost);
+
+	pool.active.remove(ghost);
+	pool.active.push(ghost);
+	FlxTween.tween(ghost, {alpha: 0}, Math.max(ghostDuration, 0.05), {
+		ease: FlxEase.cubeOut,
+		onComplete: function(_) {
+			if (doubleGhostPlayStateIsAlive())
+				recycleEchoGhost(pool, ghost);
 		}
 	});
 }
 
 function recycleEchoGhost(pool:Dynamic, ghost:FunkinSprite) {
+	// FlxTween is global: an onComplete can arrive just after returning from a
+	// Charter playtest, when the old PlayState.members has already become null.
+	if (!doubleGhostPlayStateIsAlive())
+		return;
+
 	if (pool != null && pool.active != null)
 		pool.active.remove(ghost);
 	if (ghost == null)
@@ -438,6 +556,9 @@ function getDoubleSpecialAnim(char:Character, event, eventAnim:String):String {
 }
 
 function spawnDoubleGhost(char:Character, animName:String, holdTime:Float, copyCurrentFrame:Bool = false, snapshotFrame:Int = 0) {
+	if (!doubleGhostPlayStateIsAlive())
+		return;
+
 	if (char == null || animName == null || !char.isOnScreen())
 		return;
 
@@ -449,7 +570,6 @@ function spawnDoubleGhost(char:Character, animName:String, holdTime:Float, copyC
 	copyPoseToGhost(ghost, char, animName, copyCurrentFrame, snapshotFrame);
 	if (holdTime > 0)
 		addFollowGhost(ghost, char, holdTime);
-	doubleGhostSpawnCount++;
 
 	var charIndex = members.indexOf(char);
 	if (members.indexOf(ghost) < 0)
@@ -463,11 +583,10 @@ function spawnDoubleGhost(char:Character, animName:String, holdTime:Float, copyC
 		ease: FlxEase.expoIn,
 		startDelay: holdTime,
 		onComplete: function(_) {
-			ghost.kill();
+			if (doubleGhostPlayStateIsAlive() && ghost != null)
+				ghost.kill();
 		}
 	});
-
-	debugGhostTrace(char, animName, ghost.getAnimName(), pool, holdTime);
 }
 
 function addFollowGhost(ghost:FunkinSprite, char:Character, holdTime:Float) {
@@ -498,6 +617,7 @@ function updateFollowGhosts() {
 			continue;
 
 		ghost.setPosition(char.x + char.extraOffset.x, char.y + char.extraOffset.y);
+		copyCharacterDrawOrientationToGhost(ghost, char);
 		ghost.scrollFactor.copyFrom(char.scrollFactor);
 		ghost.cameras = char.cameras;
 		kept.push(data);
@@ -506,28 +626,10 @@ function updateFollowGhosts() {
 	doubleGhostFollowData = kept;
 }
 
-function debugGhostTrace(char:Character, animName:String, actualAnimName:String, pool:Dynamic, holdTime:Float) {
-	if (!doubleGhostDebug)
+function handleDoubleGhostHit(event) {
+	if (!doubleGhostPlayStateIsAlive())
 		return;
 
-	trace('[DoubleNoteGhosts] ghost #' + doubleGhostSpawnCount
-		+ ' char=' + char.curCharacter
-		+ ' anim=' + animName
-		+ ' actual=' + actualAnimName
-		+ ' hold=' + holdTime
-		+ ' activePool=' + countActiveGhosts(pool)
-		+ '/' + pool.ghosts.length);
-}
-
-function countActiveGhosts(pool:Dynamic):Int {
-	var count = 0;
-	for (ghost in pool.ghosts)
-		if (ghost != null && ghost.exists && ghost.alive)
-			count++;
-	return count;
-}
-
-function handleDoubleGhostHit(event) {
 	if (event == null || event.note == null)
 		return;
 
@@ -590,6 +692,9 @@ function onNoteHit(event) {
 }
 
 function postUpdate(elapsed:Float) {
+	if (!doubleGhostPlayStateIsAlive())
+		return;
+
 	if (doubleGhostFollowData.length <= 0)
 		return;
 
@@ -597,9 +702,14 @@ function postUpdate(elapsed:Float) {
 }
 
 function destroy() {
+	// Mark teardown before cancelling anything. A callback already queued by
+	// Flixel will see this and cannot access the destroyed PlayState.
+	doubleGhostShuttingDown = true;
+
 	for (pool in doubleGhostPools) {
 		for (ghost in pool.ghosts) {
 			FlxTween.cancelTweensOf(ghost);
+			FlxTween.cancelTweensOf(ghost.scale);
 			if (members.indexOf(ghost) >= 0)
 				remove(ghost, true);
 			ghost.destroy();
@@ -608,6 +718,7 @@ function destroy() {
 	for (pool in doubleGhostEchoPools) {
 		for (ghost in pool.ghosts) {
 			FlxTween.cancelTweensOf(ghost);
+			FlxTween.cancelTweensOf(ghost.scale);
 			if (members.indexOf(ghost) >= 0)
 				remove(ghost, true);
 			ghost.destroy();

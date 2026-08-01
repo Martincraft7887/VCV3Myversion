@@ -1,6 +1,7 @@
 //
 
 import haxe.Timer;
+import haxe.ds.ObjectMap;
 
 
 ///////////3D Matrix stuff//////////////////////////////
@@ -14,7 +15,15 @@ var perspectiveMatrix:Array<Float> =
 	0, 0, 1.0, 1.0,
 	0, 0, 0, 0
 ];
-var viewMatrix:Array<Float> = [];
+// Keep this array alive for the whole song. Every perspective shader points to
+// it, so updating its values is enough and does not allocate one matrix per
+// shader (or per frame).
+var viewMatrix:Array<Float> = [
+	1, 0, 0, 0,
+	0, 1, 0, 0,
+	0, 0, 1, 0,
+	0, 0, 0, 1
+];
 
 public var eye:Array<Float> = [0, 0, -0.71, 0];
 public var lookAt:Array<Float> = [0, 0, 0, 0];
@@ -26,20 +35,63 @@ var forward:Array<Float> = [0, 0, 1, 0];
 
 function updateViewMatrix()
 {
-	forward = [(lookAt[0] - eye[0]), (-lookAt[1] - -eye[1]), (lookAt[2] - eye[2]), 0];
-	forward = normalize(forward);
+	var fx:Float = lookAt[0] - eye[0];
+	var fy:Float = eye[1] - lookAt[1];
+	var fz:Float = lookAt[2] - eye[2];
+	var mag:Float = Math.sqrt((fx * fx) + (fy * fy) + (fz * fz));
+	if (mag <= 0) return;
 
-	right = cross(up, forward);
-	right = normalize(right);
-	upv = cross(forward, right);
-	var negEye = [-eye[0], eye[1], -eye[2], -eye[3]];
-	viewMatrix = 
-	[
-		right[0], upv[0], forward[0], 0,
-		right[1], upv[1], forward[1], 0,
-		right[2], upv[2], forward[2], 0,
-		dot(right, negEye), dot(upv, negEye), dot(forward, negEye), 1
-	];
+	fx /= mag;
+	fy /= mag;
+	fz /= mag;
+	forward[0] = fx;
+	forward[1] = fy;
+	forward[2] = fz;
+	forward[3] = 0;
+
+	var rx:Float = (up[1] * fz) - (up[2] * fy);
+	var ry:Float = (up[2] * fx) - (up[0] * fz);
+	var rz:Float = (up[0] * fy) - (up[1] * fx);
+	// Preserve the legacy cross()/normalize() result: cross() used w = 1 and
+	// normalize() included it in the magnitude.
+	mag = Math.sqrt((rx * rx) + (ry * ry) + (rz * rz) + 1);
+	if (mag <= 0) return;
+
+	rx /= mag;
+	ry /= mag;
+	rz /= mag;
+	right[0] = rx;
+	right[1] = ry;
+	right[2] = rz;
+	right[3] = 1 / mag;
+
+	var ux:Float = (fy * rz) - (fz * ry);
+	var uy:Float = (fz * rx) - (fx * rz);
+	var uz:Float = (fx * ry) - (fy * rx);
+	upv[0] = ux;
+	upv[1] = uy;
+	upv[2] = uz;
+	upv[3] = 1;
+
+	var negX:Float = -eye[0];
+	var negY:Float = eye[1];
+	var negZ:Float = -eye[2];
+	viewMatrix[0] = rx;
+	viewMatrix[1] = ux;
+	viewMatrix[2] = fx;
+	viewMatrix[3] = 0;
+	viewMatrix[4] = ry;
+	viewMatrix[5] = uy;
+	viewMatrix[6] = fy;
+	viewMatrix[7] = 0;
+	viewMatrix[8] = rz;
+	viewMatrix[9] = uz;
+	viewMatrix[10] = fz;
+	viewMatrix[11] = 0;
+	viewMatrix[12] = (rx * negX) + (ry * negY) + (rz * negZ);
+	viewMatrix[13] = (ux * negX) + (uy * negY) + (uz * negZ);
+	viewMatrix[14] = (fx * negX) + (fy * negY) + (fz * negZ);
+	viewMatrix[15] = 1;
 }
 function normalize(vec:Array<Float>)
 {
@@ -70,6 +122,134 @@ var modShaderVertTable:Array<Dynamic> = [];
 var modShaderFragTable:Array<Dynamic> = [];
 
 var shaderPool:Array<Dynamic> = [];
+var shaderRuntimeData:ObjectMap<Dynamic, Dynamic> = new ObjectMap();
+var MAX_PREWARM_SHADERS_PER_LANE:Int = 32;
+
+function getShaderParameter(shader, name:String) {
+	if (shader == null || shader.data == null) return null;
+	return Reflect.field(shader.data, name);
+}
+
+function initShaderScalar(parameter, value) {
+	if (parameter != null) parameter.value = [value];
+}
+
+function initShaderVec4(parameter, x:Float, y:Float, z:Float, w:Float) {
+	if (parameter != null) parameter.value = [x, y, z, w];
+}
+
+function setShaderScalar(parameter, value) {
+	if (parameter != null && parameter.value != null && parameter.value.length > 0)
+		parameter.value[0] = value;
+}
+
+function setShaderVec4(parameter, x:Float, y:Float, z:Float, w:Float) {
+	if (parameter == null || parameter.value == null || parameter.value.length < 4) return;
+	parameter.value[0] = x;
+	parameter.value[1] = y;
+	parameter.value[2] = z;
+	parameter.value[3] = w;
+}
+
+// FunkinShader.hset creates a fresh one-element Array for every scalar write.
+// The legacy manager used to do that hundreds of times per frame. Cache the
+// ShaderParameter objects once and mutate their existing value arrays instead.
+function cachePerspectiveShader(shader, strumLineID:Int, strumID:Int) {
+	if (shader == null) return null;
+
+	var cached = shaderRuntimeData.get(shader);
+	if (cached != null) return cached;
+
+	var data = {
+		downscroll: getShaderParameter(shader, "downscroll"),
+		isSustainNote: getShaderParameter(shader, "isSustainNote"),
+		screenX: getShaderParameter(shader, "screenX"),
+		screenY: getShaderParameter(shader, "screenY"),
+		songPosition: getShaderParameter(shader, "songPosition"),
+		curBeat: getShaderParameter(shader, "curBeat"),
+		scrollSpeed: getShaderParameter(shader, "scrollSpeed"),
+		strumID: getShaderParameter(shader, "strumID"),
+		strumLineID: getShaderParameter(shader, "strumLineID"),
+		noteCurPos: getShaderParameter(shader, "noteCurPos"),
+		frameUV: getShaderParameter(shader, "frameUV"),
+		modifierParams: []
+	};
+
+	initShaderVec4(getShaderParameter(shader, "vertexID"), 0, 1, 2, 3);
+	initShaderVec4(data.noteCurPos, 0, 0, 0, 0);
+	initShaderVec4(data.frameUV, 0, 0, 1, 1);
+	initShaderScalar(data.downscroll, false);
+	initShaderScalar(data.isSustainNote, false);
+	initShaderScalar(data.screenX, 0.0);
+	initShaderScalar(data.screenY, 0.0);
+	initShaderScalar(data.songPosition, 0.0);
+	initShaderScalar(data.curBeat, 0.0);
+	initShaderScalar(data.scrollSpeed, 0.0);
+	initShaderScalar(data.strumID, strumID + 0.0);
+	initShaderScalar(data.strumLineID, strumLineID + 0.0);
+
+	var perspectiveParam = getShaderParameter(shader, "perspectiveMatrix");
+	if (perspectiveParam != null) perspectiveParam.value = perspectiveMatrix;
+	var viewParam = getShaderParameter(shader, "viewMatrix");
+	if (viewParam != null) viewParam.value = viewMatrix;
+
+	if (modTable[strumLineID] != null && modTable[strumLineID][strumID] != null) {
+		for (mod in modTable[strumLineID][strumID]) {
+			var parameter = getShaderParameter(shader, mod[MOD_NAME] + "_value");
+			if (parameter == null) continue;
+			initShaderScalar(parameter, mod[MOD_VALUE]);
+			data.modifierParams.push({parameter: parameter, modifier: mod});
+		}
+	}
+
+	shaderRuntimeData.set(shader, data);
+	return data;
+}
+
+function newPerspectiveShader(strumLineID:Int, strumID:Int) {
+	var shader = new FunkinShader(modShaderFragTable[strumLineID][strumID], modShaderVertTable[strumLineID][strumID]);
+	cachePerspectiveShader(shader, strumLineID, strumID);
+	return shader;
+}
+
+function prewarmPerspectiveShaderLane(strumLineID:Int, strumID:Int) {
+	if (PlayState.instance == null || !hasPerspectiveShaderLane(strumLineID, strumID)) return;
+	var strumLine = strumLines.members[strumLineID];
+	if (strumLine == null || strumLine.notes == null || strumLine.notes.members == null) return;
+
+	var noteTimes:Array<Float> = [];
+	for (note in strumLine.notes.members) {
+		if (note != null && note.strumID == strumID)
+			noteTimes.push(note.strumTime);
+	}
+	if (noteTimes.length < 1) return;
+
+	noteTimes.sort(function(a:Float, b:Float) {
+		return a < b ? -1 : (a > b ? 1 : 0);
+	});
+
+	var speed:Float = scrollSpeed;
+	if (speed <= 0) speed = 1;
+	var lateWindow:Float = Conductor.stepCrochet;
+	if (Options.hitWindow > lateWindow)
+		lateWindow = Options.hitWindow;
+	var activeWindow:Float = (1750 / speed) + lateWindow;
+
+	var left:Int = 0;
+	var peak:Int = 0;
+	for (right in 0...noteTimes.length) {
+		while (left < right && noteTimes[right] - noteTimes[left] > activeWindow)
+			left++;
+		var count:Int = right - left + 1;
+		if (count > peak) peak = count;
+	}
+
+	if (peak > MAX_PREWARM_SHADERS_PER_LANE)
+		peak = MAX_PREWARM_SHADERS_PER_LANE;
+	var pool = shaderPool[strumLineID][strumID];
+	while (pool.length < peak)
+		pool.push(newPerspectiveShader(strumLineID, strumID));
+}
 
 function isPerspectiveShader(shader) {
 	return shader != null && shader.data != null && Reflect.field(shader.data, "noteCurPos") != null;
@@ -88,12 +268,10 @@ function getPerspectiveShader(strumLineID, strumID) {
 	var pool = shaderPool[strumLineID][strumID];
 
 	if (pool.length < 1) {
-		var shader = new FunkinShader(modShaderFragTable[strumLineID][strumID], modShaderVertTable[strumLineID][strumID]);
-		shader.data.vertexID.value = [0, 1, 2, 3];
-		shader.perspectiveMatrix = perspectiveMatrix;
-		return shader;
+		return newPerspectiveShader(strumLineID, strumID);
 	} else {
 		var shader = pool.pop();
+		cachePerspectiveShader(shader, strumLineID, strumID);
 		return shader;
 	}
 }
@@ -108,14 +286,7 @@ function createPerspectiveShader(obj, strumLineID, strumID)
 {
 	if (obj == null || !hasPerspectiveShaderLane(strumLineID, strumID)) return;
 
-	var shader = new FunkinShader(modShaderFragTable[strumLineID][strumID], modShaderVertTable[strumLineID][strumID]);
-	//shader.data.vertexXOffset.value = [0.0, 0.0, 0.0, 0.0];
-	//shader.data.vertexYOffset.value = [0.0, 0.0, 0.0, 0.0];
-	//shader.data.vertexZOffset.value = [0.0, 0.0, 0.0, 0.0];
-	shader.data.vertexID.value = [0, 1, 2, 3];
-	shader.perspectiveMatrix = perspectiveMatrix;
-	shader.viewMatrix = viewMatrix;
-	obj.shader = shader;
+	obj.shader = newPerspectiveShader(strumLineID, strumID);
 }
 /////////////////////////////////////
 
@@ -206,17 +377,17 @@ function postUpdate(elapsed)
 					debugShaderAppliedCount++;
 				}
 				if (n.shader == null) return;
+				var shaderData = cachePerspectiveShader(n.shader, p, n.strumID);
+				if (shaderData == null) return;
 				n.forceIsOnScreen = true;
-				n.shader.viewMatrix = viewMatrix;
-				n.shader.perspectiveMatrix = perspectiveMatrix;
-				n.shader.songPosition = Conductor.songPosition;
-				n.shader.curBeat = Conductor.curBeatFloat;
-				n.shader.downscroll = downscroll;
-				n.shader.isSustainNote = n.isSustainNote;
+				setShaderScalar(shaderData.songPosition, Conductor.songPosition);
+				setShaderScalar(shaderData.curBeat, Conductor.curBeatFloat);
+				setShaderScalar(shaderData.downscroll, downscroll);
+				setShaderScalar(shaderData.isSustainNote, n.isSustainNote);
 				//if (n.isSustainNote)
 	
 				if (n.frame != null)
-					n.shader.frameUV = [n.frame.uv.x,n.frame.uv.y,n.frame.uv.width,n.frame.uv.height];
+					setShaderVec4(shaderData.frameUV, n.frame.uv.x, n.frame.uv.y, n.frame.uv.width, n.frame.uv.height);
 	
 				var curPos = Conductor.songPosition - n.strumTime;
 				var nextCurPos = curPos;
@@ -237,20 +408,20 @@ function postUpdate(elapsed)
 				//calculate screen position for rotation and scaling inside shader
 				var point = FlxPoint.weak();
 				n.getScreenPosition(point, camHUD);
-				n.shader.screenX = (n.origin.x + point.x - n.offset.x) + n.__strum.x;
+				setShaderScalar(shaderData.screenX, (n.origin.x + point.x - n.offset.x) + n.__strum.x);
 				if (downscroll)
-					n.shader.screenY = (n.origin.y + point.y - n.offset.y) - n.__strum.y;
+					setShaderScalar(shaderData.screenY, (n.origin.y + point.y - n.offset.y) - n.__strum.y);
 				else
-					n.shader.screenY = (n.origin.y + point.y - n.offset.y) + n.__strum.y;
+					setShaderScalar(shaderData.screenY, (n.origin.y + point.y - n.offset.y) + n.__strum.y);
 				point.put();
 	
 				
-				n.shader.strumID = n.strumID;
-				n.shader.strumLineID = p;
-				n.shader.data.noteCurPos.value = [curPos, curPos, nextCurPos, nextCurPos];
+				setShaderScalar(shaderData.strumID, n.strumID + 0.0);
+				setShaderScalar(shaderData.strumLineID, p + 0.0);
+				setShaderVec4(shaderData.noteCurPos, curPos, curPos, nextCurPos, nextCurPos);
 				var targetStrum = strumLines.members[p].members[n.strumID];
 				if (targetStrum != null)
-					n.shader.scrollSpeed = targetStrum.getScrollSpeed(n);
+					setShaderScalar(shaderData.scrollSpeed, targetStrum.getScrollSpeed(n));
 				applyModifierValuesToShader(n.shader, p, n.strumID);
 			});
 		}
@@ -261,30 +432,30 @@ function updateStrum(strum, p) {
 		strum.shader = getPerspectiveShader(p, strum.ID);
 	}
 	if (strum.shader == null) return;
+	var shaderData = cachePerspectiveShader(strum.shader, p, strum.ID);
+	if (shaderData == null) return;
 
-	strum.shader.viewMatrix = viewMatrix;
-	strum.shader.perspectiveMatrix = perspectiveMatrix;
-	strum.shader.songPosition = Conductor.songPosition;
-	strum.shader.curBeat = Conductor.curBeatFloat;
+	setShaderScalar(shaderData.songPosition, Conductor.songPosition);
+	setShaderScalar(shaderData.curBeat, Conductor.curBeatFloat);
 
-	strum.shader.strumID = strum.ID;
-	strum.shader.strumLineID = p;
-	strum.shader.data.noteCurPos.value = [0.0, 0.0, 0.0, 0.0];
-	strum.shader.scrollSpeed = 0.0;
+	setShaderScalar(shaderData.strumID, strum.ID + 0.0);
+	setShaderScalar(shaderData.strumLineID, p + 0.0);
+	setShaderVec4(shaderData.noteCurPos, 0.0, 0.0, 0.0, 0.0);
+	setShaderScalar(shaderData.scrollSpeed, 0.0);
 
 	if (strum.frame != null)
-		strum.shader.frameUV = [strum.frame.uv.x,strum.frame.uv.y,strum.frame.uv.width,strum.frame.uv.height];
+		setShaderVec4(shaderData.frameUV, strum.frame.uv.x, strum.frame.uv.y, strum.frame.uv.width, strum.frame.uv.height);
 
 
 	//calculate screen position for rotation and scaling inside shader
 	var point = FlxPoint.weak();
 	strum.getScreenPosition(point, camHUD);
-	strum.shader.screenX = strum.origin.x + point.x - strum.offset.x;
-	strum.shader.screenY = strum.origin.y + point.y - strum.offset.y;
+	setShaderScalar(shaderData.screenX, strum.origin.x + point.x - strum.offset.x);
+	setShaderScalar(shaderData.screenY, strum.origin.y + point.y - strum.offset.y);
 	point.put();
 
-	strum.shader.downscroll = downscroll;
-	strum.shader.isSustainNote = false;
+	setShaderScalar(shaderData.downscroll, downscroll);
+	setShaderScalar(shaderData.isSustainNote, false);
 
 	
 	//honestly i have no idea how these are updating the notes as well
@@ -294,13 +465,13 @@ function updateStrum(strum, p) {
 }
 
 function applyModifierValuesToShader(shader, p, strumID) {
-	if (shader == null || modTable[p] == null || modTable[p][strumID] == null) return;
+	if (shader == null) return;
+	var shaderData = cachePerspectiveShader(shader, p, strumID);
+	if (shaderData == null) return;
 
-	for (mod in modTable[p][strumID])
+	for (entry in shaderData.modifierParams)
 	{
-		shader.hset(mod[MOD_NAME] + "_value", mod[MOD_VALUE]);
-		//var shit = Reflect.getProperty(strum.shader.data, mod[MOD_NAME] + "_value");
-		//Reflect.setProperty(shit, "value", [mod[MOD_VALUE]]);
+		setShaderScalar(entry.parameter, entry.modifier[MOD_VALUE]);
 	}
 }
 
@@ -453,6 +624,9 @@ public function initModchart()
 			for (strum in strumLines.members[p].members) {
 				strum.shader = getPerspectiveShader(p, strum.ID);
 			}
+			for (strum in strumLines.members[p].members) {
+				prewarmPerspectiveShaderLane(p, strum.ID);
+			}
 		} else {
 			for (strum in strumLines[p]) {
 				strum.shader = getPerspectiveShader(p, strum.ID);
@@ -501,6 +675,7 @@ public function generateShaderCode()
 	modShaderVertTable = [];
 	modShaderFragTable = [];
 	shaderPool = [];
+	shaderRuntimeData = new ObjectMap();
 
 	/*
 	var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];

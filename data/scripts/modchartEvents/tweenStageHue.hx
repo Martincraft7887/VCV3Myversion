@@ -115,13 +115,21 @@ function getEventWindowHeight() {
 
 function setupEventWindow(event, propertyMap, windowData) {
 	windowData.state.add(new UIText(windowData.curX, windowData.curY, 0, getDisplayName(event), 24));
-	windowData.curY += 28 + 50;
+	windowData.curY += 28 + 25;
 
-	windowData.curX = windowData.windowSpr.x + (windowData.windowSpr.bWidth / 2) - 50;
+	// Keep the three steppers inside the 640x310 event window. addStepper()
+	// already advances curY, so the first two fields share a row and Time sits
+	// centered beneath them, clear of the bottom action buttons.
+	var firstRowY = windowData.curY;
+	windowData.curX = windowData.windowSpr.x + 84;
 	windowData.addStepper("startValue", "Start Value", event.startValue, 0.01, 0.1);
-	windowData.curY += 50;
+
+	windowData.curX = windowData.windowSpr.x + windowData.windowSpr.bWidth - 204;
+	windowData.curY = firstRowY;
 	windowData.addStepper("value", "Value", event.value, 0.01, 0.1);
-	windowData.curY += 50;
+
+	windowData.curX = windowData.windowSpr.x + (windowData.windowSpr.bWidth / 2) - 60;
+	windowData.curY = firstRowY + 84;
 	windowData.addStepper("time", "Time", event.time, 0.25, 4);
 }
 
@@ -131,5 +139,4 @@ function saveEventWindow(event, propertyMap) {
 	event.time = propertyMap.get("time").value;
 	event.ease = STAGE_HUE_EASE;
 }
-
 
