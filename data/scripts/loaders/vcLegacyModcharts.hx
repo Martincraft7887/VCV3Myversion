@@ -72,6 +72,7 @@ function getEventTypeID(name) {
 var legacyNoteModchart:Bool = false;
 var noteModifiers:Array<Int> = [];
 var debugInitModifierCount:Int = 0;
+var modchartXMLText:String = null;
 
 function destroy() {
 	for (s in shaders) s = null;
@@ -109,13 +110,18 @@ function loadEvents() {
 	shaders[getShaderIndex("colorswap")].hue = 0;
 	defaultValueList[getValueIndex("colorswap.hue")] = 0;
 
-	var xmlPath = Paths.getPath("songs/"+PlayState.SONG.meta.name+"/modchart.xml");
-	if (Assets.exists(Paths.getPath("songs/"+PlayState.SONG.meta.name+"/modchart-" + PlayState.difficulty + ".xml"))) {
-		xmlPath = Paths.getPath("songs/"+PlayState.SONG.meta.name+"/modchart-" + PlayState.difficulty + ".xml");
+	var xmlText = modchartXMLText;
+	if (xmlText == null) {
+		var xmlPath = Paths.getPath("songs/"+PlayState.SONG.meta.name+"/modchart.xml");
+		if (Assets.exists(Paths.getPath("songs/"+PlayState.SONG.meta.name+"/modchart-" + PlayState.difficulty + ".xml"))) {
+			xmlPath = Paths.getPath("songs/"+PlayState.SONG.meta.name+"/modchart-" + PlayState.difficulty + ".xml");
+		}
+		if (!Assets.exists(xmlPath)) return;
+		xmlText = Assets.getText(xmlPath);
 	}
-	if (!Assets.exists(xmlPath)) return;
 
-	var xml = Xml.parse(Assets.getText(xmlPath)).firstElement();
+	var xml = Xml.parse(xmlText).firstElement();
+	modchartXMLText = null;
 
 	if (xml.get("noteModchart") == "true") {
 		legacyNoteModchart = true;

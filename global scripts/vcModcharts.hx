@@ -15,6 +15,7 @@ public var itemTypes = [];
 var eventUpdateFuncs = [];
 
 public var modchartItems = [];
+var iTimeShaders:Array<Dynamic> = [];
 public function createModchartItem(n, p, t, v, o) {
 	var item = {
 		name: n,
@@ -27,6 +28,16 @@ public function createModchartItem(n, p, t, v, o) {
 	return item;
 }
 
+function rebuildITimeShaderCache() {
+	iTimeShaders = [];
+	for (item in modchartItems) {
+		if (item == null || item.property != "iTime" || item.object == null) continue;
+		// Normally there is one iTime item per shader. Avoid duplicate uniform
+		// writes as well if an item script happens to expose it more than once.
+		if (iTimeShaders.indexOf(item.object) < 0) iTimeShaders.push(item.object);
+	}
+}
+
 var events:Array<Dynamic> = [];
 var originalEvents:Array<Dynamic> = [];
 var nextEventIndex:Int = 0;
@@ -36,6 +47,23 @@ var rewindThresholdMs:Float = 250;
 var modchartFullSyncCount:Int = 0;
 var lastModchartFullSyncMs:Float = 0;
 var activeLegacyModchart:Bool = false;
+var modchartXMLPathCache:String = null;
+var modchartXMLTextCache:String = null;
+
+inline function isNewModchartText(text:String):Bool {
+	if (text == null) return false;
+
+	// Only inspect the beginning and the root tag. Modern charts use the same
+	// unobtrusive root-attribute style as options such as stageHueCamHUD.
+	var prefix = text.length > 512 ? text.substr(0, 512) : text;
+	var rootStart = prefix.indexOf("<Modchart");
+	if (rootStart < 0) return false;
+	var rootEnd = prefix.indexOf(">", rootStart);
+	if (rootEnd < 0) return false;
+
+	var rootTag = prefix.substr(rootStart, rootEnd - rootStart + 1);
+	return rootTag.indexOf('format="2"') >= 0 || rootTag.indexOf("format='2'") >= 0;
+}
 
 function ensureModchartOption() {
 	if (Reflect.field(FlxG.save.data, "voiidModcharts") == null) {
@@ -59,10 +87,21 @@ function getModchartXMLPath():String {
 	return null;
 }
 
-function getModchartXML():Xml {
+function getModchartXMLText():String {
 	var xmlPath = getModchartXMLPath();
 	if (xmlPath == null) return null;
-	return Xml.parse(Assets.getText(xmlPath)).firstElement();
+	if (modchartXMLTextCache != null && modchartXMLPathCache == xmlPath)
+		return modchartXMLTextCache;
+
+	modchartXMLPathCache = xmlPath;
+	modchartXMLTextCache = Assets.getText(xmlPath);
+	return modchartXMLTextCache;
+}
+
+function getModchartXML():Xml {
+	var text = getModchartXMLText();
+	if (text == null) return null;
+	return Xml.parse(text).firstElement();
 }
 
 function isLegacyModchartXML(xml:Xml):Bool {
@@ -98,10 +137,15 @@ function isLegacyModchartXML(xml:Xml):Bool {
 }
 
 function useLegacyLoader():Bool {
-	return isLegacyModchartXML(getModchartXML());
+	var text = getModchartXMLText();
+	return text != null && !isNewModchartText(text);
 }
 
 function destroy() {
+	modchartXMLPathCache = null;
+	modchartXMLTextCache = null;
+	for (shader in iTimeShaders) shader = null;
+	iTimeShaders.splice(0, iTimeShaders.length);
 	if (activeLegacyModchart) return;
 
 	for (e in modchartItems) e = null;
@@ -113,15 +157,45 @@ function destroy() {
 	nextEventIndex = 0;
 }
 
+function applyTypedModchartItemValue(item:Dynamic, value:Float) {
+    if (item == null || item.object == null || item.property == null) return;
+    var uniformName = Reflect.hasField(item, "uniformName") && item.uniformName != null ? item.uniformName : item.property;
+    var uniformType = Reflect.hasField(item, "uniformType") && item.uniformType != null ? Std.string(item.uniformType).toLowerCase() : "float";
+    var componentIndex = Reflect.hasField(item, "componentIndex") && item.componentIndex != null ? Std.int(item.componentIndex) : -1;
+    var objectData = Reflect.hasField(item.object, "data") ? Reflect.field(item.object, "data") : null;
+    var parameter = objectData == null ? null : Reflect.field(objectData, uniformName);
+
+    try {
+        if (componentIndex >= 0) {
+            if (parameter != null && parameter.value != null && parameter.value.length > componentIndex) {
+                parameter.value[componentIndex] = value;
+            } else {
+                var count = uniformType == "vec2" ? 2 : (uniformType == "vec4" ? 4 : 3);
+                var values = [];
+                for (i in 0...count) values.push(i == componentIndex ? value : 0.0);
+                item.object.hset(uniformName, values);
+            }
+            return;
+        }
+
+        var typedValue:Dynamic = switch(uniformType) {
+            case "bool": value >= 0.5;
+            case "int": Std.int(Math.round(value));
+            default: value;
+        };
+        if (parameter != null && parameter.value != null && parameter.value.length > 0)
+            parameter.value[0] = typedValue;
+        else
+            item.object.hset(uniformName, typedValue);
+    } catch(e:Dynamic) {
+        try {
+            Reflect.setProperty(item.object, uniformName, value);
+        } catch(e2:Dynamic) {}
+    }
+}
+
 function applyItemDefault(item:Dynamic) {
-	if (item == null || item.object == null || item.property == null) return;
-	try {
-		item.object.hset(item.property, item.value);
-	} catch(e:Dynamic) {
-		try {
-			Reflect.setProperty(item.object, item.property, item.value);
-		} catch(e2:Dynamic) {}
-	}
+    applyTypedModchartItemValue(item, item.value);
 }
 
 function isImpulseEvent(e:Dynamic):Bool {
@@ -183,6 +257,9 @@ function loadNewModchart() {
 	for (name => script in itemScripts) {
 		script.call("postXMLLoadGame", [xml]);
 	}
+	// Cache this once after every timeline item has been created. The frame loop
+	// can then touch only actual iTime shaders, like the legacy loader does.
+	rebuildITimeShaderCache();
 
 	events.sort(function(a, b) {
 		if(a.step < b.step) return -1;
@@ -266,7 +343,9 @@ function create() {
 
 	activeLegacyModchart = useLegacyLoader();
 	if (activeLegacyModchart) {
-		importScript("data/scripts/loaders/vcLegacyModcharts.hx");
+		var legacyLoader = importScript("data/scripts/loaders/vcLegacyModcharts.hx");
+		if (legacyLoader != null)
+			legacyLoader.set("modchartXMLText", modchartXMLTextCache);
 		return;
 	}
 
@@ -301,9 +380,7 @@ function postUpdate(elapsed) {
 	}
 	lastModchartSongPosition = Conductor.songPosition;
 
-	for (item in modchartItems) {
-		if (item.property == "iTime") {
-			item.object.hset("iTime", Conductor.songPosition * 0.001);
-		}
-	}
+	var shaderTime = Conductor.songPosition * 0.001;
+	for (shader in iTimeShaders)
+		shader.hset("iTime", shaderTime);
 }

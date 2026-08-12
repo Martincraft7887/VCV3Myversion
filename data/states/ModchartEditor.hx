@@ -59,6 +59,14 @@ var editorCamZoom:Float = 1;
 inline static var EDITOR_CAM_ZOOM_MIN:Float = 0.25;
 inline static var EDITOR_CAM_ZOOM_MAX:Float = 3;
 function destroy() {
+	if (experimentalPreviewScreenPoint != null) {
+		experimentalPreviewScreenPoint.put();
+		experimentalPreviewScreenPoint = null;
+	}
+	if (experimentalRTXMidpoint != null) {
+		experimentalRTXMidpoint.put();
+		experimentalRTXMidpoint = null;
+	}
 	CURRENT_EVENT = null;
 	EVENT_EDIT_EVENT_SCRIPT = null;
 	EVENT_EDIT_CALLBACK = null;
@@ -70,6 +78,26 @@ function destroy() {
 	ITEM_EDIT_PRESERVED_INIT_NODES = [];
 	ITEM_EDIT_LOADED_SCRIPTS = null;
 	CURRENT_XML = null;
+	if (editorStageCache != null) {
+		for (name => cachedStage in editorStageCache) {
+			if (cachedStage == null) continue;
+			// Active stage objects still belong to the state and are destroyed by it.
+			// Cached inactive stages were removed from the state, so release those here.
+			if (cachedStage != stage) {
+				var cachedObjects = editorStageObjects.get(name);
+				if (cachedObjects != null) {
+					for (obj in cachedObjects) {
+						if (obj == null) continue;
+						remove(obj, true);
+						obj.destroy();
+					}
+				}
+			}
+			cachedStage.destroy();
+		}
+		editorStageCache.clear();
+		editorStageObjects.clear();
+	}
 }
 
 public var eventScripts = ["" => null];
@@ -216,23 +244,42 @@ var hoverBox:FlxSprite;
 var stage:Stage;
 var defaultCamZoom:Float = 1;
 var stagePreviewMode = false;
+var initialEditorStageName:String = null;
+var currentEditorStageName:String = null;
+var editorStageCache:Map<String, Stage> = [];
+var editorStageObjects:Map<String, Array<Dynamic>> = [];
+var editorStageChanges:Array<Dynamic> = [];
+var editorStageChangeCursor:Int = -1;
 var experimentalGameplayPreview:Bool = false;
 var experimentalPreviewChars:Array<Dynamic> = [];
 var experimentalPreviewCharGroups:Array<Dynamic> = [];
 var experimentalPreviewCharData:Array<Dynamic> = [];
 var experimentalPreviewNotes:Array<Dynamic> = [];
+var experimentalPreviewWindowNotes:Array<Dynamic> = [];
+var experimentalPreviewLiveVisuals:Array<Dynamic> = [];
+var experimentalPreviewLongSustains:Array<Dynamic> = [];
+var experimentalPreviewSkinChanges:Array<Dynamic> = [];
 var experimentalNoteTypeData:Map<String, Dynamic> = [];
 var experimentalPreviewNextNoteIndex:Int = 0;
-var experimentalPreviewFirstRenderIndex:Int = 0;
+var experimentalPreviewWindowCursor:Int = 0;
 var experimentalPreviewLastSongPosition:Float = Math.NEGATIVE_INFINITY;
 var experimentalRTXData:Dynamic = null;
 var experimentalRTXTargets:Array<Dynamic> = [];
 var experimentalRTXShaders:Array<Dynamic> = [];
 var experimentalRTXHue:Float = 0;
+var experimentalRTXPointLight:Bool = false;
+var experimentalPreviewScreenPoint:FlxPoint = null;
+var experimentalRTXMidpoint:FlxPoint = null;
+var experimentalFrameContextActive:Bool = false;
+var experimentalFrameModTable:Dynamic = null;
+var experimentalFrameModchartCamera:Dynamic = null;
+var experimentalFrameApplyValuesFunc:Dynamic = null;
+var experimentalFrameScrollSpeed:Float = 1;
 inline static var EXPERIMENTAL_PREVIEW_PAST_WINDOW:Float = 350;
 inline static var EXPERIMENTAL_PREVIEW_FUTURE_WINDOW:Float = 2500;
 inline static var EXPERIMENTAL_PREVIEW_VISUALS_PER_FRAME:Int = 8;
 inline static var EXPERIMENTAL_PREVIEW_SEEK_THRESHOLD:Float = 1000;
+inline static var EXPERIMENTAL_PREVIEW_LONG_SUSTAIN_THRESHOLD:Float = 5000;
 
 var xml:Xml;
 
@@ -293,7 +340,10 @@ function postCreate() {
 					keybind: [FlxKey.CONTROL, FlxKey.S],
 					onSelect: _save
 				},
-				
+				{
+					label: "Save (Optimized)",
+					onSelect: _save_opt
+				},
 
 
 
@@ -354,6 +404,16 @@ function postCreate() {
 					label: "Shift Selection Right",
 					keybind: [FlxKey.SHIFT, FlxKey.RIGHT],
 					onSelect: _edit_shiftright
+				},
+				{
+					label: "Shift Selection Up",
+					keybind: [FlxKey.SHIFT, FlxKey.UP],
+					onSelect: _edit_shiftup
+				},
+				{
+					label: "Shift Selection Down",
+					keybind: [FlxKey.SHIFT, FlxKey.DOWN],
+					onSelect: _edit_shiftdown
 				}
 			]
 		},
@@ -518,10 +578,14 @@ function postCreate() {
 	
 
 	if (PlayState.SONG.stage == null) PlayState.SONG.stage = "stage";
-	stage = new Stage(PlayState.SONG.stage);
+	initialEditorStageName = PlayState.SONG.stage;
+	currentEditorStageName = initialEditorStageName;
+	stage = new Stage(initialEditorStageName);
 	for (obj in stage.stageSprites) {
 		obj.cameras = [camGame];
 	}
+	editorStageCache.set(initialEditorStageName, stage);
+	editorStageObjects.set(initialEditorStageName, collectEditorStageObjects(stage));
 	if (stage.stageXML != null && stage.stageXML.exists("zoom")) {
 		defaultCamZoom = Std.parseFloat(stage.stageXML.get("zoom"));
 	}
@@ -557,6 +621,8 @@ function postCreate() {
 	hoverBox.cameras = [camTimeline];
 	
 	loadSong();
+	buildEditorStageChanges();
+	syncEditorStageToSongPosition();
 	loadEvents(false);
 	buildXMLFromEvents();
 
@@ -626,6 +692,144 @@ function postCreate() {
 
 	endStagePan();
 	initEditorCamera();
+}
+
+function collectEditorStageObjects(daStage:Stage):Array<Dynamic> {
+	var owned:Array<Dynamic> = [];
+	var ordered:Array<Dynamic> = [];
+	if (daStage == null) return ordered;
+
+	for (obj in daStage.stageSprites)
+		if (obj != null && owned.indexOf(obj) < 0) owned.push(obj);
+	for (name => pos in daStage.characterPoses)
+		if (pos != null && owned.indexOf(pos) < 0) owned.push(pos);
+
+	// Stage adds its objects in XML order. Preserve the state's current ordering
+	// so a cached stage looks identical when it is activated again after a seek.
+	for (member in members)
+		if (member != null && owned.indexOf(member) >= 0) ordered.push(member);
+	for (obj in owned)
+		if (ordered.indexOf(obj) < 0) ordered.push(obj);
+	return ordered;
+}
+
+function setEditorStageSpriteCameras(daStage:Stage) {
+	if (daStage == null) return;
+	for (obj in daStage.stageSprites)
+		if (obj != null) obj.cameras = [camGame];
+}
+
+function removeEditorStageObjects(stageName:String) {
+	var objects = editorStageObjects.get(stageName);
+	if (objects == null) return;
+	for (obj in objects)
+		if (obj != null) remove(obj, true);
+}
+
+function addEditorStageObjects(stageName:String) {
+	var objects = editorStageObjects.get(stageName);
+	if (objects == null) return;
+	for (obj in objects)
+		if (obj != null) add(obj);
+}
+
+function getOrCreateEditorStage(stageName:String):Stage {
+	if (editorStageCache.exists(stageName)) return editorStageCache.get(stageName);
+
+	var newStage = new Stage(stageName);
+	setEditorStageSpriteCameras(newStage);
+	editorStageCache.set(stageName, newStage);
+	editorStageObjects.set(stageName, collectEditorStageObjects(newStage));
+	return newStage;
+}
+
+function buildEditorStageChanges() {
+	editorStageChanges = [];
+	editorStageChangeCursor = -1;
+	var chartEvents:Dynamic = Reflect.field(PlayState.SONG, "events");
+	if (chartEvents == null) return;
+
+	var order:Int = 0;
+	for (event in chartEvents) {
+		if (event == null) {
+			order++;
+			continue;
+		}
+
+		var eventName = Reflect.field(event, "name");
+		var params:Dynamic = Reflect.field(event, "params");
+		var normalizedName = eventName == null ? "" : StringTools.trim(Std.string(eventName)).toLowerCase();
+		if ((normalizedName == "change stage" || normalizedName == "changestage") && params != null && params.length > 0) {
+			var stageName = StringTools.trim(Std.string(params[0]));
+			var eventTime = Std.parseFloat(Std.string(Reflect.field(event, "time")));
+			if (stageName != "" && stageName != "null" && !Math.isNaN(eventTime))
+				editorStageChanges.push({time: eventTime, stage: stageName, order: order});
+		}
+		order++;
+	}
+
+	editorStageChanges.sort(function(a, b) {
+		if (a.time < b.time) return -1;
+		if (a.time > b.time) return 1;
+		return a.order - b.order;
+	});
+
+	// Match characterAndStageChanges.hx's preload behavior: pay the load cost
+	// while opening the editor, not on the exact playback frame of the event.
+	for (change in editorStageChanges) {
+		if (editorStageCache.exists(change.stage)) continue;
+		getOrCreateEditorStage(change.stage);
+		removeEditorStageObjects(change.stage);
+	}
+}
+
+function changeEditorStage(stageName:String) {
+	if (stageName == null || stageName == "" || stageName == currentEditorStageName) return;
+
+	var rebuildPreview = experimentalGameplayPreview;
+	if (rebuildPreview) clearExperimentalGameplayPreview();
+	removeEditorStageObjects(currentEditorStageName);
+
+	var wasCached = editorStageCache.exists(stageName);
+	var newStage = getOrCreateEditorStage(stageName);
+	if (newStage == null) {
+		addEditorStageObjects(currentEditorStageName);
+		if (rebuildPreview) createExperimentalGameplayPreview();
+		return;
+	}
+	if (wasCached) addEditorStageObjects(stageName);
+
+	stage = newStage;
+	currentEditorStageName = stageName;
+	setEditorStageSpriteCameras(stage);
+	defaultCamZoom = 1;
+	if (stage.stageXML != null && stage.stageXML.exists("zoom")) {
+		var parsedZoom = Std.parseFloat(stage.stageXML.get("zoom"));
+		if (!Math.isNaN(parsedZoom)) defaultCamZoom = parsedZoom;
+	}
+
+	for (name => script in itemScripts)
+		if (script != null) script.call("onStageChanged", [stageName]);
+	var hueItem = getStageHueTimelineItem();
+	if (hueItem != null) applyStageHuePreview(hueItem);
+
+	if (rebuildPreview) createExperimentalGameplayPreview();
+	resetEditorCamera();
+}
+
+function syncEditorStageToSongPosition() {
+	if (initialEditorStageName == null) return;
+	var songTime = Conductor.songPosition;
+
+	while (editorStageChangeCursor + 1 < editorStageChanges.length && editorStageChanges[editorStageChangeCursor + 1].time <= songTime)
+		editorStageChangeCursor++;
+	while (editorStageChangeCursor >= 0 && editorStageChanges[editorStageChangeCursor].time > songTime)
+		editorStageChangeCursor--;
+
+	var wantedStage = editorStageChangeCursor < 0
+		? initialEditorStageName
+		: editorStageChanges[editorStageChangeCursor].stage;
+	changeEditorStage(wantedStage);
 }
 
 function createTimelineUI() {
@@ -936,12 +1140,30 @@ function clearExperimentalGameplayPreview() {
 	experimentalPreviewCharGroups = [];
 	experimentalPreviewCharData = [];
 
-	for (data in experimentalPreviewNotes)
-		releaseExperimentalNoteVisual(data);
+	while (experimentalPreviewLiveVisuals.length > 0)
+		releaseExperimentalNoteVisual(experimentalPreviewLiveVisuals.pop());
 	experimentalPreviewNotes = [];
+	experimentalPreviewWindowNotes = [];
+	experimentalPreviewLiveVisuals = [];
+	experimentalPreviewLongSustains = [];
+	experimentalPreviewSkinChanges = [];
 	experimentalPreviewNextNoteIndex = 0;
-	experimentalPreviewFirstRenderIndex = 0;
+	experimentalPreviewWindowCursor = 0;
 	experimentalPreviewLastSongPosition = Math.NEGATIVE_INFINITY;
+	experimentalRTXData = null;
+	experimentalRTXPointLight = false;
+	experimentalFrameContextActive = false;
+	experimentalFrameModTable = null;
+	experimentalFrameModchartCamera = null;
+	experimentalFrameApplyValuesFunc = null;
+	if (experimentalPreviewScreenPoint != null) {
+		experimentalPreviewScreenPoint.put();
+		experimentalPreviewScreenPoint = null;
+	}
+	if (experimentalRTXMidpoint != null) {
+		experimentalRTXMidpoint.put();
+		experimentalRTXMidpoint = null;
+	}
 }
 
 function destroyExperimentalNoteSprite(sprite:Dynamic) {
@@ -953,6 +1175,7 @@ function destroyExperimentalNoteSprite(sprite:Dynamic) {
 function releaseExperimentalNoteVisual(data:Dynamic) {
 	if (data == null) return;
 	if (data.sprite == null && data.sustain == null && data.sustainBody == null && data.sustainEnd == null) {
+		experimentalPreviewLiveVisuals.remove(data);
 		data.visibleInPreview = false;
 		data.sustainLastHeight = -1;
 		return;
@@ -961,6 +1184,7 @@ function releaseExperimentalNoteVisual(data:Dynamic) {
 	destroyExperimentalNoteSprite(data.sustain);
 	destroyExperimentalNoteSprite(data.sustainBody);
 	destroyExperimentalNoteSprite(data.sustainEnd);
+	experimentalPreviewLiveVisuals.remove(data);
 	data.sprite = null;
 	data.sustain = null;
 	data.sustainBody = null;
@@ -974,9 +1198,10 @@ function releaseExperimentalNoteVisual(data:Dynamic) {
 }
 
 function loadExperimentalRTX() {
-	experimentalRTXData = readExperimentalRTXData(PlayState.SONG.stage);
+	experimentalRTXData = readExperimentalRTXData(currentEditorStageName != null ? currentEditorStageName : PlayState.SONG.stage);
 	clearExperimentalRTXShaders();
 	if (experimentalRTXData == null) return;
+	experimentalRTXPointLight = getExperimentalRTXBool("pointLight", false);
 
 	var hueItem = getStageHueTimelineItem();
 	if (hueItem != null) experimentalRTXHue = hueItem.currentValue;
@@ -1041,7 +1266,7 @@ function setExperimentalRTXHue(value:Float) {
 }
 
 function updateExperimentalRTXAngles() {
-	if (experimentalRTXData == null) return;
+	if (experimentalRTXData == null || !experimentalRTXPointLight) return;
 	for (i in 0...experimentalRTXTargets.length) {
 		var sprite = experimentalRTXTargets[i];
 		var shader = experimentalRTXShaders[i];
@@ -1082,8 +1307,9 @@ function parseExperimentalRTXColor(value:String):Array<Float> {
 }
 
 function getExperimentalRTXAngle(sprite:Dynamic):Float {
-	if (getExperimentalRTXBool("pointLight", false) && sprite != null) {
-		var midpoint = sprite.getGraphicMidpoint();
+	if (experimentalRTXPointLight && sprite != null) {
+		if (experimentalRTXMidpoint == null) experimentalRTXMidpoint = FlxPoint.get();
+		var midpoint = sprite.getGraphicMidpoint(experimentalRTXMidpoint);
 		var dx = getExperimentalRTXFloat("lightX", 0) - midpoint.x;
 		var dy = getExperimentalRTXFloat("lightY", 0) - midpoint.y;
 		if (sprite.flipX) dx = -dx;
@@ -1157,21 +1383,53 @@ function createExperimentalCharacters() {
 	loadExperimentalRTX();
 }
 
+function buildExperimentalPreviewSkinChanges() {
+	var sortedChanges:Array<Dynamic> = [];
+	var chartEvents:Dynamic = Reflect.field(PlayState.SONG, "events");
+	if (chartEvents == null) {
+		experimentalPreviewSkinChanges = [];
+		return;
+	}
+
+	var order:Int = 0;
+	for (event in chartEvents) {
+		if (event != null && event.name == "Change UI Skin" && event.params != null && event.params.length > 1) {
+			sortedChanges.push({time: event.time, prefix: event.params[1], order: order});
+		}
+		order++;
+	}
+	sortedChanges.sort(function(a, b) {
+		if (a.time < b.time) return -1;
+		if (a.time > b.time) return 1;
+		return a.order - b.order;
+	});
+
+	// Preserve the old array-order precedence even if chart events are unsorted.
+	experimentalPreviewSkinChanges = [];
+	var bestOrder:Int = -1;
+	for (change in sortedChanges) {
+		if (change.order <= bestOrder) continue;
+		bestOrder = change.order;
+		experimentalPreviewSkinChanges.push(change);
+	}
+}
+
 function getExperimentalNoteSkinForTime(time:Float, noteType:String = "none"):String {
 	var noteTypeData = getExperimentalNoteTypeData(noteType);
 	if (noteTypeData != null && noteTypeData.skin != null)
 		return "game/voiid/notes/" + noteTypeData.skin;
 
 	var noteSkinPrefix = "voiid/";
-	var chartEvents:Dynamic = Reflect.field(PlayState.SONG, "events");
-	if (chartEvents != null) {
-		for (event in chartEvents) {
-			if (event == null || event.name != "Change UI Skin" || event.params == null) continue;
-			if (event.time <= time && event.params.length > 1) {
-				noteSkinPrefix = event.params[1];
-			}
-		}
+	var low:Int = 0;
+	var high:Int = experimentalPreviewSkinChanges.length;
+	while (low < high) {
+		var middle:Int = (low + high) >> 1;
+		if (experimentalPreviewSkinChanges[middle].time <= time)
+			low = middle + 1;
+		else
+			high = middle;
 	}
+	if (low > 0) noteSkinPrefix = experimentalPreviewSkinChanges[low - 1].prefix;
 	return "game/" + noteSkinPrefix + "notes/default";
 }
 
@@ -1181,6 +1439,9 @@ function makeExperimentalNoteData(strumLineID:Int, noteData:Dynamic) {
 	var sustainMs:Float = Std.parseFloat(Std.string(Reflect.field(noteData, "sLen")));
 	if (Math.isNaN(sustainMs)) sustainMs = 0;
 	var noteType:String = getExperimentalNoteTypeName(noteData);
+	var noteTypeData = getExperimentalNoteTypeData(noteType);
+	var singDir:Int = getExperimentalSingDirection(strumLineID, id);
+	if (singDir == 4) singDir = 2;
 
 	return {
 		sprite: null,
@@ -1195,6 +1456,9 @@ function makeExperimentalNoteData(strumLineID:Int, noteData:Dynamic) {
 		id: id,
 		lane: getExperimentalLane(strumLineID, id),
 		noteType: noteType,
+		noteTypeData: noteTypeData,
+		singDir: singDir,
+		previewCharacters: null,
 		type: Reflect.field(noteData, "type"),
 		sLen: sustainMs,
 		endTime: time + sustainMs,
@@ -1203,6 +1467,9 @@ function makeExperimentalNoteData(strumLineID:Int, noteData:Dynamic) {
 		baseScaleX: 1.0,
 		baseScaleY: 1.0,
 		modifierTransform: {x: 0.0, y: 0.0, angle: 0.0, scaleX: 1.0, scaleY: 1.0, alpha: 1.0},
+		bodyModifierTransform: {x: 0.0, y: 0.0, angle: 0.0, scaleX: 1.0, scaleY: 1.0, alpha: 1.0},
+		tailModifierTransform: {x: 0.0, y: 0.0, angle: 0.0, scaleX: 1.0, scaleY: 1.0, alpha: 1.0},
+		sustainYOffset: sustainMs > 0 ? getExperimentalSustainYOffset(strumLineID) : 0.0,
 		sustainLastHeight: -1,
 		nextSustainConfirmTime: time + (Conductor.stepCrochet > 0 ? Conductor.stepCrochet : 125)
 	};
@@ -1285,16 +1552,27 @@ function createExperimentalNoteVisual(data:Dynamic) {
 	data.baseScaleX = sprite.scale.x;
 	data.baseScaleY = sprite.scale.y;
 	data.sustainLastHeight = -1;
+	if (!experimentalPreviewLiveVisuals.contains(data)) experimentalPreviewLiveVisuals.push(data);
 }
 
 function createExperimentalNotes() {
+	buildExperimentalPreviewSkinChanges();
+	experimentalPreviewLongSustains = [];
 	for (strumLineID => strumLine in PlayState.SONG.strumLines) {
 		if (strumLine == null || strumLine.notes == null) continue;
 		for (note in strumLine.notes) {
-			experimentalPreviewNotes.push(makeExperimentalNoteData(strumLineID, note));
+			var data = makeExperimentalNoteData(strumLineID, note);
+			experimentalPreviewNotes.push(data);
+			if (data.sLen > EXPERIMENTAL_PREVIEW_LONG_SUSTAIN_THRESHOLD)
+				experimentalPreviewLongSustains.push(data);
 		}
 	}
 	experimentalPreviewNotes.sort(function(a, b) {
+		if (a.time < b.time) return -1;
+		if (a.time > b.time) return 1;
+		return 0;
+	});
+	experimentalPreviewLongSustains.sort(function(a, b) {
 		if (a.time < b.time) return -1;
 		if (a.time > b.time) return 1;
 		return 0;
@@ -1314,27 +1592,96 @@ function createExperimentalGameplayPreview() {
 	updateExperimentalGameplayPreview();
 }
 
-function refreshExperimentalPreviewNoteIndex() {
-	experimentalPreviewNextNoteIndex = 0;
-	while (experimentalPreviewNextNoteIndex < experimentalPreviewNotes.length && experimentalPreviewNotes[experimentalPreviewNextNoteIndex].time < Conductor.songPosition) {
-		experimentalPreviewNextNoteIndex++;
+function findExperimentalNoteIndexAtOrAfter(time:Float):Int {
+	var low:Int = 0;
+	var high:Int = experimentalPreviewNotes.length;
+	while (low < high) {
+		var middle:Int = (low + high) >> 1;
+		if (experimentalPreviewNotes[middle].time < time)
+			low = middle + 1;
+		else
+			high = middle;
 	}
-	experimentalPreviewFirstRenderIndex = 0;
-	while (experimentalPreviewFirstRenderIndex < experimentalPreviewNotes.length && experimentalPreviewNotes[experimentalPreviewFirstRenderIndex].endTime < Conductor.songPosition - EXPERIMENTAL_PREVIEW_PAST_WINDOW) {
-		hideExperimentalPreviewNote(experimentalPreviewNotes[experimentalPreviewFirstRenderIndex]);
-		experimentalPreviewFirstRenderIndex++;
+	return low;
+}
+
+function findExperimentalNoteIndexAfter(time:Float):Int {
+	var low:Int = 0;
+	var high:Int = experimentalPreviewNotes.length;
+	while (low < high) {
+		var middle:Int = (low + high) >> 1;
+		if (experimentalPreviewNotes[middle].time <= time)
+			low = middle + 1;
+		else
+			high = middle;
 	}
-	for (data in experimentalPreviewNotes) {
-		if (data != null) {
+	return low;
+}
+
+function rebuildExperimentalPreviewWindow() {
+	while (experimentalPreviewLiveVisuals.length > 0)
+		releaseExperimentalNoteVisual(experimentalPreviewLiveVisuals.pop());
+
+	experimentalPreviewWindowNotes = [];
+	var pastLimit:Float = Conductor.songPosition - EXPERIMENTAL_PREVIEW_PAST_WINDOW;
+	var futureLimit:Float = Conductor.songPosition + EXPERIMENTAL_PREVIEW_FUTURE_WINDOW;
+	var recentLimit:Float = pastLimit - EXPERIMENTAL_PREVIEW_LONG_SUSTAIN_THRESHOLD;
+	var recentIndex:Int = findExperimentalNoteIndexAtOrAfter(recentLimit);
+	var futureIndex:Int = findExperimentalNoteIndexAfter(futureLimit);
+
+	for (data in experimentalPreviewLongSustains) {
+		if (data.time >= recentLimit) break;
+		if (data.endTime >= pastLimit && data.time <= futureLimit)
+			experimentalPreviewWindowNotes.push(data);
+	}
+	for (i in recentIndex...futureIndex) {
+		var data = experimentalPreviewNotes[i];
+		if (data != null && data.endTime >= pastLimit)
+			experimentalPreviewWindowNotes.push(data);
+	}
+	experimentalPreviewWindowNotes.sort(function(a, b) {
+		if (a.time < b.time) return -1;
+		if (a.time > b.time) return 1;
+		return 0;
+	});
+	for (data in experimentalPreviewWindowNotes)
+		data.wasHit = data.time < Conductor.songPosition;
+
+	experimentalPreviewWindowCursor = futureIndex;
+}
+
+function syncExperimentalPreviewWindow() {
+	var pastLimit:Float = Conductor.songPosition - EXPERIMENTAL_PREVIEW_PAST_WINDOW;
+	var futureLimit:Float = Conductor.songPosition + EXPERIMENTAL_PREVIEW_FUTURE_WINDOW;
+	while (experimentalPreviewWindowCursor < experimentalPreviewNotes.length && experimentalPreviewNotes[experimentalPreviewWindowCursor].time <= futureLimit) {
+		var data = experimentalPreviewNotes[experimentalPreviewWindowCursor];
+		if (data != null && data.endTime >= pastLimit) {
 			data.wasHit = data.time < Conductor.songPosition;
-			releaseExperimentalNoteVisual(data);
+			experimentalPreviewWindowNotes.push(data);
 		}
+		experimentalPreviewWindowCursor++;
 	}
+	var i:Int = experimentalPreviewWindowNotes.length - 1;
+	while (i >= 0) {
+		var data = experimentalPreviewWindowNotes[i];
+		if (data == null || data.endTime < pastLimit) {
+			releaseExperimentalNoteVisual(data);
+			experimentalPreviewWindowNotes.splice(i, 1);
+		}
+		i--;
+	}
+}
+
+function refreshExperimentalPreviewNoteIndex() {
+	experimentalPreviewNextNoteIndex = findExperimentalNoteIndexAtOrAfter(Conductor.songPosition);
+	rebuildExperimentalPreviewWindow();
 	experimentalPreviewLastSongPosition = Conductor.songPosition;
 }
 
 function getExperimentalCharactersForNote(noteData:Dynamic):Array<Dynamic> {
+	if (noteData != null && noteData.previewCharacters != null) return noteData.previewCharacters;
 	var chars:Array<Dynamic> = [];
+	if (noteData != null) noteData.previewCharacters = chars;
 	var group = experimentalPreviewCharGroups[noteData.strumLineID];
 	if (group == null || group.length < 1) return chars;
 
@@ -1502,7 +1849,7 @@ function forceExperimentalModifierValues(shader:Dynamic, table:Dynamic, strumLin
 
 function applyExperimentalNoteModifierValues(shader:Dynamic, table:Dynamic, strumLineID:Int, lane:Int) {
 	if (shader == null || table == null) return;
-	var applyFunc = Reflect.field(table, "applyValuesToShader");
+	var applyFunc = experimentalFrameContextActive ? experimentalFrameApplyValuesFunc : Reflect.field(table, "applyValuesToShader");
 	if (applyFunc != null) {
 		try {
 			Reflect.callMethod(table, applyFunc, [shader, strumLineID, lane]);
@@ -1585,7 +1932,7 @@ function getExperimentalModifierTransform(strumLineID:Int, lane:Int, curPos:Floa
 	return result;
 }
 
-function getExperimentalModTable() {
+function resolveExperimentalModTable() {
 	try {
 		if (modTable != null) return modTable;
 	} catch(e:Dynamic) {}
@@ -1599,7 +1946,11 @@ function getExperimentalModTable() {
 	return Reflect.field(this, "modTable");
 }
 
-function getExperimentalModchartCamera() {
+function getExperimentalModTable() {
+	return experimentalFrameContextActive ? experimentalFrameModTable : resolveExperimentalModTable();
+}
+
+function resolveExperimentalModchartCamera() {
 	try {
 		if (modchartCamera != null) return modchartCamera;
 	} catch(e:Dynamic) {}
@@ -1611,6 +1962,26 @@ function getExperimentalModchartCamera() {
 		}
 	} catch(e2:Dynamic) {}
 	return Reflect.field(this, "modchartCamera");
+}
+
+function getExperimentalModchartCamera() {
+	return experimentalFrameContextActive ? experimentalFrameModchartCamera : resolveExperimentalModchartCamera();
+}
+
+function beginExperimentalFrameContext(speed:Float) {
+	experimentalFrameContextActive = false;
+	experimentalFrameModTable = resolveExperimentalModTable();
+	experimentalFrameModchartCamera = resolveExperimentalModchartCamera();
+	experimentalFrameApplyValuesFunc = experimentalFrameModTable == null ? null : Reflect.field(experimentalFrameModTable, "applyValuesToShader");
+	experimentalFrameScrollSpeed = speed;
+	experimentalFrameContextActive = true;
+}
+
+function endExperimentalFrameContext() {
+	experimentalFrameContextActive = false;
+	experimentalFrameModTable = null;
+	experimentalFrameModchartCamera = null;
+	experimentalFrameApplyValuesFunc = null;
 }
 
 function getExperimentalPerspectiveShader(data:Dynamic, fieldName:String, strumLineID:Int, lane:Int) {
@@ -1676,16 +2047,15 @@ function applyExperimentalPerspectiveToSprite(target:Dynamic, shader:Dynamic, st
 
 		updateExperimentalFrameUV(target, shader);
 
-		var point = FlxPoint.weak();
-		target.getScreenPosition(point, camHUD);
-		shader.screenX = target.origin.x + point.x - target.offset.x;
-		shader.screenY = target.origin.y + point.y - target.offset.y;
-		point.put();
+		if (experimentalPreviewScreenPoint == null) experimentalPreviewScreenPoint = FlxPoint.get();
+		target.getScreenPosition(experimentalPreviewScreenPoint, camHUD);
+		shader.screenX = target.origin.x + experimentalPreviewScreenPoint.x - target.offset.x;
+		shader.screenY = target.origin.y + experimentalPreviewScreenPoint.y - target.offset.y;
 
 		shader.strumID = lane;
 		shader.strumLineID = strumLineID;
 		setExperimentalNoteCurPos(shader, curPos, curPos, nextCurPos, nextCurPos);
-		shader.scrollSpeed = PlayState.SONG.scrollSpeed == null ? 1 : PlayState.SONG.scrollSpeed;
+		shader.scrollSpeed = experimentalFrameScrollSpeed;
 		applyExperimentalNoteModifierValues(shader, table, strumLineID, lane);
 	} catch(e:Dynamic) {
 	}
@@ -1713,18 +2083,16 @@ function applyExperimentalPerspectiveStrum(strum:Dynamic, strumLineID:Int, lane:
 		strum.shader.downscroll = downscroll;
 		strum.shader.isSustainNote = false;
 
-		if (strum.frame != null)
-			strum.shader.frameUV = [strum.frame.uv.x, strum.frame.uv.y, strum.frame.uv.width, strum.frame.uv.height];
+		updateExperimentalFrameUV(strum, strum.shader);
 
-		var point = FlxPoint.weak();
-		strum.getScreenPosition(point, camHUD);
-		strum.shader.screenX = strum.origin.x + point.x - strum.offset.x;
-		strum.shader.screenY = strum.origin.y + point.y - strum.offset.y;
-		point.put();
+		if (experimentalPreviewScreenPoint == null) experimentalPreviewScreenPoint = FlxPoint.get();
+		strum.getScreenPosition(experimentalPreviewScreenPoint, camHUD);
+		strum.shader.screenX = strum.origin.x + experimentalPreviewScreenPoint.x - strum.offset.x;
+		strum.shader.screenY = strum.origin.y + experimentalPreviewScreenPoint.y - strum.offset.y;
 
 		strum.shader.strumID = lane;
 		strum.shader.strumLineID = strumLineID;
-		strum.shader.data.noteCurPos.value = [0.0, 0.0, 0.0, 0.0];
+		setExperimentalNoteCurPos(strum.shader, 0.0, 0.0, 0.0, 0.0);
 		strum.shader.scrollSpeed = 0.0;
 		forceExperimentalModifierValues(strum.shader, table, strumLineID, lane);
 	} catch(e:Dynamic) {
@@ -1735,9 +2103,12 @@ function updateExperimentalGameplayPreview() {
 	if (!experimentalGameplayPreview) return;
 	updateExperimentalCharacterHits();
 	updateExperimentalRTXAngles();
+	var speed:Float = PlayState.SONG.scrollSpeed == null ? 1 : PlayState.SONG.scrollSpeed;
+	beginExperimentalFrameContext(speed);
+	syncExperimentalPreviewWindow();
 
 	if (!legacyNoteModchart) {
-		var camera = Reflect.field(this, "modchartCamera");
+		var camera = experimentalFrameModchartCamera;
 		if (camera != null && Reflect.field(camera, "updateViewMatrix") != null) {
 			try {
 				Reflect.callMethod(camera, Reflect.field(camera, "updateViewMatrix"), []);
@@ -1745,7 +2116,6 @@ function updateExperimentalGameplayPreview() {
 		}
 	}
 
-	var speed:Float = PlayState.SONG.scrollSpeed == null ? 1 : PlayState.SONG.scrollSpeed;
 	for (strumLineID => line in strumLines) {
 		if (line == null) continue;
 		for (lane => strum in line) {
@@ -1756,19 +2126,11 @@ function updateExperimentalGameplayPreview() {
 		}
 	}
 
-	while (experimentalPreviewFirstRenderIndex < experimentalPreviewNotes.length && experimentalPreviewNotes[experimentalPreviewFirstRenderIndex].endTime < Conductor.songPosition - EXPERIMENTAL_PREVIEW_PAST_WINDOW) {
-		releaseExperimentalNoteVisual(experimentalPreviewNotes[experimentalPreviewFirstRenderIndex]);
-		experimentalPreviewFirstRenderIndex++;
-	}
-
 	var visualsLeft:Int = EXPERIMENTAL_PREVIEW_VISUALS_PER_FRAME;
-	for (i in experimentalPreviewFirstRenderIndex...experimentalPreviewNotes.length) {
-		var data = experimentalPreviewNotes[i];
+	var pxPerMs:Float = 0.45 * speed;
+	var scrollDir:Int = downscroll ? -1 : 1;
+	for (data in experimentalPreviewWindowNotes) {
 		if (data == null) continue;
-		if (data.time - Conductor.songPosition > EXPERIMENTAL_PREVIEW_FUTURE_WINDOW) {
-			hideExperimentalPreviewNote(data);
-			break;
-		}
 		if (data.sprite == null) {
 			if (visualsLeft <= 0) continue;
 			createExperimentalNoteVisual(data);
@@ -1793,8 +2155,6 @@ function updateExperimentalGameplayPreview() {
 			continue;
 		}
 
-		var pxPerMs:Float = 0.45 * speed;
-		var scrollDir:Int = downscroll ? -1 : 1;
 		var diff:Float = data.time - Conductor.songPosition;
 		var endDiff:Float = diff + data.sLen;
 		if (endDiff < -EXPERIMENTAL_PREVIEW_PAST_WINDOW || diff > EXPERIMENTAL_PREVIEW_FUTURE_WINDOW) {
@@ -1802,9 +2162,8 @@ function updateExperimentalGameplayPreview() {
 			continue;
 		}
 
-		var noteTypeData = getExperimentalNoteTypeData(data.noteType);
-		var singDir:Int = getExperimentalSingDirection(data.strumLineID, data.id);
-		if (singDir == 4) singDir = 2;
+		var noteTypeData = data.noteTypeData;
+		var singDir:Int = data.singDir;
 		var offsetX:Float = 0;
 		var offsetY:Float = 0;
 		if (noteTypeData != null) {
@@ -1853,7 +2212,7 @@ function updateExperimentalGameplayPreview() {
 			}
 
 			if (data.sustainBody != null) {
-				var sustainYOffset:Float = getExperimentalSustainYOffset(data.strumLineID);
+				var sustainYOffset:Float = data.sustainYOffset;
 				var tapHalfH:Float = data.sprite.height * 0.5;
 				var headY:Float = strum.y + (diff * pxPerMs * scrollDir);
 				var tailY:Float = strum.y + (endDiff * pxPerMs * scrollDir);
@@ -1863,14 +2222,12 @@ function updateExperimentalGameplayPreview() {
 				var bodyHeightPx:Float = 0.0;
 				var bodyY:Float = 0.0;
 				var bodyCurPosForMods:Float = data.wasHit ? 0 : (diff > 0 ? diff * pxPerMs : 0);
-				var bodyTransform = getExperimentalModifierTransform(data.strumLineID, lane, bodyCurPosForMods);
+				var bodyTransform = getExperimentalModifierTransform(data.strumLineID, lane, bodyCurPosForMods, data.bodyModifierTransform);
 				var frameH:Float = data.sustainBodyFrameHeight;
 
-				data.sustainBody.clipRect = null;
 				data.sustainBody.x = strum.x + ((strum.width - data.sustainBody.width) / 2) + offsetX + bodyTransform.x;
 				data.sustainBody.angle = 0;
 				data.sustainBody.alpha = bodyTransform.alpha;
-				data.sustainBody.scale.x = data.sustainBodyBaseScaleX;
 
 				if (data.wasHit && Conductor.songPosition >= data.time) {
 					bodyHeightPx = Math.max(0, endDiff * pxPerMs);
@@ -1881,8 +2238,11 @@ function updateExperimentalGameplayPreview() {
 				}
 
 				data.sustainBody.y = bodyY + offsetY - bodyTransform.y;
-				data.sustainBody.scale.y = Math.max(0.01, bodyHeightPx / frameH);
-				data.sustainBody.updateHitbox();
+				if (data.sustainLastHeight < 0 || Math.abs(data.sustainLastHeight - bodyHeightPx) > 0.01) {
+					data.sustainLastHeight = bodyHeightPx;
+					data.sustainBody.scale.y = Math.max(0.01, bodyHeightPx / frameH);
+					data.sustainBody.updateHitbox();
+				}
 				data.sustainBody.visible = sustainVisible && bodyHeightPx > 2;
 
 				if (data.sustainBody.visible) {
@@ -1898,15 +2258,14 @@ function updateExperimentalGameplayPreview() {
 			}
 
 			if (data.sustainEnd != null) {
-				var sustainYOffset:Float = getExperimentalSustainYOffset(data.strumLineID);
+				var sustainYOffset:Float = data.sustainYOffset;
 				var tapHalfH:Float = data.sprite.height * 0.5;
 				var tailVisible:Bool = sustainVisible && endDiff > 0 && endDiff <= EXPERIMENTAL_PREVIEW_FUTURE_WINDOW;
-				var tailTransform = getExperimentalModifierTransform(data.strumLineID, lane, Conductor.songPosition - data.endTime);
+				var tailTransform = getExperimentalModifierTransform(data.strumLineID, lane, Conductor.songPosition - data.endTime, data.tailModifierTransform);
 				data.sustainEnd.x = strum.x + ((strum.width - data.sustainEnd.width) / 2) + offsetX + tailTransform.x;
 				data.sustainEnd.y = strum.y + (endDiff * pxPerMs * scrollDir) + tapHalfH + sustainYOffset + offsetY - tailTransform.y;
 				data.sustainEnd.angle = 0;
 				data.sustainEnd.alpha = tailTransform.alpha;
-				data.sustainEnd.scale.set(data.sustainBodyBaseScaleX, data.sustainBodyBaseScaleX);
 				data.sustainEnd.flipY = downscroll;
 				data.sustainEnd.visible = tailVisible;
 			}
@@ -1917,6 +2276,7 @@ function updateExperimentalGameplayPreview() {
 		}
 		data.visibleInPreview = data.sprite.visible || (data.sustainBody != null && data.sustainBody.visible) || (data.sustainEnd != null && data.sustainEnd.visible);
 	}
+	endExperimentalFrameContext();
 }
 
 var _fullscreen = false;
@@ -1950,6 +2310,7 @@ function update(elapsed) {
 			rt.call("editorPostUpdate", [elapsed]);
 	}
 
+	syncEditorStageToSongPosition();
 	updateExperimentalGameplayPreview();
 
 	__crochet = ((60 / Conductor.bpm) * 1000);
@@ -1978,6 +2339,9 @@ function update(elapsed) {
 
 	var songLength = FlxG.sound.music.length;
 	Conductor.songPosition = FlxMath.bound(Conductor.songPosition + Conductor.songOffset, 0, songLength);
+	// Mouse-wheel/scrollbar seeks can change the position inside this update.
+	// Synchronize a second time so crossing a stage event is visible immediately.
+	syncEditorStageToSongPosition();
 	if (Conductor.songPosition >= songLength - Conductor.songOffset) {
 		FlxG.sound.music.pause();
 		vocals.pause();
@@ -2347,34 +2711,9 @@ function loadSong() {
 
 function isLegacyModchartXML(xml:Xml):Bool {
 	if (xml == null) return false;
-	if (xml.get("noteModchart") == "true") return true;
-	if (xml.elementsNamed("Shader").hasNext()) return false;
-	if (xml.elementsNamed("Modifier").hasNext()) return false;
-	if (xml.elementsNamed("FunkinModifier").hasNext()) return false;
-
-	for (list in xml.elementsNamed("Init")) {
-		if (list.elementsNamed("Shader").hasNext()) return false;
-		if (list.elementsNamed("Modifier").hasNext()) return false;
-		if (list.elementsNamed("FunkinModifier").hasNext()) return false;
-
-		for (event in list.elementsNamed("Event")) {
-			switch (event.get("type")) {
-				case "initShader" | "setCameraShader" | "setShaderProperty" | "initModifier":
-					return true;
-			}
-		}
-	}
-
-	for (list in xml.elementsNamed("Events")) {
-		for (event in list.elementsNamed("Event")) {
-			switch (event.get("type")) {
-				case "setShaderProperty" | "setModifierValue" | "tweenShaderProperty" | "tweenModifierValue" | "addCameraZoom" | "addHUDZoom":
-					return true;
-			}
-		}
-	}
-
-	return false;
+	// Match the runtime rule exactly: existing unmarked charts stay legacy.
+	// This prevents saving an ambiguous/empty legacy chart as format 2.
+	return !xml.exists("format") || xml.get("format") != "2";
 }
 
 function getLegacyCamera(camName:String):FlxCamera {
@@ -2905,6 +3244,10 @@ function buildXMLFromEvents(?newInitEvents = null, ?packaged = false) {
 		for (attribute in xml.attributes())
 			newXml.set(attribute, xml.get(attribute));
 	}
+	if (legacyFormat)
+		newXml.remove("format");
+	else
+		newXml.set("format", "2");
 
 	if (xml != null && newInitEvents == null) {
 		if (legacyFormat) {
@@ -3258,6 +3601,65 @@ function _edit_shiftright() {
 	sortAllEvents();
 	refreshEventTimings();
 }
+
+function getVerticalEventMove(event, direction:Int):Dynamic {
+	if (event == null || event.timelineIndex == null) return null;
+	var targetIndex:Int = Std.int(event.timelineIndex) + direction;
+	if (targetIndex < 0 || targetIndex >= timelineItems.length) return null;
+
+	var targetItem = timelineItems[targetIndex];
+	if (targetItem == null) return null;
+	var targetEventType = callItemScriptFromItem(targetItem, "getEventNameFromItem", [targetItem]);
+	// Moving between unlike rows (for example Camera Zoom -> Shader) would need
+	// converting the event's value model, not merely changing its property.
+	if (targetEventType == null || targetEventType != event.type) return null;
+
+	var script = eventScripts.get(event.type);
+	if (script == null || script.get("createEventEditor") == null) return null;
+	var template = script.call("createEventEditor", [targetItem.name, event.step, targetItem]);
+	if (template == null) return null;
+
+	// Ensure the event script itself agrees that this template targets the row.
+	var templateItemName = script.call("getItemName", [template]);
+	if (templateItemName == null || templateItemName != targetItem.name) return null;
+
+	// A numeric tween and a bool setter have different semantics. Do not silently
+	// turn one into the other while preserving values/duration.
+	var sourceUniformType = Reflect.field(event, "uniformType");
+	var targetUniformType = Reflect.field(template, "uniformType");
+	var sourceIsBool = sourceUniformType != null && Std.string(sourceUniformType).toLowerCase() == "bool";
+	var targetIsBool = targetUniformType != null && Std.string(targetUniformType).toLowerCase() == "bool";
+	if (sourceIsBool != targetIsBool) return null;
+
+	return {event: event, template: template};
+}
+
+function applyVerticalEventMove(move) {
+	var event = move.event;
+	var template = move.template;
+	// These fields identify the destination property. Every value/timing field on
+	// the original event is deliberately left untouched.
+	for (field in ["name", "property", "uniformType"])
+		if (Reflect.hasField(template, field))
+			Reflect.setField(event, field, Reflect.field(template, field));
+}
+
+function shiftSelectionVertical(direction:Int) {
+	if (selectedEvents.length < 1) return;
+	var moves = [];
+	// Validate the complete selection first so a blocked row cannot cause a
+	// partial move that changes the relative shape of a multi-event selection.
+	for (event in selectedEvents) {
+		var move = getVerticalEventMove(event, direction);
+		if (move == null) return;
+		moves.push(move);
+	}
+	for (move in moves) applyVerticalEventMove(move);
+	refreshEventTimings();
+}
+
+function _edit_shiftup() shiftSelectionVertical(-1);
+function _edit_shiftdown() shiftSelectionVertical(1);
 
 function sortAllEvents() {
 	events.sort(function(a, b) {

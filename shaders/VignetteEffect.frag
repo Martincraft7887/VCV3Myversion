@@ -1,29 +1,27 @@
 #pragma header
-		
+
 uniform float strength;
 uniform float size;
-
 uniform float red;
 uniform float green;
 uniform float blue;
+uniform bool followAlpha;
 
-void main()
-{
-	vec2 uv = openfl_TextureCoordv;
-	vec4 col = flixel_texture2D(bitmap, uv);
+void main() {
+	vec2 uv = clamp(openfl_TextureCoordv, vec2(0.0), vec2(1.0));
+	vec4 color = flixel_texture2D(bitmap, uv);
 
-	//modified from this
-	//https://www.shadertoy.com/view/lsKSWR
+	// A zero strength/size is a genuinely neutral state. Clamping the base and
+	// exponent also prevents undefined pow() results from turning the frame black.
+	if (strength > 0.0 && size > 0.0) {
+		float exponent = max((size * strength) / 12.0, 0.0001);
+		vec2 wave = max(sin(uv * 3.0), vec2(0.0001));
+		float vignette = clamp(pow(wave.x, exponent) * pow(wave.y, exponent), 0.0, 1.0);
+		vec3 vignetteColor = clamp(vec3(red, green, blue) / 255.0, vec3(0.0), vec3(1.0));
 
-	uv = uv * (1.0 - uv.yx);
-	float vig = uv.x * uv.y * strength;
-	vig = pow(vig, size);
+		color.rgb = mix(vignetteColor, color.rgb, vignette);
+		if (!followAlpha) color.a = clamp(color.a + (1.0 - vignette), 0.0, 1.0);
+	}
 
-	vig = 0.0 - vig + 1.0;
-
-	vec3 vigCol = vec3((red / 255.0),(green / 255.0),(blue / 255.0));
-	col.rgb += vigCol * vig;
-	col.a += vig;
-
-	gl_FragColor = col;
+	gl_FragColor = color;
 }

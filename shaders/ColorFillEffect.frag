@@ -3,13 +3,15 @@
 uniform float red;
 uniform float green;
 uniform float blue;
-uniform float fade;
+uniform float alpha;
 
 void main()
 {
-	vec4 spritecolor = flixel_texture2D(bitmap, openfl_TextureCoordv);
-	vec4 col = vec4(red/255.0,green/255.0,blue/255.0, spritecolor.a);
-	vec3 finalCol = mix(col.rgb*spritecolor.a, spritecolor.rgb, fade);
+	vec4 spriteColor = flixel_texture2D(bitmap, openfl_TextureCoordv);
+	float intensity = clamp(alpha, 0.0, 1.0);
 
-	gl_FragColor = vec4( finalCol.r, finalCol.g, finalCol.b, spritecolor.a );
+	vec3 fillColor = vec3(red, green, blue) / 255.0 * spriteColor.a;
+	vec3 finalColor = mix(spriteColor.rgb, fillColor, intensity);
+
+	gl_FragColor = vec4(finalColor, spriteColor.a);
 }

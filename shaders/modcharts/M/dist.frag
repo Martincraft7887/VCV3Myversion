@@ -1,9 +1,5 @@
 //SHADERTOY PORT FIX
 #pragma header
-vec2 uv = openfl_TextureCoordv.xy;
-vec2 fragCoord = openfl_TextureCoordv*openfl_TextureSize;
-vec2 iResolution = openfl_TextureSize;
-vec2 iMouse;
 uniform float iTime;
 #define iChannel0 bitmap
 #define texture flixel_texture2D
@@ -125,6 +121,8 @@ float noise(float p){
 
 void main()
 {
+    vec2 fragCoord = openfl_TextureCoordv * openfl_TextureSize;
+    vec2 iResolution = openfl_TextureSize;
     vec2 uv = fragCoord.xy / iResolution.xy;
     //float n = 1.5;
     float n = noise(fragCoord.y + iTime);

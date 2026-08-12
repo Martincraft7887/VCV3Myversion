@@ -1,9 +1,8 @@
-
 import haxe.io.Bytes;
 import Xml;
 
 var stageHueShader = null;
-var stageHueGameItem = null;
+var stageHueGameItems = [];
 var stageHueApplyHUD:Bool = false;
 var stageHueHUDShader = null;
 var stageHueHUDCamera = null;
@@ -13,12 +12,7 @@ function getItemTypeName() {
 }
 
 function getEventNameFromItem(item) {
-	
-	return "tweenStageHue";
-}
-
-function getStageHueEaseName() {
-	return "linear";
+    return "tweenStageHue";
 }
 
 function getStageHueStage() {
@@ -79,90 +73,145 @@ function applyStageHueShader(shader) {
     var daStage = getStageHueStage();
     if (shader != null && daStage != null && daStage.stageSprites != null) {
         for (name => obj in daStage.stageSprites) {
-            if (obj != null) {
-                obj.shader = shader;
-            }
+            if (obj != null) obj.shader = shader;
         }
     }
     applyStageHueHUDShader(shader);
 }
 
-function setStageHueValue(shader, value) {
+function setStageHueUniform(shader, property, value) {
     if (shader == null) return;
 
     try {
-        shader.hset("hue", value);
+        shader.hset(property, value);
     } catch(e:Dynamic) {
-        Reflect.setProperty(shader, "hue", value);
+        Reflect.setProperty(shader, property, value);
     }
+}
 
-    try {
-        scripts.call("setRTXHue", [value]);
-    } catch(e:Dynamic) {}
+function setStageHueValue(shader, property, value) {
+    if (shader == null) return;
 
+    setStageHueUniform(shader, property, value);
+    if (property == "hue") {
+        try {
+            scripts.call("setRTXHue", [value]);
+        } catch(e:Dynamic) {}
+    }
     applyStageHueShader(shader);
 }
 
-function createStageHueShader(defaultValue) {
+function getStageHueNodeValue(node, property, alias, fallback) {
+    var value = fallback;
+    if (node.exists(property)) {
+        value = Std.parseFloat(node.get(property));
+    } else if (alias != null && node.exists(alias)) {
+        value = Std.parseFloat(node.get(alias));
+    }
+    return Math.isNaN(value) ? fallback : value;
+}
+
+function getStageHueNodeValues(node) {
+    var legacyHue = node.exists("value") ? Std.parseFloat(node.get("value")) : 0.0;
+    if (Math.isNaN(legacyHue)) legacyHue = 0.0;
+
+    return {
+        hue: getStageHueNodeValue(node, "hue", null, legacyHue),
+        sat: getStageHueNodeValue(node, "sat", "saturation", 0.0),
+        brt: getStageHueNodeValue(node, "brt", "brightness", 0.0)
+    };
+}
+
+function getStageHuePropertyValue(values, property) {
+    return switch(property) {
+        case "sat": values.sat;
+        case "brt": values.brt;
+        default: values.hue;
+    };
+}
+
+function createStageHueShader(hue, sat, brt) {
     var shader = new CustomShader("colorswap");
-    setStageHueValue(shader, defaultValue);
+    setStageHueUniform(shader, "hue", hue);
+    setStageHueUniform(shader, "sat", sat);
+    setStageHueUniform(shader, "brt", brt);
+    try {
+        scripts.call("setRTXHue", [hue]);
+    } catch(e:Dynamic) {}
     applyStageHueShader(shader);
     return shader;
 }
 
-function createStageHueItem(defaultValue) {
-    var shader = createStageHueShader(defaultValue);
+function createStageHueGameItems(shader, values) {
+    stageHueGameItems = [];
+    stageHueGameItems.push(createModchartItem("stageHue.hue", "hue", getItemTypeName(), values.hue, shader));
+    stageHueGameItems.push(createModchartItem("stageHue.sat", "sat", getItemTypeName(), values.sat, shader));
+    stageHueGameItems.push(createModchartItem("stageHue.brt", "brt", getItemTypeName(), values.brt, shader));
+}
 
-    stageHueGameItem = createModchartItem("stageHue.hue", "hue", getItemTypeName(), defaultValue, shader);
-    return stageHueGameItem;
+function bindStageHueGameItems(shader, values) {
+    if (stageHueGameItems.length == 0) {
+        createStageHueGameItems(shader, values);
+        return;
+    }
+
+    for (item in stageHueGameItems) {
+        item.object = shader;
+        item.value = getStageHuePropertyValue(values, item.property);
+    }
 }
 
 function setupDefaultsGame() {
-    if (stageHueGameItem == null) {
-        createStageHueItem(0.0);
-    }
+    if (stageHueGameItems.length > 0) return;
+
+    var values = {hue: 0.0, sat: 0.0, brt: 0.0};
+    createStageHueGameItems(createStageHueShader(values.hue, values.sat, values.brt), values);
 }
 
 function setupItemsFromXMLGame(xml) {
     for (node in xml.elementsNamed("StageHue")) {
-        var value = node.exists("value") ? Std.parseFloat(node.get("value")) : 0.0;
+        var values = getStageHueNodeValues(node);
         stageHueApplyHUD = node.exists("camHUD") && node.get("camHUD") == "true";
-        var shader = createStageHueShader(value);
-        if (stageHueGameItem == null) {
-            createStageHueItem(value);
-        } else {
-            stageHueGameItem.value = value;
-            stageHueGameItem.object = shader;
-        }
+        var shader = createStageHueShader(values.hue, values.sat, values.brt);
+        bindStageHueGameItems(shader, values);
     }
+}
+
+function setupStageHueTimelineItem(property, defaultValue, shader) {
+    var name = "stageHue." + property;
+    var item = timelineIndexMap.exists(name)
+        ? timelineItems[timelineIndexMap.get(name)]
+        : createTimelineItem(name, getItemTypeName(), shader);
+    item.object = shader;
+    item.property = property;
+    item.defaultValue = defaultValue;
+    return item;
 }
 
 function setupItemsFromXMLEditor(xml) {
     for (node in xml.elementsNamed("StageHue")) {
-        var value = node.exists("value") ? Std.parseFloat(node.get("value")) : 0.0;
+        var values = getStageHueNodeValues(node);
         stageHueApplyHUD = node.exists("camHUD") && node.get("camHUD") == "true";
-        var item = timelineIndexMap.exists("stageHue.hue") ? timelineItems[timelineIndexMap.get("stageHue.hue")] : createTimelineItem("stageHue.hue", getItemTypeName(), null);
-        var shader = createStageHueShader(value);
-        item.object = shader;
-        item.property = "hue";
-        item.defaultValue = value;
+        var shader = createStageHueShader(values.hue, values.sat, values.brt);
+        setupStageHueTimelineItem("hue", values.hue, shader);
+        setupStageHueTimelineItem("sat", values.sat, shader);
+        setupStageHueTimelineItem("brt", values.brt, shader);
     }
 }
 
 function setupDefaultsEditor() {
-    if (timelineIndexMap.exists("stageHue.hue")) return;
+    if (timelineIndexMap.exists("stageHue.hue") && timelineIndexMap.exists("stageHue.sat") && timelineIndexMap.exists("stageHue.brt")) return;
 
-    var item = createTimelineItem("stageHue.hue", getItemTypeName(), createStageHueShader(0.0));
-    item.property = "hue";
-    item.defaultValue = 0.0;
+    var shader = createStageHueShader(0.0, 0.0, 0.0);
+    setupStageHueTimelineItem("hue", 0.0, shader);
+    setupStageHueTimelineItem("sat", 0.0, shader);
+    setupStageHueTimelineItem("brt", 0.0, shader);
 }
 
 function copyXMLItems(xml, output, packaged) {
     for (e in xml.elementsNamed("StageHue")) {
         var item = Xml.createElement("StageHue");
-        for (att in e.attributes()) {
-            item.set(att, e.get(att));
-        }
+        for (att in e.attributes()) item.set(att, e.get(att));
 
         if (packaged) {
             var path = "shaders/colorswap";
@@ -176,11 +225,8 @@ function copyXMLItems(xml, output, packaged) {
 
 function updateItem(item, i) {
     var text = timelineUIList[i].valueText;
-    if (text != null) {
-        text.text = Std.string(FlxMath.roundDecimal(item.currentValue, 2));
-    }
-
-    setStageHueValue(item.object, item.currentValue);
+    if (text != null) text.text = Std.string(FlxMath.roundDecimal(item.currentValue, 2));
+    setStageHueValue(item.object, item.property, item.currentValue);
 }
 
 function postXMLLoad(xml) {
@@ -202,7 +248,7 @@ function onStageChanged(n) {
 function reloadItems() {
     clearStageHueHUDShader();
     stageHueShader = null;
-    stageHueGameItem = null;
+    stageHueGameItems = [];
     stageHueApplyHUD = false;
 }
 

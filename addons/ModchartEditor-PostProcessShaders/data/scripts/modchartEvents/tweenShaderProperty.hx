@@ -21,17 +21,46 @@ function createEventGame(typeID, node, itemIndex) {
 function getItemNameFromXML(node) {
     return node.get("name") + "." + node.get("property");
 }
+
+function getShaderItemType(item) {
+    if (item != null && Reflect.hasField(item, "uniformType") && item.uniformType != null)
+        return Std.string(item.uniformType).toLowerCase();
+    return "float";
+}
+
 function setTweenShaderFloat(item, value:Float) {
-    var parameter = item == null || item.object == null || item.object.data == null ? null : Reflect.field(item.object.data, item.property);
+    if (item == null || item.object == null) return;
+    var uniformName = Reflect.hasField(item, "uniformName") && item.uniformName != null ? item.uniformName : item.property;
+    var uniformType = getShaderItemType(item);
+    var componentIndex = Reflect.hasField(item, "componentIndex") && item.componentIndex != null ? Std.int(item.componentIndex) : -1;
+    var parameter = item.object.data == null ? null : Reflect.field(item.object.data, uniformName);
+
+    if (componentIndex >= 0) {
+        if (parameter != null && parameter.value != null && parameter.value.length > componentIndex) {
+            parameter.value[componentIndex] = value;
+        } else {
+            var count = uniformType == "vec2" ? 2 : (uniformType == "vec4" ? 4 : 3);
+            var values = [];
+            for (i in 0...count) values.push(i == componentIndex ? value : 0.0);
+            item.object.hset(uniformName, values);
+        }
+        return;
+    }
+
+    var typedValue:Dynamic = switch(uniformType) {
+        case "bool": value >= 0.5;
+        case "int": Std.int(Math.round(value));
+        default: value;
+    };
     if (parameter != null && parameter.value != null && parameter.value.length > 0)
-        parameter.value[0] = value;
-    else if (item != null && item.object != null)
-        item.object.hset(item.property, value);
+        parameter.value[0] = typedValue;
+    else
+        item.object.hset(uniformName, typedValue);
 }
 function updateEventGame(currentStep, e) {
     var item = modchartItems[e.itemIndex];
-    if (currentStep < e.step + e.time) {
-        var l = (currentStep - e.step) * ((1) / ((e.step + e.time) - e.step));
+    if (e.time > 0 && currentStep < e.step + e.time) {
+        var l = (currentStep - e.step) / e.time;
         setTweenShaderFloat(item, FlxMath.lerp(e.startValue, e.value, e.ease(l)));
         return false; //dont remove yet
     }
@@ -40,22 +69,26 @@ function updateEventGame(currentStep, e) {
 }
 
 function createEventEditor(name, step, item) {
-    var data = name.split(".");
+    var separator = name.indexOf(".");
+    var shaderName = separator < 0 ? name : name.substr(0, separator);
+    var propertyName = separator < 0 ? "" : name.substr(separator + 1);
+    var uniformType = getShaderItemType(item);
     return {
         "type": "tweenShaderProperty",
         "step": step,
-        "name": data[0],
-        "property": data[1],
+        "name": shaderName,
+        "property": propertyName,
         "value": 0,
-        "time": 4,
-        "ease": "cubeInOut",
+        "time": uniformType == "bool" ? 0 : 4,
+        "ease": uniformType == "bool" ? "linear" : "cubeInOut",
         "startValue": item.currentValue,
-        "lastValue": 0
+        "lastValue": 0,
+        "uniformType": uniformType
     };
 }
 
 function updateEventEditor(currentStep, e, item) {
-    if (currentStep < e.step + e.time) {
+    if (e.time > 0 && currentStep < e.step + e.time) {
         var easeFunc:Float->Float = CoolUtil.flxeaseFromString(e.ease, "");
 
         var startVMult:Float = (e.DI_startValue != null && e.DI_startValue && downscroll) ? -1.0 : 1.0;
@@ -83,7 +116,8 @@ function copyEventEditor(e) {
         "startValue": e.startValue,
         "lastValue": e.lastValue,
         "DI_value": e.DI_value,
-        "DI_startValue": e.DI_startValue
+        "DI_startValue": e.DI_startValue,
+        "uniformType": e.uniformType
     };
 }
 
@@ -98,7 +132,8 @@ function eventFromXMLEditor(node) {
         "time": Std.parseFloat(node.get("time")),
         "ease": node.get("ease"),
         "startValue": Std.parseFloat(node.get("startValue")),
-        "lastValue": 0
+        "lastValue": 0,
+        "uniformType": node.exists("uniformType") ? node.get("uniformType") : "float"
     };
 
     if (node.exists("DI_startValue")) {
@@ -118,6 +153,7 @@ function eventToXMLEditor(node, e) {
     node.set("time", e.time);
     node.set("ease", e.ease);
     node.set("startValue", e.startValue);
+    if (e.uniformType != null && e.uniformType != "float") node.set("uniformType", e.uniformType);
     
     if (e.DI_startValue != null && e.DI_startValue) {
         node.set("DI_startValue", e.DI_startValue);
@@ -130,7 +166,7 @@ function getItemName(e) {
     return e.name + "." + e.property;
 }
 function getDisplayName(e) {
-    return "Tween Shader Property";
+    return e != null && e.uniformType == "bool" ? "Set Shader Bool" : "Tween Shader Property";
 }
 function getEventWindowWidth() {
     return 960;
@@ -141,6 +177,11 @@ function getEventWindowHeight() {
 function setupEventWindow(event, propertyMap, windowData) {
     windowData.state.add(new UIText(windowData.curX, windowData.curY, 0, getItemName(event), 24));
     windowData.curY += 28 + 50;
+
+    if (event.uniformType == "bool") {
+        windowData.addCheckbox("boolValue", "Enabled", event.value >= 0.5);
+        return;
+    }
 
     var temp = windowData.curY;
     windowData.curX += 115;
@@ -177,6 +218,16 @@ function setupEventWindow(event, propertyMap, windowData) {
     windowData.addStepper("time", "Tween Length (steps)", event.time, 1, 4);
 }
 function saveEventWindow(event, propertyMap) {
+    if (event.uniformType == "bool") {
+        event.startValue = event.value;
+        event.value = propertyMap.get("boolValue").checked ? 1.0 : 0.0;
+        event.time = 0;
+        event.ease = "linear";
+        event.DI_startValue = false;
+        event.DI_value = false;
+        return;
+    }
+
     propertyMap.get("startValue").__onChange(propertyMap.get("startValue").label.text);
     propertyMap.get("value").__onChange(propertyMap.get("value").label.text);
     propertyMap.get("time").__onChange(propertyMap.get("time").label.text);

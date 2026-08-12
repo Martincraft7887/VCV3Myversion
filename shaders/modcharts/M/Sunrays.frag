@@ -7,8 +7,8 @@ uniform float kstep;
 uniform float ksum;
 uniform float eatt;
 uniform float iTime;
-vec2 fragCoord = openfl_TextureCoordv*openfl_TextureSize;
-vec2 iResolution = openfl_TextureSize;
+
+const int MAX_RAY_SAMPLES = 128;
 
 
 vec3 attenuation(vec3 c, float d)
@@ -25,12 +25,15 @@ vec3 radial_blur_filter(in vec2 origin, in vec2 point)
     vec2 v = point - origin;
     float l = length(v);
     v = normalize(v); 
-    float dz =  hh / num_samples * ksum;
+    float sampleCount = clamp(floor(num_samples + 0.5), 1.0, float(MAX_RAY_SAMPLES));
+    float dz = hh / sampleCount * ksum;
     float l1 = l/(1.0 + hh);
     float al = (l-l1);
-    for(float s = 0.0; s < num_samples; s++)
+    for(int sampleIndex = 0; sampleIndex < MAX_RAY_SAMPLES; sampleIndex++)
     {
-        float l2 = l1 + al*s/num_samples;
+        if (float(sampleIndex) >= sampleCount) break;
+        float s = float(sampleIndex);
+        float l2 = l1 + al*s/sampleCount;
         vec2 p = origin + v*l2;
         
         vec3 c = texture2D(bitmap, p).rgb;
@@ -52,6 +55,8 @@ vec3 radial_blur_filter(in vec2 origin, in vec2 point)
 
 void main()
 {
+    vec2 fragCoord = openfl_TextureCoordv * openfl_TextureSize;
+    vec2 iResolution = openfl_TextureSize;
     vec2 pt = fragCoord.xy/iResolution.xy;
     vec4 col = texture2D(bitmap, pt);
     vec2 mouse = vec2(0.5+0.1*sin(iTime*2.),0.25+0.1*cos(iTime*1.25));
