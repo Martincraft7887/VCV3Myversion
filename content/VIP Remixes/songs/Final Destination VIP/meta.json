@@ -2,7 +2,9 @@
 	"opponentModeAllowed": true,
 	"difficulties": [
 		"canon-god",
-		"god-mania"
+		"god-mania",
+		"god",
+		"canon"
 	],
 	"icon": "VoiidSXM-godl",
 	"color": "#2A6A01",
