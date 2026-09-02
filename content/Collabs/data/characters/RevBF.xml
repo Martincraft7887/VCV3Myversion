@@ -1,18 +1,18 @@
 <!DOCTYPE codename-engine-character>
 <character sprite="BOYFRIEND-RED" flipX="true" isPlayer="true" icon="RevBF-icons" color="#FFAB67" isGF="false">
-	<anim name="idle" anim="BF idle dance" x="-8" y="-7" fps="24" loop="false"/>
-	<anim name="singLEFT" anim="BF NOTE RIGHT0" x="-50" y="-5" fps="24" loop="false"/>
-	<anim name="singDOWN" anim="BF NOTE DOWN0" x="-23" y="-35" fps="24" loop="false"/>
-	<anim name="singUP" anim="BF NOTE UP0" x="-66" y="30" fps="24" loop="false"/>
-	<anim name="singRIGHT" anim="BF NOTE LEFT0" x="24" y="-15" fps="24" loop="false"/>
-	<anim name="singLEFTmiss" anim="BF NOTE RIGHT MISS" x="-55" y="8" fps="24" loop="false"/>
-	<anim name="singDOWNmiss" anim="BF NOTE DOWN MISS" x="-24" y="-34" fps="24" loop="false"/>
-	<anim name="singUPmiss" anim="BF NOTE UP MISS" x="-65" y="31" fps="24" loop="false"/>
-	<anim name="singRIGHTmiss" anim="BF NOTE LEFT MISS" x="28" y="5" fps="24" loop="false"/>
-	<anim name="hey" anim="BF HEY!!" x="-18" y="1" fps="24" loop="false"/>
-	<anim name="dodge" anim="boyfriend dodge0" x="34" y="69" fps="24" loop="false"/>
-	<anim name="dodgeLEFT" anim="boyfriend dodge0" x="34" y="69" fps="24" loop="false"/>
-	<anim name="dodgeUP" anim="boyfriend dodge0" x="34" y="69" fps="24" loop="false"/>
-	<anim name="dodgeDOWN" anim="boyfriend dodge0" x="34" y="69" fps="24" loop="false"/>
-	<anim name="dodgeRIGHT" anim="boyfriend dodge0" x="34" y="69" fps="24" loop="false"/>
+	<anim name="idle" anim="BF idle dance" x="-8" y="-7"/>
+	<anim name="singLEFT" anim="BF NOTE LEFT0" x="21" y="-14"/>
+	<anim name="singDOWN" anim="BF NOTE DOWN0" x="-8" y="-35"/>
+	<anim name="singUP" anim="BF NOTE UP0" x="-66" y="30"/>
+	<anim name="singRIGHT" anim="BF NOTE RIGHT0" x="-38" y="-5"/>
+	<anim name="singLEFTmiss" anim="BF NOTE LEFT MISS" x="20" y="8"/>
+	<anim name="singDOWNmiss" anim="BF NOTE DOWN MISS" x="-14" y="-34"/>
+	<anim name="singUPmiss" anim="BF NOTE UP MISS" x="-65" y="31"/>
+	<anim name="singRIGHTmiss" anim="BF NOTE RIGHT MISS" x="-47" y="5"/>
+	<anim name="hey" anim="BF HEY!!" x="-18" y="1"/>
+	<anim name="dodge" anim="boyfriend dodge0" x="34" y="69"/>
+	<anim name="dodgeLEFT" anim="boyfriend dodge0" x="34" y="69"/>
+	<anim name="dodgeUP" anim="boyfriend dodge0" x="34" y="69"/>
+	<anim name="dodgeDOWN" anim="boyfriend dodge0" x="34" y="69"/>
+	<anim name="dodgeRIGHT" anim="boyfriend dodge0" x="34" y="69"/>
 </character>

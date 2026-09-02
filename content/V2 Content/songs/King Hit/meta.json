@@ -1,10 +1,10 @@
 {
-	"color": "#2A6A01",
 	"opponentModeAllowed": true,
 	"icon": "Wiik3VoiidMatt-icons",
 	"difficulties": [
 		"voiid"
 	],
+	"color": "#2A6A01",
 	"coopAllowed": true,
 	"stepsPerBeat": 4,
 	"displayName": "King Hit",

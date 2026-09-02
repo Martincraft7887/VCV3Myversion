@@ -1,4 +1,4 @@
-<Modchart stageHueCamHUD="true">
+<Modchart stageHueCamHUD="true" format="2">
 	<Init>
 		<Shader camHUD="true" camOther="false" camGame="true" shader="colorswap" name="colorswap" color="#545454">
 			<Property value="0" name="hue"/>
